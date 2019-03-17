@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import {
   MatToolbarModule, MatButtonModule, MatCheckboxModule,
   MatSelectModule, MatCardModule, MatIconModule,
-  MatInputModule,
+  MatInputModule, MatSnackBarModule,
 } from '@angular/material';
 import { FretboardComponent } from './fretboard/fretboard.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -24,6 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatCardModule,
     MatIconModule,
     MatInputModule,
+    MatSnackBarModule,
   ],
   exports: [
     FretboardComponent,
@@ -37,6 +38,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatCardModule,
     MatIconModule,
     MatInputModule,
+    MatSnackBarModule,
   ]
 })
 export class SharedModule { }

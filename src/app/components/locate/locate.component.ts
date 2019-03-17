@@ -3,8 +3,9 @@ import {
   FormBuilder, Validators, AbstractControl,
   ValidatorFn, ValidationErrors, FormGroup
 } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 import { fretboardNotes } from 'src/app/data/fretboard-notes.data';
-import { Note } from '../../models/note.model';
+import { Note } from 'src/app/models/note.model';
 import { chromaticScale } from 'src/app/data/chromatic-scale.data';
 
 @Component({
@@ -24,7 +25,7 @@ export class LocateComponent implements OnInit {
   good = 0;
   bad = 0;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.setForm();
@@ -32,7 +33,12 @@ export class LocateComponent implements OnInit {
 
   setForm(): FormGroup {
     return this.locateForm = this.fb.group({
-      selectedNotes: [this.notes, Validators.required],
+      selectedNotes: [
+        this.notes, [
+          Validators.required,
+          this.validateSelectedNotes
+        ]
+      ],
       fretStart: [
         0, [
           Validators.required,
@@ -52,15 +58,21 @@ export class LocateComponent implements OnInit {
     });
   }
 
+  onResetForm() {
+    this.setForm();
+  }
+
   toggleShowAll(): boolean {
     return (this.showAll = !this.showAll);
   }
 
   toggleSettings(): boolean {
+    if (this.locateForm.invalid) { return; }
     return (this.showSettings = !this.showSettings);
   }
 
   togglePaused(): boolean {
+    if (this.locateForm.invalid) { return; }
     this.paused = !this.paused;
     if (!this.paused) {
       this.showSettings = false;
@@ -73,15 +85,19 @@ export class LocateComponent implements OnInit {
   }
 
   pickRandomNote(): Note {
-    const formValues = this.locateForm.value;
     const randomFret = Math.ceil(Math.random() * 1000) % 13;
     const randomString = Math.ceil(Math.random() * 1000) % 6;
     const note = this.fretboardNotes[randomFret][randomString];
+    const selectedNotes = this.locateForm.value.selectedNotes;
+    const intervalNotes = this.fretboardNotes
+      .slice(this.locateForm.value.fretStart, this.locateForm.value.fretEnd + 1)
+      .join().split(',');
+
+    if (!this.checkSelectedNotes(selectedNotes, intervalNotes)) { return; }
 
     if (!note
-      || !formValues.selectedNotes.includes(note)
-      || !this.fretboardNotes.slice(formValues.fretStart, formValues.fretEnd + 1)
-        .join().split(',').join(' ').includes(note + ' ')
+      || !selectedNotes.includes(note)
+      || !intervalNotes.join(' ').includes(note + ' ')
       || (this.noteToFind && note == this.noteToFind.note)) {
       console.log('bad note', note, randomFret, randomString);
       return this.pickRandomNote();
@@ -91,6 +107,22 @@ export class LocateComponent implements OnInit {
       string: randomString,
       note
     };
+  }
+
+  checkSelectedNotes(selectedNotes: string[], intervalNotes: string[]) {
+    const areSelectedNotesInTheFretsInterval = selectedNotes
+      .slice()
+      .map((n: string) => intervalNotes.join(' ').includes(n + ' '))
+      .includes(true);
+    if (!areSelectedNotesInTheFretsInterval) {
+      this.openSnackBar(`The selected notes are not
+        in the interval of frets you selected.
+        Change the settiongs!`, null);
+      this.togglePaused();
+      this.toggleSettings();
+      return false;
+    }
+    return true;
   }
 
   onNoteClicked(noteObject: Note) {
@@ -115,9 +147,25 @@ export class LocateComponent implements OnInit {
       }
       const end = Number(context.locateForm.get('fretEnd').value);
       const start = Number(context.locateForm.get('fretStart').value);
-      if (end < start) { return { frets: true }; }
+      if (end <= start) { return { frets: true }; }
       return null;
     };
+  }
+
+  validateSelectedNotes(control: AbstractControl): ValidationErrors | null {
+    if (!control || !control.value) { return null; }
+    if (control.value.length <= 2) {
+      return { selectedNotes: true };
+    }
+    return null;
+  }
+
+  openSnackBar(message: string, action: string): void {
+    this.snackBar.open(message, action, {
+      duration: 4000,
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom'
+    });
   }
 
 }

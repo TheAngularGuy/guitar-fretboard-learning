@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { fretboardNotes } from 'src/app/data/fretboard-notes.data';
-import { Note } from '../../models/note.model';
+import { Note } from 'src/app/models/note.model';
 
 @Component({
   selector: 'app-fretboard',
@@ -8,6 +8,7 @@ import { Note } from '../../models/note.model';
   styleUrls: ['./fretboard.component.scss']
 })
 export class FretboardComponent implements OnInit {
+  @Input() selectedFrets: [number, number];
   @Input() selectedNotes: string[];
   @Input() showSelectedNotes: boolean;
   @Input() showAll: boolean;
@@ -39,6 +40,16 @@ export class FretboardComponent implements OnInit {
    */
   isGoodNote(note: string): boolean {
     return this.selectedNotes.includes(note);
+  }
+
+  /**
+   * Return true if the fret is selected
+   * @param  {number} fret
+   * @returns boolean
+   */
+  isSelectedFret(fret: number): boolean {
+    if (!this.selectedFrets || this.selectedFrets.length < 2) { return true; }
+    return (fret >= this.selectedFrets[0] && fret <= this.selectedFrets[1]);
   }
 
   /**
