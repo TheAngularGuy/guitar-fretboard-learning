@@ -1,0 +1,49 @@
+.settings {
+    display: flex;
+
+    .mat-form-field {
+        width: 100%;
+    }
+}
+
+.note-to-find {
+    margin: 1rem auto 0;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #006699;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba($color: #006699, $alpha: 0.2);
+    line-height: 100px;
+}
+
+.action-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .action-row-result {
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+    }
+
+    .good,
+    .bad {
+        font-size: 1.2rem;
+        color: green;
+    }
+
+    .bad {
+        color: brown;
+    }
+}
+
+@media screen and (max-width: 600px) {
+
+    .settings {
+        flex-direction: column;
+    }
+}

@@ -1,19 +1,27 @@
 <div class="fretboard-wrapper">
     <div class="fretboard">
-        <div class="tile width-{{i}}"
-             [ngClass]="{'nut': i === 0}"
-             *ngFor="let fretnotes of notes; let i=index">
+        <div class="tile width-{{fret}}"
+             [ngClass]="{'nut': fret === 0}"
+             *ngFor="let fretnotes of notes; let fret=index">
 
             <span class="tile-number"
-                  *ngIf="i > 0">
-                {{i}}
+                  *ngIf="fret > 0">
+                {{fret}}
             </span>
 
             <div class="note"
-                 *ngFor="let note of fretnotes"
-                 (tap)="onNoteClicked(note, noteName, btn)">
+                 *ngFor="let note of fretnotes; let string=index"
+                 (tap)="onNoteClicked({
+                     note: note,
+                     fret: fret,
+                     string: string
+                 }, noteName, btn)">
                 <span class="note-name"
-                      [ngClass]="{'note-false': note != noteSelected}"
+                      [ngClass]="{
+                          'note-false': selectedNotes && !isGoodNote(note),
+                          'note-show': showAll,
+                          'note-show': showSelectedNotes && isGoodNote(note)
+                        }"
                       #noteName>
                     {{note}}
                 </span>
