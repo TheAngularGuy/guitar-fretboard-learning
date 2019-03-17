@@ -1,16 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatToolbarModule, MatButtonModule } from '@angular/material';
+import { FretboardComponent } from './fretboard/fretboard.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [FretboardComponent],
   imports: [
     CommonModule,
-    MatToolbarModule
+
+
+    // material modules
+    MatToolbarModule,
+    MatButtonModule,
   ],
   exports: [
-    MatToolbarModule
+    FretboardComponent,
+
+    // material modules
+    MatToolbarModule,
+    MatButtonModule,
   ]
 })
 export class SharedModule { }

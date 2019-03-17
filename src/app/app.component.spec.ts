@@ -26,10 +26,10 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('guitar-fretboard-learning');
   });
 
-  it('should render title in a h1 tag', () => {
+  it('should render title in a mat-toolbar', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to guitar-fretboard-learning!');
+    expect(compiled.querySelector('mat-toolbar').textContent).toContain('guitar-fretboard-learning!');
   });
 });

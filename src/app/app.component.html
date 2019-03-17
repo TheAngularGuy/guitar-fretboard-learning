@@ -1,8 +1,12 @@
 <mat-toolbar color="primary">
-  <img src="assets/imgs/guitar.svg" height="50">
-  &nbsp;
-  My App
+    <img src="assets/imgs/guitar.svg"
+         height="50">
+    &nbsp;
+    {{ title | titlecase }}
 </mat-toolbar>
+
+
+
 
 
 <router-outlet></router-outlet>
