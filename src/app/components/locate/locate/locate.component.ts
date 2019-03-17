@@ -15,6 +15,7 @@ import { chromaticScale } from 'src/app/data/chromatic-scale.data';
 export class LocateComponent implements OnInit {
   fretboardNotes = fretboardNotes;
   notes: string[] = chromaticScale;
+  showAll = false;
   showSettings = false;
   paused = true;
   locateForm: FormGroup;
@@ -49,6 +50,10 @@ export class LocateComponent implements OnInit {
         ]
       ]
     });
+  }
+
+  toggleShowAll(): boolean {
+    return (this.showAll = !this.showAll);
   }
 
   toggleSettings(): boolean {

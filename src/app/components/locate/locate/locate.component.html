@@ -85,9 +85,19 @@
                     </div>
                     <div>
                         <button mat-button
+                                (tap)="toggleShowAll()">
+                            <mat-icon *ngIf="!showAll">visibility</mat-icon>
+                            <mat-icon *ngIf="showAll">visibility_off</mat-icon>
+                            &nbsp;
+                            <span>Show all</span>
+                        </button>
+                        <br>
+                        <button mat-button
                                 (tap)="togglePaused()"
                                 color="warn">
-                            Stop
+                            <mat-icon>pause</mat-icon>
+                            &nbsp;
+                            <span>Stop</span>
                         </button>
                     </div>
                 </div>
@@ -101,5 +111,6 @@
 <br>
 
 <app-fretboard (noteClick)="onNoteClicked($event)"
+               [showAll]="showAll"
                [selectedNotes]="noteToFind ? [noteToFind.note] : null">
 </app-fretboard>
