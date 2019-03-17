@@ -2,12 +2,14 @@
     <mat-card>
         <mat-card-actions>
             <button mat-icon-button
+                    title="Reset"
                     *ngIf="paused && showSettings"
                     (tap)="onResetForm()">
                 <mat-icon>replay</mat-icon>
             </button>
             &nbsp;
             <button mat-icon-button
+                    title="Save"
                     *ngIf="paused"
                     (tap)="toggleSettings()">
                 <mat-icon *ngIf="showSettings">check</mat-icon>
