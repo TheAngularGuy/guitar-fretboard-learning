@@ -46,4 +46,15 @@
     .settings {
         flex-direction: column;
     }
+
+    .note-to-find-wrapper {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 2;
+        width: 100vw;
+        background: #f4F4F4;
+        border-top: 1px solid #006699;
+        padding-bottom: 5px;
+    }
 }

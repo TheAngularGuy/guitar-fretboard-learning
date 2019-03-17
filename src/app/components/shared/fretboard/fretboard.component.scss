@@ -4,6 +4,8 @@
     --tileHeightMobile: 120px;
 
 
+    border-top: 1.5px solid rgba($color: #000000, $alpha: 0.2);
+    border-bottom: 1.5px solid rgba($color: #000000, $alpha: 0.2);
     max-height: var(--fretboardHeight);
     overflow-y: hidden;
 
