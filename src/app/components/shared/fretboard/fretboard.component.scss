@@ -3,14 +3,12 @@
     --tileWidth: 148px;
     --tileHeightMobile: 120px;
 
-
-    border-top: 1.5px solid rgba($color: #000000, $alpha: 0.2);
-    border-bottom: 1.5px solid rgba($color: #000000, $alpha: 0.2);
     max-height: var(--fretboardHeight);
     overflow-y: hidden;
 
     .fretboard {
         display: flex;
+        justify-content: center;
         overflow-y: hidden;
         overflow-x: auto;
         padding-bottom: 1rem;
@@ -20,11 +18,10 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            min-height: var(--fretboardHeight);
+            min-height: calc(var(--fretboardHeight) - 2px);
             width: var(--tileWidth);
             background: antiquewhite;
-            border-left: solid 1px rgba($color: #000, $alpha: 0.2);
-            border-right: solid 1px rgba($color: #000, $alpha: 0.2);
+            border: solid 1px rgba($color: #000, $alpha: 0.2);
 
             .tile-blocked {
                 cursor: not-allowed;
@@ -99,7 +96,6 @@
         }
 
         .nut {
-            border-left: none;
             width: 46px;
             background: #ffF1F1;
         }
