@@ -8,7 +8,6 @@
 
     .fretboard {
         display: flex;
-        justify-content: center;
         overflow-y: hidden;
         overflow-x: auto;
         padding-bottom: 1rem;
@@ -95,6 +94,53 @@
             }
         }
 
+        .tile-one-dot {
+            position: relative;
+
+            &::before {
+                content: '';
+                position: absolute;
+                pointer-events: none;
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba($color: #000000, $alpha: 0.4);
+            }
+        }
+
+        .tile-two-dot {
+            position: relative;
+
+            &::before {
+                content: '';
+                position: absolute;
+                pointer-events: none;
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                top: 33%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba($color: #000000, $alpha: 0.4);
+            }
+
+            &::after {
+                content: '';
+                position: absolute;
+                pointer-events: none;
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                top: 67%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba($color: #000000, $alpha: 0.4);
+            }
+        }
+
         .nut {
             width: 46px;
             background: #ffF1F1;
@@ -109,7 +155,6 @@
     .fretboard-wrapper {
         max-height: initial;
         overflow-y: hidden;
-        margin-bottom: var(--tileHeightMobile);
 
         .fretboard {
             overflow-y: hidden;
@@ -148,6 +193,36 @@
                         pointer-events: none;
                     }
 
+                }
+            }
+
+            .tile-two-dot {
+                position: relative;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    pointer-events: none;
+                    width: 18px;
+                    height: 18px;
+                    border-radius: 50%;
+                    left: 33%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    background: rgba($color: #000000, $alpha: 0.4);
+                }
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    pointer-events: none;
+                    width: 18px;
+                    height: 18px;
+                    border-radius: 50%;
+                    left: 67%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    background: rgba($color: #000000, $alpha: 0.4);
                 }
             }
 
@@ -205,11 +280,18 @@
     }
 
     .width-12 {
-        max-height: calc(var(--tileWidth) - 45px);
+        max-height: calc(var(--tileWidth) - 55px);
     }
 }
 
 @media screen and (min-width: 600px) {
+
+    .fretboard-wrapper {
+        max-width: 100vw;
+        width: calc(var(--tileWidth) * 12 - 321px + 26px + 46px);
+        margin: auto;
+    }
+
     .width-1 {
         max-width: calc(var(--tileWidth) - 5px);
     }
@@ -255,6 +337,6 @@
     }
 
     .width-12 {
-        max-width: calc(var(--tileWidth) - 45px);
+        max-width: calc(var(--tileWidth) - 55px);
     }
 }

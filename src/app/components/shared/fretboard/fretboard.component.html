@@ -1,7 +1,11 @@
 <div class="fretboard-wrapper">
     <div class="fretboard">
         <div class="tile width-{{fret}}"
-             [ngClass]="{'nut': fret === 0}"
+             [ngClass]="{
+                 'nut': fret === 0,
+                 'tile-one-dot': [3, 5, 7, 9].includes(fret),
+                 'tile-two-dot': fret === 12
+                }"
              *ngFor="let fretnotes of notes; let fret=index">
 
             <span class="tile-number"

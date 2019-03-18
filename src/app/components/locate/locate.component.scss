@@ -41,6 +41,10 @@
     }
 }
 
+.note-to-find-wrapper-placeholder {
+    display: none;
+}
+
 @media screen and (max-width: 600px) {
 
     .settings {
@@ -56,5 +60,10 @@
         background: #f4F4F4;
         border-top: 1px solid rgba($color: #000000, $alpha: 0.4);
         padding-bottom: 5px;
+    }
+
+    .note-to-find-wrapper-placeholder {
+        min-height: 126px;
+        display: block;
     }
 }
