@@ -41,8 +41,6 @@
     width: 60%;
     height: calc(100% - 2rem);
     background: #f4F4F4;
-
-
 }
 
 .head-title {
@@ -59,4 +57,54 @@
 .text-muted {
     cursor: default;
     padding: 0 0.5rem;
+}
+
+
+@media screen and (max-width: 600px) {
+
+    .head-title {
+        padding-top: 1rem;
+        padding-right: 0rem;
+        padding-left: 0rem;
+        max-width: 100%;
+        font-size: 200%;
+        text-transform: capitalize;
+        letter-spacing: 5px;
+        text-align: center;
+    }
+
+    .panel {
+        color: black;
+        overflow: hidden;
+        border-radius: 8px 8px 8px 8px;
+        position: initial;
+        margin: 2rem auto 0;
+        width: 90%;
+        height: auto;
+        background: #f4F4F4;
+    }
+
+    .btn-list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        position: initial;
+        bottom: 0;
+        right: 0;
+        margin: 1rem auto;
+
+        .mat-flat-button {
+            font-size: 120%;
+            min-height: 0;
+            width: 90%;
+            margin: 1rem auto;
+            border-radius: 8px;
+
+            img {
+                height: 50px;
+                margin-top: 1rem;
+            }
+        }
+    }
+
 }

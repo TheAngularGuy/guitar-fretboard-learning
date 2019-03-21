@@ -1,137 +1,111 @@
-<section class="padding">
-    <mat-card>
-        <mat-card-actions>
-            <button mat-icon-button
-                    title="Reset"
-                    *ngIf="paused && showSettings"
-                    (tap)="onResetForm()">
-                <mat-icon>replay</mat-icon>
-            </button>
-            &nbsp;
-            <button mat-icon-button
-                    title="Save"
-                    *ngIf="paused"
-                    (tap)="toggleSettings()">
-                <mat-icon *ngIf="showSettings">check</mat-icon>
-                <mat-icon *ngIf="!showSettings">settings</mat-icon>
-            </button>
-        </mat-card-actions>
-
-
-        <mat-card-title>
-            Locate the note !
-        </mat-card-title>
-        <mat-card-subtitle>
-            In this game you have to locate the note on the fretboard and click on it
-        </mat-card-subtitle>
-        <mat-card-content>
-
-            <form class="settings"
-                  [formGroup]="locateForm"
-                  *ngIf="showSettings">
-                <mat-form-field>
-                    <mat-select placeholder="Notes to play with:"
-                                multiple
-                                formControlName="selectedNotes"
-                                [disableOptionCentering]="true">
-                        <mat-option *ngFor="let note of notes"
-                                    [value]="note">{{note}}</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="locateForm.get('selectedNotes').invalid">
-                        Please select three notes or more.
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field>
-                    <input placeholder="From fret number:"
-                           matInput
-                           autocomplete="off"
-                           type="number"
-                           formControlName="fretStart">
-                    <mat-error *ngIf="locateForm.get('fretStart').invalid">
-                        Please enter a number inferior than the ending fret.
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field>
-                    <input placeholder="To fret number:"
-                           matInput
-                           autocomplete="off"
-                           type="number"
-                           formControlName="fretEnd">
-                    <mat-error *ngIf="locateForm.get('fretEnd').invalid">
-                        Please enter a number greater than the starting fret.
-                    </mat-error>
-                </mat-form-field>
-            </form>
-
-            <div class="play"
-                 *ngIf="paused">
-                <button mat-button
-                        (tap)="togglePaused()"
-                        style="margin: 1rem auto 0; display: block">
-                    <img src="assets/imgs/play.svg"
-                         height="80">
-                    <span style="display:block">Play</span>
+<div class="container">
+    <section class="padding">
+        <mat-card>
+            <mat-card-actions>
+                <button mat-icon-button title="Reset" *ngIf="paused && showSettings" (tap)="onResetForm()">
+                    <mat-icon>replay</mat-icon>
                 </button>
-                <p *ngIf="good"
-                   style="text-align:center">
-                    <span>You guessed right {{good}} out of {{good + bad}} notes.</span>
-                    <br>
-                    <span *ngIf="bad">Try again!</span>
-                    <span *ngIf="!bad">Impressive!</span>
-                </p>
-            </div>
+                &nbsp;
+                <button mat-icon-button title="Save" *ngIf="paused" (tap)="toggleSettings()">
+                    <mat-icon *ngIf="showSettings">check</mat-icon>
+                    <mat-icon *ngIf="!showSettings">settings</mat-icon>
+                </button>
+            </mat-card-actions>
 
-            <div class="note-to-find-wrapper"
-                 *ngIf="!paused">
-                <div class="action-row">
-                    <div>
-                        <p class="action-row-result">
-                            <img src="assets/imgs/good.svg"
-                                 height="30">
-                            <span class="good">: {{good}}</span>
-                        </p>
-                        <p class="action-row-result">
-                            <img src="assets/imgs/bad.svg"
-                                 height="30">
-                            <span class="bad">: {{bad}}</span>
-                        </p>
-                    </div>
-                    <div class="note-to-find">
-                        <span>
-                            {{noteToFind?.note}}
-                        </span>
-                    </div>
-                    <div>
-                        <button mat-button
-                                (tap)="toggleShowAll()">
-                            <mat-icon *ngIf="!showAll">visibility</mat-icon>
-                            <mat-icon *ngIf="showAll">visibility_off</mat-icon>
-                            &nbsp;
-                            <span>Show all</span>
-                        </button>
+
+            <mat-card-title>
+                Locate the note !
+            </mat-card-title>
+            <mat-card-subtitle>
+                In this game you have to locate the note on the fretboard and click on it
+            </mat-card-subtitle>
+            <mat-card-content>
+
+                <form class="settings" [formGroup]="locateForm" *ngIf="showSettings">
+                    <mat-form-field>
+                        <mat-select placeholder="Notes to play with:" multiple formControlName="selectedNotes"
+                            [disableOptionCentering]="true">
+                            <mat-option *ngFor="let note of notes" [value]="note">{{note}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="locateForm.get('selectedNotes').invalid">
+                            Please select three notes or more.
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input placeholder="From fret number:" matInput autocomplete="off" type="number"
+                            formControlName="fretStart">
+                        <mat-error *ngIf="locateForm.get('fretStart').invalid">
+                            Please enter a number inferior than the ending fret.
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input placeholder="To fret number:" matInput autocomplete="off" type="number"
+                            formControlName="fretEnd">
+                        <mat-error *ngIf="locateForm.get('fretEnd').invalid">
+                            Please enter a number greater than the starting fret.
+                        </mat-error>
+                    </mat-form-field>
+                </form>
+
+                <div class="play" *ngIf="paused">
+                    <button mat-button (tap)="togglePaused()" style="margin: 1rem auto 0; display: block">
+                        <img src="assets/imgs/play.svg" height="80">
+                        <span style="display:block">Play</span>
+                    </button>
+                    <p *ngIf="good" style="text-align:center">
+                        <span>You guessed right {{good}} out of {{good + bad}} notes.</span>
                         <br>
-                        <button mat-button
-                                (tap)="togglePaused()"
-                                color="warn">
-                            <mat-icon>pause</mat-icon>
-                            &nbsp;
-                            <span>Stop</span>
-                        </button>
+                        <span *ngIf="bad">Try again!</span>
+                        <span *ngIf="!bad">Impressive!</span>
+                    </p>
+                </div>
+
+                <div class="note-to-find-wrapper" *ngIf="!paused">
+                    <div class="action-row">
+                        <div>
+                            <p class="action-row-result">
+                                <img src="assets/imgs/good.svg" height="30">
+                                <span class="good">: {{good}}</span>
+                            </p>
+                            <p class="action-row-result">
+                                <img src="assets/imgs/bad.svg" height="30">
+                                <span class="bad">: {{bad}}</span>
+                            </p>
+                        </div>
+                        <div class="note-to-find">
+                            <span>
+                                {{noteToFind?.note}}
+                            </span>
+                        </div>
+                        <div>
+                            <button mat-button (tap)="toggleShowAll()">
+                                <mat-icon *ngIf="!showAll">visibility</mat-icon>
+                                <mat-icon *ngIf="showAll">visibility_off</mat-icon>
+                                &nbsp;
+                                <span>Show all</span>
+                            </button>
+                            <br>
+                            <button mat-button (tap)="togglePaused()" color="warn">
+                                <mat-icon>pause</mat-icon>
+                                &nbsp;
+                                <span>Stop</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
 
-        </mat-card-content>
-    </mat-card>
-</section>
+            </mat-card-content>
+        </mat-card>
+    </section>
+
+</div>
 
 <br>
 
-<app-fretboard (noteClick)="onNoteClicked($event)"
-               [showAll]="showAll"
-               [selectedFrets]="[locateForm?.value.fretStart, locateForm?.value.fretEnd]"
-               [selectedNotes]="noteToFind ? [noteToFind.note] : null">
+<app-fretboard *ngIf="!paused" (noteClick)="onNoteClicked($event)" [showAll]="showAll"
+    [selectedFrets]="[locateForm?.value.fretStart, locateForm?.value.fretEnd]"
+    [selectedNotes]="noteToFind ? [noteToFind.note] : null">
 </app-fretboard>
 
 <div class="note-to-find-wrapper-placeholder"></div>
