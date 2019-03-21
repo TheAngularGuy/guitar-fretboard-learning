@@ -1,0 +1,66 @@
+<div class="full-page">
+
+    <div class="panel">
+        <mat-tab-group mat-align-tabs="end">
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <span>Game modes</span>
+                </ng-template>
+                <div class="padding">
+                    <h2>Let's learn the fretboard !</h2>
+                    <p>
+                        ...
+                    </p>
+                </div>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <span>Contact</span>
+                </ng-template>
+                <div class="padding">
+                    <h2>Let's keep in touch !</h2>
+                    <p class="pointer">
+                        <span>GitHub</span>
+                        <span class="text-muted">/</span>
+                        <span>Twitter</span>
+                        <span class="text-muted">/</span>
+                        <span>Linked in</span>
+                    </p>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+
+    <div class="head-title">
+        Guitar <br>
+        fretboard <br>
+        learning
+    </div>
+
+    <div class="btn-list">
+        <button mat-flat-button color="primary" (tap)="goTo('locate')">
+            <img src="assets/imgs/locate.svg" height="80">
+            <br>
+            &nbsp;
+            <br>
+            Locate
+        </button>
+        <button mat-flat-button color="primary" (tap)="goTo('identify')">
+            <img src="assets/imgs/identify.svg" height="80">
+            <br>
+            &nbsp;
+            <br>
+            Identify
+        </button>
+        <button mat-flat-button color="primary">
+            <img src="assets/imgs/explore.svg" height="80">
+            <br>
+            &nbsp;
+            <br>
+            Explore
+        </button>
+    </div>
+
+
+
+</div>

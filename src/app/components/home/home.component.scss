@@ -1,0 +1,62 @@
+.btn-list {
+    width: 80%;
+    display: flex;
+    justify-content: flex-start;
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+
+    .mat-flat-button {
+        font-size: 200%;
+        min-height: 350px;
+        width: 100%;
+        margin: 0 0.7rem;
+        border-radius: 8px;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+            0 10px 10px rgba(0, 0, 0, 0.22);
+        transition: box-shadow 0.3s cubic-bezier(.25, .8, .25, 1);
+
+        &:hover {
+            box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30),
+                0 15px 12px rgba(0, 0, 0, 0.22);
+        }
+    }
+}
+
+.full-page {
+    color: white;
+    height: calc(100vh - 64px);
+    min-height: 780px;
+    background-image: linear-gradient(to bottom, #006699, #6585b0, #9ca7c6, #cbccdc, #f4f4f4);
+    position: relative;
+}
+
+.panel {
+    color: black;
+    overflow: hidden;
+    border-radius: 8px 8px 0 0;
+    position: absolute;
+    top: 2rem;
+    right: 1.5rem;
+    width: 60%;
+    height: calc(100% - 2rem);
+    background: #f4F4F4;
+
+
+}
+
+.head-title {
+    padding-top: 15vh;
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+    max-width: calc(40% - 4.5rem);
+    font-size: 200%;
+    text-transform: capitalize;
+    letter-spacing: 5px;
+    text-align: center;
+}
+
+.text-muted {
+    cursor: default;
+    padding: 0 0.5rem;
+}

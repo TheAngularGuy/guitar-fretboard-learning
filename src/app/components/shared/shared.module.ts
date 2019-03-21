@@ -1,12 +1,19 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  MatToolbarModule, MatButtonModule, MatCheckboxModule,
-  MatSelectModule, MatCardModule, MatIconModule,
-  MatInputModule, MatSnackBarModule,
-} from '@angular/material';
-import { FretboardComponent } from './fretboard/fretboard.component';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatIconModule,
+  MatInputModule,
+  MatSelectModule,
+  MatSnackBarModule,
+  MatTabsModule,
+  MatToolbarModule,
+} from '@angular/material';
+
+import { FretboardComponent } from './fretboard/fretboard.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +32,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatIconModule,
     MatInputModule,
     MatSnackBarModule,
+    MatTabsModule,
   ],
   exports: [
     FretboardComponent,
@@ -39,6 +47,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatIconModule,
     MatInputModule,
     MatSnackBarModule,
+    MatTabsModule,
   ]
 })
 export class SharedModule { }
