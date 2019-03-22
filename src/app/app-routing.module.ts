@@ -12,6 +12,9 @@ const routes: Routes = [
     path: 'identify',
     loadChildren: './components/identify/identify.module#IdentifyModule'
   }, {
+    path: 'explore',
+    loadChildren: './components/explore/explore.module#ExploreModule'
+  }, {
     path: '',
     component: HomeComponent
   }, {

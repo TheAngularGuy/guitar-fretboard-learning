@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder, Validators, AbstractControl,
-  ValidatorFn, ValidationErrors, FormGroup
-} from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { chromaticScale } from 'src/app/data/chromatic-scale.data';
 import { fretboardNotes } from 'src/app/data/fretboard-notes.data';
 import { Note } from 'src/app/models/note.model';
-import { chromaticScale } from 'src/app/data/chromatic-scale.data';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-locate',
@@ -25,7 +22,7 @@ export class LocateComponent implements OnInit {
   good = 0;
   bad = 0;
 
-  constructor(private fb: FormBuilder, private snackBar: MatSnackBar) { }
+  constructor(private fb: FormBuilder, private utils: UtilitiesService) { }
 
   ngOnInit() {
     this.setForm();
@@ -36,7 +33,7 @@ export class LocateComponent implements OnInit {
       selectedNotes: [
         this.notes, [
           Validators.required,
-          this.validateSelectedNotes
+          this.utils.validateSelectedNotes
         ]
       ],
       fretStart: [
@@ -44,7 +41,7 @@ export class LocateComponent implements OnInit {
           Validators.required,
           Validators.min(0),
           Validators.max(12),
-          this.validateFrets(this)
+          this.utils.validateFrets(this)
         ]
       ],
       fretEnd: [
@@ -52,7 +49,7 @@ export class LocateComponent implements OnInit {
           Validators.required,
           Validators.min(0),
           Validators.max(12),
-          this.validateFrets(this)
+          this.utils.validateFrets(this)
         ]
       ]
     });
@@ -115,7 +112,7 @@ export class LocateComponent implements OnInit {
       .map((n: string) => intervalNotes.join(' ').includes(n + ' '))
       .includes(true);
     if (!areSelectedNotesInTheFretsInterval) {
-      this.openSnackBar(`The selected notes are not
+      this.utils.openSnackBar(`The selected notes are not
         in the interval of frets you selected.
         Change the settiongs!`, null);
       this.togglePaused();
@@ -136,36 +133,6 @@ export class LocateComponent implements OnInit {
     setTimeout(() => {
       this.pickRandomNote();
     }, 1250);
-  }
-
-  validateFrets(context: LocateComponent): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      if (!context || !context.locateForm
-        || !context.locateForm.get('fretEnd')
-        || !context.locateForm.get('fretStart')) {
-        return null;
-      }
-      const end = Number(context.locateForm.get('fretEnd').value);
-      const start = Number(context.locateForm.get('fretStart').value);
-      if (end <= start) { return { frets: true }; }
-      return null;
-    };
-  }
-
-  validateSelectedNotes(control: AbstractControl): ValidationErrors | null {
-    if (!control || !control.value) { return null; }
-    if (control.value.length <= 2) {
-      return { selectedNotes: true };
-    }
-    return null;
-  }
-
-  openSnackBar(message: string, action: string): void {
-    this.snackBar.open(message, action, {
-      duration: 4000,
-      horizontalPosition: 'right',
-      verticalPosition: 'bottom'
-    });
   }
 
 }

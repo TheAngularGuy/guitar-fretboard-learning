@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { fretboardNotes } from 'src/app/data/fretboard-notes.data';
 import { Note } from 'src/app/models/note.model';
 
@@ -39,6 +39,7 @@ export class FretboardComponent implements OnInit {
    * @returns boolean
    */
   isGoodNote(note: string): boolean {
+    if (!this.selectedNotes) { return false; }
     return this.selectedNotes.includes(note);
   }
 
