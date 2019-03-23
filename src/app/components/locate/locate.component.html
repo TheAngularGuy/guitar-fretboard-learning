@@ -98,10 +98,18 @@
                             <span class="bad">: {{bad}}</span>
                         </p>
                     </div>
-                    <div class="note-to-find">
+                    <div class="note-to-find"
+                         *ngIf="mode == 1">
                         <span>
                             {{noteToFind?.note}}
                         </span>
+                    </div>
+                    <div class="list-of-notes-to-find"
+                         *ngIf="mode == 2">
+                        <button mat-raised-button
+                                #guessBtn
+                                *ngFor="let n of locateForm.value.selectedNotes"
+                                (tap)="onNoteGuessed(n, guessBtn)">{{n}}</button>
                     </div>
                     <div>
                         <button mat-button
@@ -131,6 +139,8 @@
 <br>
 
 <app-fretboard (noteClick)="onNoteClicked($event)"
+               [highlightNote]="mode == 2 ? noteToFind : null"
+               [disableClick]="mode == 2 ? true : false"
                [showAll]="showAll"
                [selectedFrets]="[locateForm?.value.fretStart, locateForm?.value.fretEnd]"
                [selectedNotes]="noteToFind ? [noteToFind.note] : null">

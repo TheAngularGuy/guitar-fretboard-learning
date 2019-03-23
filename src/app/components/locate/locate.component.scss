@@ -19,6 +19,16 @@
     line-height: 100px;
 }
 
+.list-of-notes-to-find {
+    max-width: 40%;
+    text-align: center;
+    overflow-y: auto;
+
+    button {
+        margin: 5px;
+    }
+}
+
 .action-row {
     display: flex;
     justify-content: space-between;
@@ -60,6 +70,10 @@
         background: #f4F4F4;
         border-top: 1px solid rgba($color: #000000, $alpha: 0.4);
         padding-bottom: 5px;
+    }
+
+    .list-of-notes-to-find {
+        max-height: 120px;
     }
 
     .note-to-find-wrapper-placeholder {

@@ -92,6 +92,10 @@
                     width: 100%;
                 }
             }
+
+            .note-highlighted {
+                background: rgba($color: #006699, $alpha: 0.4);
+            }
         }
 
         .tile-one-dot {
@@ -148,6 +152,9 @@
     }
 }
 
+.no-click {
+    pointer-events: none;
+}
 
 
 @media screen and (max-width: 600px) {

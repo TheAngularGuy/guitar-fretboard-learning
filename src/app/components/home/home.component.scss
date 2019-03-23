@@ -27,8 +27,24 @@
     color: white;
     height: calc(100vh - 64px);
     min-height: 690px;
-    background-image: linear-gradient(to bottom, #006699, #6585b0, #9ca7c6, #cbccdc, #f4f4f4);
+    background-image: url("https://cdn.pixabay.com/photo/2016/02/05/11/18/guitar-1180744_1280.jpg");
     position: relative;
+    z-index: 1;
+
+    &:before {
+        z-index: 0;
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-image: linear-gradient(to bottom, #006699,
+            rgba(#6585b0, .8),
+            rgba(#9ca7c6, .6),
+            rgba(#cbccdc, .4),
+            rgba(#f4f4f4, .2));
+    }
 }
 
 .panel {
@@ -53,6 +69,8 @@
     font-size: 200%;
     text-transform: capitalize;
     letter-spacing: 5px;
+    z-index: 1;
+    position: relative;
     text-align: center;
 }
 

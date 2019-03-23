@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   }
 
   goTo(str: string) {
-    this.router.navigate([str]);
+    this.router.navigate(str.split('/'));
   }
 
 }

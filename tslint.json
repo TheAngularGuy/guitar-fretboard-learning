@@ -4,6 +4,7 @@
         "codelyzer"
     ],
     "rules": {
+        "align": false,
         "triple-equals": false,
         "no-redundant-jsdoc": false,
         "array-type": false,

@@ -11,6 +11,8 @@ export class FretboardComponent implements OnInit {
   @Input() selectedFrets: [number, number];
   @Input() selectedNotes: string[];
   @Input() showSelectedNotes: boolean;
+  @Input() highlightNote: Note;
+  @Input() disableClick: boolean;
   @Input() showAll: boolean;
   @Output() noteClick: EventEmitter<Note> = new EventEmitter();
   notes: any[];
@@ -62,5 +64,13 @@ export class FretboardComponent implements OnInit {
     if (!this.selectedNotes || !this.selectedNotes.length) { return ''; }
     if (!this.selectedNotes || !this.isGoodNote(note)) { return 'warn'; }
     return 'primary';
+  }
+
+  isNoteHighlighted(fret: number, stringg: number) {
+    if (!this.highlightNote) { return false; }
+    if (this.highlightNote.fret == fret && stringg == this.highlightNote.string) {
+      return true;
+    }
+    return false;
   }
 }
