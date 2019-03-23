@@ -120,7 +120,7 @@ export class LocateComponent implements OnInit {
     };
   }
 
-  checkSelectedNotes(selectedNotes: string[]) {
+  checkSelectedNotes(selectedNotes: string[]): boolean {
     const intervalNotes = this.fretboardNotes
       .slice(this.locateForm.value.fretStart, this.locateForm.value.fretEnd + 1)
       .join().split(',');
