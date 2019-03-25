@@ -1,34 +1,27 @@
 <div class="full-page">
 
   <div class="head-title">
-    Guitar
-    <br>
-    fretboard
-    <br>
-    learning
+    Guitar <br> fretboard <br> learning
   </div>
 
   <div class="panel">
     <mat-tab-group mat-align-tabs="end">
       <mat-tab>
         <ng-template mat-tab-label>
-          <span>
-            Game modes
-          </span>
+          <span> Game modes </span>
         </ng-template>
         <div class="padding no-scroll">
-          <h2>
-            Let's learn the fretboard !
-          </h2>
-          <p>
-            In the locate mode you have to locate the note on the fretboard and click on it.
-          </p>
-          <p>
-            In the identify mode you have to guess the note that is displayed on the fretboard.
-          </p>
-          <p>
-            In the explore mode you can simply explore the fretboard.
-          </p>
+          <h2> Let's learn the fretboard ! </h2>
+          <p> Hello there ! I hope this tool will help you learn your fretboard. </p>
+          <p> There is 3 modes to play with, the first one is to locate a specific note on the fretboard. </p>
+          <p>The second one is a little bit harder, a note on the fretboard will be highlighted and you have to
+            guess wich one is it. </p>
+          <p>Last but not least the third game mode will help you to improvise, select the notes of the
+            scale you want and you are ready to jam ! </p>
+          <p>Happy playing </p>
+          <!-- <p> In the locate mode you have to locate the note on the fretboard and click on it. </p>
+          <p> In the identify mode you have to guess the note that is displayed on the fretboard. </p>
+          <p> In the explore mode you can simply explore the fretboard. </p> -->
         </div>
       </mat-tab>
       <mat-tab>
@@ -36,9 +29,7 @@
           <span>Contact</span>
         </ng-template>
         <div class="padding no-scroll">
-          <h2>
-            Hi, it's nice to meet you !
-          </h2>
+          <h2> Hi, it's nice to meet you ! </h2>
           <p class="pointer">
             <span (tap)="openLink('https://github.com/ultraMIND/guitar-fretboard-learning')">
               GitHub
@@ -54,6 +45,8 @@
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
           </div>
         </div>
       </mat-tab>
@@ -61,11 +54,9 @@
   </div>
 
   <div class="btn-list">
-
     <button mat-flat-button color="primary" (tap)="goTo('locate')">
       <img src="assets/imgs/locate.svg" height="80">
       <br> &nbsp; <br>
-
       Locate
     </button>
     <button mat-flat-button color="primary" (tap)="goTo('locate/identify')">
