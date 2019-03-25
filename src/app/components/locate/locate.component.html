@@ -14,7 +14,6 @@
     </mat-card-actions>
 
 
-
     <mat-card-title>
       Locate the note !
     </mat-card-title>
@@ -47,6 +46,7 @@
         </mat-form-field>
       </form>
 
+
       <div class="play" *ngIf="paused">
         <button mat-button (tap)="togglePaused()" style="margin: 1rem auto 0; display: block">
           <img src="assets/imgs/play.svg" height="80">
@@ -60,8 +60,6 @@
         </p>
       </div>
 
-
-
       <div class="note-to-find-wrapper" *ngIf="!paused">
         <div class="action-row">
           <div>
@@ -74,18 +72,23 @@
               <span class="bad">: {{bad}}</span>
             </p>
           </div>
-          <div class="note-to-find">
+          <div class="note-to-find" *ngIf="mode == 1">
             <span>
               {{noteToFind?.note}}
             </span>
           </div>
-          <div style="width:120px">
+          <div class="list-of-notes-to-find" *ngIf="mode == 2">
+            <button mat-raised-button #guessBtn *ngFor="let n of locateForm.value.selectedNotes"
+              (tap)="onNoteGuessed(n, guessBtn)">{{n}}</button>
+          </div>
+          <div>
             <button mat-button (tap)="toggleShowAll()">
               <mat-icon *ngIf="!showAll">visibility</mat-icon>
               <mat-icon *ngIf="showAll">visibility_off</mat-icon>
               &nbsp;
               <span>Show all</span>
             </button>
+            <br>
             <br>
             <button mat-button (tap)="togglePaused()" color="warn">
               <mat-icon>pause</mat-icon>
@@ -97,10 +100,10 @@
       </div>
 
 
-
     </mat-card-content>
   </mat-card>
 </section>
+
 
 
 <br>
@@ -110,7 +113,6 @@
   [disableClick]="mode == 2 ? true : false" [showAll]="showAll"
   [selectedFrets]="[locateForm?.value.fretStart, locateForm?.value.fretEnd]"
   [selectedNotes]="noteToFind ? [noteToFind.note] : null">
-
 </app-fretboard>
 
 <div class="note-to-find-wrapper-placeholder"></div>

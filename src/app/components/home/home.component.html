@@ -37,7 +37,7 @@
         </ng-template>
         <div class="padding no-scroll">
           <h2>
-            Let's keep in touch !
+            Hi, it's nice to meet you !
           </h2>
           <p class="pointer">
             <span (tap)="openLink('https://github.com/ultraMIND/guitar-fretboard-learning')">
@@ -73,7 +73,7 @@
       <br> &nbsp; <br>
       Identify
     </button>
-    <button mat-flat-button color="primary">
+    <button mat-flat-button color="primary" (tap)="goTo('explore')">
       <img src="assets/imgs/explore.svg" height="80">
       <br> &nbsp; <br>
       Explore
