@@ -29,6 +29,10 @@ body {
     margin: 0 0.5rem;
 }
 
+.mat-tab-label-active {
+    opacity: 1 !important;
+}
+
 .mat-tab-header {
     border: none !important;
 }

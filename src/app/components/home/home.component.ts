@@ -13,10 +13,15 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  goTo(str: string) {
+  goTo(path: string) {
     setTimeout(() => {
-      this.router.navigate([str]);
+      this.router.navigate([path]);
     }, 250);
+  }
+
+  openLink(url: string) {
+    const win = window.open(url, '_blank');
+    win.focus();
   }
 
 }

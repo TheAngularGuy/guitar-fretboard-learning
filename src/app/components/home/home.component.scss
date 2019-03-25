@@ -44,13 +44,14 @@
 }
 
 .head-title {
+    font-family: 'Poppins', sans-serif;
     padding-top: 15vh;
     padding-right: 1.5rem;
     padding-left: 1.5rem;
     max-width: calc(40% - 4.5rem);
     font-size: 200%;
     text-transform: capitalize;
-    letter-spacing: 5px;
+    letter-spacing: 2.5px;
     text-align: center;
 }
 
@@ -60,7 +61,10 @@
 }
 
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
+    .hide-on-mobile {
+        display: none;
+    }
 
     .head-title {
         padding-top: 1rem;
@@ -107,4 +111,11 @@
         }
     }
 
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Poppins', sans-serif;
+    margin-top: 0;
 }
