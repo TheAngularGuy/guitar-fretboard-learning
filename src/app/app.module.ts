@@ -7,8 +7,9 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { SharedModule } from './components/shared/shared.module';
 import { LostComponent } from './components/lost/lost.component';
+import { SharedModule } from './components/shared/shared.module';
+import { UtilitiesService } from './services/utilities.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,9 @@ import { LostComponent } from './components/lost/lost.component';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     SharedModule
   ],
-  providers: [],
+  providers: [
+    UtilitiesService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

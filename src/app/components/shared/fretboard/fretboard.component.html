@@ -2,6 +2,7 @@
     <div class="fretboard">
         <div class="tile width-{{fret}}"
              [ngClass]="{
+                 'no-click': disableClick,
                  'nut': fret === 0,
                  'tile-one-dot': [3, 5, 7, 9].includes(fret),
                  'tile-two-dot': fret === 12
@@ -14,6 +15,7 @@
             </span>
 
             <div class="note"
+                 [ngClass]="{'note-highlighted': isNoteHighlighted(fret, string)}"
                  *ngFor="let note of fretnotes; let string=index"
                  (tap)="onNoteClicked({
                      note: note,
@@ -21,12 +23,12 @@
                      string: string
                  }, noteName, btn)">
                 <span class="note-name"
+                      #noteName
                       [ngClass]="{
                           'note-false': selectedNotes && !isGoodNote(note),
                           'note-show-all': showAll,
                           'note-show': showSelectedNotes && isGoodNote(note)
-                        }"
-                      #noteName>
+                        }">
                     {{note}}
                 </span>
                 <button mat-button

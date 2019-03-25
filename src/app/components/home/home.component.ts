@@ -14,9 +14,7 @@ export class HomeComponent implements OnInit {
   }
 
   goTo(path: string) {
-    setTimeout(() => {
-      this.router.navigate([path]);
-    }, 250);
+    this.router.navigate([path]);
   }
 
   openLink(url: string) {

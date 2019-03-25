@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder, Validators, AbstractControl,
-  ValidatorFn, ValidationErrors, FormGroup
-} from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { chromaticScale } from 'src/app/data/chromatic-scale.data';
 import { fretboardNotes } from 'src/app/data/fretboard-notes.data';
 import { Note } from 'src/app/models/note.model';
-import { chromaticScale } from 'src/app/data/chromatic-scale.data';
+import { UtilitiesService } from 'src/app/services/utilities.service';
+
+const enum MODES {
+  locate = 1,
+  identify = 2
+}
+const ANIMATION_DELAY = 1250;
+const CLICK_INTERVAL = 500;
 
 @Component({
   selector: 'app-locate',
@@ -14,20 +19,25 @@ import { chromaticScale } from 'src/app/data/chromatic-scale.data';
   styleUrls: ['./locate.component.scss']
 })
 export class LocateComponent implements OnInit {
+  mode: MODES;
+  locateForm: FormGroup;
   fretboardNotes = fretboardNotes;
-  notes: string[] = chromaticScale;
+  notes = chromaticScale;
   showAll = false;
   showSettings = false;
   paused = true;
-  locateForm: FormGroup;
+  lastClickRegistred = 0;
 
   noteToFind: Note;
   good = 0;
   bad = 0;
 
-  constructor(private fb: FormBuilder, private snackBar: MatSnackBar) { }
+  constructor(private fb: FormBuilder
+    , private route: ActivatedRoute
+    , private utils: UtilitiesService) { }
 
   ngOnInit() {
+    this.mode = this.route.snapshot.params.mode ? MODES.identify : MODES.locate;
     this.setForm();
   }
 
@@ -36,7 +46,7 @@ export class LocateComponent implements OnInit {
       selectedNotes: [
         this.notes, [
           Validators.required,
-          this.validateSelectedNotes
+          this.utils.validateSelectedNotes
         ]
       ],
       fretStart: [
@@ -44,7 +54,7 @@ export class LocateComponent implements OnInit {
           Validators.required,
           Validators.min(0),
           Validators.max(12),
-          this.validateFrets(this)
+          this.utils.validateFrets(this)
         ]
       ],
       fretEnd: [
@@ -52,7 +62,7 @@ export class LocateComponent implements OnInit {
           Validators.required,
           Validators.min(0),
           Validators.max(12),
-          this.validateFrets(this)
+          this.utils.validateFrets(this)
         ]
       ]
     });
@@ -67,7 +77,10 @@ export class LocateComponent implements OnInit {
   }
 
   toggleSettings(): boolean {
-    if (this.locateForm.invalid) { return; }
+    if (this.locateForm.invalid) {
+      this.utils.openSnackBar('There seems to be an error in the inputs above.', null);
+      return;
+    }
     return (this.showSettings = !this.showSettings);
   }
 
@@ -85,19 +98,17 @@ export class LocateComponent implements OnInit {
   }
 
   pickRandomNote(): Note {
-    const randomFret = Math.ceil(Math.random() * 1000) % 13;
-    const randomString = Math.ceil(Math.random() * 1000) % 6;
-    const note = this.fretboardNotes[randomFret][randomString];
     const selectedNotes = this.locateForm.value.selectedNotes;
-    const intervalNotes = this.fretboardNotes
-      .slice(this.locateForm.value.fretStart, this.locateForm.value.fretEnd + 1)
-      .join().split(',');
+    if (!this.checkSelectedNotes(selectedNotes)) { return; }
 
-    if (!this.checkSelectedNotes(selectedNotes, intervalNotes)) { return; }
+    const randomString = Math.ceil(Math.random() * 1000) % 6;
+    const randomFret = Math.max(
+      Math.ceil(Math.random() * 1000) % (this.locateForm.value.fretEnd + 1),
+      this.locateForm.value.fretStart);
+    const note = this.fretboardNotes[randomFret][randomString];
 
     if (!note
       || !selectedNotes.includes(note)
-      || !intervalNotes.join(' ').includes(note + ' ')
       || (this.noteToFind && note == this.noteToFind.note)) {
       console.log('bad note', note, randomFret, randomString);
       return this.pickRandomNote();
@@ -109,13 +120,16 @@ export class LocateComponent implements OnInit {
     };
   }
 
-  checkSelectedNotes(selectedNotes: string[], intervalNotes: string[]) {
+  checkSelectedNotes(selectedNotes: string[]): boolean {
+    const intervalNotes = this.fretboardNotes
+      .slice(this.locateForm.value.fretStart, this.locateForm.value.fretEnd + 1)
+      .join().split(',');
     const areSelectedNotesInTheFretsInterval = selectedNotes
       .slice()
       .map((n: string) => intervalNotes.join(' ').includes(n + ' '))
       .includes(true);
     if (!areSelectedNotesInTheFretsInterval) {
-      this.openSnackBar(`The selected notes are not
+      this.utils.openSnackBar(`The selected notes are not
         in the interval of frets you selected.
         Change the settiongs!`, null);
       this.togglePaused();
@@ -125,47 +139,33 @@ export class LocateComponent implements OnInit {
     return true;
   }
 
-  onNoteClicked(noteObject: Note) {
+  onNoteClicked(noteObject: Note): boolean {
+    const now = Date.now();
+    if ((now - this.lastClickRegistred) < CLICK_INTERVAL) { return false; }
     if (this.paused) { return; }
     if (noteObject.note == this.noteToFind.note) {
       this.good++;
     } else {
       this.bad++;
     }
-    // TODO: execute animation
-    setTimeout(() => {
-      this.pickRandomNote();
-    }, 1250);
+    setTimeout(() => this.pickRandomNote(), ANIMATION_DELAY);
+    this.lastClickRegistred = now;
+    return true;
   }
 
-  validateFrets(context: LocateComponent): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      if (!context || !context.locateForm
-        || !context.locateForm.get('fretEnd')
-        || !context.locateForm.get('fretStart')) {
-        return null;
-      }
-      const end = Number(context.locateForm.get('fretEnd').value);
-      const start = Number(context.locateForm.get('fretStart').value);
-      if (end <= start) { return { frets: true }; }
-      return null;
-    };
-  }
-
-  validateSelectedNotes(control: AbstractControl): ValidationErrors | null {
-    if (!control || !control.value) { return null; }
-    if (control.value.length <= 2) {
-      return { selectedNotes: true };
-    }
-    return null;
-  }
-
-  openSnackBar(message: string, action: string): void {
-    this.snackBar.open(message, action, {
-      duration: 4000,
-      horizontalPosition: 'right',
-      verticalPosition: 'bottom'
+  onNoteGuessed(n: string, btn: any) {
+    const isRegistred = this.onNoteClicked({
+      fret: 0,
+      string: 0,
+      note: n
     });
+    if (!isRegistred) { return; }
+    if (n == this.noteToFind.note) {
+      btn.color = 'primary';
+    } else {
+      btn.color = 'warn';
+    }
+    setTimeout(() => btn.color = '', ANIMATION_DELAY);
   }
 
 }

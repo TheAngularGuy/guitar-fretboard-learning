@@ -1,0 +1,15 @@
+.settings {
+    display: flex;
+
+    .mat-form-field {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+
+    .settings {
+        flex-direction: column;
+    }
+
+}

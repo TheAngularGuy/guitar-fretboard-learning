@@ -3,21 +3,22 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { SharedModule } from '../shared/shared.module';
-import { IdentifyComponent } from './identify.component';
+import { ExploreComponent } from './explore.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: IdentifyComponent
+    component: ExploreComponent
   },
 ];
 
+
 @NgModule({
-  declarations: [IdentifyComponent],
+  declarations: [ExploreComponent],
   imports: [
     CommonModule,
     SharedModule,
     RouterModule.forChild(routes)
   ]
 })
-export class IdentifyModule { }
+export class ExploreModule { }
