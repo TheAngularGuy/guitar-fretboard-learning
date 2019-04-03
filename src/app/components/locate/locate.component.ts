@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { slideAnimation } from 'src/app/animations/fade.animation';
 import { popAnimation } from 'src/app/animations/pop.animation';
+import { slideAnimation } from 'src/app/animations/slide.animation';
 import { chromaticScale } from 'src/app/data/chromatic-scale.data';
 import { fretboardNotes } from 'src/app/data/fretboard-notes.data';
 import { Note } from 'src/app/models/note.model';

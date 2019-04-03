@@ -7,7 +7,7 @@ export const popAnimation = trigger('popAnimation', [
       transform: 'scale(0)',
       overflow: 'hidden'
     }),
-    animate('250ms ease-out', style({
+    animate('250ms cubic-bezier(.54,.22,.77,1.36)', style({
       transform: 'scale(1)',
     }))
   ]), transition(':enter', [
@@ -15,7 +15,7 @@ export const popAnimation = trigger('popAnimation', [
       transform: 'scale(0)',
       overflow: 'hidden'
     }),
-    animate('250ms ease-out', style({
+    animate('250ms cubic-bezier(.54,.22,.77,1.36)', style({
       transform: 'scale(1)',
     }))
   ]), transition(':leave', [
@@ -23,7 +23,7 @@ export const popAnimation = trigger('popAnimation', [
       transform: 'scale(1)',
       overflow: 'hidden'
     }),
-    animate('250ms ease-out', style({
+    animate('250ms cubic-bezier(.54,.22,.77,1.36)', style({
       transform: 'scale(0)',
     }))
   ]),
