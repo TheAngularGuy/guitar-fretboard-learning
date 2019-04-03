@@ -1,45 +1,37 @@
 <div class="fretboard-wrapper">
-    <div class="fretboard">
-        <div class="tile width-{{fret}}"
-             [ngClass]="{
+  <div class="fretboard">
+    <div class="tile width-{{fret}}" [ngClass]="{
                  'no-click': disableClick,
                  'nut': fret === 0,
                  'tile-one-dot': [3, 5, 7, 9].includes(fret),
                  'tile-two-dot': fret === 12
-                }"
-             *ngFor="let fretnotes of notes; let fret=index">
+                }" *ngFor="let fretnotes of notes; let fret=index">
 
-            <span class="tile-number"
-                  *ngIf="fret > 0">
-                {{fret}}
-            </span>
+      <span class="tile-number">
+        <ng-container *ngIf="fret == 0">e</ng-container>
+        <ng-container *ngIf="fret > 0">{{fret}}</ng-container>
+      </span>
 
-            <div class="note"
-                 [ngClass]="{'note-highlighted': isNoteHighlighted(fret, string)}"
-                 *ngFor="let note of fretnotes; let string=index"
-                 (tap)="onNoteClicked({
+      <div class="note" [ngClass]="{'note-highlighted': isNoteHighlighted(fret, string)}"
+        *ngFor="let note of fretnotes; let string=index" (tap)="onNoteClicked({
                      note: note,
                      fret: fret,
                      string: string
                  }, noteName, btn)">
-                <span class="note-name"
-                      #noteName
-                      [ngClass]="{
+        <span class="note-name" #noteName [ngClass]="{
                           'note-false': selectedNotes && !isGoodNote(note),
                           'note-show-all': showAll,
                           'note-show': showSelectedNotes && isGoodNote(note)
                         }">
-                    {{note}}
-                </span>
-                <button mat-button
-                        #btn>
-                </button>
-            </div>
+          {{note}}
+        </span>
+        <button mat-button #btn>
+        </button>
+      </div>
 
-            <div class="tile-blocked"
-                 *ngIf="!isSelectedFret(fret)">
-            </div>
+      <div class="tile-blocked" *ngIf="!isSelectedFret(fret)">
+      </div>
 
-        </div>
     </div>
+  </div>
 </div>
