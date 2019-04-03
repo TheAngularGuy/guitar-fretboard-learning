@@ -30,7 +30,8 @@
   background-image: url("../../../assets/imgs/big-guitar.webp");
   position: relative;
   z-index: 1;
-  overflow: auto
+  overflow: auto;
+  background-size: cover;
 }
 
 .gradient {
