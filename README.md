@@ -4,6 +4,10 @@ This project is a simple tool that helps you learn all the notes of the fretboar
 
 Initially it was something i did for myself, then some collegue un friends whanted to have acceess to it so i decided to share it.
 
+## Demo 
+
+https://guitar-fretboard-learning.firebaseapp.com/
+
 
 ## Start the project
 

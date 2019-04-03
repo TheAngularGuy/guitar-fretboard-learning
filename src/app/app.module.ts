@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
@@ -10,6 +10,15 @@ import { HomeComponent } from './components/home/home.component';
 import { LostComponent } from './components/lost/lost.component';
 import { SharedModule } from './components/shared/shared.module';
 import { UtilitiesService } from './services/utilities.service';
+
+
+export class MyHammerConfig extends HammerGestureConfig {
+  overrides = {
+    pinch: { enable: false },
+    rotate: { enable: false },
+    pan: { enable: false },
+  };
+}
 
 @NgModule({
   declarations: [
@@ -25,7 +34,11 @@ import { UtilitiesService } from './services/utilities.service';
     SharedModule
   ],
   providers: [
-    UtilitiesService
+    UtilitiesService,
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: MyHammerConfig
+    }
   ],
   bootstrap: [AppComponent]
 })

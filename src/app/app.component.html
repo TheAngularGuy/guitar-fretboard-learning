@@ -1,14 +1,10 @@
-<mat-toolbar color="primary">
-    <img (tap)="goHome()"
-         class="pointer"
-         src="assets/imgs/guitar.svg"
-         height="50">
-    <span class="pointer"
-          (tap)="goHome()">
-        &nbsp; {{ title | titlecase }}
-    </span>
+<mat-toolbar color="primary" style="height:64px; position: fixed; top: 0; left: 0; z-index:2">
+  <img (tap)="goHome()" class="pointer" src="assets/imgs/guitar.svg" height="50">
+  <span class="pointer" (tap)="goHome()">
+    &nbsp; {{ title | titlecase }}
+  </span>
 </mat-toolbar>
-
+<div style="height:64px"></div>
 
 
 

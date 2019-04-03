@@ -22,7 +22,7 @@
     </mat-card-subtitle>
     <mat-card-content>
 
-      <form class="settings" [formGroup]="locateForm" *ngIf="showSettings">
+      <form class="settings" [formGroup]="locateForm" *ngIf="showSettings" @slideAnimation>
         <mat-form-field>
           <mat-select placeholder="Notes to play with:" multiple formControlName="selectedNotes"
             [disableOptionCentering]="true">
@@ -61,7 +61,7 @@
       </div>
 
       <div class="note-to-find-wrapper" *ngIf="!paused">
-        <div class="action-row">
+        <div class="action-row" style="min-height: 118px;">
           <div>
             <p class="action-row-result">
               <img src="assets/imgs/good.svg" height="30">
@@ -72,7 +72,8 @@
               <span class="bad">: {{bad}}</span>
             </p>
           </div>
-          <div class="note-to-find" *ngIf="mode == 1">
+          <div class="note-to-find" *ngIf="noteToFind && noteToFind.note && mode == 1"
+            [@popAnimation]="noteToFind.note">
             <span>
               {{noteToFind?.note}}
             </span>

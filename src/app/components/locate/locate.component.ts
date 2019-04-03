@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { slideAnimation } from 'src/app/animations/fade.animation';
+import { popAnimation } from 'src/app/animations/pop.animation';
 import { chromaticScale } from 'src/app/data/chromatic-scale.data';
 import { fretboardNotes } from 'src/app/data/fretboard-notes.data';
 import { Note } from 'src/app/models/note.model';
@@ -16,7 +18,11 @@ const CLICK_INTERVAL = 500;
 @Component({
   selector: 'app-locate',
   templateUrl: './locate.component.html',
-  styleUrls: ['./locate.component.scss']
+  styleUrls: ['./locate.component.scss'],
+  animations: [
+    slideAnimation,
+    popAnimation
+  ]
 })
 export class LocateComponent implements OnInit {
   mode: MODES;

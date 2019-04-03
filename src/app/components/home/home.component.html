@@ -1,5 +1,7 @@
 <div class="full-page">
 
+  <div class="gradient"></div>
+
   <div class="head-title">
     Guitar <br> fretboard <br> learning
   </div>
@@ -47,27 +49,18 @@
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
+            <p>&nbsp;</p>
           </div>
         </div>
       </mat-tab>
     </mat-tab-group>
   </div>
 
-  <div class="btn-list">
-    <button mat-flat-button color="primary" (tap)="goTo('locate')">
-      <img src="assets/imgs/locate.svg" height="80">
+  <div class="btn-list" [@listAnimation]="gameModes.length">
+    <button *ngFor="let mode of gameModes" mat-flat-button color="primary" (tap)="goTo(mode.path)">
+      <img [src]="mode.img" height="80">
       <br> &nbsp; <br>
-      Locate
-    </button>
-    <button mat-flat-button color="primary" (tap)="goTo('locate/identify')">
-      <img src="assets/imgs/identify.svg" height="80">
-      <br> &nbsp; <br>
-      Identify
-    </button>
-    <button mat-flat-button color="primary" (tap)="goTo('explore')">
-      <img src="assets/imgs/explore.svg" height="80">
-      <br> &nbsp; <br>
-      Explore
+      {{ mode.name }}
     </button>
   </div>
 
