@@ -2,7 +2,7 @@
 
 This project is a simple tool that helps you learn all the notes of the fretboard.
 
-Initially it was something i did for myself, then some collegue un friends whanted to have acceess to it so i decided to share it.
+Initially it was something i did for myself, then some collegues and friends wanted to have acceess to it so i decided to share it. Enjoy :)
 
 ## Demo 
 
