@@ -15,10 +15,16 @@
 
 
     <mat-card-title>
-      Locate the note !
+      <ng-container *ngIf="mode == 1">Locate the note !</ng-container>
+      <ng-container *ngIf="mode == 2">Identify the note !</ng-container>
     </mat-card-title>
     <mat-card-subtitle>
-      In this game you have to locate the note on the fretboard and click on it
+      <ng-container *ngIf="mode == 1">
+        In this game you have to locate the note on the fretboard and click on it
+      </ng-container>
+      <ng-container *ngIf="mode == 2">
+        In this game you have to identify the note highlighted on the fretboard
+      </ng-container>
     </mat-card-subtitle>
     <mat-card-content>
 
