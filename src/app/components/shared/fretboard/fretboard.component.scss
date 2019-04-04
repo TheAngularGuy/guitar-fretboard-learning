@@ -1,349 +1,353 @@
 .fretboard-wrapper {
-    --fretboardHeight: 300px;
-    --tileWidth: 148px;
-    --tileHeightMobile: 120px;
+  --fretboardHeight: 300px;
+  --tileWidth: 148px;
+  --tileHeightMobile: 120px;
 
-    max-height: var(--fretboardHeight);
+  max-height: var(--fretboardHeight);
+  overflow-y: hidden;
+
+  .fretboard {
+    display: flex;
     overflow-y: hidden;
+    overflow-x: auto;
+    padding-bottom: 1rem;
 
-    .fretboard {
-        display: flex;
-        overflow-y: hidden;
-        overflow-x: auto;
-        padding-bottom: 1rem;
+    .tile {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      min-height: calc(var(--fretboardHeight) - 2px);
+      width: var(--tileWidth);
+      background: antiquewhite;
+      border: solid 1px rgba($color: #000, $alpha: 0.2);
 
-        .tile {
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            min-height: calc(var(--fretboardHeight) - 2px);
-            width: var(--tileWidth);
-            background: antiquewhite;
-            border: solid 1px rgba($color: #000, $alpha: 0.2);
+      .tile-blocked {
+        cursor: not-allowed;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgba($color: #000, $alpha: 0.2);
+      }
 
-            .tile-blocked {
-                cursor: not-allowed;
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                background: rgba($color: #000, $alpha: 0.2);
-            }
+      .tile-number {
+        position: absolute;
+        top: 0.2rem;
+        left: 0.2rem;
+        font-size: 0.8rem;
+      }
 
-            .tile-number {
-                position: absolute;
-                top: 0.2rem;
-                left: 0.2rem;
-                font-size: 0.8rem;
-            }
+      .note {
+        cursor: pointer;
+        height: 100%;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
 
-            .note {
-                cursor: pointer;
-                height: 100%;
-                width: 100%;
-                position: relative;
-                overflow: hidden;
-
-                &::before {
-                    // NOTE: this is the string
-                    position: absolute;
-                    content: '';
-                    width: calc(100% + 2px);
-                    height: calc(50% - 1.5px);
-                    transform: translateX(-1px);
-                    border-bottom: 3px solid rgba($color: #000, $alpha: 0.6);
-                    pointer-events: none;
-                }
-
-                .note-name {
-                    opacity: 0;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    position: absolute;
-                    text-align: center;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    height: 30px;
-                    width: 30px;
-                    border-radius: 50%;
-                    color: white;
-                    font-weight: bold;
-                    font-size: 1.3rem;
-                    background: rgba($color: #006699, $alpha: 0.6);
-                    transition: opacity 250ms ease-out;
-                }
-
-                .note-false {
-                    background: rgba($color: #f23200, $alpha: 0.6);
-                }
-
-                .note-show {
-                    opacity: 1 !important;
-                }
-
-                .note-show-all {
-                    opacity: 1 !important; // NOTE: because js add style directy to the element
-                }
-
-                .mat-button {
-                    height: 100%;
-                    width: 100%;
-                }
-            }
-
-            .note-highlighted {
-                background: rgba($color: #006699, $alpha: 0.4);
-            }
+        &::before {
+          // NOTE: this is the string
+          position: absolute;
+          content: '';
+          width: calc(100% + 2px);
+          height: calc(50% - 1.5px);
+          transform: translateX(-1px);
+          border-bottom: 3px solid rgba($color: #000, $alpha: 0.6);
+          pointer-events: none;
         }
 
-        .tile-one-dot {
-            position: relative;
-
-            &::before {
-                content: '';
-                position: absolute;
-                pointer-events: none;
-                width: 18px;
-                height: 18px;
-                border-radius: 50%;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: rgba($color: #000000, $alpha: 0.4);
-            }
+        .note-name {
+          opacity: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          text-align: center;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          height: 30px;
+          width: 30px;
+          border-radius: 50%;
+          color: white;
+          font-weight: bold;
+          font-size: 1.3rem;
+          background: rgba($color: #006699, $alpha: 0.6);
+          transition: opacity 250ms ease-out;
         }
 
-        .tile-two-dot {
-            position: relative;
-
-            &::before {
-                content: '';
-                position: absolute;
-                pointer-events: none;
-                width: 18px;
-                height: 18px;
-                border-radius: 50%;
-                top: 33%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: rgba($color: #000000, $alpha: 0.4);
-            }
-
-            &::after {
-                content: '';
-                position: absolute;
-                pointer-events: none;
-                width: 18px;
-                height: 18px;
-                border-radius: 50%;
-                top: 67%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: rgba($color: #000000, $alpha: 0.4);
-            }
+        .note-false {
+          background: rgba($color: #f23200, $alpha: 0.6);
         }
 
-        .nut {
-            width: 46px;
-            background: #ffF1F1;
+        .note-show {
+          opacity: 1 !important;
         }
+
+        .note-show-all {
+          opacity: 1 !important; // NOTE: because js add style directy to the element
+        }
+
+        .mat-button {
+          height: 100%;
+          width: 100%;
+        }
+      }
+
+      .note-highlighted {
+        background: rgba($color: #006699, $alpha: 0.4);
+      }
     }
+
+    .tile-one-dot {
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        pointer-events: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba($color: #000000, $alpha: 0.4);
+      }
+    }
+
+    .tile-two-dot {
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        pointer-events: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        top: 33%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba($color: #000000, $alpha: 0.4);
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        pointer-events: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        top: 67%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba($color: #000000, $alpha: 0.4);
+      }
+    }
+
+    .nut {
+      width: 46px;
+      background: #ffF1F1;
+    }
+  }
 }
 
 .no-click {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 
 @media screen and (max-width: 600px) {
 
-    .fretboard-wrapper {
-        max-height: initial;
-        overflow-y: hidden;
+  .fretboard-wrapper {
+    max-height: initial;
+    overflow-y: hidden;
 
-        .fretboard {
-            overflow-y: hidden;
-            overflow-x: auto;
-            padding-bottom: 0rem;
-            display: block;
+    .fretboard {
+      overflow-y: hidden;
+      overflow-x: auto;
+      padding-bottom: 0rem;
+      display: block;
 
-            .tile {
-                display: flex;
-                flex-direction: row-reverse;
-                position: relative;
-                min-height: 0;
-                height: var(--tileHeightMobile);
-                width: 100%;
-                background: antiquewhite;
-                border-top: solid 1px rgba($color: #000, $alpha: 0.2);
-                border-bottom: solid 1px rgba($color: #000, $alpha: 0.2);
-                border-left: none;
-                border-right: none;
+      .tile {
+        display: flex;
+        flex-direction: row-reverse;
+        position: relative;
+        min-height: 0;
+        height: var(--tileHeightMobile);
+        width: 100%;
+        background: antiquewhite;
+        border-top: solid 1px rgba($color: #000, $alpha: 0.2);
+        border-bottom: solid 1px rgba($color: #000, $alpha: 0.2);
+        border-left: none;
+        border-right: none;
 
-                .note {
-                    cursor: pointer;
-                    height: 100%;
-                    width: 100%;
-                    position: relative;
-
-                    &::before {
-                        // NOTE: this is the string
-                        position: absolute;
-                        content: '';
-                        height: calc(100% + 3px);
-                        width: calc(50% - 1.5px);
-                        transform: translate(-1.5px, 0);
-                        border-bottom: none;
-                        border-right: 3px solid rgba($color: #000, $alpha: 0.6);
-                        pointer-events: none;
-                    }
-
-                }
-            }
-
-            .tile-two-dot {
-                position: relative;
-
-                &::before {
-                    content: '';
-                    position: absolute;
-                    pointer-events: none;
-                    width: 18px;
-                    height: 18px;
-                    border-radius: 50%;
-                    left: 33%;
-                    top: 50%;
-                    transform: translate(-50%, -50%);
-                    background: rgba($color: #000000, $alpha: 0.4);
-                }
-
-                &::after {
-                    content: '';
-                    position: absolute;
-                    pointer-events: none;
-                    width: 18px;
-                    height: 18px;
-                    border-radius: 50%;
-                    left: 67%;
-                    top: 50%;
-                    transform: translate(-50%, -50%);
-                    background: rgba($color: #000000, $alpha: 0.4);
-                }
-            }
-
-            .nut {
-                border-left: none;
-                height: 46px;
-                width: 100%;
-                background: #ffF1F1;
-            }
+        .tile-number {
+          text-transform: capitalize;
         }
-    }
 
-    .width-1 {
-        max-height: calc(var(--tileWidth) - 5px);
-    }
+        .note {
+          cursor: pointer;
+          height: 100%;
+          width: 100%;
+          position: relative;
 
-    .width-2 {
-        max-height: calc(var(--tileWidth) - 7px);
-    }
+          &::before {
+            // NOTE: this is the string
+            position: absolute;
+            content: '';
+            height: calc(100% + 3px);
+            width: calc(50% - 1.5px);
+            transform: translate(-1.5px, 0);
+            border-bottom: none;
+            border-right: 3px solid rgba($color: #000, $alpha: 0.6);
+            pointer-events: none;
+          }
 
-    .width-3 {
-        max-height: calc(var(--tileWidth) - 10px);
-    }
+        }
+      }
 
-    .width-4 {
-        max-height: calc(var(--tileWidth) - 14px);
-    }
+      .tile-two-dot {
+        position: relative;
 
-    .width-5 {
-        max-height: calc(var(--tileWidth) - 19px);
-    }
+        &::before {
+          content: '';
+          position: absolute;
+          pointer-events: none;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          left: 33%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          background: rgba($color: #000000, $alpha: 0.4);
+        }
 
-    .width-6 {
-        max-height: calc(var(--tileWidth) - 23px);
-    }
+        &::after {
+          content: '';
+          position: absolute;
+          pointer-events: none;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          left: 67%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          background: rgba($color: #000000, $alpha: 0.4);
+        }
+      }
 
-    .width-7 {
-        max-height: calc(var(--tileWidth) - 27px);
+      .nut {
+        border-left: none;
+        height: 46px;
+        width: 100%;
+        background: #ffF1F1;
+      }
     }
+  }
 
-    .width-8 {
-        max-height: calc(var(--tileWidth) - 32px);
-    }
+  .width-1 {
+    max-height: calc(var(--tileWidth) - 5px);
+  }
 
-    .width-9 {
-        max-height: calc(var(--tileWidth) - 38px);
-    }
+  .width-2 {
+    max-height: calc(var(--tileWidth) - 7px);
+  }
 
-    .width-10 {
-        max-height: calc(var(--tileWidth) - 42px);
-    }
+  .width-3 {
+    max-height: calc(var(--tileWidth) - 10px);
+  }
 
-    .width-11 {
-        max-height: calc(var(--tileWidth) - 49px);
-    }
+  .width-4 {
+    max-height: calc(var(--tileWidth) - 14px);
+  }
 
-    .width-12 {
-        max-height: calc(var(--tileWidth) - 55px);
-    }
+  .width-5 {
+    max-height: calc(var(--tileWidth) - 19px);
+  }
+
+  .width-6 {
+    max-height: calc(var(--tileWidth) - 23px);
+  }
+
+  .width-7 {
+    max-height: calc(var(--tileWidth) - 27px);
+  }
+
+  .width-8 {
+    max-height: calc(var(--tileWidth) - 32px);
+  }
+
+  .width-9 {
+    max-height: calc(var(--tileWidth) - 38px);
+  }
+
+  .width-10 {
+    max-height: calc(var(--tileWidth) - 42px);
+  }
+
+  .width-11 {
+    max-height: calc(var(--tileWidth) - 49px);
+  }
+
+  .width-12 {
+    max-height: calc(var(--tileWidth) - 55px);
+  }
 }
 
 @media screen and (min-width: 600px) {
 
-    .fretboard-wrapper {
-        max-width: 100vw;
-        width: calc(var(--tileWidth) * 12 - 321px + 26px + 46px);
-        margin: auto;
-    }
+  .fretboard-wrapper {
+    max-width: 100vw;
+    width: calc(var(--tileWidth) * 12 - 321px + 26px + 46px);
+    margin: auto;
+  }
 
-    .width-1 {
-        max-width: calc(var(--tileWidth) - 5px);
-    }
+  .width-1 {
+    max-width: calc(var(--tileWidth) - 5px);
+  }
 
-    .width-2 {
-        max-width: calc(var(--tileWidth) - 7px);
-    }
+  .width-2 {
+    max-width: calc(var(--tileWidth) - 7px);
+  }
 
-    .width-3 {
-        max-width: calc(var(--tileWidth) - 10px);
-    }
+  .width-3 {
+    max-width: calc(var(--tileWidth) - 10px);
+  }
 
-    .width-4 {
-        max-width: calc(var(--tileWidth) - 14px);
-    }
+  .width-4 {
+    max-width: calc(var(--tileWidth) - 14px);
+  }
 
-    .width-5 {
-        max-width: calc(var(--tileWidth) - 19px);
-    }
+  .width-5 {
+    max-width: calc(var(--tileWidth) - 19px);
+  }
 
-    .width-6 {
-        max-width: calc(var(--tileWidth) - 23px);
-    }
+  .width-6 {
+    max-width: calc(var(--tileWidth) - 23px);
+  }
 
-    .width-7 {
-        max-width: calc(var(--tileWidth) - 27px);
-    }
+  .width-7 {
+    max-width: calc(var(--tileWidth) - 27px);
+  }
 
-    .width-8 {
-        max-width: calc(var(--tileWidth) - 32px);
-    }
+  .width-8 {
+    max-width: calc(var(--tileWidth) - 32px);
+  }
 
-    .width-9 {
-        max-width: calc(var(--tileWidth) - 38px);
-    }
+  .width-9 {
+    max-width: calc(var(--tileWidth) - 38px);
+  }
 
-    .width-10 {
-        max-width: calc(var(--tileWidth) - 42px);
-    }
+  .width-10 {
+    max-width: calc(var(--tileWidth) - 42px);
+  }
 
-    .width-11 {
-        max-width: calc(var(--tileWidth) - 49px);
-    }
+  .width-11 {
+    max-width: calc(var(--tileWidth) - 49px);
+  }
 
-    .width-12 {
-        max-width: calc(var(--tileWidth) - 55px);
-    }
+  .width-12 {
+    max-width: calc(var(--tileWidth) - 55px);
+  }
 }
