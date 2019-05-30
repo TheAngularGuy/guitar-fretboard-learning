@@ -6,7 +6,7 @@ Initially it was something i did for myself, then some collegues and friends wan
 
 ## Demo 
 
-https://guitar-fretboard-learning.firebaseapp.com/
+https://guitar-fretboard-learning.web.app/
 
 
 ## Start the project
