@@ -107,6 +107,10 @@
         min-height: 225px;
         margin-bottom: 1rem;
         width: 100%;
+
+        &:last-of-type {
+          margin-bottom: 5rem;
+        }
       }
     }
   }
