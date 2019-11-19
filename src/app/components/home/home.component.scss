@@ -1,136 +1,120 @@
-.btn-list {
-  width: 80%;
-  display: flex;
-  justify-content: flex-start;
-  position: absolute;
-  bottom: 2rem;
-  right: 2rem;
+.full-page {
+  height: calc(100% - 64px);
+  width: 100%;
+  color: white;
+  background-image: url('../../../assets/imgs/big-guitar.webp');
+  background-size: cover;
+  position: relative;
+  overflow: auto;
+  z-index: 1;
 
-  .mat-flat-button {
+  display: grid;
+  grid-template-columns: repeat(48, 1fr);
+  grid-template-rows: repeat(28, 1fr);
+  min-height: 750px;
+
+  .gradient {
+    z-index: 0;
+    content: '';
+    position: fixed;
+    top: 64px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: linear-gradient(
+      to bottom,
+      #006699,
+      rgba(#6585b0, 0.8),
+      rgba(#9ca7c6, 0.6),
+      rgba(#cbccdc, 0.4),
+      rgba(#f4f4f4, 0.2)
+    );
+  }
+
+  .head-title {
+    grid-row: 4 / 16;
+    grid-column: 4 / 18;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 1;
+    font-family: 'Poppins', sans-serif;
     font-size: 200%;
-    min-height: 350px;
-    width: 100%;
-    margin: 0 0.7rem;
-    border-radius: 8px;
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
-      0 10px 10px rgba(0, 0, 0, 0.22);
-    transition: box-shadow 0.3s cubic-bezier(.25, .8, .25, 1);
+    text-transform: capitalize;
+    letter-spacing: 4px;
+    position: relative;
+    text-align: center;
+  }
 
-    &:hover {
-      box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30),
-        0 15px 12px rgba(0, 0, 0, 0.22);
+  .panel {
+    grid-row: 3 / -1;
+    grid-column: 20 / -2;
+    z-index: 1;
+
+    color: black;
+    overflow: hidden;
+    border-radius: 8px 8px 0 0;
+    background: #f4f4f4;
+  }
+
+  .btn-list {
+    grid-row: 18 / -2;
+    grid-column: 10 / -3;
+
+    display: flex;
+    justify-content: flex-start;
+    justify-content: space-between;
+    z-index: 1;
+    position: relative;
+
+    .mat-flat-button {
+      font-size: 200%;
+      height: 100%;
+      width: calc(33% - 1rem);
+      border-radius: 8px;
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+      transition: box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+      &:hover {
+        box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+      }
     }
   }
 }
 
-.full-page {
-  color: white;
-  height: calc(100vh - 64px);
-  min-height: 750px;
-  background-image: url("../../../assets/imgs/big-guitar.webp");
-  position: relative;
-  z-index: 1;
-  overflow: auto;
-  background-size: cover;
-}
+@media screen and (max-width: 800px) {
+  .full-page {
+    .head-title {
+      display: none;
+    }
 
-.gradient {
-  z-index: 0;
-  content: '';
-  position: fixed;
-  top: 64px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-image: linear-gradient(to bottom, #006699,
-    rgba(#6585b0, .8),
-    rgba(#9ca7c6, .6),
-    rgba(#cbccdc, .4),
-    rgba(#f4f4f4, .2));
-}
+    .panel {
+      grid-row: 2 / 15;
+      grid-column: 3 / -3;
+      border-radius: 8px;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
 
-.panel {
-  color: black;
-  overflow: hidden;
-  border-radius: 8px 8px 0 0;
-  position: absolute;
-  top: 2rem;
-  right: 1.5rem;
-  width: 60%;
-  height: calc(100% - 2rem);
-  background: #f4F4F4;
-}
+    .btn-list {
+      grid-row-start: 16;
+      grid-column: 3 / -3;
+      flex-direction: column;
 
-.head-title {
-  font-family: 'Poppins', sans-serif;
-  padding-top: 15vh;
-  padding-right: 1.5rem;
-  padding-left: 1.5rem;
-  max-width: calc(40% - 4.5rem);
-  font-size: 200%;
-  text-transform: capitalize;
-  letter-spacing: 5px;
-  z-index: 1;
-  position: relative;
-  text-align: center;
+      .mat-flat-button {
+        font-size: 200%;
+        min-height: 225px;
+        margin-bottom: 1rem;
+        width: 100%;
+      }
+    }
+  }
 }
 
 .text-muted {
   cursor: default;
   padding: 0 0.5rem;
-}
-
-
-@media screen and (max-width: 800px) {
-  .hide-on-mobile {
-    display: none;
-  }
-
-  .head-title {
-    padding-top: 1rem;
-    padding-right: 0rem;
-    padding-left: 0rem;
-    max-width: 100%;
-    font-size: 200%;
-    text-transform: capitalize;
-    letter-spacing: 5px;
-    text-align: center;
-  }
-
-  .panel {
-    color: black;
-    overflow: hidden;
-    border-radius: 8px 8px 8px 8px;
-    position: initial;
-    margin: 2rem auto 0;
-    width: 90%;
-    height: auto;
-    background: #f4F4F4;
-  }
-
-  .btn-list {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    position: initial;
-    bottom: 0;
-    right: 0;
-    margin: 1rem auto;
-
-    .mat-flat-button {
-      font-size: 120%;
-      min-height: 0;
-      width: 90%;
-      margin: 1rem auto;
-      border-radius: 8px;
-
-      img {
-        height: 50px;
-        margin-top: 1rem;
-      }
-    }
-  }
-
 }
 
 h1,

@@ -7,37 +7,49 @@ import { noEnterAnimation } from 'src/app/animations/no-enter.animation';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  animations: [
-    noEnterAnimation,
-    listAnimation
-  ]
+  animations: [noEnterAnimation, listAnimation],
 })
 export class HomeComponent implements OnInit {
-  gameModes = [{
-    path: 'locate',
-    img: 'assets/imgs/locate.svg',
-    name: 'Locate'
-  }, {
-    path: 'locate/identify',
-    img: 'assets/imgs/identify.svg',
-    name: 'Identify'
-  }, {
-    path: 'explore',
-    img: 'assets/imgs/explore.svg',
-    name: 'Explore'
-  }];
+  gameModes = [
+    {
+      path: 'locate',
+      img: 'assets/imgs/locate.svg',
+      name: 'Locate',
+    },
+    {
+      path: 'locate/identify',
+      img: 'assets/imgs/identify.svg',
+      name: 'Identify',
+    },
+    {
+      path: 'explore',
+      img: 'assets/imgs/explore.svg',
+      name: 'Explore',
+    },
+  ];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   goTo(path: string) {
     this.router.navigate([path]);
+  }
+
+  goLinkedIn() {
+    this.openLink('https://www.linkedin.com/in/mustapha-aouas-7918a214b/');
+  }
+
+  goGithub() {
+    this.openLink('https://github.com/TheAngularGuy/guitar-fretboard-learning');
+  }
+
+  goTwitter() {
+    this.openLink('https://twitter.com/TheAngularGuy');
   }
 
   openLink(url: string) {
     const win = window.open(url, '_blank');
     win.focus();
   }
-
 }
