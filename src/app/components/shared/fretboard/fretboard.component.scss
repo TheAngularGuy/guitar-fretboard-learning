@@ -297,12 +297,7 @@
 @media screen and (min-width: 800px) {
   .fretboard-wrapper {
     margin: auto;
-    width: 100%;
-
-    .fretboard {
-      position: relative;
-      justify-content: center;
-    }
+    width: 99%;
   }
 
   .nut {
@@ -330,7 +325,7 @@
     width: calc(8% - 0.25%);
   }
   .width-8 {
-    max-width: calc(8% - 0.5%);
+    width: calc(8% - 0.5%);
   }
   .width-9 {
     width: calc(8% - 1%);
