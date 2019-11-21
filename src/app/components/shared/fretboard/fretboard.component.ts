@@ -5,7 +5,7 @@ import { Note } from 'src/app/models/note.model';
 @Component({
   selector: 'app-fretboard',
   templateUrl: './fretboard.component.html',
-  styleUrls: ['./fretboard.component.scss']
+  styleUrls: ['./fretboard.component.scss'],
 })
 export class FretboardComponent implements OnInit {
   @Input() selectedFrets: [number, number];
@@ -17,7 +17,7 @@ export class FretboardComponent implements OnInit {
   @Output() noteClick: EventEmitter<Note> = new EventEmitter();
   notes: any[];
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.notes = fretboardNotes;
@@ -25,7 +25,9 @@ export class FretboardComponent implements OnInit {
 
   onNoteClicked(noteObject: Note, noteElement: any, btnElement: any): void {
     this.noteClick.emit(noteObject);
-    if (this.showAll || (this.showSelectedNotes && this.isGoodNote(noteObject.note))) { return; }
+    if (this.showAll || (this.showSelectedNotes && this.isGoodNote(noteObject.note))) {
+      return;
+    }
     btnElement.color = this.getBtnColor(noteObject.note);
     noteElement.style.opacity = 1;
 
@@ -41,7 +43,9 @@ export class FretboardComponent implements OnInit {
    * @returns boolean
    */
   isGoodNote(note: string): boolean {
-    if (!this.selectedNotes) { return false; }
+    if (!this.selectedNotes) {
+      return false;
+    }
     return this.selectedNotes.includes(note);
   }
 
@@ -51,8 +55,10 @@ export class FretboardComponent implements OnInit {
    * @returns boolean
    */
   isSelectedFret(fret: number): boolean {
-    if (!this.selectedFrets || this.selectedFrets.length < 2) { return true; }
-    return (fret >= this.selectedFrets[0] && fret <= this.selectedFrets[1]);
+    if (!this.selectedFrets || this.selectedFrets.length < 2) {
+      return true;
+    }
+    return fret >= this.selectedFrets[0] && fret <= this.selectedFrets[1];
   }
 
   /**
@@ -61,13 +67,19 @@ export class FretboardComponent implements OnInit {
    * @returns string
    */
   getBtnColor(note: string): string {
-    if (!this.selectedNotes || !this.selectedNotes.length) { return ''; }
-    if (!this.selectedNotes || !this.isGoodNote(note)) { return 'warn'; }
+    if (!this.selectedNotes || !this.selectedNotes.length) {
+      return '';
+    }
+    if (!this.selectedNotes || !this.isGoodNote(note)) {
+      return 'warn';
+    }
     return 'primary';
   }
 
   isNoteHighlighted(fret: number, stringg: number) {
-    if (!this.highlightNote) { return false; }
+    if (!this.highlightNote) {
+      return false;
+    }
     if (this.highlightNote.fret == fret && stringg == this.highlightNote.string) {
       return true;
     }

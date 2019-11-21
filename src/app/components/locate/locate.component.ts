@@ -10,7 +10,7 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 
 const enum MODES {
   locate = 1,
-  identify = 2
+  identify = 2,
 }
 const ANIMATION_DELAY = 1250;
 const CLICK_INTERVAL = 500;
@@ -19,10 +19,7 @@ const CLICK_INTERVAL = 500;
   selector: 'app-locate',
   templateUrl: './locate.component.html',
   styleUrls: ['./locate.component.scss'],
-  animations: [
-    slideAnimation,
-    popAnimation
-  ]
+  animations: [slideAnimation, popAnimation],
 })
 export class LocateComponent implements OnInit {
   mode: MODES;
@@ -38,9 +35,7 @@ export class LocateComponent implements OnInit {
   good = 0;
   bad = 0;
 
-  constructor(private fb: FormBuilder
-    , private route: ActivatedRoute
-    , private utils: UtilitiesService) { }
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private utils: UtilitiesService) {}
 
   ngOnInit() {
     this.mode = this.route.snapshot.params.mode ? MODES.identify : MODES.locate;
@@ -48,30 +43,17 @@ export class LocateComponent implements OnInit {
   }
 
   setForm(): FormGroup {
-    return this.locateForm = this.fb.group({
-      selectedNotes: [
-        this.notes, [
-          Validators.required,
-          this.utils.validateSelectedNotes
-        ]
-      ],
+    return (this.locateForm = this.fb.group({
+      selectedNotes: [this.notes, [Validators.required, this.utils.validateSelectedNotes]],
       fretStart: [
-        0, [
-          Validators.required,
-          Validators.min(0),
-          Validators.max(12),
-          this.utils.validateFrets(this)
-        ]
+        0,
+        [Validators.required, Validators.min(0), Validators.max(12), this.utils.validateFrets(this)],
       ],
       fretEnd: [
-        12, [
-          Validators.required,
-          Validators.min(0),
-          Validators.max(12),
-          this.utils.validateFrets(this)
-        ]
-      ]
-    });
+        12,
+        [Validators.required, Validators.min(0), Validators.max(12), this.utils.validateFrets(this)],
+      ],
+    }));
   }
 
   onResetForm() {
@@ -91,7 +73,9 @@ export class LocateComponent implements OnInit {
   }
 
   togglePaused(): boolean {
-    if (this.locateForm.invalid) { return; }
+    if (this.locateForm.invalid) {
+      return;
+    }
     this.paused = !this.paused;
     if (!this.paused) {
       this.showSettings = false;
@@ -105,39 +89,44 @@ export class LocateComponent implements OnInit {
 
   pickRandomNote(): Note {
     const selectedNotes = this.locateForm.value.selectedNotes;
-    if (!this.checkSelectedNotes(selectedNotes)) { return; }
+    if (!this.checkSelectedNotes(selectedNotes)) {
+      return;
+    }
 
     const randomString = Math.ceil(Math.random() * 1000) % 6;
     const randomFret = Math.max(
       Math.ceil(Math.random() * 1000) % (this.locateForm.value.fretEnd + 1),
-      this.locateForm.value.fretStart);
+      this.locateForm.value.fretStart,
+    );
     const note = this.fretboardNotes[randomFret][randomString];
 
-    if (!note
-      || !selectedNotes.includes(note)
-      || (this.noteToFind && note == this.noteToFind.note)) {
+    if (!note || !selectedNotes.includes(note) || (this.noteToFind && note == this.noteToFind.note)) {
       console.log('bad note', note, randomFret, randomString);
       return this.pickRandomNote();
     }
-    return this.noteToFind = {
+    return (this.noteToFind = {
       fret: randomFret,
       string: randomString,
-      note
-    };
+      note,
+    });
   }
 
   checkSelectedNotes(selectedNotes: string[]): boolean {
     const intervalNotes = this.fretboardNotes
       .slice(this.locateForm.value.fretStart, this.locateForm.value.fretEnd + 1)
-      .join().split(',');
+      .join()
+      .split(',');
     const areSelectedNotesInTheFretsInterval = selectedNotes
       .slice()
       .map((n: string) => intervalNotes.join(' ').includes(n + ' '))
       .includes(true);
     if (!areSelectedNotesInTheFretsInterval) {
-      this.utils.openSnackBar(`The selected notes are not
+      this.utils.openSnackBar(
+        `The selected notes are not
         in the interval of frets you selected.
-        Change the settiongs!`, null);
+        Change the settiongs!`,
+        null,
+      );
       this.togglePaused();
       this.toggleSettings();
       return false;
@@ -147,8 +136,12 @@ export class LocateComponent implements OnInit {
 
   onNoteClicked(noteObject: Note): boolean {
     const now = Date.now();
-    if ((now - this.lastClickRegistred) < CLICK_INTERVAL) { return false; }
-    if (this.paused) { return; }
+    if (now - this.lastClickRegistred < CLICK_INTERVAL) {
+      return false;
+    }
+    if (this.paused) {
+      return;
+    }
     if (noteObject.note == this.noteToFind.note) {
       this.good++;
     } else {
@@ -163,15 +156,16 @@ export class LocateComponent implements OnInit {
     const isRegistred = this.onNoteClicked({
       fret: 0,
       string: 0,
-      note: n
+      note: n,
     });
-    if (!isRegistred) { return; }
+    if (!isRegistred) {
+      return;
+    }
     if (n == this.noteToFind.note) {
       btn.color = 'primary';
     } else {
       btn.color = 'warn';
     }
-    setTimeout(() => btn.color = '', ANIMATION_DELAY);
+    setTimeout(() => (btn.color = ''), ANIMATION_DELAY);
   }
-
 }
