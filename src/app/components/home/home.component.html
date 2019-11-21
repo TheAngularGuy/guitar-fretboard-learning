@@ -54,7 +54,7 @@
 
   <div class="btn-list" [@listAnimation]="gameModes.length">
     <button *ngFor="let mode of gameModes" mat-flat-button color="primary" (tap)="goTo(mode.path)">
-      <img [src]="mode.img" height="80" />
+      <img [src]="mode.img" height="80" [alt]="mode.name" />
       <br />
       <p style="margin-bottom: 0">{{ mode.name }}</p>
     </button>

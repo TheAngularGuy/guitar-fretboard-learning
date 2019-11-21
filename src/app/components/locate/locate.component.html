@@ -68,7 +68,7 @@
 
       <div class="play" *ngIf="paused">
         <button mat-button (tap)="togglePaused()" style="margin: 1rem auto 0; display: block">
-          <img src="assets/imgs/play.svg" height="80" />
+          <img src="assets/imgs/play.svg" height="80" alt="play button" />
           <span style="display:block">Play</span>
         </button>
         <p *ngIf="good" style="text-align:center">
@@ -83,11 +83,11 @@
         <div class="action-row" style="min-height: 118px;">
           <div>
             <p class="action-row-result">
-              <img src="assets/imgs/good.svg" height="30" />
+              <img src="assets/imgs/good.svg" height="30" alt="thumbs up" />
               <span class="good">: {{ good }}</span>
             </p>
             <p class="action-row-result">
-              <img src="assets/imgs/bad.svg" height="30" />
+              <img src="assets/imgs/bad.svg" height="30" alt="thumbs down" />
               <span class="bad">: {{ bad }}</span>
             </p>
           </div>
