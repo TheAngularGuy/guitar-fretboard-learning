@@ -22,7 +22,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
-            "assets": ["src/robot.txt", "src/favicon.ico", "src/assets", "src/manifest.json"],
+            "assets": ["src/robots.txt", "src/favicon.ico", "src/assets", "src/manifest.json"],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/app/styles/styles.scss"

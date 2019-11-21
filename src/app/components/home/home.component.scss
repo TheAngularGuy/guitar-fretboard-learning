@@ -39,8 +39,9 @@
     justify-content: center;
 
     z-index: 1;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Avenir', sans-serif;
     font-size: 200%;
+    font-display: swap;
     text-transform: capitalize;
     letter-spacing: 4px;
     position: relative;
@@ -124,6 +125,7 @@
 h1,
 h2,
 h3 {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Avenir', sans-serif;
+  font-display: swap;
   margin-top: 0;
 }
