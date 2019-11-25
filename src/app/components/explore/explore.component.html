@@ -17,7 +17,7 @@
             formControlName="selectedNotes"
             [disableOptionCentering]="true"
           >
-            <mat-option *ngFor="let note of notes" [value]="note">{{ note }}</mat-option>
+            <mat-option *ngFor="let note of chromaticScale" [value]="note">{{ note }}</mat-option>
           </mat-select>
           <mat-error *ngIf="exploreForm.get('selectedNotes').invalid">
             Please select three notes or more.

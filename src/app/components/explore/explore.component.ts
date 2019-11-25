@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { cagedScale } from 'src/app/data/chromatic-scale.data';
+import { cagedScale, chromaticScale } from 'src/app/data/chromatic-scale.data';
 import { Note } from 'src/app/models/note.model';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 
@@ -11,6 +11,7 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 })
 export class ExploreComponent implements OnInit {
   exploreForm: FormGroup;
+  chromaticScale = chromaticScale;
   notes = cagedScale;
 
   constructor(private fb: FormBuilder, private utils: UtilitiesService) {}
