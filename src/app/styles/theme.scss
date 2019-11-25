@@ -176,5 +176,3 @@ $custom-theme-foreground: mat-palette($front);
 $custom-theme: mat-light-theme($custom-theme-primary, $custom-theme-accent, $custom-theme-warn);
 
 @include angular-material-theme($custom-theme);
-
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons&display=optional');
