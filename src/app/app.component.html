@@ -1,12 +1,12 @@
 <mat-toolbar color="primary" class="toolbar">
   <img
-    (tap)="goHome()"
+    (click)="goHome()"
     class="pointer"
     src="assets/imgs/guitar.svg"
     height="50"
-    alt="logo of a guitare"
+    alt="logo of a guitar"
   />
-  <span class="pointer" (tap)="goHome()"> &nbsp; {{ title | titlecase }} </span>
+  <span class="pointer" (click)="goHome()"> &nbsp; {{ title | titlecase }} </span>
 </mat-toolbar>
 
 <router-outlet></router-outlet>

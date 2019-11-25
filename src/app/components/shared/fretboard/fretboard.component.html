@@ -19,7 +19,7 @@
         class="note"
         [ngClass]="{ 'note-highlighted': isNoteHighlighted(fret, string) }"
         *ngFor="let note of fretnotes; let string = index"
-        (tap)="
+        (click)="
           onNoteClicked(
             {
               note: note,

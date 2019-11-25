@@ -3,11 +3,11 @@
 
   <mat-card>
     <mat-card-actions>
-      <button mat-icon-button title="Reset" *ngIf="paused && showSettings" (tap)="onResetForm()">
+      <button mat-icon-button title="Reset" *ngIf="paused && showSettings" (click)="onResetForm()">
         <mat-icon>replay</mat-icon>
       </button>
       &nbsp;
-      <button mat-icon-button title="Save" *ngIf="paused" (tap)="toggleSettings()">
+      <button mat-icon-button title="Save" *ngIf="paused" (click)="toggleSettings()">
         <mat-icon *ngIf="showSettings">check</mat-icon>
         <mat-icon *ngIf="!showSettings">settings</mat-icon>
       </button>
@@ -67,7 +67,7 @@
       </form>
 
       <div class="play" *ngIf="paused">
-        <button mat-button (tap)="togglePaused()" style="margin: 1rem auto 0; display: block">
+        <button mat-button (click)="togglePaused()" style="margin: 1rem auto 0; display: block">
           <img src="assets/imgs/play.svg" height="80" alt="play button" />
           <span style="display:block">Play</span>
         </button>
@@ -105,13 +105,13 @@
               mat-raised-button
               #guessBtn
               *ngFor="let n of locateForm.value.selectedNotes"
-              (tap)="onNoteGuessed(n, guessBtn)"
+              (click)="onNoteGuessed(n, guessBtn)"
             >
               {{ n }}
             </button>
           </div>
           <div>
-            <button mat-button (tap)="toggleShowAll()">
+            <button mat-button (click)="toggleShowAll()">
               <mat-icon *ngIf="!showAll">visibility</mat-icon>
               <mat-icon *ngIf="showAll">visibility_off</mat-icon>
               &nbsp;
@@ -119,7 +119,7 @@
             </button>
             <br />
             <br />
-            <button mat-button (tap)="togglePaused()" color="warn">
+            <button mat-button (click)="togglePaused()" color="warn">
               <mat-icon>pause</mat-icon>
               &nbsp;
               <span>Stop</span>

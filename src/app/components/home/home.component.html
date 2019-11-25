@@ -41,11 +41,11 @@
             media below:
           </p>
           <p class="pointer">
-            <span (tap)="goTwitter()"> Twitter </span>
+            <span (click)="goTwitter()"> Twitter </span>
             <span class="text-muted">/</span>
-            <span (tap)="goGithub()"> GitHub </span>
+            <span (click)="goGithub()"> GitHub </span>
             <span class="text-muted">/</span>
-            <span (tap)="goLinkedIn()"> Linkedin </span>
+            <span (click)="goLinkedIn()"> Linkedin </span>
           </p>
         </div>
       </mat-tab>
@@ -53,7 +53,7 @@
   </div>
 
   <div class="btn-list" [@listAnimation]="gameModes.length">
-    <button *ngFor="let mode of gameModes" mat-flat-button color="primary" (tap)="goTo(mode.path)">
+    <button *ngFor="let mode of gameModes" mat-flat-button color="primary" (click)="goTo(mode.path)">
       <img [src]="mode.img" height="80" [alt]="mode.name" />
       <br />
       <p style="margin-bottom: 0">{{ mode.name }}</p>
