@@ -7,24 +7,28 @@ import { LostComponent } from './components/lost/lost.component';
 const routes: Routes = [
   {
     path: 'locate',
-    loadChildren: './components/locate/locate.module#LocateModule'
-  }, {
+    loadChildren: './modules/locate/locate.module#LocateModule',
+  },
+  {
     path: 'explore',
-    loadChildren: './components/explore/explore.module#ExploreModule'
-  }, {
+    loadChildren: './modules/explore/explore.module#ExploreModule',
+  },
+  {
     path: '',
-    component: HomeComponent
-  }, {
+    component: HomeComponent,
+  },
+  {
     path: '404',
-    component: LostComponent
-  }, {
+    component: LostComponent,
+  },
+  {
     path: '**',
-    redirectTo: '404'
-  }
+    redirectTo: '404',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

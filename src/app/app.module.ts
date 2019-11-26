@@ -8,9 +8,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { LostComponent } from './components/lost/lost.component';
-import { SharedModule } from './components/shared/shared.module';
+import { SharedModule } from './modules/shared/shared.module';
 import { UtilitiesService } from './services/utilities.service';
-
 
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = {
@@ -21,25 +20,21 @@ export class MyHammerConfig extends HammerGestureConfig {
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    LostComponent
-  ],
+  declarations: [AppComponent, HomeComponent, LostComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    SharedModule
+    SharedModule,
   ],
   providers: [
     UtilitiesService,
     {
       provide: HAMMER_GESTURE_CONFIG,
-      useClass: MyHammerConfig
-    }
+      useClass: MyHammerConfig,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
