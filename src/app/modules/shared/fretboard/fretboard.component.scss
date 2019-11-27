@@ -155,7 +155,8 @@
 
 @media screen and (max-width: 800px) {
   .fretboard-wrapper {
-    width: 87%;
+    width: 78%;
+    max-width: 50vh;
     margin: auto;
     max-height: initial;
     overflow-y: hidden;
@@ -246,51 +247,40 @@
   }
 
   .width-1 {
-    max-height: calc(var(--tileWidth) - 5px);
+    max-height: calc(8vh + 2.5vh);
   }
-
   .width-2 {
-    max-height: calc(var(--tileWidth) - 7px);
+    max-height: calc(8vh + 2vh);
   }
-
   .width-3 {
-    max-height: calc(var(--tileWidth) - 10px);
+    max-height: calc(8vh + 1.5vh);
   }
-
   .width-4 {
-    max-height: calc(var(--tileWidth) - 14px);
+    max-height: calc(8vh + 1vh);
   }
-
   .width-5 {
-    max-height: calc(var(--tileWidth) - 19px);
+    max-height: calc(8vh + 0.5vh);
   }
-
   .width-6 {
-    max-height: calc(var(--tileWidth) - 23px);
+    max-height: calc(8vh + 0.25vh);
   }
-
   .width-7 {
-    max-height: calc(var(--tileWidth) - 27px);
+    max-height: calc(8vh - 0.25vh);
   }
-
   .width-8 {
-    max-height: calc(var(--tileWidth) - 32px);
+    max-height: calc(8vh - 0.5vh);
   }
-
   .width-9 {
-    max-height: calc(var(--tileWidth) - 38px);
+    max-height: calc(8vh - 1vh);
   }
-
   .width-10 {
-    max-height: calc(var(--tileWidth) - 42px);
+    max-height: calc(8vh - 1.25vh);
   }
-
   .width-11 {
-    max-height: calc(var(--tileWidth) - 49px);
+    max-height: calc(8vh - 1.25vh);
   }
-
   .width-12 {
-    max-height: calc(var(--tileWidth) - 55px);
+    max-height: calc(8vh - 1.25vh);
   }
 }
 
