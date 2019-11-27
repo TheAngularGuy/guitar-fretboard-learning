@@ -14,6 +14,11 @@ const enum MODES {
 }
 const ANIMATION_DELAY = 1250;
 const CLICK_INTERVAL = 500;
+const MAX_RANGE = 5;
+
+interface NoteToFind extends Note {
+  time: number;
+}
 
 @Component({
   selector: 'app-locate',
@@ -31,11 +36,14 @@ export class LocateComponent implements OnInit {
   paused = true;
   lastClickRegistred = 0;
 
-  noteToFind: Note;
-  good = 0;
-  bad = 0;
+  noteToFind: NoteToFind;
+  scoreHistory: { noteToFind: Note; noteGessed: Note; time: number; good: boolean }[] = [];
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private utils: UtilitiesService) {}
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly route: ActivatedRoute,
+    private readonly utils: UtilitiesService,
+  ) {}
 
   ngOnInit() {
     this.mode = this.route.snapshot.params.mode ? MODES.identify : MODES.locate;
@@ -79,36 +87,12 @@ export class LocateComponent implements OnInit {
     this.paused = !this.paused;
     if (!this.paused) {
       this.showSettings = false;
-      this.good = this.bad = 0;
+      this.scoreHistory = [];
       this.pickRandomNote();
     } else {
       this.noteToFind = null;
     }
     return this.paused;
-  }
-
-  pickRandomNote(): Note {
-    const selectedNotes = this.locateForm.value.selectedNotes;
-    if (!this.checkSelectedNotes(selectedNotes)) {
-      return;
-    }
-
-    const randomString = Math.ceil(Math.random() * 1000) % 6;
-    const randomFret = Math.max(
-      Math.ceil(Math.random() * 1000) % (this.locateForm.value.fretEnd + 1),
-      this.locateForm.value.fretStart,
-    );
-    const note = this.fretboardNotes[randomFret][randomString];
-
-    if (!note || !selectedNotes.includes(note) || (this.noteToFind && note == this.noteToFind.note)) {
-      console.log('bad note', note, randomFret, randomString);
-      return this.pickRandomNote();
-    }
-    return (this.noteToFind = {
-      fret: randomFret,
-      string: randomString,
-      note,
-    });
   }
 
   checkSelectedNotes(selectedNotes: string[]): boolean {
@@ -134,21 +118,49 @@ export class LocateComponent implements OnInit {
     return true;
   }
 
-  onNoteClicked(noteObject: Note): boolean {
-    const now = Date.now();
-    if (now - this.lastClickRegistred < CLICK_INTERVAL) {
-      return false;
-    }
-    if (this.paused) {
+  pickRandomNote(): Note {
+    const selectedNotes = this.locateForm.value.selectedNotes;
+    if (!this.checkSelectedNotes(selectedNotes)) {
       return;
     }
-    if (noteObject.note == this.noteToFind.note) {
-      this.good++;
-    } else {
-      this.bad++;
+    const randomString = Math.ceil(Math.random() * 1000) % 6;
+    const randomFret = Math.max(
+      Math.ceil(Math.random() * 1000) % (this.locateForm.value.fretEnd + 1),
+      this.locateForm.value.fretStart,
+    );
+    const note = this.fretboardNotes[randomFret][randomString];
+    if (!note || !selectedNotes.includes(note) || (this.noteToFind && note == this.noteToFind.note)) {
+      return this.pickRandomNote();
+    }
+    return (this.noteToFind = {
+      time: Date.now(),
+      fret: randomFret,
+      string: randomString,
+      note,
+    });
+  }
+
+  onNoteClicked(noteObject: Note): boolean {
+    const now = Date.now();
+    if (this.paused || now - this.lastClickRegistred <= CLICK_INTERVAL) {
+      return false;
+    }
+
+    this.lastClickRegistred = now;
+    this.scoreHistory.push({
+      noteToFind: this.noteToFind,
+      noteGessed: noteObject,
+      good: noteObject.note == this.noteToFind.note,
+      time: Date.now() - this.noteToFind.time,
+    });
+
+    if (this.scoreHistory.length == MAX_RANGE) {
+      this.paused = true;
+      this.showAll = false;
+      this.noteToFind = null;
+      return;
     }
     setTimeout(() => this.pickRandomNote(), ANIMATION_DELAY);
-    this.lastClickRegistred = now;
     return true;
   }
 
@@ -167,5 +179,16 @@ export class LocateComponent implements OnInit {
       btn.color = 'warn';
     }
     setTimeout(() => (btn.color = ''), ANIMATION_DELAY);
+  }
+
+  // utils
+  getNumberOfGood() {
+    return this.scoreHistory.reduce((acc, n) => acc + (n.good ? 1 : 0), 0);
+  }
+  getNumberOfBad() {
+    return this.scoreHistory.length - this.getNumberOfGood();
+  }
+  getAverageTime() {
+    return this.scoreHistory.reduce((acc, n) => acc + n.time, 0) / this.scoreHistory.length / 1000; // in second
   }
 }

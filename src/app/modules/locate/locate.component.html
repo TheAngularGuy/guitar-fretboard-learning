@@ -71,11 +71,17 @@
           <img src="assets/imgs/play.svg" height="80" alt="play button" />
           <span style="display:block">Play</span>
         </button>
-        <p *ngIf="good" style="text-align:center">
-          <span>You guessed right {{ good }} out of {{ good + bad }} notes.</span>
+        <p *ngIf="scoreHistory.length > 0" style="text-align:center" @slideAnimation>
+          <span>
+            You guessed right <b>{{ getNumberOfGood() }}</b> out of {{ scoreHistory.length }} notes.
+          </span>
           <br />
-          <span *ngIf="bad">Try again!</span>
-          <span *ngIf="!bad">Impressive!</span>
+          <span>
+            Your average time is: <b>{{ getAverageTime() | number }}</b> seconds
+          </span>
+          <br />
+          <span *ngIf="getNumberOfBad()">Try again to do even better!</span>
+          <span *ngIf="!getNumberOfBad()">Impressive!</span>
         </p>
       </div>
 
@@ -84,11 +90,11 @@
           <div>
             <p class="action-row-result">
               <img src="assets/imgs/good.svg" height="30" alt="thumbs up" />
-              <span class="good">: {{ good }}</span>
+              <span class="good">: {{ getNumberOfGood() }}</span>
             </p>
             <p class="action-row-result">
               <img src="assets/imgs/bad.svg" height="30" alt="thumbs down" />
-              <span class="bad">: {{ bad }}</span>
+              <span class="bad">: {{ getNumberOfBad() }}</span>
             </p>
           </div>
           <div
@@ -134,12 +140,12 @@
 <br />
 
 <app-fretboard
-  (noteClick)="onNoteClicked($event)"
   [highlightNote]="mode == 2 ? noteToFind : null"
   [disableClick]="mode == 2 ? true : false"
   [showAll]="showAll"
   [selectedFrets]="[locateForm?.value.fretStart, locateForm?.value.fretEnd]"
   [selectedNotes]="noteToFind ? [noteToFind.note] : null"
+  (noteClick)="onNoteClicked($event)"
 >
 </app-fretboard>
 
