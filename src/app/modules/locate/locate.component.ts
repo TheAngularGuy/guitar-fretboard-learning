@@ -142,6 +142,19 @@ export class LocateComponent implements OnInit {
     });
   }
 
+  endRound() {
+    this.paused = true;
+    setTimeout(() => {
+      this.showAll = false;
+      this.noteToFind = null;
+      // we need a timeout so when the user is wrong on the last guess
+      // the note stay in red a little so he knows he was wrong.
+    }, ANIMATION_DELAY);
+    setTimeout(() => {
+      window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+    }, ANIMATION_TIME);
+  }
+
   onNoteClicked(noteObject: Note): boolean {
     const now = Date.now();
     if (this.paused || now - this.lastClickRegistred <= CLICK_INTERVAL) {
@@ -157,16 +170,7 @@ export class LocateComponent implements OnInit {
     });
 
     if (this.scoreHistory.length == MAX_RANGE) {
-      this.paused = true;
-      setTimeout(() => {
-        this.showAll = false;
-        this.noteToFind = null;
-        // we need a timeout so when the user is wrong on the last guess
-        // the note stay in red a little so he knows he was wrong.
-      }, ANIMATION_DELAY);
-      setTimeout(() => {
-        window.scroll({ top: 0, left: 0, behavior: 'smooth' });
-      }, ANIMATION_TIME);
+      this.endRound();
       return;
     }
     setTimeout(() => this.pickRandomNote(), ANIMATION_DELAY);
