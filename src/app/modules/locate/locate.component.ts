@@ -12,6 +12,7 @@ const enum MODES {
   locate = 1,
   identify = 2,
 }
+const ANIMATION_TIME = 250;
 const ANIMATION_DELAY = 1250;
 const CLICK_INTERVAL = 500;
 const MAX_RANGE = 5;
@@ -151,13 +152,17 @@ export class LocateComponent implements OnInit {
       noteToFind: this.noteToFind,
       noteGessed: noteObject,
       good: noteObject.note == this.noteToFind.note,
-      time: Date.now() - this.noteToFind.time,
+      time: Date.now() - this.noteToFind.time - ANIMATION_TIME,
     });
 
     if (this.scoreHistory.length == MAX_RANGE) {
       this.paused = true;
-      this.showAll = false;
-      this.noteToFind = null;
+      setTimeout(() => {
+        this.showAll = false;
+        this.noteToFind = null;
+        // we need a timeout so when the user is wrong on the last guess
+        // the note stay in red a little so he knows he was wrong.
+      }, ANIMATION_DELAY);
       return;
     }
     setTimeout(() => this.pickRandomNote(), ANIMATION_DELAY);
