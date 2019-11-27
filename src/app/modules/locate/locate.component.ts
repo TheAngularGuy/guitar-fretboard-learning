@@ -164,6 +164,9 @@ export class LocateComponent implements OnInit {
         // we need a timeout so when the user is wrong on the last guess
         // the note stay in red a little so he knows he was wrong.
       }, ANIMATION_DELAY);
+      setTimeout(() => {
+        window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+      }, ANIMATION_TIME);
       return;
     }
     setTimeout(() => this.pickRandomNote(), ANIMATION_DELAY);
