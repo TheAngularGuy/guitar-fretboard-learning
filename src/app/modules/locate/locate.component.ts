@@ -15,7 +15,7 @@ const enum MODES {
 const ANIMATION_TIME = 250;
 const ANIMATION_DELAY = 1250;
 const CLICK_INTERVAL = 500;
-const MAX_RANGE = 5;
+const MAX_RANGE = 20;
 
 interface NoteToFind extends Note {
   time: number;
@@ -28,6 +28,7 @@ interface NoteToFind extends Note {
   animations: [slideAnimation, popAnimation],
 })
 export class LocateComponent implements OnInit {
+  maxRange = MAX_RANGE;
   mode: MODES;
   locateForm: FormGroup;
   fretboardNotes = fretboardNotes;
