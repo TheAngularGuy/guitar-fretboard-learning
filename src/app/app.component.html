@@ -1,12 +1,23 @@
-<mat-toolbar color="primary" class="toolbar">
-  <img
-    (click)="goHome()"
-    class="pointer"
-    src="assets/imgs/guitar.svg"
-    height="50"
-    alt="logo of a guitar"
-  />
-  <span class="pointer" (click)="goHome()"> &nbsp; {{ title | titlecase }} </span>
-</mat-toolbar>
-
-<router-outlet></router-outlet>
+<ion-app>
+  <ion-split-pane contentId="main-content" [disabled]="true">
+    <ion-menu contentId="main-content" type="push">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+              <ion-label>
+                {{ p.title }}
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>

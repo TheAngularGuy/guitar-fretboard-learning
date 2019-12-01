@@ -1,0 +1,113 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>locate</ion-title>
+    <ion-buttons slot="end" *ngIf="play">
+      <ion-button (click)="togglePlay()">
+        <ion-icon slot="icon-only" name="pause"></ion-icon>
+      </ion-button>
+      <ion-button (click)="toggleShowAll()">
+        <ion-icon slot="icon-only" name="eye"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end" *ngIf="!play">
+      <ion-button (click)="toggleShowSettings()">
+        <ion-icon slot="icon-only" name="settings"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <br />
+
+  <ion-card *ngIf="!play">
+    <ion-card-header>
+      <ion-card-title>Locate the note on the fretboard!</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p>In this game you have to locate the note on the fretboard and click on it.</p>
+
+      <hr />
+
+      <form class="settings" *ngIf="showSettings" [formGroup]="locateForm" @popAnimation>
+        <ion-item>
+          <ion-label>Notes</ion-label>
+          <ion-select multiple="true" formControlName="selectedNotes">
+            <ion-select-option *ngFor="let note of chromaticScale" [value]="note">
+              {{note}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>From fret number</ion-label>
+          <ion-input formControlName="fretStart" type="number"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>To fret number</ion-label>
+          <ion-input formControlName="fretEnd" type="number"></ion-input>
+        </ion-item>
+      </form>
+
+      <p class="result" *ngIf="!showSettings">
+        <ng-container *ngIf="!scoreHistoric || !scoreHistoric.length">
+          Press the button to start playing
+        </ng-container>
+        <ng-container *ngIf="scoreHistoric && scoreHistoric.length">
+          Your score is <b>{{ score.good }}</b> out of {{ scoreHistoric?.length }}. And your average time
+          is: <b>{{ getAverageTime() | number }}</b> seconds.
+        </ng-container>
+      </p>
+
+      <br />
+
+      <div class="start">
+        <ion-button color="secondary" shape="round" (click)="togglePlay()" [disabled]="noteToFind">
+          <ion-icon name="play" *ngIf="!noteToFind"></ion-icon>
+          <ion-icon name="refresh" *ngIf="noteToFind"></ion-icon>
+          &nbsp; GO
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="play" class="hide-on-mobile">
+    <ion-card-header>
+      <ion-card-title>Locate the note on the fretboard!</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>In this game you have to locate the note on the fretboard and click on it.</p>
+      <br />
+
+      <ng-container *ngTemplateOutlet="playingControls"></ng-container>
+    </ion-card-content>
+  </ion-card>
+  <br />
+
+  <app-fretboard
+    [showAll]="showAll"
+    [selectedFrets]="[locateForm?.value.fretStart, locateForm?.value.fretEnd]"
+    [selectedNotes]="noteToFind ? [noteToFind.note.noteName] : null"
+    (noteClick)="onNoteClicked($event)"
+  ></app-fretboard>
+  <br />
+</ion-content>
+
+<ion-footer *ngIf="play" class="hide-on-desktop">
+  <ng-container *ngTemplateOutlet="playingControls"></ng-container>
+</ion-footer>
+
+<ng-template #playingControls>
+  <div class="playing">
+    <div class="score">
+      <p><ion-icon name="thumbs-up"></ion-icon> &nbsp; {{score.good}} &nbsp; / &nbsp; {{maxRange}}</p>
+      <p><ion-icon name="thumbs-down"></ion-icon> &nbsp; {{score.bad}} &nbsp; / &nbsp; {{maxRange}}</p>
+    </div>
+    <div class="note" [@popAnimation]="noteToFind?.note?.noteName">
+      {{noteToFind?.note?.noteName}}
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,62 @@
+.settings {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+
+  ion-item {
+    width: 100%;
+
+    ion-input {
+      text-align: end;
+    }
+  }
+
+  @media screen and (max-width: 800px) {
+    & {
+      grid-template-columns: 1fr;
+      grid-gap: 0rem;
+    }
+  }
+}
+
+.result {
+  color: black;
+  font-size: 1.1rem;
+  text-align: center;
+  margin: 1.9rem 0 0;
+}
+
+.start {
+  display: flex;
+  justify-content: center;
+}
+
+.playing {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 2ch;
+
+  .note {
+    grid-column: 2 / 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(var(--ion-color-primary-contrast-rgb));
+    font-size: 2rem;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: rgba($color: var(--ion-color-primary-rgb), $alpha: 1);
+    margin: auto;
+  }
+  .score {
+    grid-column: 1 / 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    p {
+      margin: 0;
+    }
+  }
+}

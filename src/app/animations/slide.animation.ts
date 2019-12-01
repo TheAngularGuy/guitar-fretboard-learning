@@ -9,19 +9,20 @@ export const slideAnimation = trigger('slideAnimation', [
     animate(
       '250ms ease-out',
       style({
-        height: '*',
+        height: '!',
       }),
     ),
   ]),
   transition(':leave', [
     style({
-      height: '*',
+      height: '!',
       overflow: 'hidden',
     }),
     animate(
       '250ms ease-out',
       style({
         height: '0',
+        overflow: 'hidden',
       }),
     ),
   ]),

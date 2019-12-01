@@ -1,34 +1,44 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-
-import { HomeComponent } from './components/home/home.component';
-import { LostComponent } from './components/lost/lost.component';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'locate',
-    loadChildren: './modules/locate/locate.module#LocateModule',
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
   },
   {
     path: 'explore',
-    loadChildren: './modules/explore/explore.module#ExploreModule',
+    loadChildren: () => import('./pages/explore/explore.module').then( m => m.ExplorePageModule)
   },
   {
-    path: '',
-    component: HomeComponent,
+    path: 'locate',
+    loadChildren: () => import('./pages/locate/locate.module').then( m => m.LocatePageModule)
   },
   {
-    path: '404',
-    component: LostComponent,
+    path: 'identify',
+    loadChildren: () => import('./pages/identify/identify.module').then( m => m.IdentifyPageModule)
   },
   {
-    path: '**',
-    redirectTo: '404',
+    path: 'settings',
+    loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'about',
+    loadChildren: () => import('./pages/about/about.module').then( m => m.AboutPageModule)
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

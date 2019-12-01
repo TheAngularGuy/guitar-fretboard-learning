@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>About</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <br />
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Hey, let's stay in touch!</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>
+        You liked this app or you have a great idea to enhance it?
+        <br />
+        Contact me on one of my social media below:
+      </p>
+
+      <br />
+
+      <ion-list>
+        <ion-item (click)="goTwitter()">
+          <ion-label> Twitter </ion-label>
+          <ion-icon name="logo-twitter" slot="end"></ion-icon>
+        </ion-item>
+        <ion-item (click)="goGithub()">
+          <ion-label> GitHub </ion-label>
+          <ion-icon name="logo-github" slot="end"></ion-icon>
+        </ion-item>
+        <ion-item (click)="goLinkedIn()">
+          <ion-label> LinkedIn </ion-label>
+          <ion-icon name="logo-linkedin" slot="end"></ion-icon>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
