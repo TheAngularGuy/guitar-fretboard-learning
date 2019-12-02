@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { IonButton, ToastController } from '@ionic/angular';
+import { IonButton, IonContent, ToastController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { popAnimation } from 'src/app/animations/pop.animation';
 import { slideAnimation } from 'src/app/animations/slide.animation';
@@ -22,6 +22,7 @@ const MAX_RANGE = 20;
   animations: [popAnimation, slideAnimation],
 })
 export class IdentifyPage implements OnInit, OnDestroy {
+  @ViewChild('content', { static: false }) content: IonContent;
   destroyed$ = new Subject();
   identifyForm: FormGroup;
   maxRange: number;
@@ -160,10 +161,12 @@ export class IdentifyPage implements OnInit, OnDestroy {
     setTimeout(() => {
       // we need a timeout so when the user is wrong on the last guess
       // the note stay in red a little so he knows he was wrong.
-      window.scroll({ top: 0, left: 0, behavior: 'smooth' });
       this.showAll = false;
       this.noteToFind = null;
     }, ANIMATION_DELAY);
+    setTimeout(() => {
+      this.content.scrollToTop(250);
+    }, ANIMATION_TIME);
   }
 
   checkIfNoteIsInTheFretInterval(noteName: string): boolean {

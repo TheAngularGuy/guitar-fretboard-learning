@@ -10,15 +10,16 @@
         'tile-two-dot': fret === 12
       }"
       *ngFor="let fretnotes of notes; let fret = index"
+      [id]="'idFretNb' + fret"
     >
       <span class="tile-number">
-        <span *ngIf="fret == 0" class="hide-on-mobile">
+        <span *ngIf="getNum(fret) == 0" class="hide-on-mobile">
           {{ fretnotes[0] | lowercase }}
         </span>
-        <span *ngIf="fret == 0" class="hide-on-desktop">
+        <span *ngIf="getNum(fret) == 0" class="hide-on-desktop">
           {{ fretnotes[5] | uppercase }}
         </span>
-        <span *ngIf="fret > 0">{{ fret }}</span>
+        <span *ngIf="getNum(fret) > 0">{{ fret }}</span>
       </span>
 
       <div

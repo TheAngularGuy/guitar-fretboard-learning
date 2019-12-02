@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { FRETBOARD_STANDARD } from '../../constants/fretboard-notes.constant';
@@ -9,7 +9,7 @@ import { Note } from '../../models/note.model';
   templateUrl: './fretboard.component.html',
   styleUrls: ['./fretboard.component.scss'],
 })
-export class FretboardComponent implements OnInit {
+export class FretboardComponent implements OnInit, OnChanges {
   @Input() selectedFrets: [number, number];
   @Input() selectedNotes: string[];
   @Input() showSelectedNotes: boolean;
@@ -23,6 +23,16 @@ export class FretboardComponent implements OnInit {
 
   ngOnInit() {
     this.notes = FRETBOARD_STANDARD;
+  }
+
+  ngOnChanges() {
+    if (this.highlightNote && this.highlightNote.fret) {
+      const el = window['idFretNb' + this.highlightNote.fret];
+      el.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
   }
 
   onNoteClicked(noteObject: Note, noteElement: any): void {
@@ -63,5 +73,9 @@ export class FretboardComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  getNum(n: any) {
+    return +n;
   }
 }

@@ -1,8 +1,9 @@
 .header {
   background: linear-gradient(
     45deg,
-    rgba(var(--ion-color-primary-rgb), 0.5),
-    rgba(var(--ion-color-primary-rgb), 1)
+    rgba(var(--ion-color-primary-rgb), 0.5) 0%,
+    rgba(var(--ion-color-primary-rgb), 1) 35%,
+    rgba(var(--ion-color-primary-rgb), 1) 100%
   );
   background-size: cover;
   height: 220px;
@@ -10,6 +11,7 @@
   border-radius: 0 0 0 65px;
   position: relative;
   margin-bottom: 1rem;
+  box-shadow: -6px -4px 16px 0px #020202;
 
   display: flex;
   align-items: center;

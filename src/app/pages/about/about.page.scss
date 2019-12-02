@@ -9,3 +9,9 @@
     margin: 1rem auto 2rem;
   }
 }
+
+@media screen and (min-width: 800px) {
+  .page {
+    text-align: center;
+  }
+}
