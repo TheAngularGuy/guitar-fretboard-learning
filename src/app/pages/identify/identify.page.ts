@@ -171,12 +171,10 @@ export class IdentifyPage implements OnInit, OnDestroy {
 
   checkIfNoteIsInTheFretInterval(noteName: string): boolean {
     const allSelectedNotes = [
-      ...new Set(
-        this.fretboardNotes
-          .slice(this.identifyForm.value.fretStart, this.identifyForm.value.fretEnd + 1)
-          .join()
-          .split(',') as any[],
-      ),
+      ...this.fretboardNotes
+        .slice(this.identifyForm.value.fretStart, this.identifyForm.value.fretEnd + 1)
+        .join()
+        .split(','),
     ];
     return allSelectedNotes.includes(noteName);
   }

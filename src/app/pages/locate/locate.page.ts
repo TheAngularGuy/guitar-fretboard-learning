@@ -171,12 +171,10 @@ export class LocatePage implements OnInit, OnDestroy {
 
   checkIfNoteIsInTheFretInterval(noteName: string): boolean {
     const allSelectedNotes = [
-      ...new Set(
-        this.fretboardNotes
-          .slice(this.locateForm.value.fretStart, this.locateForm.value.fretEnd + 1)
-          .join()
-          .split(',') as any[],
-      ),
+      ...this.fretboardNotes
+        .slice(this.locateForm.value.fretStart, this.locateForm.value.fretEnd + 1)
+        .join()
+        .split(','),
     ];
     return allSelectedNotes.includes(noteName);
   }
