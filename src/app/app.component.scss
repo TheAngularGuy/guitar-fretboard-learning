@@ -1,9 +1,13 @@
 .header {
-  background: var(--ion-color-primary);
+  background: linear-gradient(
+    45deg,
+    rgba(var(--ion-color-primary-rgb), 0.5),
+    rgba(var(--ion-color-primary-rgb), 1)
+  );
   background-size: cover;
   height: 220px;
   overflow: hidden;
-  border-radius: 0 0 0 100px;
+  border-radius: 0 0 0 65px;
   position: relative;
   margin-bottom: 1rem;
 
