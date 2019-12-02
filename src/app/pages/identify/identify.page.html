@@ -32,7 +32,7 @@
 
       <hr />
 
-      <form class="settings" *ngIf="showSettings" [formGroup]="identifyForm" @popAnimation>
+      <form class="settings" *ngIf="showSettings" [formGroup]="identifyForm" @slideAnimation>
         <ion-item>
           <ion-label>Notes</ion-label>
           <ion-select multiple="true" formControlName="selectedNotes">
@@ -105,16 +105,25 @@
 <ng-template #playingControls>
   <div class="playing">
     <div class="score">
-      <p><ion-icon name="thumbs-up"></ion-icon> &nbsp; {{score.good}} &nbsp; / &nbsp; {{maxRange}}</p>
-      <p><ion-icon name="thumbs-down"></ion-icon> &nbsp; {{score.bad}} &nbsp; / &nbsp; {{maxRange}}</p>
+      <p class="good">
+        <ion-icon name="thumbs-up" color="secondary"></ion-icon> &nbsp;
+        <b [@popAnimation]="score.good">{{score.good}}</b> &nbsp; / {{maxRange}}
+      </p>
+      <p class="bad">
+        <ion-icon name="thumbs-down" color="danger"></ion-icon> &nbsp;
+        <b [@popAnimation]="score.bad">{{score.bad}} </b> &nbsp; / {{maxRange}}
+      </p>
     </div>
     <div class="notes">
       <ion-button
+        #btn
         color="light"
         *ngFor="let note of identifyForm.value.selectedNotes"
-        (click)="onNoteClicked(note)"
+        (click)="onNoteClicked(note, btn)"
       >
-        {{note}}
+        <span style="min-width: 2.3ch; display: inline-block; font-feature-settings: 'tnum';">
+          {{note}}
+        </span>
       </ion-button>
     </div>
   </div>

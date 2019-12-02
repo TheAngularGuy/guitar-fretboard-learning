@@ -17,7 +17,7 @@ export class FretboardComponent implements OnInit {
   @Input() disableClick: boolean;
   @Input() showAll: boolean;
   @Output() noteClick: Subject<Note> = new Subject();
-  notes: any[];
+  notes: string[][];
 
   constructor() {}
 

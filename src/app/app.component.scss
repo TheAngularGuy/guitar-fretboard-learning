@@ -1,0 +1,20 @@
+.header {
+  background: var(--ion-color-primary);
+  background-size: cover;
+  height: 220px;
+  overflow: hidden;
+  border-radius: 0 0 0 100px;
+  position: relative;
+  margin-bottom: 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: 'Avenir', sans-serif;
+  font-size: 200%;
+  font-display: swap;
+  text-transform: capitalize;
+  text-align: center;
+  color: var(--ion-color-primary-contrast);
+}

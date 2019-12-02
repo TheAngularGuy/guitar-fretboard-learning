@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ToastController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { popAnimation } from 'src/app/animations/pop.animation';
+import { slideAnimation } from 'src/app/animations/slide.animation';
 import { Note } from 'src/app/models/note.model';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 
@@ -18,7 +19,7 @@ const MAX_RANGE = 20;
   selector: 'app-locate',
   templateUrl: './locate.page.html',
   styleUrls: ['./locate.page.scss'],
-  animations: [popAnimation],
+  animations: [popAnimation, slideAnimation],
 })
 export class LocatePage implements OnInit, OnDestroy {
   destroyed$ = new Subject();

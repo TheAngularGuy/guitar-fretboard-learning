@@ -33,7 +33,7 @@
 
       <hr />
 
-      <form class="settings" *ngIf="showSettings" [formGroup]="locateForm" @popAnimation>
+      <form class="settings" *ngIf="showSettings" [formGroup]="locateForm" @slideAnimation>
         <ion-item>
           <ion-label>Notes</ion-label>
           <ion-select multiple="true" formControlName="selectedNotes">
@@ -103,8 +103,14 @@
 <ng-template #playingControls>
   <div class="playing">
     <div class="score">
-      <p><ion-icon name="thumbs-up"></ion-icon> &nbsp; {{score.good}} &nbsp; / &nbsp; {{maxRange}}</p>
-      <p><ion-icon name="thumbs-down"></ion-icon> &nbsp; {{score.bad}} &nbsp; / &nbsp; {{maxRange}}</p>
+      <p class="good">
+        <ion-icon name="thumbs-up" color="secondary"></ion-icon> &nbsp;
+        <b [@popAnimation]="score.good">{{score.good}}</b> &nbsp; / {{maxRange}}
+      </p>
+      <p class="bad">
+        <ion-icon name="thumbs-down" color="danger"></ion-icon> &nbsp;
+        <b [@popAnimation]="score.bad">{{score.bad}} </b> &nbsp; / {{maxRange}}
+      </p>
     </div>
     <div class="note" [@popAnimation]="noteToFind?.note?.noteName">
       {{noteToFind?.note?.noteName}}

@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ToastController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { popAnimation } from 'src/app/animations/pop.animation';
+import { slideAnimation } from 'src/app/animations/slide.animation';
 import { Note } from 'src/app/models/note.model';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 
@@ -18,7 +19,7 @@ const MAX_RANGE = 20;
   selector: 'app-identify',
   templateUrl: './identify.page.html',
   styleUrls: ['./identify.page.scss'],
-  animations: [popAnimation],
+  animations: [popAnimation, slideAnimation],
 })
 export class IdentifyPage implements OnInit, OnDestroy {
   destroyed$ = new Subject();
@@ -202,7 +203,7 @@ export class IdentifyPage implements OnInit, OnDestroy {
     };
   }
 
-  onNoteClicked(noteGuessed: string): boolean {
+  onNoteClicked(noteGuessed: string, btn: { el: { color: string } }): boolean {
     const now = Date.now();
     if (!this.play || now - this.lastClickRegistered <= CLICK_INTERVAL) {
       return;
@@ -210,8 +211,16 @@ export class IdentifyPage implements OnInit, OnDestroy {
     this.lastClickRegistered = now;
     if (noteGuessed === this.noteToFind.note.noteName) {
       this.score.good += 1;
+      btn.el.color = 'primary';
+      setTimeout(() => {
+        btn.el.color = 'light';
+      }, ANIMATION_DELAY);
     } else {
       this.score.bad += 1;
+      btn.el.color = 'danger';
+      setTimeout(() => {
+        btn.el.color = 'light';
+      }, ANIMATION_DELAY);
     }
     this.scoreHistoric.push({
       noteGuessed: {

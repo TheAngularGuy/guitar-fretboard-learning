@@ -50,8 +50,13 @@
     flex-direction: column;
     justify-content: center;
 
-    p {
+    .good,
+    .bad {
+      font-feature-settings: 'tnum';
       margin: 0;
+      height: 3ch;
+      display: flex;
+      align-items: center;
     }
   }
 }

@@ -12,8 +12,13 @@
       *ngFor="let fretnotes of notes; let fret = index"
     >
       <span class="tile-number">
-        <ng-container *ngIf="fret == 0">e</ng-container>
-        <ng-container *ngIf="fret > 0">{{ fret }}</ng-container>
+        <span *ngIf="fret == 0" class="hide-on-mobile">
+          {{ fretnotes[0] | lowercase }}
+        </span>
+        <span *ngIf="fret == 0" class="hide-on-desktop">
+          {{ fretnotes[5] | uppercase }}
+        </span>
+        <span *ngIf="fret > 0">{{ fret }}</span>
       </span>
 
       <div
