@@ -58,7 +58,9 @@ export class IdentifyPage implements OnInit, OnDestroy {
   setForm(): FormGroup {
     const form = this.fb.group({
       selectedNotes: [
-        this.chromaticScale.filter(n => !n.includes('#')),
+        window.innerWidth > 800
+          ? this.chromaticScale
+          : this.chromaticScale.filter(n => !n.includes('#')),
         [
           Validators.required,
           (c: FormControl) => {
