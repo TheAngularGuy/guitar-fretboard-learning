@@ -93,7 +93,6 @@
     [showAll]="showAll"
     [selectedFrets]="[identifyForm?.value.fretStart, identifyForm?.value.fretEnd]"
     [selectedNotes]="noteToFind ? [noteToFind.note.noteName] : null"
-    (noteClick)="onNoteClicked($event)"
   >
   </app-fretboard>
 </ion-content>

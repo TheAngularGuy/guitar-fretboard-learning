@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ToastController } from '@ionic/angular';
+import { IonButton, ToastController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { popAnimation } from 'src/app/animations/pop.animation';
 import { slideAnimation } from 'src/app/animations/slide.animation';
@@ -172,7 +172,7 @@ export class IdentifyPage implements OnInit, OnDestroy {
         this.fretboardNotes
           .slice(this.identifyForm.value.fretStart, this.identifyForm.value.fretEnd + 1)
           .join()
-          .split(','),
+          .split(',') as any[],
       ),
     ];
     return allSelectedNotes.includes(noteName);
@@ -203,7 +203,7 @@ export class IdentifyPage implements OnInit, OnDestroy {
     };
   }
 
-  onNoteClicked(noteGuessed: string, btn: { el: { color: string } }): boolean {
+  onNoteClicked(noteGuessed: string, btn: IonButton | any): boolean {
     const now = Date.now();
     if (!this.play || now - this.lastClickRegistered <= CLICK_INTERVAL) {
       return;

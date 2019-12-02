@@ -172,7 +172,7 @@ export class LocatePage implements OnInit, OnDestroy {
         this.fretboardNotes
           .slice(this.locateForm.value.fretStart, this.locateForm.value.fretEnd + 1)
           .join()
-          .split(','),
+          .split(',') as any[],
       ),
     ];
     return allSelectedNotes.includes(noteName);
