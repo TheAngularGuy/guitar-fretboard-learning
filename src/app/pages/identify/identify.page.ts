@@ -197,21 +197,23 @@ export class IdentifyPage implements OnInit, OnDestroy {
     };
 
     // scroll
-
-    if (
-      (window as any).fretboard &&
-      (window as any).fretboard.clientHeight > window.screen.height - HEIGHT_OFFSET
-    ) {
-      setTimeout(() => {
-        const el = window['idFretNb' + this.noteToFind.note.fret];
-        if (el) {
-          el.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-          });
+    setTimeout(
+      () => {
+        if (
+          (window as any).fretboard &&
+          (window as any).fretboard.clientHeight > window.screen.height - HEIGHT_OFFSET
+        ) {
+          const el = window['idFretNb' + this.noteToFind.note.fret];
+          if (el) {
+            el.scrollIntoView({
+              behavior: 'smooth',
+              block: 'center',
+            });
+          }
         }
-      }, 15);
-    }
+      },
+      this.scoreHistoric.length === 0 ? 100 : 10,
+    );
   }
 
   onNoteClicked(noteGuessed: string, btn: IonButton | any): boolean {
@@ -244,7 +246,9 @@ export class IdentifyPage implements OnInit, OnDestroy {
     });
 
     if (this.scoreHistoric.length === MAX_RANGE) {
-      this.togglePlay();
+      setTimeout(() => {
+        this.togglePlay();
+      }, ANIMATION_DELAY);
       return;
     }
     setTimeout(() => this.pickRandomNote(), ANIMATION_DELAY);

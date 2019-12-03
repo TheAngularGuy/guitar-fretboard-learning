@@ -36,10 +36,7 @@ export class ExplorePage implements OnInit, OnDestroy {
     const form = this.fb.group({
       selectedNotes: [this.cagedScale, [Validators.required]],
       fretStart: [0, [Validators.required, Validators.min(0), Validators.max(12)]],
-      fretEnd: [
-        window.innerWidth > 800 ? 12 : 3,
-        [Validators.required, Validators.min(0), Validators.max(12)],
-      ],
+      fretEnd: [12, [Validators.required, Validators.min(0), Validators.max(12)]],
     });
 
     return (this.exploreForm = form);

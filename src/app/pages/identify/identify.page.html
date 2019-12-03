@@ -87,6 +87,7 @@
 
   <br />
   <app-fretboard
+    [ngClass]="{'hide-on-mobile': !play}"
     [highlightNote]="noteToFind && noteToFind.note"
     [disableClick]="true"
     [showAll]="showAll"

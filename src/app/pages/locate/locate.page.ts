@@ -209,7 +209,9 @@ export class LocatePage implements OnInit, OnDestroy {
     });
 
     if (this.scoreHistoric.length === MAX_RANGE) {
-      this.togglePlay();
+      setTimeout(() => {
+        this.togglePlay();
+      }, ANIMATION_DELAY);
       return;
     }
     setTimeout(() => this.pickRandomNote(), ANIMATION_DELAY);
