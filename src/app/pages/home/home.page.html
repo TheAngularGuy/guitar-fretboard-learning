@@ -19,23 +19,29 @@
       learning
     </div>
 
-    <div class="panel">
-      <h2>Let's learn the fretboard</h2>
-      <p class="hide-on-mobile">Hello there!</p>
-      <p>
-        This tool will help you learn your fretboard. There is 3 modes to play with, the first one is to
-        locate a specific note on the fretboard.
-      </p>
-      <p>
-        The second one is a little bit harder, a note on the fretboard will be highlighted and you have
-        to guess which one is it.
-      </p>
-      <p>
-        Last but not least the third game mode will help you to improvise, select the notes of the scale
-        you want and you are ready to jam!
-      </p>
-      <p class="hide-on-mobile">Happy playing!</p>
-    </div>
+    <ion-card class="panel">
+      <ion-card-header>
+        <ion-card-title>
+          Let's learn the fretboard
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p class="hide-on-mobile">Hello there!</p>
+        <p>
+          This tool will help you learn your fretboard. There is 3 modes to play with, the first one is
+          to locate a specific note on the fretboard.
+        </p>
+        <p>
+          The second one is a little bit harder, a note on the fretboard will be highlighted and you have
+          to guess which one is it.
+        </p>
+        <p>
+          Last but not least the third game mode will help you to improvise, select the notes of the
+          scale you want and you are ready to jam!
+        </p>
+        <p class="hide-on-mobile">Happy playing!</p>
+      </ion-card-content>
+    </ion-card>
 
     <div class="btn-list" [@listAnimation]="gameModes.length">
       <ion-button color="primary" *ngFor="let mode of gameModes" (click)="goTo(mode.path)">
