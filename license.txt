@@ -659,3 +659,27 @@ specific requirements.
 if any, to sign a "copyright disclaimer" for the program, if necessary.
 For more information on this, and how to apply and follow the GNU AGPL, see
 <https://www.gnu.org/licenses/>.
+
+
+
+
+
+-----------------------------------------------------------------------
+
+Permissions:
+ Commercial use
+ Distribution
+ Modification
+ Patent use
+ Private use
+
+Conditions:
+ Disclose source
+ License and copyright notice
+ Network use is distribution
+ Same license
+ State changes
+
+Limitations
+ Liability
+ Warranty
