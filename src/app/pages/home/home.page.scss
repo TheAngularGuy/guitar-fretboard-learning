@@ -23,11 +23,8 @@
       left: 0;
       background-image: linear-gradient(
         to bottom,
-        #006699,
-        rgba(#6585b0, 0.8),
-        rgba(#9ca7c6, 0.6),
-        rgba(#cbccdc, 0.4),
-        rgba(#f4f4f4, 0.2)
+        var(--ion-color-primary),
+        rgba(var(--ion-color-primary-contrast-rgb), 0.2)
       );
 
       &::after {

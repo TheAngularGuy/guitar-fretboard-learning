@@ -222,7 +222,7 @@ export class IdentifyPage implements OnInit, OnDestroy {
     this.lastClickRegistered = now;
     if (noteGuessed === this.noteToFind.note.noteName) {
       this.score.good += 1;
-      btn.el.color = 'primary';
+      btn.el.color = 'success';
       setTimeout(() => {
         btn.el.color = 'light';
       }, ANIMATION_DELAY);

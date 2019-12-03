@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
@@ -63,7 +63,7 @@
       <br />
 
       <div class="start">
-        <ion-button color="secondary" shape="round" (click)="togglePlay()" [disabled]="noteToFind">
+        <ion-button color="success" shape="round" (click)="togglePlay()" [disabled]="noteToFind">
           <ion-icon name="play" *ngIf="!noteToFind"></ion-icon>
           <ion-icon name="refresh" *ngIf="noteToFind"></ion-icon>
           &nbsp; GO
@@ -94,7 +94,7 @@
   <br />
 </ion-content>
 
-<ion-footer *ngIf="play" class="hide-on-desktop">
+<ion-footer color="light" *ngIf="play" class="hide-on-desktop">
   <ng-container *ngTemplateOutlet="playingControls"></ng-container>
 </ion-footer>
 
@@ -102,7 +102,7 @@
   <div class="playing">
     <div class="score">
       <p class="good">
-        <ion-icon name="thumbs-up" color="secondary"></ion-icon> &nbsp;
+        <ion-icon name="thumbs-up" color="success"></ion-icon> &nbsp;
         <b [@popAnimation]="score.good">{{score.good}}</b> &nbsp; / {{maxRange}}
       </p>
       <p class="bad">

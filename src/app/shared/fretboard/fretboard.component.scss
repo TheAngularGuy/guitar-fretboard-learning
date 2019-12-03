@@ -71,12 +71,12 @@
           color: white;
           font-weight: bold;
           font-size: 1.3rem;
-          background: rgba($color: #006699, $alpha: 0.6);
+          background: rgba(var(--ion-color-secondary-rgb), 0.6);
           transition: opacity 250ms ease-out;
         }
 
         .note-false {
-          background: rgba($color: #f23200, $alpha: 0.6);
+          background: rgba(var(--ion-color-danger-rgb), 0.6);
         }
 
         .note-show {
@@ -89,7 +89,7 @@
       }
 
       .note-highlighted {
-        background: rgba($color: #006699, $alpha: 0.4);
+        background: rgba(var(--ion-color-secondary-rgb), 0.4);
       }
     }
 
