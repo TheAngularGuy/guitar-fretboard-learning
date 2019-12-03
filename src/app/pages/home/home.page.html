@@ -46,7 +46,7 @@
     </ion-card>
 
     <div class="btn-list" [@listAnimation]="gameModes.length">
-      <ion-button color="secondary" *ngFor="let mode of gameModes" (click)="goTo(mode.path)">
+      <ion-button [color]="mode.color" *ngFor="let mode of gameModes" (click)="goTo(mode.path)">
         <div>
           <img [src]="mode.img" height="80" [alt]="mode.name" />
           <p style="margin-bottom: 0">{{ mode.name }}</p>
