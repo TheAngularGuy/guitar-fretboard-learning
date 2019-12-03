@@ -28,10 +28,12 @@ export class FretboardComponent implements OnInit, OnChanges {
   ngOnChanges() {
     if (this.highlightNote && this.highlightNote.fret) {
       const el = window['idFretNb' + this.highlightNote.fret];
-      el.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      });
+      if (!this.isElementInViewport(el)) {
+        el.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+      }
     }
   }
 
@@ -77,5 +79,25 @@ export class FretboardComponent implements OnInit, OnChanges {
 
   getNum(n: any) {
     return +n;
+  }
+
+  isElementInViewport(el: HTMLElement | any) {
+    let top = el.offsetTop;
+    let left = el.offsetLeft;
+    const width = el.offsetWidth;
+    const height = el.offsetHeight;
+
+    while (el.offsetParent) {
+      el = el.offsetParent;
+      top += el.offsetTop;
+      left += el.offsetLeft;
+    }
+
+    return (
+      top >= window.pageYOffset &&
+      left >= window.pageXOffset &&
+      top + height <= window.pageYOffset + window.innerHeight &&
+      left + width <= window.pageXOffset + window.innerWidth
+    );
   }
 }
