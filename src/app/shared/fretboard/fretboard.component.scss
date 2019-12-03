@@ -71,7 +71,7 @@
           color: white;
           font-weight: bold;
           font-size: 1.3rem;
-          background: rgba(var(--ion-color-secondary-rgb), 0.6);
+          background: rgba(var(--ion-color-success-rgb), 0.6);
           transition: opacity 250ms ease-out;
         }
 
@@ -89,7 +89,7 @@
       }
 
       .note-highlighted {
-        background: rgba(var(--ion-color-secondary-rgb), 0.4);
+        background: rgba(var(--ion-color-tertiary-rgb), 0.4);
       }
     }
 

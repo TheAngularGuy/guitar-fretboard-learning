@@ -1,8 +1,8 @@
 {
-  "name": "app",
-  "short_name": "app",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "name": "Fretboard Learning",
+  "short_name": "Fretboard Learning",
+  "theme_color": "#020202",
+  "background_color": "#f4f5f8",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
