@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
+import { SwUpdate } from '@angular/service-worker';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Platform } from '@ionic/angular';
+import { Platform, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
@@ -18,9 +19,11 @@ export class AppComponent {
   ];
 
   constructor(
-    private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
+    private readonly platform: Platform,
+    private readonly splashScreen: SplashScreen,
+    private readonly statusBar: StatusBar,
+    private readonly swUpdate: SwUpdate,
+    private readonly toastController: ToastController,
   ) {
     this.initializeApp();
   }
@@ -29,6 +32,34 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.checkSWVersion();
     });
+  }
+
+  checkSWVersion() {
+    if (this.swUpdate.isEnabled) {
+      this.swUpdate.available.subscribe(async () => {
+        const toast = await this.toastController.create({
+          message: 'New version available',
+          position: 'top',
+          buttons: [
+            {
+              side: 'end',
+              icon: 'refresh',
+              text: 'reload',
+              handler: () => {
+                window.location.reload();
+              },
+            },
+            {
+              text: 'ignore',
+              role: 'cancel',
+              handler: () => {},
+            },
+          ],
+        });
+        toast.present();
+      });
+    }
   }
 }
