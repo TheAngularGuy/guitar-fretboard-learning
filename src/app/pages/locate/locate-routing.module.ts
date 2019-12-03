@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
+import { CanDeactivateGuard } from '../../guards/deactivate.guard';
 import { LocatePage } from './locate.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: LocatePage
-  }
+    component: LocatePage,
+    canDeactivate: [CanDeactivateGuard],
+  },
 ];
 
 @NgModule({

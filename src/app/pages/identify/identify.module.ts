@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonicModule, ToastController } from '@ionic/angular';
+import { AlertController, IonicModule, ToastController } from '@ionic/angular';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 import { FretboardModule } from 'src/app/shared/fretboard/fretboard.module';
 
+import { CanDeactivateGuard } from '../../guards/deactivate.guard';
 import { IdentifyPageRoutingModule } from './identify-routing.module';
 import { IdentifyPage } from './identify.page';
 
@@ -18,6 +19,6 @@ import { IdentifyPage } from './identify.page';
     FretboardModule,
   ],
   declarations: [IdentifyPage],
-  providers: [UtilsService, ToastController],
+  providers: [UtilsService, ToastController, AlertController, CanDeactivateGuard],
 })
 export class IdentifyPageModule {}

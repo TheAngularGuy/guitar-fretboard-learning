@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { IonContent, ToastController } from '@ionic/angular';
+import { AlertController, IonContent, ToastController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { popAnimation } from 'src/app/animations/pop.animation';
 import { slideAnimation } from 'src/app/animations/slide.animation';
@@ -9,6 +9,7 @@ import { UtilsService } from 'src/app/services/utils/utils.service';
 
 import { CHROMATIC_SCALE } from '../../constants/chromatic-scale.constant';
 import { FRETBOARD_STANDARD } from '../../constants/fretboard-notes.constant';
+import { CanDeactivateComponent } from '../../guards/deactivate.guard';
 
 const ANIMATION_TIME = 250;
 const ANIMATION_DELAY = 1250;
@@ -21,7 +22,7 @@ const MAX_RANGE = 20;
   styleUrls: ['./locate.page.scss'],
   animations: [popAnimation, slideAnimation],
 })
-export class LocatePage implements OnInit, OnDestroy {
+export class LocatePage implements OnInit, OnDestroy, CanDeactivateComponent {
   @ViewChild('content', { static: false }) content: IonContent;
   destroyed$ = new Subject();
   locateForm: FormGroup;
@@ -42,6 +43,7 @@ export class LocatePage implements OnInit, OnDestroy {
     private readonly fb: FormBuilder,
     private readonly utils: UtilsService,
     private readonly toastController: ToastController,
+    private readonly alertController: AlertController,
   ) {}
 
   ngOnDestroy() {
@@ -223,5 +225,31 @@ export class LocatePage implements OnInit, OnDestroy {
       return;
     }
     return this.scoreHistoric.reduce((acc, n) => acc + n.timeTook, 0) / this.scoreHistoric.length / 1000;
+  }
+
+  async canDeactivateComp() {
+    let ret = true;
+    if (this.play) {
+      const alert = await this.alertController.create({
+        header: 'Do you want to leave?',
+        message:
+          'It looks like you are in the middle of somethig, are you sure you want to leave this page ?',
+        buttons: [
+          {
+            text: 'Yes',
+            role: 'cancel',
+          },
+          {
+            text: 'No',
+            handler: () => {
+              ret = false;
+            },
+          },
+        ],
+      });
+      await alert.present();
+      await alert.onWillDismiss();
+    }
+    return ret;
   }
 }
