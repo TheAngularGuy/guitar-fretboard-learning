@@ -71,12 +71,12 @@
           color: white;
           font-weight: bold;
           font-size: 1.3rem;
-          background: rgba(var(--ion-color-success-rgb), 0.6);
+          background: rgba(var(--ion-color-success-rgb), 0.8);
           transition: opacity 250ms ease-out;
         }
 
         .note-false {
-          background: rgba(var(--ion-color-danger-rgb), 0.6);
+          background: rgba(var(--ion-color-danger-rgb), 0.8);
         }
 
         .note-show {
@@ -89,7 +89,7 @@
       }
 
       .note-highlighted {
-        background: rgba(var(--ion-color-tertiary-rgb), 0.4);
+        background: rgba(var(--ion-color-tertiary-rgb), 0.35);
       }
     }
 
