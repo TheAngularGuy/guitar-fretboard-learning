@@ -71,23 +71,10 @@ export class LocatePage implements OnInit, OnDestroy {
           },
         ],
       ],
-      fretStart: [
-        0,
-        [
-          Validators.required,
-          Validators.min(0),
-          Validators.max(12),
-          this.utils.selectedFretsValidator(),
-        ],
-      ],
+      fretStart: [0, [Validators.required, Validators.min(0), Validators.max(12)]],
       fretEnd: [
         window.innerWidth > 800 ? 12 : 3,
-        [
-          Validators.required,
-          Validators.min(0),
-          Validators.max(12),
-          this.utils.selectedFretsValidator(),
-        ],
+        [Validators.required, Validators.min(0), Validators.max(12)],
       ],
     });
 
@@ -107,7 +94,7 @@ export class LocatePage implements OnInit, OnDestroy {
   }
 
   togglePlay(): boolean {
-    if (this.locateForm.invalid) {
+    if (this.locateForm.invalid || this.locateForm.value.fretStart >= this.locateForm.value.fretEnd) {
       this.toastController
         .create({
           message: 'Invalid form, please select at least 2 notes and 2 frets',
