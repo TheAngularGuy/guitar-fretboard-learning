@@ -1,4 +1,9 @@
 .settings {
+  ion-item {
+    ion-input {
+      text-align: end;
+    }
+  }
   @media screen and (min-width: 800px) {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

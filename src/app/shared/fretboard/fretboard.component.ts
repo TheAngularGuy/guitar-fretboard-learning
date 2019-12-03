@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { FRETBOARD_STANDARD } from '../../constants/fretboard-notes.constant';
@@ -9,7 +9,7 @@ import { Note } from '../../models/note.model';
   templateUrl: './fretboard.component.html',
   styleUrls: ['./fretboard.component.scss'],
 })
-export class FretboardComponent implements OnInit, OnChanges {
+export class FretboardComponent implements OnInit {
   @Input() selectedFrets: [number, number];
   @Input() selectedNotes: string[];
   @Input() showSelectedNotes: boolean;
@@ -23,18 +23,6 @@ export class FretboardComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.notes = FRETBOARD_STANDARD;
-  }
-
-  ngOnChanges() {
-    if (this.highlightNote && this.highlightNote.fret) {
-      const el = window['idFretNb' + this.highlightNote.fret];
-      if (!this.isElementInViewport(el)) {
-        el.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
-        });
-      }
-    }
   }
 
   onNoteClicked(noteObject: Note, noteElement: any): void {
@@ -82,6 +70,7 @@ export class FretboardComponent implements OnInit, OnChanges {
   }
 
   isElementInViewport(el: HTMLElement | any) {
+    // NOTE: need to work on that
     let top = el.offsetTop;
     let left = el.offsetLeft;
     const width = el.offsetWidth;

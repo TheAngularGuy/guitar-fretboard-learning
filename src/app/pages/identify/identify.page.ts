@@ -14,6 +14,7 @@ const ANIMATION_TIME = 250;
 const ANIMATION_DELAY = 1250;
 const CLICK_INTERVAL = 500;
 const MAX_RANGE = 20;
+const HEIGHT_OFFSET = 300; // topbar + footer height -- maybe improve this later with the actual height
 
 @Component({
   selector: 'app-identify',
@@ -194,6 +195,23 @@ export class IdentifyPage implements OnInit, OnDestroy {
         string: randomString,
       },
     };
+
+    // scroll
+
+    if (
+      (window as any).fretboard &&
+      (window as any).fretboard.clientHeight > window.screen.height - HEIGHT_OFFSET
+    ) {
+      setTimeout(() => {
+        const el = window['idFretNb' + this.noteToFind.note.fret];
+        if (el) {
+          el.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+          });
+        }
+      }, 15);
+    }
   }
 
   onNoteClicked(noteGuessed: string, btn: IonButton | any): boolean {
