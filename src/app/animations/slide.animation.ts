@@ -16,12 +16,14 @@ export const slideAnimation = trigger('slideAnimation', [
   transition(':leave', [
     style({
       height: '!',
+      opacity: '!',
       overflow: 'hidden',
     }),
     animate(
       '250ms ease-out',
       style({
         height: '0',
+        opacity: '0',
         overflow: 'hidden',
       }),
     ),
