@@ -9,7 +9,7 @@ import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
 import { CHROMATIC_SCALE } from '../../constants/chromatic-scale.constant';
 import { FRETBOARD_STANDARD } from '../../constants/fretboard-notes.constant';
-import { CanDeactivateComponent } from '../../guards/deactivate.guard';
+import { CanDeactivateComponent } from '../../shared/guards/deactivate.guard';
 
 const ANIMATION_TIME = 250;
 const ANIMATION_DELAY = 1250;
