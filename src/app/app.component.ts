@@ -17,7 +17,7 @@ export class AppComponent {
     { title: 'Explore', url: '/explore', img: 'assets/imgs/explore-black.svg' },
   ];
   morePages = [
-    { title: 'Preference', url: '/settings' },
+    { title: 'Preferences', url: '/settings' },
     { title: 'About', url: '/about' },
   ];
   // icons set: https://www.flaticon.com/packs/essential-set-2
