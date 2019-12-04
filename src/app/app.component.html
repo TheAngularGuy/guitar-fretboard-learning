@@ -13,7 +13,18 @@
 
         <ion-list>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item ion-button [routerDirection]="'root'" [routerLink]="[p.url]">
+            <ion-item ion-button [routerDirection]="'root'" [routerLink]="[p.url]" lines="none">
+              <img [src]="p.img" height="26" style="margin-right: 2ch;" />
+              <ion-label>
+                {{ p.title }}
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-item-divider></ion-item-divider>
+
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of morePages">
+            <ion-item ion-button [routerDirection]="'root'" [routerLink]="[p.url]" lines="none">
               <ion-label>
                 {{ p.title }}
               </ion-label>

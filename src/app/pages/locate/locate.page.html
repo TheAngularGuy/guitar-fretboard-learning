@@ -5,9 +5,9 @@
     </ion-buttons>
     <ion-title>locate</ion-title>
     <ion-buttons slot="end" *ngIf="play">
-      <ion-button (click)="togglePlay()">
+      <!-- <ion-button (click)="togglePlay()">
         <ion-icon slot="icon-only" name="pause"></ion-icon>
-      </ion-button>
+      </ion-button> -->
       <ion-button (click)="toggleShowAll()">
         <ion-icon slot="icon-only" name="eye"></ion-icon>
       </ion-button>
@@ -110,6 +110,9 @@
         <ion-icon name="thumbs-down" color="danger"></ion-icon> &nbsp;
         <b [@popAnimation]="score.bad">{{score.bad}} </b> &nbsp; / {{maxRange}}
       </p>
+      <ion-button fill="outline" color="danger" size="small" style="width: 9ch" (click)="togglePlay()">
+        Stop
+      </ion-button>
     </div>
     <div class="note" [@popAnimation]="noteToFind?.note?.noteName">
       {{noteToFind?.note?.noteName}}

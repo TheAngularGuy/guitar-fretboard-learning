@@ -10,13 +10,17 @@ import { Platform, ToastController } from '@ionic/angular';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  public appPages = [
-    { title: 'Home', url: '/home' },
-    { title: 'Locate', url: '/locate' },
-    { title: 'Identify', url: '/identify' },
-    { title: 'Explore', url: '/explore' },
+  appPages = [
+    { title: 'Home', url: '/home', img: 'assets/imgs/home.svg' },
+    { title: 'Locate', url: '/locate', img: 'assets/imgs/locate.svg' },
+    { title: 'Identify', url: '/identify', img: 'assets/imgs/identify.svg' },
+    { title: 'Explore', url: '/explore', img: 'assets/imgs/explore-black.svg' },
+  ];
+  morePages = [
+    { title: 'Preference', url: '/settings' },
     { title: 'About', url: '/about' },
   ];
+  // icons set: https://www.flaticon.com/packs/essential-set-2
 
   constructor(
     private readonly platform: Platform,

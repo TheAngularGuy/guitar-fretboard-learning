@@ -1,5 +1,45 @@
-<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" version="1.1" x="0px" y="0px" viewBox="0 0 100 100">
-
-
-
-<g transform="translate(0,-952.36218)"><path style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;opacity:1;color:#000000;fill:#000000;fill-opacity:1;stroke:none;stroke-width:5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans" d="M 50 5 C 25.182716 5 5 25.18272 5 50 C 5 74.8173 25.182716 95 50 95 C 74.817284 95 95 74.8173 95 50 C 95 25.18272 74.817284 5 50 5 z M 50 11 C 71.574644 11 89 28.42536 89 50 C 89 71.5746 71.574644 89 50 89 C 28.425356 89 11 71.5746 11 50 C 11 28.42536 28.425356 11 50 11 z M 50 25 C 41.751258 25 35 31.75127 35 40 A 3.0003 3.0003 0 1 0 41 40 C 41 34.99391 44.993902 31 50 31 C 55.006098 31 59 34.99391 59 40 C 59 43.11324 57.744892 45.23848 55.6875 47.40625 C 53.630108 49.574 50.775527 51.53585 48.125 53.65625 A 3.0003 3.0003 0 0 0 47 56 L 47 60 A 3.0003 3.0003 0 1 0 53 60 L 53 57.46875 C 55.185751 55.80025 57.752652 53.96505 60.0625 51.53125 C 62.755108 48.69425 65 44.86747 65 40 C 65 31.75127 58.248742 25 50 25 z M 50 67 C 47.79086 67 46 68.7908 46 71 C 46 73.2091 47.79086 75 50 75 C 52.20914 75 54 73.2091 54 71 C 54 68.7908 52.20914 67 50 67 z " transform="translate(0,952.36218)"/></g></svg>      
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 52 52" style="enable-background:new 0 0 52 52;" xml:space="preserve">
+<g>
+	<path d="M26,0C11.663,0,0,11.663,0,26s11.663,26,26,26s26-11.663,26-26S40.337,0,26,0z M26,50C12.767,50,2,39.233,2,26
+		S12.767,2,26,2s24,10.767,24,24S39.233,50,26,50z"/>
+	<path d="M26,37c-0.553,0-1,0.447-1,1v2c0,0.553,0.447,1,1,1s1-0.447,1-1v-2C27,37.447,26.553,37,26,37z"/>
+	<path d="M26.113,9.001C26.075,9.001,26.037,9,25.998,9c-2.116,0-4.106,0.815-5.615,2.304C18.847,12.819,18,14.842,18,17
+		c0,0.553,0.447,1,1,1s1-0.447,1-1c0-1.618,0.635-3.136,1.787-4.272c1.153-1.137,2.688-1.765,4.299-1.727
+		c3.161,0.044,5.869,2.752,5.913,5.913c0.029,2.084-0.999,4.002-2.751,5.132C26.588,23.762,25,26.794,25,30.158V33
+		c0,0.553,0.447,1,1,1s1-0.447,1-1v-2.842c0-2.642,1.276-5.105,3.332-6.432c2.335-1.506,3.706-4.063,3.667-6.84
+		C33.939,12.599,30.401,9.061,26.113,9.001z"/>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>

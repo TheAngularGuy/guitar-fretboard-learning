@@ -2,9 +2,12 @@
   padding: 1rem;
 
   img {
-    min-width: 150px;
-    width: 70vw;
     max-width: 400px;
+    max-height: 400px;
+    width: 70vw;
+    height: 70vw;
+    min-width: 150px;
+    min-height: 150px;
     display: block;
     margin: 1rem auto 2rem;
   }

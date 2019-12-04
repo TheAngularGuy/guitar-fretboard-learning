@@ -66,6 +66,7 @@ export class FretboardComponent implements OnInit {
   }
 
   getNum(n: any) {
+    // TODO remove when AngularLanguageService fixes its bug
     return +n;
   }
 
