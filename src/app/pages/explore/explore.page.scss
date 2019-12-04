@@ -4,7 +4,7 @@
       text-align: end;
     }
   }
-  @media screen and (min-width: 800px) {
+  @media screen and (min-width: 760px) {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 1rem;

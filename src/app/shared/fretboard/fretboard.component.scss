@@ -150,12 +150,12 @@
   pointer-events: none;
 }
 .tile-hide {
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 760px) {
     display: none !important;
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 760px) {
   .fretboard-wrapper {
     width: calc(100% - 20px);
     margin: auto;
@@ -292,7 +292,7 @@
   }
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 760px) {
   .fretboard-wrapper {
     margin: auto;
     width: calc(100% - 20px);

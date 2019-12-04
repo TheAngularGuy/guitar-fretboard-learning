@@ -61,7 +61,7 @@ export class IdentifyPage implements OnInit, OnDestroy, CanDeactivateComponent {
   setForm(): FormGroup {
     const form = this.fb.group({
       selectedNotes: [
-        window.innerWidth > 800
+        window.innerWidth > 760
           ? this.chromaticScale
           : this.chromaticScale.filter(n => !n.includes('#')),
         [
@@ -78,7 +78,7 @@ export class IdentifyPage implements OnInit, OnDestroy, CanDeactivateComponent {
       ],
       fretStart: [0, [Validators.required, Validators.min(0), Validators.max(12)]],
       fretEnd: [
-        window.innerWidth > 800 ? 12 : 3,
+        window.innerWidth > 760 ? 12 : 3,
         [Validators.required, Validators.min(0), Validators.max(12)],
       ],
     });

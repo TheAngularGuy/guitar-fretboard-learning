@@ -22,12 +22,12 @@ h3 {
   margin-top: 0;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 760px) {
   .hide-on-mobile {
     display: none;
   }
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 760px) {
   .hide-on-desktop {
     display: none;
   }
