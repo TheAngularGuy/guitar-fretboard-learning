@@ -41,8 +41,8 @@ export class IdentifyPage implements OnInit, OnDestroy, CanDeactivateComponent {
   scoreHistoric: { timeTook: number; noteToFind: Note; noteGuessed: Note }[];
 
   constructor(
+    public readonly utils: UtilsService,
     private readonly fb: FormBuilder,
-    private readonly utils: UtilsService,
     private readonly toastController: ToastController,
     private readonly alertController: AlertController,
   ) {}

@@ -99,6 +99,7 @@
 
 <ion-footer *ngIf="play" class="hide-on-desktop">
   <ng-container *ngTemplateOutlet="playingControls"></ng-container>
+  <div *ngIf="utils.isIosPWA()" style="height: 2ch;"></div>
 </ion-footer>
 
 <ng-template #playingControls>
