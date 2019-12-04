@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { CanDeactivateGuard } from '../../guards/deactivate.guard';
 import { LocatePage } from './locate.page';
 
 const routes: Routes = [
   {
     path: '',
     component: LocatePage,
-    canDeactivate: [CanDeactivateGuard],
+    // there's no way to prevent swipe navigation in IOS
+    // canDeactivate: [CanDeactivateGuard],
   },
 ];
 
