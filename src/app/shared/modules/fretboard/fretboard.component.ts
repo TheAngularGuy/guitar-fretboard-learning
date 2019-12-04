@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { FRETBOARD_STANDARD } from '../../constants/fretboard-notes.constant';
-import { Note } from '../../models/note.model';
+import { FRETBOARD_STANDARD } from '../../../constants/fretboard-notes.constant';
+import { Note } from '../../../models/note.model';
 
 @Component({
   selector: 'app-fretboard',

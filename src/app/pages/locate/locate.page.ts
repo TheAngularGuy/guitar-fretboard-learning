@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { popAnimation } from 'src/app/animations/pop.animation';
 import { slideAnimation } from 'src/app/animations/slide.animation';
 import { Note } from 'src/app/models/note.model';
-import { UtilsService } from 'src/app/services/utils/utils.service';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
 import { CHROMATIC_SCALE } from '../../constants/chromatic-scale.constant';
 import { FRETBOARD_STANDARD } from '../../constants/fretboard-notes.constant';

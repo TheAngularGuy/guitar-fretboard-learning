@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertController, IonicModule, ToastController } from '@ionic/angular';
-import { UtilsService } from 'src/app/services/utils/utils.service';
-import { FretboardModule } from 'src/app/shared/fretboard/fretboard.module';
+import { FretboardModule } from 'src/app/shared/modules/fretboard/fretboard.module';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
 import { CanDeactivateGuard } from '../../guards/deactivate.guard';
 import { LocatePageRoutingModule } from './locate-routing.module';

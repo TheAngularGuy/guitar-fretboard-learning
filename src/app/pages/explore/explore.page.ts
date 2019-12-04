@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { CAGED_SCALE } from 'src/app/constants/caged-scale.constant';
-import { UtilsService } from 'src/app/services/utils/utils.service';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
 import { CHROMATIC_SCALE } from '../../constants/chromatic-scale.constant';
 import { FRETBOARD_STANDARD } from '../../constants/fretboard-notes.constant';
