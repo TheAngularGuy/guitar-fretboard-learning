@@ -24,7 +24,7 @@ export class HomePage {
     },
     {
       path: 'explore',
-      img: 'assets/imgs/explore.svg',
+      img: 'assets/imgs/music-note-white.svg',
       name: 'Explore',
       color: 'primary',
     },

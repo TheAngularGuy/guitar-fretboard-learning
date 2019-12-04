@@ -14,7 +14,7 @@ export class AppComponent {
     { title: 'Home', url: '/home', img: 'assets/imgs/home.svg' },
     { title: 'Locate', url: '/locate', img: 'assets/imgs/locate.svg' },
     { title: 'Identify', url: '/identify', img: 'assets/imgs/identify.svg' },
-    { title: 'Explore', url: '/explore', img: 'assets/imgs/explore-black.svg' },
+    { title: 'Explore', url: '/explore', img: 'assets/imgs/music-note.svg' },
   ];
   morePages = [
     { title: 'Preferences', url: '/settings' },
