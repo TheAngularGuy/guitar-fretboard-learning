@@ -31,12 +31,10 @@ export class PreferencesState {
   @Selector()
   public static getFretboardNotes(state: PreferencesStateModel) {
     let output: string[][];
-    console.log('Debbug log: PreferencesState -> getFretboardNotes -> state', state);
     if (state.tuning.toLowerCase().includes('standard')) {
       output = FRETBOARD_STANDARD;
     }
     if (state.leftHandedMode) {
-      console.log('Debbug log: ExplorePage -> ngOnInit -> fretboard', output);
       return output.map(fret => fret.reverse());
     }
     return output;
