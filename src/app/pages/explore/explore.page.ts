@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngxs/store';
 import { Subject } from 'rxjs';
 import { CAGED_SCALE } from 'src/app/constants/caged-scale.constant';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
+import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
 
 import { CHROMATIC_SCALE } from '../../constants/chromatic-scale.constant';
-import { FRETBOARD_STANDARD } from '../../constants/fretboard-notes.constant';
 
 @Component({
   selector: 'app-explore',
@@ -19,14 +20,23 @@ export class ExplorePage implements OnInit, OnDestroy {
   chromaticScale: string[];
   cagedScale: string[];
 
-  constructor(private readonly fb: FormBuilder, private readonly utils: UtilsService) {}
+  preferences: PreferencesStateModel;
+
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly utils: UtilsService,
+    private readonly store: Store,
+  ) {}
 
   ngOnDestroy() {
     this.destroyed$.next(), this.destroyed$.complete();
   }
 
   ngOnInit() {
-    this.fretboardNotes = FRETBOARD_STANDARD;
+    this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
+    const fretboard = this.store.selectSnapshot<string[][]>(PreferencesState.getFretboardNotes);
+
+    this.fretboardNotes = fretboard;
     this.chromaticScale = CHROMATIC_SCALE;
     this.cagedScale = CAGED_SCALE;
     this.setForm();

@@ -41,6 +41,7 @@
 
   <br />
   <app-fretboard
+    [notes]="fretboardNotes"
     [showSelectedNotes]="true"
     [selectedNotes]="exploreForm.get('selectedNotes').value"
     [selectedFrets]="[exploreForm?.value.fretStart, exploreForm?.value.fretEnd]"
