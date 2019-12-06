@@ -11,16 +11,16 @@ import { Platform, ToastController } from '@ionic/angular';
 })
 export class AppComponent {
   appPages = [
-    { title: 'Home', url: '/home', img: 'assets/imgs/home.svg' },
+    // { title: 'Home', url: '/home', img: 'assets/imgs/home.svg' },
     { title: 'Locate', url: '/locate', img: 'assets/imgs/locate.svg' },
     { title: 'Identify', url: '/identify', img: 'assets/imgs/identify.svg' },
-    { title: 'Explore', url: '/explore', img: 'assets/imgs/music-note.svg' },
+    { title: 'Explore', url: '/explore', img: 'assets/imgs/explore.svg' },
   ];
   morePages = [
     { title: 'Preferences', url: '/settings' },
     { title: 'About', url: '/about' },
   ];
-  // icons set: https://www.flaticon.com/packs/essential-set-2
+  // icons set: https://www.flaticon.com/packs/seo-55
 
   constructor(
     private readonly platform: Platform,
