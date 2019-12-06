@@ -1,8 +1,7 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { FRETBOARD_STANDARD } from '../../constants/fretboard-notes.constant';
-import { Note } from '../../models/note.model';
+import { Note } from '../../../models/note.model';
 
 @Component({
   selector: 'app-fretboard',
@@ -16,14 +15,13 @@ export class FretboardComponent implements OnInit {
   @Input() highlightNote: Note;
   @Input() disableClick: boolean;
   @Input() showAll: boolean;
+  @Input() leftHanded: boolean;
+  @Input() notes: string[][];
   @Output() noteClick: Subject<Note> = new Subject();
-  notes: string[][];
 
   constructor() {}
 
-  ngOnInit() {
-    this.notes = FRETBOARD_STANDARD;
-  }
+  ngOnInit() {}
 
   onNoteClicked(noteObject: Note, noteElement: any): void {
     this.noteClick.next(noteObject);

@@ -2,8 +2,9 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { UtilsService } from 'src/app/services/utils/utils.service';
-import { FretboardModule } from 'src/app/shared/fretboard/fretboard.module';
+import { NgxsModule } from '@ngxs/store';
+import { FretboardModule } from 'src/app/shared/modules/fretboard/fretboard.module';
+import { FretboardManipulationService } from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
 
 import { ExplorePageRoutingModule } from './explore-routing.module';
 import { ExplorePage } from './explore.page';
@@ -16,8 +17,10 @@ import { ExplorePage } from './explore.page';
     IonicModule,
     ExplorePageRoutingModule,
     FretboardModule,
+
+    NgxsModule.forFeature(),
   ],
   declarations: [ExplorePage],
-  providers: [UtilsService],
+  providers: [FretboardManipulationService],
 })
 export class ExplorePageModule {}

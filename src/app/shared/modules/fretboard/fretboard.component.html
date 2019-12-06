@@ -13,10 +13,16 @@
       [id]="'idFretNb' + fret"
     >
       <span class="tile-number">
-        <span *ngIf="getNum(fret) == 0" class="hide-on-mobile">
+        <span
+          *ngIf="getNum(fret) == 0"
+          [ngClass]="{ 'hide-on-mobile': !leftHanded, 'hide-on-desktop': leftHanded }"
+        >
           {{ fretnotes[0] | lowercase }}
         </span>
-        <span *ngIf="getNum(fret) == 0" class="hide-on-desktop">
+        <span
+          *ngIf="getNum(fret) == 0"
+          [ngClass]="{ 'hide-on-mobile': leftHanded, 'hide-on-desktop': !leftHanded }"
+        >
           {{ fretnotes[5] | uppercase }}
         </span>
         <span *ngIf="getNum(fret) > 0">{{ fret }}</span>

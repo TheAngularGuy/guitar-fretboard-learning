@@ -1,15 +1,17 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, IonButton, IonContent, ToastController } from '@ionic/angular';
+import { Store } from '@ngxs/store';
 import { Subject } from 'rxjs';
 import { popAnimation } from 'src/app/animations/pop.animation';
 import { slideAnimation } from 'src/app/animations/slide.animation';
 import { Note } from 'src/app/models/note.model';
-import { UtilsService } from 'src/app/services/utils/utils.service';
+import { FretboardManipulationService } from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
+import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
 
 import { CHROMATIC_SCALE } from '../../constants/chromatic-scale.constant';
-import { FRETBOARD_STANDARD } from '../../constants/fretboard-notes.constant';
-import { CanDeactivateComponent } from '../../guards/deactivate.guard';
+import { CanDeactivateComponent } from '../../shared/guards/deactivate.guard';
 
 const ANIMATION_TIME = 250;
 const ANIMATION_DELAY = 1250;
@@ -30,6 +32,7 @@ export class IdentifyPage implements OnInit, OnDestroy, CanDeactivateComponent {
   maxRange: number;
   fretboardNotes: string[][];
   chromaticScale: string[];
+  preferences: PreferencesStateModel;
 
   play: boolean;
   showSettings: boolean;
@@ -45,6 +48,8 @@ export class IdentifyPage implements OnInit, OnDestroy, CanDeactivateComponent {
     private readonly fb: FormBuilder,
     private readonly toastController: ToastController,
     private readonly alertController: AlertController,
+    private readonly fretboardManipulationService: FretboardManipulationService,
+    private readonly store: Store,
   ) {}
 
   ngOnDestroy() {
@@ -52,8 +57,9 @@ export class IdentifyPage implements OnInit, OnDestroy, CanDeactivateComponent {
   }
 
   ngOnInit() {
+    this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
+    this.fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
     this.maxRange = MAX_RANGE;
-    this.fretboardNotes = FRETBOARD_STANDARD;
     this.chromaticScale = CHROMATIC_SCALE;
     this.setForm();
   }

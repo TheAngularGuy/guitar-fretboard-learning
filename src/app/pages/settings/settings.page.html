@@ -12,7 +12,7 @@
     <img src="assets/imgs/undraw_adjustments.svg" alt="messaging illustration" />
   </div>
 
-  <form>
+  <form [formGroup]="settingsForm">
     <ion-list>
       <ion-list-header>
         <ion-label>Preferences</ion-label>
@@ -20,15 +20,15 @@
 
       <ion-item>
         <ion-label>Left handed mode</ion-label>
-        <ion-toggle [disabled]="true"></ion-toggle>
+        <ion-toggle formControlName="leftHandedMode"></ion-toggle>
       </ion-item>
       <ion-item>
         <ion-label>Activate sound</ion-label>
-        <ion-toggle [disabled]="true"></ion-toggle>
+        <ion-toggle [disabled]="true" formControlName="activateSound"></ion-toggle>
       </ion-item>
       <ion-item>
         <ion-label>Tuning</ion-label>
-        <ion-select [value]="tunings[0]" [disabled]="true">
+        <ion-select formControlName="tuning">
           <ion-select-option *ngFor="let tuning of tunings" [value]="tuning">
             {{tuning}}
           </ion-select-option>
