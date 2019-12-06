@@ -28,7 +28,7 @@
         <span *ngIf="getNum(fret) > 0">{{ fret }}</span>
       </span>
 
-      <div
+      <button
         class="note"
         [ngClass]="{ 'note-highlighted': isNoteHighlighted(fret, string) }"
         *ngFor="let note of fretnotes; let string = index"
@@ -54,7 +54,7 @@
         >
           {{ note }}
         </span>
-      </div>
+      </button>
 
       <div class="tile-blocked" *ngIf="!isSelectedFret(fret)"></div>
     </div>
