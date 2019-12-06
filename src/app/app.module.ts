@@ -26,8 +26,8 @@ import { PreferencesState } from './shared/store/preferences/preferences.state';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     // Ngxs
     NgxsModule.forRoot([PreferencesState]),
-    NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxsLoggerPluginModule.forRoot(),
+    environment.production ? [] : NgxsReduxDevtoolsPluginModule.forRoot(),
+    environment.production ? [] : NgxsLoggerPluginModule.forRoot(),
   ],
   providers: [
     StatusBar,
