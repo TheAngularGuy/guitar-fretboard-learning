@@ -2,7 +2,7 @@
   "name": "Fretboard Learning",
   "short_name": "Fretboard Learning",
   "theme_color": "#020202",
-  "background_color": "#f4f5f8",
+  "background_color": "#faebd7",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
@@ -20,11 +20,6 @@
     {
       "src": "assets/icons/icon-128x128.png",
       "sizes": "128x128",
-      "type": "image/png"
-    },
-    {
-      "src": "assets/icons/icon-144x144.png",
-      "sizes": "144x144",
       "type": "image/png"
     },
     {
