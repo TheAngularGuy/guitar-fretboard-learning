@@ -1,5 +1,6 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 
+import { UtilsService } from '../../services/utils/utils.service';
 import {
   PreferencesSetLeftyModeAction,
   PreferencesSetSoundAction,
@@ -15,9 +16,9 @@ export interface PreferencesStateModel {
 @State<PreferencesStateModel>({
   name: 'preferences',
   defaults: {
-    leftHandedMode: false,
-    activateSound: false,
-    tuning: 'Standard',
+    leftHandedMode: UtilsService.getParsedItemFromLS('preferences_leftHandedMode') || false,
+    activateSound: UtilsService.getParsedItemFromLS('preferences_activateSound') || false,
+    tuning: UtilsService.getParsedItemFromLS('preferences_tuning') || 'Standard',
   },
 })
 export class PreferencesState {
@@ -30,31 +31,28 @@ export class PreferencesState {
   // Reducers
   @Action(PreferencesSetLeftyModeAction)
   public setLeftHandedMode(
-    { getState, setState }: StateContext<PreferencesStateModel>,
+    { patchState }: StateContext<PreferencesStateModel>,
     { payload }: PreferencesSetLeftyModeAction,
   ) {
-    const stateModel = getState();
-    stateModel.leftHandedMode = payload.leftHandedMode;
-    setState(stateModel);
+    patchState({ leftHandedMode: payload.leftHandedMode });
+    UtilsService.setParsedItemToLS('preferences_leftHandedMode', payload.leftHandedMode);
   }
 
   @Action(PreferencesSetSoundAction)
   public setActivatedSound(
-    { getState, setState }: StateContext<PreferencesStateModel>,
+    { patchState }: StateContext<PreferencesStateModel>,
     { payload }: PreferencesSetSoundAction,
   ) {
-    const stateModel = getState();
-    stateModel.activateSound = payload.activateSound;
-    setState(stateModel);
+    patchState({ activateSound: payload.activateSound });
+    UtilsService.setParsedItemToLS('preferences_activateSound', payload.activateSound);
   }
 
   @Action(PreferencesSetTunningAction)
   public setGuitarTuning(
-    { getState, setState }: StateContext<PreferencesStateModel>,
+    { patchState }: StateContext<PreferencesStateModel>,
     { payload }: PreferencesSetTunningAction,
   ) {
-    const stateModel = getState();
-    stateModel.tuning = payload.tuning;
-    setState(stateModel);
+    patchState({ tuning: payload.tuning });
+    UtilsService.setParsedItemToLS('preferences_tuning', payload.tuning);
   }
 }

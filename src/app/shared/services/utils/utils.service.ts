@@ -2,7 +2,19 @@ export class UtilsService {
   private isIosPrivateValue: boolean;
   private isStandalonePrivateValue: boolean;
 
-  constructor() {}
+  /**
+   * Get item from Local Storage
+   */
+  public static getParsedItemFromLS(key: string) {
+    return JSON.parse(localStorage.getItem(key));
+  }
+
+  /**
+   * Set item to Local Storage
+   */
+  public static setParsedItemToLS(key: string, val: any = null) {
+    localStorage.setItem(key, JSON.stringify(val));
+  }
 
   /**
    * Returns a random number between min (inclusive) and max (exclusive)
