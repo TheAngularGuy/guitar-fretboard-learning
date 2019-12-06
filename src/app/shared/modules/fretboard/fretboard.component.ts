@@ -24,6 +24,9 @@ export class FretboardComponent implements OnInit {
   ngOnInit() {}
 
   onNoteClicked(noteObject: Note, noteElement: any): void {
+    if (this.disableClick) {
+      return;
+    }
     this.noteClick.next(noteObject);
     if (this.showAll || (this.showSelectedNotes && this.isGoodNote(noteObject.noteName))) {
       return;
