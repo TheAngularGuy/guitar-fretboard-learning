@@ -7,6 +7,12 @@ import {
   PreferencesSetTunningAction,
 } from './preferences.actions';
 
+enum stateEnums {
+  leftHandedMode = 'preferences_leftHandedMode',
+  activateSound = 'preferences_activateSound',
+  tuning = 'preferences_tuning',
+}
+
 export interface PreferencesStateModel {
   leftHandedMode: boolean;
   activateSound: boolean;
@@ -16,9 +22,9 @@ export interface PreferencesStateModel {
 @State<PreferencesStateModel>({
   name: 'preferences',
   defaults: {
-    leftHandedMode: UtilsService.getParsedItemFromLS('preferences_leftHandedMode') || false,
-    activateSound: UtilsService.getParsedItemFromLS('preferences_activateSound') || false,
-    tuning: UtilsService.getParsedItemFromLS('preferences_tuning') || 'Standard',
+    leftHandedMode: UtilsService.getParsedItemFromLS(stateEnums.leftHandedMode) || false,
+    activateSound: UtilsService.getParsedItemFromLS(stateEnums.activateSound) || false,
+    tuning: UtilsService.getParsedItemFromLS(stateEnums.tuning) || 'Standard',
   },
 })
 export class PreferencesState {
@@ -35,7 +41,7 @@ export class PreferencesState {
     { payload }: PreferencesSetLeftyModeAction,
   ) {
     patchState({ leftHandedMode: payload.leftHandedMode });
-    UtilsService.setParsedItemToLS('preferences_leftHandedMode', payload.leftHandedMode);
+    UtilsService.setParsedItemToLS(stateEnums.leftHandedMode, payload.leftHandedMode);
   }
 
   @Action(PreferencesSetSoundAction)
@@ -44,7 +50,7 @@ export class PreferencesState {
     { payload }: PreferencesSetSoundAction,
   ) {
     patchState({ activateSound: payload.activateSound });
-    UtilsService.setParsedItemToLS('preferences_activateSound', payload.activateSound);
+    UtilsService.setParsedItemToLS(stateEnums.activateSound, payload.activateSound);
   }
 
   @Action(PreferencesSetTunningAction)
@@ -53,6 +59,6 @@ export class PreferencesState {
     { payload }: PreferencesSetTunningAction,
   ) {
     patchState({ tuning: payload.tuning });
-    UtilsService.setParsedItemToLS('preferences_tuning', payload.tuning);
+    UtilsService.setParsedItemToLS(stateEnums.tuning, payload.tuning);
   }
 }
