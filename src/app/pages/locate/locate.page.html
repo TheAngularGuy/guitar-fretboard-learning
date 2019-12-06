@@ -87,6 +87,8 @@
 
   <app-fretboard
     [ngClass]="{'hide-on-mobile': !play}"
+    [notes]="fretboardNotes"
+    [leftHanded]="preferences?.leftHandedMode"
     [showAll]="showAll"
     [selectedFrets]="[locateForm?.value.fretStart, locateForm?.value.fretEnd]"
     [selectedNotes]="noteToFind ? [noteToFind.note.noteName] : null"

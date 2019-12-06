@@ -1,5 +1,4 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { FRETBOARD_STANDARD } from 'src/app/constants/fretboard-notes.constant';
 
 import {
   PreferencesSetLeftyModeAction,
@@ -26,18 +25,6 @@ export class PreferencesState {
   @Selector()
   public static getState(state: PreferencesStateModel) {
     return state;
-  }
-
-  @Selector()
-  public static getFretboardNotes(state: PreferencesStateModel) {
-    let output: string[][];
-    if (state.tuning.toLowerCase().includes('standard')) {
-      output = FRETBOARD_STANDARD;
-    }
-    if (state.leftHandedMode) {
-      return output.map(fret => fret.reverse());
-    }
-    return output;
   }
 
   // Reducers

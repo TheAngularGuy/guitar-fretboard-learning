@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { Subject } from 'rxjs';
 import { CAGED_SCALE } from 'src/app/constants/caged-scale.constant';
-import { UtilsService } from 'src/app/shared/services/utils/utils.service';
+import { FretboardManipulationService } from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
 import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
 
 import { CHROMATIC_SCALE } from '../../constants/chromatic-scale.constant';
@@ -24,7 +24,7 @@ export class ExplorePage implements OnInit, OnDestroy {
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly utils: UtilsService,
+    private readonly fretboardManipulationService: FretboardManipulationService,
     private readonly store: Store,
   ) {}
 
@@ -34,9 +34,7 @@ export class ExplorePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
-    const fretboard = this.store.selectSnapshot<string[][]>(PreferencesState.getFretboardNotes);
-
-    this.fretboardNotes = fretboard;
+    this.fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
     this.chromaticScale = CHROMATIC_SCALE;
     this.cagedScale = CAGED_SCALE;
     this.setForm();
