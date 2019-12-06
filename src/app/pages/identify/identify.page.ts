@@ -203,6 +203,7 @@ export class IdentifyPage implements OnInit, OnDestroy, CanDeactivateComponent {
         string: randomString,
       },
     };
+    this.showAll = false;
 
     // scroll
     setTimeout(

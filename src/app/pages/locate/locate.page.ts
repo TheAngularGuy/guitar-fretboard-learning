@@ -197,6 +197,7 @@ export class LocatePage implements OnInit, OnDestroy, CanDeactivateComponent {
         string: randomString,
       },
     };
+    this.showAll = false;
   }
 
   onNoteClicked(noteGuessed: Note): boolean {

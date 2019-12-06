@@ -11,13 +11,12 @@ export class FretboardManipulationService {
     }
 
     if (!!preferences.leftHandedMode) {
-      return output.map(fret => fret.reverse());
+      return output.map(fret => [...fret].reverse());
     }
     return output;
   }
 
   private customTuningFretboardFactory(tuning: string): string[][] {
-    console.log('Debbug log: tuning', tuning);
     const output = [];
     const nut = tuning
       .toUpperCase()
@@ -33,8 +32,6 @@ export class FretboardManipulationService {
       const fret = output[i - 1].map(n => this.getNextNote(n));
       output.push(fret);
     }
-
-    console.log('Debbug log: output', output);
     return output;
   }
 

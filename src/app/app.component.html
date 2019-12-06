@@ -20,17 +20,23 @@
               [detail]="false"
               lines="none"
             >
-              <img [src]="p.img" height="40" style="margin-right: 2ch;" />
+              <img [src]="p.img" height="40" style="margin-right: 3ch;" />
               <ion-label style="font-size: 1.3rem; min-height: 4ch; line-height: 4ch;">
                 {{ p.title }}
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
 
-          <ion-item-divider></ion-item-divider>
-
+          <br />
+          <br />
           <ion-menu-toggle auto-hide="false" *ngFor="let p of morePages">
-            <ion-item ion-button [routerDirection]="'root'" [routerLink]="[p.url]" lines="none">
+            <ion-item
+              ion-button
+              [detail]="false"
+              [routerDirection]="'root'"
+              [routerLink]="[p.url]"
+              lines="none"
+            >
               <ion-label>
                 {{ p.title }}
               </ion-label>
