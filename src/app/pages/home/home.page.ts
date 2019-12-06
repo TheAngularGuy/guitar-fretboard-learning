@@ -14,19 +14,19 @@ export class HomePage {
       path: 'locate',
       img: 'assets/imgs/locate.svg',
       name: 'Locate',
-      color: 'fourth',
+      color: 'secondary',
     },
     {
       path: 'identify',
       img: 'assets/imgs/identify.svg',
       name: 'Identify',
-      color: 'fourth',
+      color: 'secondary',
     },
     {
       path: 'explore',
       img: 'assets/imgs/explore.svg',
       name: 'Explore',
-      color: 'fourth',
+      color: 'secondary',
     },
   ];
   constructor(private router: Router) {}
