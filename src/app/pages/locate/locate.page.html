@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="home"></ion-back-button>
+      <ion-back-button text="" defaultHref="home"></ion-back-button>
     </ion-buttons>
     <ion-title>locate</ion-title>
     <ion-buttons slot="end" *ngIf="play">
@@ -9,12 +9,14 @@
         <ion-icon slot="icon-only" name="pause"></ion-icon>
       </ion-button> -->
       <ion-button (click)="toggleShowAll()">
-        <ion-icon slot="icon-only" name="eye"></ion-icon>
+        peek
+        <ion-icon slot="end" name="eye"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end" *ngIf="!play">
       <ion-button (click)="toggleShowSettings()">
-        <ion-icon slot="icon-only" name="settings"></ion-icon>
+        options
+        <ion-icon slot="end" name="settings"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -31,7 +33,12 @@
 
       <hr />
 
-      <form class="settings" *ngIf="showSettings" [formGroup]="locateForm" @slideAnimation>
+      <form
+        class="settings"
+        *ngIf="showSettings"
+        [formGroup]="locateForm"
+        @slideAnimation
+      >
         <ion-item>
           <ion-label>Notes</ion-label>
           <ion-select multiple="true" formControlName="selectedNotes">
@@ -55,15 +62,20 @@
           Press the button to start playing
         </ng-container>
         <ng-container *ngIf="scoreHistoric && scoreHistoric.length">
-          Your score is <b>{{ score.good }}</b> out of {{ scoreHistoric?.length }}. And your average time
-          is: <b>{{ getAverageTime() | number }}</b> seconds.
+          Your score is <b>{{ score.good }}</b> out of {{ scoreHistoric?.length }}. And
+          your average time is: <b>{{ getAverageTime() | number }}</b> seconds.
         </ng-container>
       </p>
 
       <br />
 
       <div class="start">
-        <ion-button color="success" shape="round" (click)="togglePlay()" [disabled]="noteToFind">
+        <ion-button
+          color="success"
+          shape="round"
+          (click)="togglePlay()"
+          [disabled]="noteToFind"
+        >
           <ion-icon name="play" *ngIf="!noteToFind"></ion-icon>
           <ion-icon name="refresh" *ngIf="noteToFind"></ion-icon>
           &nbsp; GO
@@ -113,7 +125,13 @@
         <ion-icon name="thumbs-down" color="danger"></ion-icon> &nbsp;
         <b [@popAnimation]="score.bad">{{score.bad}} </b> &nbsp; / {{maxRange}}
       </p>
-      <ion-button fill="outline" color="danger" size="small" style="width: 9ch" (click)="togglePlay()">
+      <ion-button
+        fill="outline"
+        color="danger"
+        size="small"
+        style="width: 9ch"
+        (click)="togglePlay()"
+      >
         Stop
       </ion-button>
     </div>

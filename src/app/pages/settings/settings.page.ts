@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
 import { Store } from '@ngxs/store';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
@@ -13,6 +14,12 @@ import {
   PreferencesStateModel,
 } from 'src/app/shared/store/preferences/preferences.state';
 
+import {
+  CustomTuningModalComponent,
+} from './custom-tuning-modal/custom-tuning-modal.component';
+import { SettingsAddCustomTuningAction } from './store/settings.actions';
+import { SettingsState, SettingsStateModel } from './store/settings.state';
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
@@ -21,6 +28,7 @@ import {
 export class SettingsPage implements OnInit, OnDestroy {
   destroyed$ = new Subject();
   settingsForm: FormGroup;
+  settingsState: SettingsStateModel;
   tunings = [
     'Standard',
     'A-E-A-E-A-C#',
@@ -50,7 +58,11 @@ export class SettingsPage implements OnInit, OnDestroy {
     'G-G-D-G-B-D',
   ];
 
-  constructor(private readonly fb: FormBuilder, private readonly store: Store) {}
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly modalController: ModalController,
+    private readonly store: Store,
+  ) {}
 
   ngOnDestroy() {
     this.destroyed$.next(), this.destroyed$.complete();
@@ -61,6 +73,7 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   setForm() {
+    this.settingsState = this.store.selectSnapshot(SettingsState.getState);
     const preferences = this.store.selectSnapshot<PreferencesStateModel>(
       PreferencesState.getState,
     );
@@ -99,5 +112,26 @@ export class SettingsPage implements OnInit, OnDestroy {
           );
         }
       });
+  }
+
+  async openCustomTuningModal() {
+    const modal = await this.modalController.create({
+      component: CustomTuningModalComponent,
+    });
+    await modal.present();
+    const { data } = (await modal.onWillDismiss()) as {
+      data: { customTuning: string; save: boolean };
+    };
+    if (data && data.save) {
+      this.store.dispatch(
+        new SettingsAddCustomTuningAction({
+          customTuning: data.customTuning,
+        }),
+      );
+
+      setTimeout(() => {
+        this.settingsState = this.store.selectSnapshot(SettingsState.getState);
+      }, 10);
+    }
   }
 }

@@ -20,15 +20,20 @@
 }
 
 .text-muted {
-  cursor: pointer;
-  padding: 1rem;
+  padding: 0 1rem;
+  cursor: default;
   opacity: 0.5;
   font-size: 80%;
-  background: transparent;
-  border: none;
-  box-shadow: none;
+}
 
-  &:hover {
-    text-decoration: underline;
-  }
+.tuning,
+.btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btns {
+  padding: 1rem;
+  justify-content: flex-end;
 }

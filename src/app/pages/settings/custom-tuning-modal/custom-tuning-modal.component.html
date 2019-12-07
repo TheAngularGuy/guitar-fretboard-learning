@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        close
+        <ion-icon slot="end" name="close"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Custom tuning</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="page">
+    <h1>Create your own custom tuning</h1>
+    <div>
+      <p>
+        Here you can create your custom tunings, then you can select them in the settings
+        page, under the preferences section. have fun!
+      </p>
+
+      <p class="text-muted" style="text-align: start;">
+        Set the tuning for right handed. You can after enable the left handed mode if you
+        wish.
+      </p>
+    </div>
+
+    <div class="tuning">
+      <select [(ngModel)]="customTuning[0]">
+        <option *ngFor="let note of chromaticScale" [value]="note"> {{ note }}</option>
+      </select>
+      <select [(ngModel)]="customTuning[1]">
+        <option *ngFor="let note of chromaticScale" [value]="note"> {{ note }}</option>
+      </select>
+      <select [(ngModel)]="customTuning[2]">
+        <option *ngFor="let note of chromaticScale" [value]="note"> {{ note }}</option>
+      </select>
+      <select [(ngModel)]="customTuning[3]">
+        <option *ngFor="let note of chromaticScale" [value]="note"> {{ note }}</option>
+      </select>
+      <select [(ngModel)]="customTuning[4]">
+        <option *ngFor="let note of chromaticScale" [value]="note"> {{ note }}</option>
+      </select>
+      <select [(ngModel)]="customTuning[5]">
+        <option *ngFor="let note of chromaticScale" [value]="note"> {{ note }}</option>
+      </select>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <div class="btns">
+    <ion-button color="success" (click)="dismiss(true)">
+      <ion-icon slot="end" name="checkmark"></ion-icon>
+      Save
+    </ion-button>
+  </div>
+</ion-footer>
