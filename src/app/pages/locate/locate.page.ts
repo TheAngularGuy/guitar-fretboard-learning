@@ -3,15 +3,27 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AlertController, IonContent, ToastController } from '@ionic/angular';
 import { Store } from '@ngxs/store';
 import { Subject } from 'rxjs';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { popAnimation } from 'src/app/animations/pop.animation';
 import { slideAnimation } from 'src/app/animations/slide.animation';
 import { Note } from 'src/app/models/note.model';
-import { FretboardManipulationService } from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
+import {
+  FretboardManipulationService,
+} from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
-import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
+import {
+  PreferencesState,
+  PreferencesStateModel,
+} from 'src/app/shared/store/preferences/preferences.state';
 
 import { CHROMATIC_SCALE } from '../../constants/chromatic-scale.constant';
 import { CanDeactivateComponent } from '../../shared/guards/deactivate.guard';
+import {
+  LocateSetFretEndAction,
+  LocateSetFretStartAction,
+  LocateSetSelectedNotesAction,
+} from './store/locate.actions';
+import { LocateState, LocateStateModel } from './store/locate.state';
 
 const ANIMATION_TIME = 250;
 const ANIMATION_DELAY = 1250;
@@ -32,6 +44,7 @@ export class LocatePage implements OnInit, OnDestroy, CanDeactivateComponent {
   fretboardNotes: string[][];
   chromaticScale: string[];
   preferences: PreferencesStateModel;
+  locateState: LocateStateModel;
 
   play: boolean;
   showSettings: boolean;
@@ -56,17 +69,22 @@ export class LocatePage implements OnInit, OnDestroy, CanDeactivateComponent {
   }
 
   ngOnInit() {
-    this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
-    this.fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
+    this.locateState = this.store.selectSnapshot<LocateStateModel>(LocateState.getState);
+    this.preferences = this.store.selectSnapshot<PreferencesStateModel>(
+      PreferencesState.getState,
+    );
+    this.fretboardNotes = this.fretboardManipulationService.getFretboardNotes(
+      this.preferences,
+    );
     this.maxRange = MAX_RANGE;
     this.chromaticScale = CHROMATIC_SCALE;
     this.setForm();
   }
 
-  setForm(): FormGroup {
+  setForm() {
     const form = this.fb.group({
       selectedNotes: [
-        this.chromaticScale,
+        this.locateState.selectedNotes,
         [
           Validators.required,
           (c: FormControl) => {
@@ -79,18 +97,49 @@ export class LocatePage implements OnInit, OnDestroy, CanDeactivateComponent {
           },
         ],
       ],
-      fretStart: [0, [Validators.required, Validators.min(0), Validators.max(12)]],
+      fretStart: [
+        this.locateState.fretStart,
+        [Validators.required, Validators.min(0), Validators.max(12)],
+      ],
       fretEnd: [
-        window.innerWidth > 760 ? 12 : 3,
+        this.locateState.fretEnd,
         [Validators.required, Validators.min(0), Validators.max(12)],
       ],
     });
-
-    return (this.locateForm = form);
+    this.locateForm = form;
+    this.setFormListener();
   }
 
-  onResetForm() {
-    this.setForm();
+  setFormListener() {
+    this.locateForm.valueChanges
+      .pipe(takeUntil(this.destroyed$), debounceTime(500))
+      .subscribe((formValue: LocateStateModel) => {
+        const locateState = this.store.selectSnapshot<LocateStateModel>(
+          LocateState.getState,
+        );
+
+        if (formValue.selectedNotes !== locateState.selectedNotes) {
+          this.store.dispatch(
+            new LocateSetSelectedNotesAction({
+              selectedNotes: formValue.selectedNotes,
+            }),
+          );
+        }
+        if (formValue.fretStart !== locateState.fretStart) {
+          this.store.dispatch(
+            new LocateSetFretStartAction({
+              fretStart: formValue.fretStart,
+            }),
+          );
+        }
+        if (formValue.fretEnd !== locateState.fretEnd) {
+          this.store.dispatch(
+            new LocateSetFretEndAction({
+              fretEnd: formValue.fretEnd,
+            }),
+          );
+        }
+      });
   }
 
   toggleShowAll(): boolean {
@@ -102,7 +151,10 @@ export class LocatePage implements OnInit, OnDestroy, CanDeactivateComponent {
   }
 
   togglePlay(): boolean {
-    if (this.locateForm.invalid || this.locateForm.value.fretStart >= this.locateForm.value.fretEnd) {
+    if (
+      this.locateForm.invalid ||
+      this.locateForm.value.fretStart >= this.locateForm.value.fretEnd
+    ) {
       this.toastController
         .create({
           message: 'Invalid form, please select at least 2 notes and 2 frets',
@@ -231,7 +283,11 @@ export class LocatePage implements OnInit, OnDestroy, CanDeactivateComponent {
     if (!this.scoreHistoric || !this.scoreHistoric.length) {
       return;
     }
-    return this.scoreHistoric.reduce((acc, n) => acc + n.timeTook, 0) / this.scoreHistoric.length / 1000;
+    return (
+      this.scoreHistoric.reduce((acc, n) => acc + n.timeTook, 0) /
+      this.scoreHistoric.length /
+      1000
+    );
   }
 
   async canDeactivateComp() {
@@ -240,7 +296,7 @@ export class LocatePage implements OnInit, OnDestroy, CanDeactivateComponent {
       const alert = await this.alertController.create({
         header: 'Do you want to leave?',
         message:
-          'It looks like you are in the middle of somethig, are you sure you want to leave this page ?',
+          'It looks like you are in the middle of something, are you sure you want to leave this page ?',
         buttons: [
           {
             text: 'Yes',

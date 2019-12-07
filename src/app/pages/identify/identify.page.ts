@@ -3,15 +3,27 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AlertController, IonButton, IonContent, ToastController } from '@ionic/angular';
 import { Store } from '@ngxs/store';
 import { Subject } from 'rxjs';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { popAnimation } from 'src/app/animations/pop.animation';
 import { slideAnimation } from 'src/app/animations/slide.animation';
 import { Note } from 'src/app/models/note.model';
-import { FretboardManipulationService } from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
+import {
+  FretboardManipulationService,
+} from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
-import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
+import {
+  PreferencesState,
+  PreferencesStateModel,
+} from 'src/app/shared/store/preferences/preferences.state';
 
 import { CHROMATIC_SCALE } from '../../constants/chromatic-scale.constant';
 import { CanDeactivateComponent } from '../../shared/guards/deactivate.guard';
+import {
+  IdentifySetFretEndAction,
+  IdentifySetFretStartAction,
+  IdentifySetSelectedNotesAction,
+} from './store/identify.actions';
+import { IdentifyState, IdentifyStateModel } from './store/identify.state';
 
 const ANIMATION_TIME = 250;
 const ANIMATION_DELAY = 1250;
@@ -33,6 +45,7 @@ export class IdentifyPage implements OnInit, OnDestroy, CanDeactivateComponent {
   fretboardNotes: string[][];
   chromaticScale: string[];
   preferences: PreferencesStateModel;
+  identifyState: IdentifyStateModel;
 
   play: boolean;
   showSettings: boolean;
@@ -57,19 +70,24 @@ export class IdentifyPage implements OnInit, OnDestroy, CanDeactivateComponent {
   }
 
   ngOnInit() {
-    this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
-    this.fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
+    this.identifyState = this.store.selectSnapshot<IdentifyStateModel>(
+      IdentifyState.getState,
+    );
+    this.preferences = this.store.selectSnapshot<PreferencesStateModel>(
+      PreferencesState.getState,
+    );
+    this.fretboardNotes = this.fretboardManipulationService.getFretboardNotes(
+      this.preferences,
+    );
     this.maxRange = MAX_RANGE;
     this.chromaticScale = CHROMATIC_SCALE;
     this.setForm();
   }
 
-  setForm(): FormGroup {
+  setForm() {
     const form = this.fb.group({
       selectedNotes: [
-        window.innerWidth > 760
-          ? this.chromaticScale
-          : this.chromaticScale.filter(n => !n.includes('#')),
+        this.identifyState.selectedNotes,
         [
           Validators.required,
           (c: FormControl) => {
@@ -82,18 +100,49 @@ export class IdentifyPage implements OnInit, OnDestroy, CanDeactivateComponent {
           },
         ],
       ],
-      fretStart: [0, [Validators.required, Validators.min(0), Validators.max(12)]],
+      fretStart: [
+        this.identifyState.fretStart,
+        [Validators.required, Validators.min(0), Validators.max(12)],
+      ],
       fretEnd: [
-        window.innerWidth > 760 ? 12 : 3,
+        this.identifyState.fretEnd,
         [Validators.required, Validators.min(0), Validators.max(12)],
       ],
     });
-
-    return (this.identifyForm = form);
+    this.identifyForm = form;
+    this.setFormListener();
   }
 
-  onResetForm() {
-    this.setForm();
+  setFormListener() {
+    this.identifyForm.valueChanges
+      .pipe(takeUntil(this.destroyed$), debounceTime(500))
+      .subscribe((formValue: IdentifyStateModel) => {
+        const identifyState = this.store.selectSnapshot<IdentifyStateModel>(
+          IdentifyState.getState,
+        );
+
+        if (formValue.selectedNotes !== identifyState.selectedNotes) {
+          this.store.dispatch(
+            new IdentifySetSelectedNotesAction({
+              selectedNotes: formValue.selectedNotes,
+            }),
+          );
+        }
+        if (formValue.fretStart !== identifyState.fretStart) {
+          this.store.dispatch(
+            new IdentifySetFretStartAction({
+              fretStart: formValue.fretStart,
+            }),
+          );
+        }
+        if (formValue.fretEnd !== identifyState.fretEnd) {
+          this.store.dispatch(
+            new IdentifySetFretEndAction({
+              fretEnd: formValue.fretEnd,
+            }),
+          );
+        }
+      });
   }
 
   toggleShowAll(): boolean {
@@ -268,7 +317,11 @@ export class IdentifyPage implements OnInit, OnDestroy, CanDeactivateComponent {
     if (!this.scoreHistoric || !this.scoreHistoric.length) {
       return;
     }
-    return this.scoreHistoric.reduce((acc, n) => acc + n.timeTook, 0) / this.scoreHistoric.length / 1000;
+    return (
+      this.scoreHistoric.reduce((acc, n) => acc + n.timeTook, 0) /
+      this.scoreHistoric.length /
+      1000
+    );
   }
 
   async canDeactivateComp() {
@@ -277,7 +330,7 @@ export class IdentifyPage implements OnInit, OnDestroy, CanDeactivateComponent {
       const alert = await this.alertController.create({
         header: 'Do you want to leave?',
         message:
-          'It looks like you are in the middle of somethig, are you sure you want to leave this page ?',
+          'It looks like you are in the middle of something, are you sure you want to leave this page ?',
         buttons: [
           {
             text: 'Yes',

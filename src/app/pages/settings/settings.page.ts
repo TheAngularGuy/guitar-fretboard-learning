@@ -2,13 +2,16 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import {
   PreferencesSetLeftyModeAction,
   PreferencesSetSoundAction,
   PreferencesSetTunningAction,
 } from 'src/app/shared/store/preferences/preferences.actions';
-import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
+import {
+  PreferencesState,
+  PreferencesStateModel,
+} from 'src/app/shared/store/preferences/preferences.state';
 
 @Component({
   selector: 'app-settings',
@@ -58,7 +61,9 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   setForm() {
-    const preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
+    const preferences = this.store.selectSnapshot<PreferencesStateModel>(
+      PreferencesState.getState,
+    );
     const form = this.fb.group({
       leftHandedMode: [preferences.leftHandedMode, [Validators.required]],
       activateSound: [preferences.activateSound, [Validators.required]],
@@ -69,23 +74,30 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   setFormListeners() {
-    this.settingsForm
-      .get('leftHandedMode')
-      .valueChanges.pipe(takeUntil(this.destroyed$))
-      .subscribe((v: boolean) => {
-        this.store.dispatch(new PreferencesSetLeftyModeAction({ leftHandedMode: v }));
-      });
-    this.settingsForm
-      .get('activateSound')
-      .valueChanges.pipe(takeUntil(this.destroyed$))
-      .subscribe((v: boolean) => {
-        this.store.dispatch(new PreferencesSetSoundAction({ activateSound: v }));
-      });
-    this.settingsForm
-      .get('tuning')
-      .valueChanges.pipe(takeUntil(this.destroyed$))
-      .subscribe((v: string) => {
-        this.store.dispatch(new PreferencesSetTunningAction({ tuning: v }));
+    this.settingsForm.valueChanges
+      .pipe(takeUntil(this.destroyed$), debounceTime(500))
+      .subscribe((formValue: PreferencesStateModel) => {
+        const preferences = this.store.selectSnapshot<PreferencesStateModel>(
+          PreferencesState.getState,
+        );
+
+        if (formValue.leftHandedMode !== preferences.leftHandedMode) {
+          this.store.dispatch(
+            new PreferencesSetLeftyModeAction({
+              leftHandedMode: formValue.leftHandedMode,
+            }),
+          );
+        }
+        if (formValue.activateSound !== preferences.activateSound) {
+          this.store.dispatch(
+            new PreferencesSetSoundAction({ activateSound: formValue.activateSound }),
+          );
+        }
+        if (formValue.tuning !== preferences.tuning) {
+          this.store.dispatch(
+            new PreferencesSetTunningAction({ tuning: formValue.tuning }),
+          );
+        }
       });
   }
 }

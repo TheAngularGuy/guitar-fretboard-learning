@@ -4,12 +4,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertController, IonicModule, ToastController } from '@ionic/angular';
 import { NgxsModule } from '@ngxs/store';
 import { FretboardModule } from 'src/app/shared/modules/fretboard/fretboard.module';
-import { FretboardManipulationService } from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
+import {
+  FretboardManipulationService,
+} from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
 import { CanDeactivateGuard } from '../../shared/guards/deactivate.guard';
 import { IdentifyPageRoutingModule } from './identify-routing.module';
 import { IdentifyPage } from './identify.page';
+import { IdentifyState } from './store/identify.state';
 
 @NgModule({
   imports: [
@@ -20,7 +23,7 @@ import { IdentifyPage } from './identify.page';
     IdentifyPageRoutingModule,
     FretboardModule,
 
-    NgxsModule.forFeature(),
+    NgxsModule.forFeature([IdentifyState]),
   ],
   declarations: [IdentifyPage],
   providers: [
