@@ -241,6 +241,7 @@ export class LocatePage implements OnInit, OnDestroy, CanDeactivateComponent {
     ) {
       return this.pickRandomNote();
     }
+    this.showAll = false;
     this.noteToFind = {
       time: Date.now(),
       note: {
@@ -249,7 +250,6 @@ export class LocatePage implements OnInit, OnDestroy, CanDeactivateComponent {
         string: randomString,
       },
     };
-    this.showAll = false;
   }
 
   onNoteClicked(noteGuessed: Note): boolean {
@@ -261,7 +261,9 @@ export class LocatePage implements OnInit, OnDestroy, CanDeactivateComponent {
     if (noteGuessed.noteName === this.noteToFind.note.noteName) {
       this.score.good += 1;
     } else {
+      // bad answer
       this.score.bad += 1;
+      window.navigator.vibrate([100, 30, 100]);
     }
     this.scoreHistoric.push({
       noteGuessed,

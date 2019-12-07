@@ -244,6 +244,7 @@ export class IdentifyPage implements OnInit, OnDestroy, CanDeactivateComponent {
     ) {
       return this.pickRandomNote();
     }
+    this.showAll = false;
     this.noteToFind = {
       time: Date.now(),
       note: {
@@ -252,7 +253,6 @@ export class IdentifyPage implements OnInit, OnDestroy, CanDeactivateComponent {
         string: randomString,
       },
     };
-    this.showAll = false;
 
     // scroll
     setTimeout(
@@ -287,7 +287,10 @@ export class IdentifyPage implements OnInit, OnDestroy, CanDeactivateComponent {
         btn.el.color = 'light';
       }, ANIMATION_DELAY);
     } else {
+      // bad answer
       this.score.bad += 1;
+      window.navigator.vibrate([100, 30, 100]);
+      this.showAll = true;
       btn.el.color = 'danger';
       setTimeout(() => {
         btn.el.color = 'light';
