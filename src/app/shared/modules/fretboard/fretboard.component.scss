@@ -244,6 +244,25 @@
           background-repeat: no-repeat;
           background-position-x: 50%;
         }
+
+        .string-0 {
+          background-size: 2px 100%;
+        }
+        .string-1 {
+          background-size: 2.5px 100%;
+        }
+        .string-2 {
+          background-size: 3px 100%;
+        }
+        .string-3 {
+          background-size: 4px 100%;
+        }
+        .string-4 {
+          background-size: 4.5px 100%;
+        }
+        .string-5 {
+          background-size: 5px 100%;
+        }
       }
 
       .tile-two-dot {
@@ -340,6 +359,29 @@
   .fretboard-wrapper {
     margin: auto;
     width: calc(100% - 20px);
+
+    .fretboard {
+      .tile {
+        .string-0 {
+          background-size: 100% 2px;
+        }
+        .string-1 {
+          background-size: 100% 2.5px;
+        }
+        .string-2 {
+          background-size: 100% 3px;
+        }
+        .string-3 {
+          background-size: 100% 4px;
+        }
+        .string-4 {
+          background-size: 100% 5px;
+        }
+        .string-5 {
+          background-size: 100% 5.5px;
+        }
+      }
+    }
   }
 
   .tile-nut {

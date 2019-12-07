@@ -29,7 +29,7 @@
       </span>
 
       <button
-        class="note"
+        class="note string-{{ stringNumber(string) }}"
         [ngClass]="{ 'note-highlighted': isNoteHighlighted(fret, string) }"
         *ngFor="let note of fretnotes; let string = index"
         (click)="
