@@ -17,6 +17,15 @@ export class UtilsService {
   }
 
   /**
+   * Vibrate using the web api
+   */
+  public static vibrate(sequence: number[]) {
+    if (window && window.navigator && window.navigator.vibrate) {
+      window.navigator.vibrate(sequence);
+    }
+  }
+
+  /**
    * Returns a random number between min (inclusive) and max (exclusive)
    */
   getRandomInt(min: number, max: number): number {

@@ -289,7 +289,7 @@ export class IdentifyPage implements OnInit, OnDestroy, CanDeactivateComponent {
     } else {
       // bad answer
       this.score.bad += 1;
-      window.navigator.vibrate([100, 30, 100]);
+      UtilsService.vibrate([100, 30, 100]);
       this.showAll = true;
       btn.el.color = 'danger';
       setTimeout(() => {
