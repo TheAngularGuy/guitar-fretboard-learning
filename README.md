@@ -30,6 +30,14 @@ https://guitar-fretboard-learning.web.app/
     yarn
     yarn start
 
+## Future steps
+
+- Unit testing & E2E testing (configuring cypress)
+- Feature to create a user account and track own progress
+- More game modes
+- Add gamification features
+- ... If you have any feedback or suggestions the [DMs are open 😁](https://twitter.com/TheAngularGuy)
+
 ## Contributions
 
 If you want to add something or change something open an issue or send a PR.
