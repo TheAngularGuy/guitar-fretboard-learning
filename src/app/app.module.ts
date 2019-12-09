@@ -9,11 +9,15 @@ import { IonicModule, IonicRouteStrategy, ToastController } from '@ionic/angular
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsModule } from '@ngxs/store';
+import * as firebase from 'firebase/app';
 
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AnalyticsService } from './shared/services/analytics/analytics.service';
 import { PreferencesState } from './shared/store/preferences/preferences.state';
+
+firebase.initializeApp(environment.firebaseConfig);
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,6 +38,7 @@ import { PreferencesState } from './shared/store/preferences/preferences.state';
     SplashScreen,
     ToastController,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    AnalyticsService,
   ],
   bootstrap: [AppComponent],
 })

@@ -4,6 +4,8 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Platform, ToastController } from '@ionic/angular';
 
+import { AnalyticsService } from './shared/services/analytics/analytics.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -27,6 +29,7 @@ export class AppComponent {
     private readonly splashScreen: SplashScreen,
     private readonly statusBar: StatusBar,
     private readonly swUpdate: SwUpdate,
+    private readonly analyticsService: AnalyticsService,
     private readonly toastController: ToastController,
   ) {
     this.initializeApp();
@@ -37,6 +40,7 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.checkSWVersion();
+      this.analyticsService.init();
     });
   }
 
