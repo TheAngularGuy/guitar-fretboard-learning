@@ -30,39 +30,43 @@
         <div class="tuning-machines-left">
           <select [(ngModel)]="customTuning[0]">
             <option *ngFor="let note of chromaticScale" [value]="note">
-              {{ note }}</option
-            >
+              {{ note }}
+            </option>
           </select>
           <select [(ngModel)]="customTuning[1]">
             <option *ngFor="let note of chromaticScale" [value]="note">
-              {{ note }}</option
-            >
+              {{ note }}
+            </option>
           </select>
           <select [(ngModel)]="customTuning[2]">
             <option *ngFor="let note of chromaticScale" [value]="note">
-              {{ note }}</option
-            >
+              {{ note }}
+            </option>
           </select>
         </div>
         <div class="tuning-machines-right">
           <select [(ngModel)]="customTuning[3]">
             <option *ngFor="let note of chromaticScale" [value]="note">
-              {{ note }}</option
-            >
+              {{ note }}
+            </option>
           </select>
           <select [(ngModel)]="customTuning[4]">
             <option *ngFor="let note of chromaticScale" [value]="note">
-              {{ note }}</option
-            >
+              {{ note }}
+            </option>
           </select>
           <select [(ngModel)]="customTuning[5]">
             <option *ngFor="let note of chromaticScale" [value]="note">
-              {{ note }}</option
-            >
+              {{ note }}
+            </option>
           </select>
         </div>
 
-        <img src="../../../../assets/imgs/acoustic-guitar.svg" alt="" />
+        <img
+          class="tuning-machines-image"
+          src="../../../../assets/imgs/acoustic-guitar.svg"
+          alt="tuning-machines-image"
+        />
       </div>
     </div>
   </div>

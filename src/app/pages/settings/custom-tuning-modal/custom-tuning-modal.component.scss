@@ -42,7 +42,7 @@
     height: 200px;
     position: relative;
 
-    img {
+    .tuning-machines-image {
       width: 200px;
       height: 200px;
     }
@@ -58,6 +58,7 @@
       align-items: flex-start;
       justify-content: space-between;
     }
+
     .tuning-machines-right {
       position: absolute;
       width: 50%;
