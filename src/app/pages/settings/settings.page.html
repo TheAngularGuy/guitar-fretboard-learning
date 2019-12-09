@@ -31,13 +31,23 @@
         <ion-toggle formControlName="invertedFrets" color="tertiary"></ion-toggle>
       </ion-item>
       <ion-item>
+        <ion-label>Use flats instead of sharps</ion-label>
+        <ion-toggle formControlName="useFlats" color="tertiary"></ion-toggle>
+      </ion-item>
+      <ion-item>
         <ion-label>Activate sound</ion-label>
-        <ion-toggle [disabled]="true" formControlName="activateSound" color="tertiary"></ion-toggle>
+        <ion-toggle
+          [disabled]="true"
+          formControlName="activateSound"
+          color="tertiary"
+        ></ion-toggle>
       </ion-item>
       <ion-item>
         <ion-label>Tuning</ion-label>
         <ion-select formControlName="tuning">
-          <ng-container *ngIf="settingsState?.customTunings && settingsState?.customTunings.length">
+          <ng-container
+            *ngIf="settingsState?.customTunings && settingsState?.customTunings.length"
+          >
             <ion-select-option
               *ngFor="let customTuning of settingsState.customTunings"
               [value]="customTuning"
@@ -51,10 +61,14 @@
           </ion-select-option>
         </ion-select>
       </ion-item>
-      <button class="text-muted" (click)="openCustomTuningModal()">
-        Didn't find the tuning you were looking for?
-        <b>Click here to add your own custom tunings</b>
-      </button>
+      <ion-item button (click)="openCustomTuningModal()">
+        <ion-label>
+          Didn't find the tuning you were looking for? &nbsp;
+          <b>Click here to add your own custom tunings</b> &nbsp;
+        </ion-label>
+      </ion-item>
     </ion-list>
   </form>
+  <br />
+  <br />
 </ion-content>

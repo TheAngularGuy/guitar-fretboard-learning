@@ -13,6 +13,11 @@ export class PreferencesSetSoundAction {
   constructor(public payload: { activateSound: boolean }) {}
 }
 
+export class PreferencesSetFlatsModeAction {
+  public static readonly type = '[Preferences] set flats';
+  constructor(public payload: { useFlats: boolean }) {}
+}
+
 export class PreferencesSetTunningAction {
   public static readonly type = '[Preferences] set tunning';
   constructor(public payload: { tuning: string }) {}
