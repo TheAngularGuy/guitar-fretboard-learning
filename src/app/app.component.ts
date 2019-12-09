@@ -23,6 +23,8 @@ export class AppComponent {
     { title: 'About', url: '/about' },
   ];
   // icons set: https://www.flaticon.com/packs/seo-55
+  // https://www.flaticon.com/packs/business-148/2
+  // https://www.flaticon.com/packs/ecology-69
 
   constructor(
     private readonly platform: Platform,
