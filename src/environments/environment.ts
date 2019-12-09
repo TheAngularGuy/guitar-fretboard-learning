@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  version: 'dev',
   firebaseConfig: {
     apiKey: 'AIzaSyC-3m7qdeMizksexLgt2pAA9SD6BGMA3CQ',
     authDomain: 'guitar-fretboard-learning.firebaseapp.com',
