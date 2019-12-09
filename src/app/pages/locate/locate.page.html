@@ -112,12 +112,22 @@
   <div class="playing">
     <div class="score">
       <p class="good">
-        <ion-icon name="thumbs-up" color="success"></ion-icon> &nbsp;
-        <b [@popAnimation]="score.good">{{score.good}}</b> &nbsp; / {{maxRange}}
+        <img
+          [@popAnimation]="score.good"
+          src="assets/imgs/like.svg"
+          alt="thumbs-up"
+          style="width: 26px; height: 26px;"
+        />
+        &nbsp; <b [@popAnimation]="score.good">{{score.good}}</b> &nbsp; / {{maxRange}}
       </p>
       <p class="bad">
-        <ion-icon name="thumbs-down" color="danger"></ion-icon> &nbsp;
-        <b [@popAnimation]="score.bad">{{score.bad}} </b> &nbsp; / {{maxRange}}
+        <img
+          [@popAnimation]="score.bad"
+          src="assets/imgs/dislike.svg"
+          alt="thumbs-down"
+          style="width: 26px; height: 26px;"
+        />
+        &nbsp; <b [@popAnimation]="score.bad">{{score.bad}} </b> &nbsp; / {{maxRange}}
       </p>
       <ion-button fill="outline" color="danger" size="small" style="width: 9ch" (click)="togglePlay()">
         Stop
