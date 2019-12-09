@@ -22,6 +22,32 @@ h3 {
   margin-top: 0;
 }
 
+.page {
+  padding: 1rem;
+
+  img {
+    max-width: 300px;
+    max-height: 300px;
+    width: 70vw;
+    height: 70vw;
+    min-width: 150px;
+    min-height: 150px;
+    display: block;
+    margin: 1rem auto 2rem;
+  }
+
+  @media screen and (min-width: 760px) {
+    text-align: center;
+  }
+}
+
+.text-muted {
+  padding: 0 1rem;
+  cursor: default;
+  opacity: 0.5;
+  font-size: 80%;
+}
+
 @media screen and (max-width: 760px) {
   .hide-on-mobile {
     display: none;
