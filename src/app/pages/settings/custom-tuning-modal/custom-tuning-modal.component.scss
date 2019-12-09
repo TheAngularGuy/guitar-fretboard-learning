@@ -47,35 +47,27 @@
       height: 200px;
     }
 
-    select:nth-child(1) {
+    .tuning-machines-left {
       position: absolute;
-      left: -15px;
-      bottom: 45px;
-    }
-    select:nth-child(2) {
-      position: absolute;
-      left: -15px;
-      top: 87px;
-    }
-    select:nth-child(3) {
-      position: absolute;
+      width: 50%;
       left: -15px;
       top: 40px;
+      bottom: 45px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
     }
-    select:nth-child(4) {
+    .tuning-machines-right {
       position: absolute;
+      width: 50%;
       right: -15px;
       top: 40px;
-    }
-    select:nth-child(5) {
-      position: absolute;
-      right: -15px;
-      top: 87px;
-    }
-    select:nth-child(6) {
-      position: absolute;
-      right: -15px;
       bottom: 45px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: space-between;
     }
   }
 
