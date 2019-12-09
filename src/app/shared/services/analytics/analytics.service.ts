@@ -5,7 +5,7 @@ export class AnalyticsService {
 
   init() {
     this.analitics = firebase.analytics();
-    this.analitics.logEvent('Initialized app');
+    this.analitics.logEvent('Initialized app', { appAnalyticsInit: true });
   }
 
   getAnalitics() {
