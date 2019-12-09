@@ -41,7 +41,8 @@
 
   <br />
   <app-fretboard
-    [leftHanded]="preferences?.leftHandedMode"
+    [invertedStrings]="preferences?.invertedStrings"
+    [invertedFrets]="preferences?.invertedFrets"
     [notes]="fretboardNotes"
     [showSelectedNotes]="true"
     [selectedNotes]="exploreForm.get('selectedNotes').value"

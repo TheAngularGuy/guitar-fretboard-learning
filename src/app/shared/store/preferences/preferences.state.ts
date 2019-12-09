@@ -2,19 +2,22 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 
 import { UtilsService } from '../../services/utils/utils.service';
 import {
-  PreferencesSetLeftyModeAction,
+  PreferencesSetInvertedFretsModeAction,
+  PreferencesSetInvertedStringsModeAction,
   PreferencesSetSoundAction,
   PreferencesSetTunningAction,
 } from './preferences.actions';
 
 enum stateEnums {
-  leftHandedMode = 'preferences_leftHandedMode',
+  invertedStrings = 'preferences_invertedStrings',
+  invertedFrets = 'preferences_invertedFrets',
   activateSound = 'preferences_activateSound',
   tuning = 'preferences_tuning',
 }
 
 export interface PreferencesStateModel {
-  leftHandedMode: boolean;
+  invertedStrings: boolean;
+  invertedFrets: boolean;
   activateSound: boolean;
   tuning: string;
 }
@@ -22,7 +25,8 @@ export interface PreferencesStateModel {
 @State<PreferencesStateModel>({
   name: 'preferences',
   defaults: {
-    leftHandedMode: UtilsService.getParsedItemFromLS(stateEnums.leftHandedMode) || false,
+    invertedStrings: UtilsService.getParsedItemFromLS(stateEnums.invertedStrings) || false,
+    invertedFrets: UtilsService.getParsedItemFromLS(stateEnums.invertedFrets) || false,
     activateSound: UtilsService.getParsedItemFromLS(stateEnums.activateSound) || false,
     tuning: UtilsService.getParsedItemFromLS(stateEnums.tuning) || 'Standard',
   },
@@ -35,13 +39,22 @@ export class PreferencesState {
   }
 
   // Reducers
-  @Action(PreferencesSetLeftyModeAction)
-  public setLeftHandedMode(
+  @Action(PreferencesSetInvertedStringsModeAction)
+  public setInvertedStringsMode(
     { patchState }: StateContext<PreferencesStateModel>,
-    { payload }: PreferencesSetLeftyModeAction,
+    { payload }: PreferencesSetInvertedStringsModeAction,
   ) {
-    patchState({ leftHandedMode: payload.leftHandedMode });
-    UtilsService.setParsedItemToLS(stateEnums.leftHandedMode, payload.leftHandedMode);
+    patchState({ invertedStrings: payload.invertedStrings });
+    UtilsService.setParsedItemToLS(stateEnums.invertedStrings, payload.invertedStrings);
+  }
+
+  @Action(PreferencesSetInvertedFretsModeAction)
+  public setInvertedFretsMode(
+    { patchState }: StateContext<PreferencesStateModel>,
+    { payload }: PreferencesSetInvertedFretsModeAction,
+  ) {
+    patchState({ invertedFrets: payload.invertedFrets });
+    UtilsService.setParsedItemToLS(stateEnums.invertedFrets, payload.invertedFrets);
   }
 
   @Action(PreferencesSetSoundAction)

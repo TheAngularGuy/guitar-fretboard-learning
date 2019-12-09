@@ -93,9 +93,10 @@
 
   <br />
   <app-fretboard
+    [invertedStrings]="preferences?.invertedStrings"
+    [invertedFrets]="preferences?.invertedFrets"
     [ngClass]="{'hide-on-mobile': !play}"
     [notes]="fretboardNotes"
-    [leftHanded]="preferences?.leftHandedMode"
     [highlightNote]="noteToFind && noteToFind.note"
     [disableClick]="true"
     [showAll]="showAll"

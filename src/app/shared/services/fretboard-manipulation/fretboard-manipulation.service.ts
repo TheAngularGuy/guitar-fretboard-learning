@@ -2,17 +2,15 @@ import { CHROMATIC_SCALE } from 'src/app/constants/chromatic-scale.constant';
 import { FRETBOARD_STANDARD } from 'src/app/constants/fretboard-notes.constant';
 
 export class FretboardManipulationService {
-  getFretboardNotes(preferences: { tuning: string; leftHandedMode: boolean }): string[][] {
+  getFretboardNotes(preferences: { tuning: string; invertedStrings: boolean }): string[][] {
     let output: string[][];
+
     if (preferences.tuning.toLowerCase().includes('standard')) {
       output = FRETBOARD_STANDARD;
     } else {
       output = this.customTuningFretboardFactory(preferences.tuning);
     }
 
-    if (!!preferences.leftHandedMode) {
-      return output.map(fret => [...fret].reverse());
-    }
     return output;
   }
 

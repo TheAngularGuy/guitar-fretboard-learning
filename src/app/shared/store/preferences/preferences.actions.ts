@@ -1,6 +1,11 @@
-export class PreferencesSetLeftyModeAction {
-  public static readonly type = '[Preferences] set left handed';
-  constructor(public payload: { leftHandedMode: boolean }) {}
+export class PreferencesSetInvertedStringsModeAction {
+  public static readonly type = '[Preferences] set inverted strings';
+  constructor(public payload: { invertedStrings: boolean }) {}
+}
+
+export class PreferencesSetInvertedFretsModeAction {
+  public static readonly type = '[Preferences] set inverted frets';
+  constructor(public payload: { invertedFrets: boolean }) {}
 }
 
 export class PreferencesSetSoundAction {

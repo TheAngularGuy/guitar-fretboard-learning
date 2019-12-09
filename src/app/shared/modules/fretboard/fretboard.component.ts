@@ -15,7 +15,8 @@ export class FretboardComponent implements OnInit {
   @Input() highlightNote: Note;
   @Input() disableClick: boolean;
   @Input() showAll: boolean;
-  @Input() leftHanded: boolean;
+  @Input() invertedStrings: boolean;
+  @Input() invertedFrets: boolean;
   @Input() notes: string[][];
   @Output() noteClick: Subject<Note> = new Subject();
 
@@ -28,10 +29,7 @@ export class FretboardComponent implements OnInit {
       return;
     }
     this.noteClick.next(noteObject);
-    if (
-      this.showAll ||
-      (this.showSelectedNotes && this.isGoodNote(noteObject.noteName))
-    ) {
+    if (this.showAll || (this.showSelectedNotes && this.isGoodNote(noteObject.noteName))) {
       return;
     }
     noteElement.style.opacity = 1;
@@ -63,10 +61,7 @@ export class FretboardComponent implements OnInit {
     if (!this.highlightNote) {
       return false;
     }
-    if (
-      this.highlightNote.fret === fret &&
-      selectedString === this.highlightNote.string
-    ) {
+    if (this.highlightNote.fret === fret && selectedString === this.highlightNote.string) {
       return true;
     }
     return false;
@@ -96,13 +91,5 @@ export class FretboardComponent implements OnInit {
       top + height <= window.pageYOffset + window.innerHeight &&
       left + width <= window.pageXOffset + window.innerWidth
     );
-  }
-
-  stringNumber(n: number): number {
-    if (!this.leftHanded) {
-      return n;
-    } else {
-      return 5 - n;
-    }
   }
 }

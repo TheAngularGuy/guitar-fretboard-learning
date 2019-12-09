@@ -23,12 +23,16 @@
       </ion-list-header>
 
       <ion-item>
-        <ion-label>Left handed mode</ion-label>
-        <ion-toggle formControlName="leftHandedMode"></ion-toggle>
+        <ion-label>Invert the strings order</ion-label>
+        <ion-toggle formControlName="invertedStrings" color="tertiary"></ion-toggle>
+      </ion-item>
+      <ion-item class="hide-on-mobile">
+        <ion-label>Invert the frets order</ion-label>
+        <ion-toggle formControlName="invertedFrets" color="tertiary"></ion-toggle>
       </ion-item>
       <ion-item>
         <ion-label>Activate sound</ion-label>
-        <ion-toggle [disabled]="true" formControlName="activateSound"></ion-toggle>
+        <ion-toggle [disabled]="true" formControlName="activateSound" color="tertiary"></ion-toggle>
       </ion-item>
       <ion-item>
         <ion-label>Tuning</ion-label>

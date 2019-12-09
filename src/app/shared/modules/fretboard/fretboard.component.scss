@@ -23,6 +23,7 @@
       background: var(--ion-color-secondary);
 
       &::before {
+        // fret
         position: absolute;
         content: '';
         width: calc(100% - 3px);
@@ -59,6 +60,7 @@
         box-shadow: none;
         margin: 0;
         padding: 0;
+        // string
         background-image: linear-gradient(0deg, black, transparent);
         background-size: 100% 3px;
         background-repeat: no-repeat;
@@ -145,14 +147,14 @@
         content: '';
         position: absolute;
         pointer-events: none;
-        width: 18px;
-        height: 18px;
+        width: 18px !important;
+        height: 18px !important;
         border-radius: 50%;
         top: 33%;
         left: 50%;
         transform: translate(-50%, -50%);
         background: rgba($color: #000000, $alpha: 0.4);
-        border: none;
+        border: none !important;
       }
 
       &::after {
@@ -179,6 +181,7 @@
 .no-click {
   pointer-events: none;
 }
+
 .tile-hide {
   @media screen and (max-width: 760px) {
     display: none !important;
@@ -235,11 +238,7 @@
           box-shadow: none;
           margin: 0;
           padding: 0;
-          background-image: linear-gradient(
-            90deg,
-            rgba(0, 0, 0, 0.8),
-            rgba(0, 0, 0, 0.2)
-          );
+          background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2));
           background-size: 3px 100%;
           background-repeat: no-repeat;
           background-position-x: 50%;
@@ -302,6 +301,12 @@
         height: 46px;
         width: 100%;
         background: #fff1f1;
+      }
+    }
+
+    .fretboard-inverted-strings {
+      .tile {
+        flex-direction: row;
       }
     }
   }
@@ -380,6 +385,30 @@
         .string-5 {
           background-size: 100% 5.5px;
         }
+      }
+    }
+
+    .fretboard-inverted-frets {
+      flex-direction: row-reverse;
+
+      .tile {
+        &::before {
+          // fret
+          position: absolute;
+          content: '';
+          right: 0;
+          width: calc(100% - 3px);
+          height: 100%;
+          border-left: 3px solid rgba(var(--ion-color-fourth-rgb), 1);
+          border-right: none;
+          pointer-events: none;
+        }
+      }
+    }
+
+    .fretboard-inverted-strings {
+      .tile {
+        flex-direction: column-reverse;
       }
     }
   }

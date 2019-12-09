@@ -1,5 +1,12 @@
 <div class="fretboard-wrapper">
-  <div class="fretboard" id="fretboard">
+  <div
+    class="fretboard"
+    id="fretboard"
+    [ngClass]="{
+      'fretboard-inverted-frets': invertedFrets,
+      'fretboard-inverted-strings': invertedStrings
+    }"
+  >
     <div
       class="tile width-{{ fret }}"
       [ngClass]="{
@@ -15,13 +22,13 @@
       <span class="tile-number">
         <span
           *ngIf="getNum(fret) == 0"
-          [ngClass]="{ 'hide-on-mobile': !leftHanded, 'hide-on-desktop': leftHanded }"
+          [ngClass]="{ 'hide-on-mobile': !invertedStrings, 'hide-on-desktop': invertedStrings }"
         >
           {{ fretnotes[0] | lowercase }}
         </span>
         <span
           *ngIf="getNum(fret) == 0"
-          [ngClass]="{ 'hide-on-mobile': leftHanded, 'hide-on-desktop': !leftHanded }"
+          [ngClass]="{ 'hide-on-mobile': invertedStrings, 'hide-on-desktop': !invertedStrings }"
         >
           {{ fretnotes[5] | uppercase }}
         </span>
@@ -29,7 +36,7 @@
       </span>
 
       <button
-        class="note string-{{ stringNumber(string) }}"
+        class="note string-{{ string }}"
         [ngClass]="{ 'note-highlighted': isNoteHighlighted(fret, string) }"
         *ngFor="let note of fretnotes; let string = index"
         (click)="
