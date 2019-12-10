@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 import { environment } from '../../../environments/environment';
 
@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
   selector: 'app-about',
   templateUrl: './about.page.html',
   styleUrls: ['./about.page.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AboutPage implements OnInit {
   appVersion = environment.version;

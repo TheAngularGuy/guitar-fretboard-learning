@@ -11,8 +11,8 @@ import { FretboardManipulationService } from 'src/app/shared/services/fretboard-
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
 
-import { CHROMATIC_SCALE } from '../../constants/chromatic-scale.constant';
-import { CanDeactivateComponent } from '../../shared/guards/deactivate.guard';
+import { CHROMATIC_SCALE } from '../../../../constants/chromatic-scale.constant';
+import { CanDeactivateComponent } from '../../../../shared/guards/deactivate.guard';
 import { LocateSetFretEndAction, LocateSetFretStartAction, LocateSetSelectedNotesAction } from './store/locate.actions';
 import { LocateState, LocateStateModel } from './store/locate.state';
 

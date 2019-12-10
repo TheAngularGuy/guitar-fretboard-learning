@@ -8,7 +8,7 @@ import { GlobalModule } from 'src/app/shared/modules/global/global.module';
 import { FretboardManipulationService } from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
-import { CanDeactivateGuard } from '../../shared/guards/deactivate.guard';
+import { CanDeactivateGuard } from '../../../../shared/guards/deactivate.guard';
 import { LocatePageRoutingModule } from './locate-routing.module';
 import { LocatePage } from './locate.page';
 import { LocateState } from './store/locate.state';

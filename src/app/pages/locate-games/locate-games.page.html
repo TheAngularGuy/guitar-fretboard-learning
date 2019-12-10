@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Locate game modes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="page">
+    <div class="btns-list">
+      <button class="btn" *ngFor="let item of gameModes">
+        <div class="btn-inside">
+          <div class="img">
+            <img [src]="item.img" [alt]="item.name" />
+          </div>
+          <div class="title">
+            {{item.name}}
+          </div>
+          <div class="subtitle">
+            {{item.text}}
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</ion-content>
