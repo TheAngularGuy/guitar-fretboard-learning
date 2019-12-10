@@ -134,9 +134,13 @@ export class LocatePage implements OnInit, OnDestroy, CanDeactivateComponent {
 
   togglePlay(): boolean {
     if (this.locateForm.invalid || this.locateForm.value.fretStart >= this.locateForm.value.fretEnd) {
+      const message =
+        this.locateForm.value.fretStart >= this.locateForm.value.fretEnd
+          ? 'Please set the ending fret to be greater than the starting fret.'
+          : 'Invalid form, please select at least two notes and two frets (between 0 and 12).';
       this.toastController
         .create({
-          message: 'Invalid form, please select at least 2 notes and 2 frets',
+          message,
           duration: 3000,
         })
         .then(toast => {
@@ -147,7 +151,7 @@ export class LocatePage implements OnInit, OnDestroy, CanDeactivateComponent {
     for (const n of this.locateForm.value.selectedNotes) {
       if (!this.checkIfNoteIsInTheFretInterval(n)) {
         const message =
-          'The notes you selected are not all present in the interval of frets' +
+          'The notes you selected are not all present in the interval of frets. ' +
           `For example ${n} is not present. Please change the settings.`;
         this.toastController
           .create({
