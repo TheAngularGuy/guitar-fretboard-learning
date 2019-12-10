@@ -15,7 +15,7 @@ export class AppComponent {
   appPages = [
     // { title: 'Home', url: '/home', img: 'assets/imgs/home.svg' },
     { title: 'Locate', url: '/locate', img: 'assets/imgs/locate.svg' },
-    { title: 'Identify', url: '/identify', img: 'assets/imgs/identify.svg' },
+    { title: 'Identify', url: '/identify', img: 'assets/imgs/identified.svg' },
     { title: 'Explore', url: '/explore', img: 'assets/imgs/explore.svg' },
   ];
   morePages = [
@@ -23,7 +23,7 @@ export class AppComponent {
     { title: 'About', url: '/about' },
   ];
   // icons set: https://www.flaticon.com/packs/seo-55
-  // https://www.flaticon.com/packs/business-148/2
+  // https://www.flaticon.com/packs/business-148
   // https://www.flaticon.com/packs/ecology-69
 
   constructor(

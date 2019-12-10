@@ -18,7 +18,7 @@ export class HomePage {
     },
     {
       path: 'identify',
-      img: 'assets/imgs/identify.svg',
+      img: 'assets/imgs/identified.svg',
       name: 'Identify',
       color: 'secondary',
     },
