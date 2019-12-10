@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
+import { GlobalModule } from '../global/global.module';
 import { FretboardComponent } from './fretboard.component';
-import { NotePipe } from './pipes/note/note.pipe';
 
 @NgModule({
-  declarations: [FretboardComponent, NotePipe],
-  imports: [CommonModule],
-  exports: [FretboardComponent, NotePipe],
+  declarations: [FretboardComponent],
+  imports: [CommonModule, GlobalModule],
+  exports: [FretboardComponent],
 })
 export class FretboardModule {}
