@@ -51,18 +51,18 @@ export class AppComponent {
       this.swUpdate.available.subscribe(async () => {
         const toast = await this.toastController.create({
           message: 'New version available',
-          position: 'top',
+          color: 'primary',
           buttons: [
             {
               side: 'end',
               icon: 'refresh',
-              text: 'reload',
+              text: 'Reload',
               handler: () => {
                 window.location.reload();
               },
             },
             {
-              text: 'ignore',
+              text: 'Ignore',
               role: 'cancel',
               handler: () => {},
             },

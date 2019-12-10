@@ -7,14 +7,9 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 import { popAnimation } from 'src/app/animations/pop.animation';
 import { slideAnimation } from 'src/app/animations/slide.animation';
 import { Note } from 'src/app/models/note.model';
-import {
-  FretboardManipulationService,
-} from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
+import { FretboardManipulationService } from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
-import {
-  PreferencesState,
-  PreferencesStateModel,
-} from 'src/app/shared/store/preferences/preferences.state';
+import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
 
 import { CHROMATIC_SCALE } from '../../constants/chromatic-scale.constant';
 import { CanDeactivateComponent } from '../../shared/guards/deactivate.guard';
@@ -70,15 +65,9 @@ export class IdentifyPage implements OnInit, OnDestroy, CanDeactivateComponent {
   }
 
   ngOnInit() {
-    this.identifyState = this.store.selectSnapshot<IdentifyStateModel>(
-      IdentifyState.getState,
-    );
-    this.preferences = this.store.selectSnapshot<PreferencesStateModel>(
-      PreferencesState.getState,
-    );
-    this.fretboardNotes = this.fretboardManipulationService.getFretboardNotes(
-      this.preferences,
-    );
+    this.identifyState = this.store.selectSnapshot<IdentifyStateModel>(IdentifyState.getState);
+    this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
+    this.fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
     this.maxRange = MAX_RANGE;
     this.chromaticScale = CHROMATIC_SCALE;
     this.setForm();
@@ -117,9 +106,7 @@ export class IdentifyPage implements OnInit, OnDestroy, CanDeactivateComponent {
     this.identifyForm.valueChanges
       .pipe(takeUntil(this.destroyed$), debounceTime(500))
       .subscribe((formValue: IdentifyStateModel) => {
-        const identifyState = this.store.selectSnapshot<IdentifyStateModel>(
-          IdentifyState.getState,
-        );
+        const identifyState = this.store.selectSnapshot<IdentifyStateModel>(IdentifyState.getState);
 
         if (formValue.selectedNotes !== identifyState.selectedNotes) {
           this.store.dispatch(
@@ -162,7 +149,6 @@ export class IdentifyPage implements OnInit, OnDestroy, CanDeactivateComponent {
         .create({
           message: 'Invalid form, please select at least 2 notes and 2 frets',
           duration: 3000,
-          position: 'top',
         })
         .then(toast => {
           toast.present();
@@ -178,7 +164,6 @@ export class IdentifyPage implements OnInit, OnDestroy, CanDeactivateComponent {
           .create({
             message,
             duration: 3000,
-            position: 'top',
           })
           .then(toast => {
             toast.present();
@@ -320,11 +305,7 @@ export class IdentifyPage implements OnInit, OnDestroy, CanDeactivateComponent {
     if (!this.scoreHistoric || !this.scoreHistoric.length) {
       return;
     }
-    return (
-      this.scoreHistoric.reduce((acc, n) => acc + n.timeTook, 0) /
-      this.scoreHistoric.length /
-      1000
-    );
+    return this.scoreHistoric.reduce((acc, n) => acc + n.timeTook, 0) / this.scoreHistoric.length / 1000;
   }
 
   async canDeactivateComp() {
