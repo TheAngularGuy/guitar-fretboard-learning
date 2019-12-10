@@ -2,49 +2,6 @@
   .page {
     max-width: 950px;
     margin: auto;
-
-    .btns-list {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-gap: 2rem;
-
-      .btn {
-        position: relative;
-        display: block;
-        border-radius: 15px;
-        min-height: 200px;
-        overflow: hidden;
-        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-        background: var(--ion-color-secondary-tint);
-        padding: 2ch;
-
-        &:hover {
-          box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
-        }
-
-        .img {
-          text-align: center;
-
-          img {
-            width: 100px;
-            height: 100px;
-          }
-        }
-
-        .title {
-          text-align: center;
-          font-size: 1.7rem;
-          padding: 1ch 1rem 0;
-          color: var(--ion-color-sixth);
-        }
-
-        .subtitle {
-          text-align: center;
-          padding: 1ch 1rem 0;
-          min-height: 3rem;
-        }
-      }
-    }
   }
 }
 
@@ -52,67 +9,5 @@
   .page {
     padding: 0;
     margin: 0;
-
-    .btns-list {
-      display: flex;
-      flex-direction: column;
-
-      .btn {
-        width: 100%;
-        border-bottom: 1px solid var(--ion-color-fourth);
-        overflow: hidden;
-        background: transparent;
-        padding: 3ch 0 3ch 3ch;
-
-        .btn-inside {
-          display: grid;
-          grid-template-columns: repeat(6, 1fr);
-          grid-template-rows: 1fr 1fr;
-
-          .img {
-            grid-column: -3 / -1;
-            grid-row: 1 / 3;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            position: relative;
-
-            &::before {
-              content: '';
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              width: 80%;
-              height: 80px;
-              transform: translate(-50%, -50%);
-              background: rgba(var(--ion-color-secondary-rgb), 1);
-              border-radius: 15px;
-            }
-
-            img {
-              position: relative;
-              width: 45px;
-              z-index: 1;
-            }
-          }
-
-          .title {
-            grid-column: 1 / -3;
-            display: flex;
-            align-items: center;
-            font-size: 1.7rem;
-            padding: 0;
-            color: var(--ion-color-sixth);
-          }
-
-          .subtitle {
-            grid-column: 1 / -3;
-            text-align: start;
-            padding: 1ch 0;
-          }
-        }
-      }
-    }
   }
 }

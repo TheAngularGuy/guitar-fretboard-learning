@@ -9,16 +9,20 @@
 
 <ion-content>
   <div class="page">
-    <div class="btns-list" [@listAnimation]="gameModes.length">
-      <button class="btn" *ngFor="let item of gameModes" [routerLink]="[ item.path ? item.path : '.' ]">
-        <div class="btn-inside">
-          <div class="img">
+    <div class="page-list" [@listAnimation]="gameModes.length">
+      <button
+        class="page-list-item"
+        *ngFor="let item of gameModes"
+        [routerLink]="[ item.path ? item.path : '.' ]"
+      >
+        <div class="page-list-item-inside">
+          <div class="page-list-item-image">
             <img [src]="item.img" [alt]="item.name" />
           </div>
-          <div class="title">
+          <div class="page-list-item-title">
             {{item.name}}
           </div>
-          <div class="subtitle" [innerHTML]="item.text"></div>
+          <div class="page-list-item-subtitle" [innerHTML]="item.text"></div>
         </div>
       </button>
     </div>
