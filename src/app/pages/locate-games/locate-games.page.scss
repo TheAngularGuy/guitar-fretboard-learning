@@ -57,17 +57,11 @@
       display: flex;
       flex-direction: column;
 
-      /* background-image: linear-gradient(
-        to left,
-        rgba(var(--ion-color-secondary-rgb), 1),
-        rgba(var(--ion-color-secondary-rgb), 0)
-      ); */
-
       .btn {
         width: 100%;
         border-bottom: 1px solid var(--ion-color-fourth);
         overflow: hidden;
-        background: transparent; // var(--ion-color-secondary-tint);
+        background: transparent;
         padding: 3ch 0 3ch 3ch;
 
         .btn-inside {
