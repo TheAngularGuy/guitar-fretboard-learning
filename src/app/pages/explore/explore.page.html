@@ -23,7 +23,7 @@
           <ion-label>Notes</ion-label>
           <ion-select multiple="true" formControlName="selectedNotes">
             <ion-select-option *ngFor="let note of chromaticScale" [value]="note">
-              {{note}}
+              {{note | note}}
             </ion-select-option>
           </ion-select>
         </ion-item>

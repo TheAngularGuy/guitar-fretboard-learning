@@ -33,12 +33,17 @@
 
       <hr />
 
-      <form class="settings" *ngIf="showSettings" [formGroup]="identifyForm" @slideAnimation>
+      <form
+        class="settings"
+        *ngIf="showSettings"
+        [formGroup]="identifyForm"
+        @slideAnimation
+      >
         <ion-item>
           <ion-label>Notes</ion-label>
           <ion-select multiple="true" formControlName="selectedNotes">
             <ion-select-option *ngFor="let note of chromaticScale" [value]="note">
-              {{note}}
+              {{note | note}}
             </ion-select-option>
           </ion-select>
         </ion-item>
@@ -57,8 +62,8 @@
           Press the button to start playing
         </ng-container>
         <ng-container *ngIf="scoreHistoric && scoreHistoric.length">
-          Your score is <b>{{ score.good }}</b> out of {{ scoreHistoric?.length }}. And your average time
-          is: <b>{{ getAverageTime() | number }}</b> seconds.
+          Your score is <b>{{ score.good }}</b> out of {{ scoreHistoric?.length }}. And
+          your average time is: <b>{{ getAverageTime() | number }}</b> seconds.
         </ng-container>
       </p>
 
@@ -70,8 +75,18 @@
             <span *ngIf="!noteToFind">GO</span>
             <span *ngIf="noteToFind">...</span>
             &nbsp;
-            <img src="assets/imgs/player.svg" alt="start" height="26" *ngIf="!noteToFind" />
-            <img src="assets/imgs/refresh.svg" alt="start" height="26" *ngIf="noteToFind" />
+            <img
+              src="assets/imgs/player.svg"
+              alt="start"
+              height="26"
+              *ngIf="!noteToFind"
+            />
+            <img
+              src="assets/imgs/refresh.svg"
+              alt="start"
+              height="26"
+              *ngIf="noteToFind"
+            />
           </div>
         </ion-button>
       </div>
@@ -132,7 +147,13 @@
         />
         &nbsp; <b [@popAnimation]="score.bad">{{score.bad}} </b> &nbsp; / {{maxRange}}
       </p>
-      <ion-button fill="outline" color="danger" size="small" style="width: 9ch" (click)="togglePlay()">
+      <ion-button
+        fill="outline"
+        color="danger"
+        size="small"
+        style="width: 9ch"
+        (click)="togglePlay()"
+      >
         Stop
       </ion-button>
     </div>
@@ -143,8 +164,10 @@
         *ngFor="let note of identifyForm.value.selectedNotes"
         (click)="onNoteClicked(note, btn)"
       >
-        <span style="min-width: 2.4ch; display: inline-block; font-feature-settings: 'tnum';">
-          {{note}}
+        <span
+          style="min-width: 2.4ch; display: inline-block; font-feature-settings: 'tnum';"
+        >
+          {{note | note}}
         </span>
       </ion-button>
     </div>

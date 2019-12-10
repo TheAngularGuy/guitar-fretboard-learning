@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
-import { CHROMATIC_SCALE } from '../../../constants/chromatic-scale.constant';
+import { CHROMATIC_SCALE } from '../../../../constants/chromatic-scale.constant';
 
 @Component({
   selector: 'app-custom-tuning-modal',

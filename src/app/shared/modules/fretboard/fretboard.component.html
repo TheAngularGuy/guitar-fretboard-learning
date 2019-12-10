@@ -22,13 +22,19 @@
       <span class="tile-number">
         <span
           *ngIf="getNum(fret) == 0"
-          [ngClass]="{ 'hide-on-mobile': !invertedStrings, 'hide-on-desktop': invertedStrings }"
+          [ngClass]="{
+            'hide-on-mobile': !invertedStrings,
+            'hide-on-desktop': invertedStrings
+          }"
         >
           {{ fretnotes[0] | lowercase }}
         </span>
         <span
           *ngIf="getNum(fret) == 0"
-          [ngClass]="{ 'hide-on-mobile': invertedStrings, 'hide-on-desktop': !invertedStrings }"
+          [ngClass]="{
+            'hide-on-mobile': invertedStrings,
+            'hide-on-desktop': !invertedStrings
+          }"
         >
           {{ fretnotes[5] | uppercase }}
         </span>
@@ -59,7 +65,7 @@
             'note-show': showSelectedNotes && isGoodNote(note)
           }"
         >
-          {{ note }}
+          {{ note | note }}
         </span>
       </button>
 

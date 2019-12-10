@@ -6,7 +6,7 @@ import { NgxsModule } from '@ngxs/store';
 
 import {
   CustomTuningModalModule,
-} from './custom-tuning-modal/custom-tuning-modal.module';
+} from './modals/custom-tuning-modal/custom-tuning-modal.module';
 import { SettingsPageRoutingModule } from './settings-routing.module';
 import { SettingsPage } from './settings.page';
 import { SettingsState } from './store/settings.state';

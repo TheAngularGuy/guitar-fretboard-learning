@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { Note } from '../../../models/note.model';
@@ -7,6 +7,7 @@ import { Note } from '../../../models/note.model';
   selector: 'app-fretboard',
   templateUrl: './fretboard.component.html',
   styleUrls: ['./fretboard.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FretboardComponent implements OnInit {
   @Input() selectedFrets: [number, number];
@@ -29,7 +30,10 @@ export class FretboardComponent implements OnInit {
       return;
     }
     this.noteClick.next(noteObject);
-    if (this.showAll || (this.showSelectedNotes && this.isGoodNote(noteObject.noteName))) {
+    if (
+      this.showAll ||
+      (this.showSelectedNotes && this.isGoodNote(noteObject.noteName))
+    ) {
       return;
     }
     noteElement.style.opacity = 1;
@@ -61,7 +65,10 @@ export class FretboardComponent implements OnInit {
     if (!this.highlightNote) {
       return false;
     }
-    if (this.highlightNote.fret === fret && selectedString === this.highlightNote.string) {
+    if (
+      this.highlightNote.fret === fret &&
+      selectedString === this.highlightNote.string
+    ) {
       return true;
     }
     return false;

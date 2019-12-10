@@ -5,14 +5,20 @@ import { Store } from '@ngxs/store';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import {
+  PreferencesSetFlatsModeAction,
   PreferencesSetInvertedFretsModeAction,
   PreferencesSetInvertedStringsModeAction,
   PreferencesSetSoundAction,
   PreferencesSetTunningAction,
 } from 'src/app/shared/store/preferences/preferences.actions';
-import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
+import {
+  PreferencesState,
+  PreferencesStateModel,
+} from 'src/app/shared/store/preferences/preferences.state';
 
-import { CustomTuningModalComponent } from './custom-tuning-modal/custom-tuning-modal.component';
+import {
+  CustomTuningModalComponent,
+} from './modals/custom-tuning-modal/custom-tuning-modal.component';
 import { SettingsAddCustomTuningAction } from './store/settings.actions';
 import { SettingsState, SettingsStateModel } from './store/settings.state';
 
@@ -70,11 +76,14 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   setForm() {
     this.settingsState = this.store.selectSnapshot(SettingsState.getState);
-    const preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
+    const preferences = this.store.selectSnapshot<PreferencesStateModel>(
+      PreferencesState.getState,
+    );
     const form = this.fb.group({
       invertedStrings: [preferences.invertedStrings, [Validators.required]],
       invertedFrets: [preferences.invertedFrets, [Validators.required]],
       activateSound: [preferences.activateSound, [Validators.required]],
+      useFlats: [preferences.useFlats, [Validators.required]],
       tuning: [preferences.tuning, [Validators.required]],
     });
     this.settingsForm = form;
@@ -85,7 +94,9 @@ export class SettingsPage implements OnInit, OnDestroy {
     this.settingsForm.valueChanges
       .pipe(takeUntil(this.destroyed$), debounceTime(500))
       .subscribe((formValue: PreferencesStateModel) => {
-        const preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
+        const preferences = this.store.selectSnapshot<PreferencesStateModel>(
+          PreferencesState.getState,
+        );
 
         if (formValue.invertedStrings !== preferences.invertedStrings) {
           this.store.dispatch(
@@ -102,10 +113,19 @@ export class SettingsPage implements OnInit, OnDestroy {
           );
         }
         if (formValue.activateSound !== preferences.activateSound) {
-          this.store.dispatch(new PreferencesSetSoundAction({ activateSound: formValue.activateSound }));
+          this.store.dispatch(
+            new PreferencesSetSoundAction({ activateSound: formValue.activateSound }),
+          );
+        }
+        if (formValue.useFlats !== preferences.useFlats) {
+          this.store.dispatch(
+            new PreferencesSetFlatsModeAction({ useFlats: formValue.useFlats }),
+          );
         }
         if (formValue.tuning !== preferences.tuning) {
-          this.store.dispatch(new PreferencesSetTunningAction({ tuning: formValue.tuning }));
+          this.store.dispatch(
+            new PreferencesSetTunningAction({ tuning: formValue.tuning }),
+          );
         }
       });
   }
@@ -127,6 +147,11 @@ export class SettingsPage implements OnInit, OnDestroy {
 
       setTimeout(() => {
         this.settingsState = this.store.selectSnapshot(SettingsState.getState);
+        setTimeout(() => {
+          this.settingsForm.patchValue({
+            tuning: data.customTuning,
+          });
+        }, 250);
       }, 10);
     }
   }
