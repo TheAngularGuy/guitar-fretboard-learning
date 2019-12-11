@@ -124,6 +124,15 @@
 </ion-footer>
 
 <ng-template #playingControls>
+  <div class="series">
+    <div
+      class="series-dot"
+      [ngClass]="{'series-dot-success': dot === true, 'series-dot-fail': dot === false}"
+      *ngFor="let dot of seriesDisplay"
+    >
+      <div class="series-dot-circle"></div>
+    </div>
+  </div>
   <div class="playing">
     <div class="score">
       <p class="good">
@@ -152,5 +161,4 @@
       {{noteToFind?.note?.noteName | note}}
     </div>
   </div>
-  {{ series.length }} / {{seriesMaxRange}}
 </ng-template>

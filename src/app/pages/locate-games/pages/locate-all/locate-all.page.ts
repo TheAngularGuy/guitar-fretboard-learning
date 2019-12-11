@@ -28,6 +28,7 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
   locateState: LocateStateModel;
   series: { good: boolean; noteGuessed: Note }[];
   seriesMaxRange: number;
+  seriesDisplay: any[];
   scoreHistoric: { timeTook: number; good: boolean; result: any }[];
 
   constructor(
@@ -61,6 +62,7 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
           this.fretboardNotes,
         );
         this.series = [];
+        this.seriesDisplay = new Array(this.seriesMaxRange).fill(undefined);
       },
       onEnd: () => {
         this.content.scrollToTop(250);
@@ -190,6 +192,7 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
         good: true,
         noteGuessed,
       });
+      this.seriesDisplay[this.series.length - 1] = true;
     } else {
       // bad answer
       this.series.push({
@@ -197,6 +200,7 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
         noteGuessed,
       });
       UtilsService.vibrate([100, 30, 100]);
+      this.seriesDisplay[this.series.length - 1] = false;
     }
     this.showAll = false;
   }
