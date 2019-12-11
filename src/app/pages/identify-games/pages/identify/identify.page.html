@@ -143,7 +143,9 @@
         *ngFor="let note of form.value.selectedNotes"
         (click)="onNoteClicked(note, btn)"
       >
-        <span style="min-width: 2.4ch; display: inline-block; font-feature-settings: 'tnum';">
+        <span
+          style="min-width: 2.4ch; display: inline-block; font-feature-settings: 'tnum'; text-transform: none;"
+        >
           {{note | note}}
         </span>
       </ion-button>
