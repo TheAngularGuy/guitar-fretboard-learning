@@ -140,7 +140,7 @@
       <ion-button
         #btn
         color="light"
-        *ngFor="let note of form.value.selectedNotes"
+        *ngFor="let note of form.value.selectedNotes.sort()"
         (click)="onNoteClicked(note, btn)"
       >
         <span
