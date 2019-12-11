@@ -14,9 +14,9 @@ import { AnalyticsService } from './shared/services/analytics/analytics.service'
 export class AppComponent {
   appPages = [
     // { title: 'Home', url: '/home', img: 'assets/imgs/home.svg' },
-    { title: 'Locate', url: '/locate', img: 'assets/imgs/locate.svg' },
-    { title: 'Identify', url: '/identify', img: 'assets/imgs/identified.svg' },
-    { title: 'Explore', url: '/explore', img: 'assets/imgs/explore.svg' },
+    { title: 'Locate', url: '/locate-games', img: 'assets/imgs/locate.svg' },
+    { title: 'Identify', url: '/identify-games', img: 'assets/imgs/identified.svg' },
+    { title: 'Explore', url: '/explore-games', img: 'assets/imgs/explore.svg' },
   ];
   morePages = [
     { title: 'Preferences', url: '/settings' },

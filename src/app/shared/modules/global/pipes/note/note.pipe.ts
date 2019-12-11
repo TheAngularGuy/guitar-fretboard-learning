@@ -11,13 +11,12 @@ export class NotePipe implements PipeTransform {
 
   transform(value: string, ...args: any[]): string {
     if (value.includes('#')) {
-      const preferences =
-        this.store && this.store.selectSnapshot(PreferencesState.getState);
+      const preferences = this.store && this.store.selectSnapshot(PreferencesState.getState);
       if (preferences && preferences.useFlats) {
         const code = value.charCodeAt(0) + 1;
-        return String.fromCharCode(code === 72 ? 65 : code) + '♭'; // 71 ==> G
+        return String.fromCharCode(code === 72 ? 65 : code) + 'b'; // 71 ==> G
       }
-      return value[0] + '♯';
+      return value[0] + '#';
     }
     return value[0];
   }

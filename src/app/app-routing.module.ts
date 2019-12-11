@@ -7,18 +7,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
   },
   {
-    path: 'explore',
-    loadChildren: () => import('./pages/explore/explore.module').then(m => m.ExplorePageModule),
-  },
-  {
-    path: 'locate',
-    loadChildren: () => import('./pages/locate/locate.module').then(m => m.LocatePageModule),
-  },
-  {
-    path: 'identify',
-    loadChildren: () => import('./pages/identify/identify.module').then(m => m.IdentifyPageModule),
-  },
-  {
     path: 'settings',
     loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule),
   },
@@ -34,7 +22,25 @@ const routes: Routes = [
     path: 'lost',
     loadChildren: () => import('./pages/lost/lost.module').then(m => m.LostPageModule),
   },
-  // Redirections
+
+  {
+    path: 'locate-games',
+    loadChildren: () =>
+      import('./pages/locate-games/locate-games.module').then(m => m.LocateGamesPageModule),
+  },
+  {
+    path: 'identify-games',
+    loadChildren: () =>
+      import('./pages/identify-games/identify-games.module').then(m => m.IdentifyGamesPageModule),
+  },
+  {
+    path: 'explore-games',
+    loadChildren: () =>
+      import('./pages/explore-games/explore-games.module').then(m => m.ExploreGamesPageModule),
+  },
+];
+
+const redirections: Routes = [
   {
     path: '',
     redirectTo: 'home',
@@ -47,7 +53,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
+  imports: [
+    RouterModule.forRoot([...routes, ...redirections], { preloadingStrategy: PreloadAllModules }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

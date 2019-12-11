@@ -5,9 +5,6 @@
     </ion-buttons>
     <ion-title>Locate</ion-title>
     <ion-buttons slot="end" *ngIf="play">
-      <!-- <ion-button (click)="togglePlay()">
-        <ion-icon slot="icon-only" name="pause"></ion-icon>
-      </ion-button> -->
       <ion-button (click)="toggleShowAll()">
         peek
         <ion-icon slot="end" name="eye"></ion-icon>
@@ -22,23 +19,29 @@
   </ion-toolbar>
 </ion-header>
 
+<ng-template #modeTitle>
+  Locate the note on the fretboard!
+</ng-template>
+<ng-template #modeSubtitle>
+  In this game you have to locate the note on the fretboard and click on it.
+</ng-template>
+
 <ion-content #content>
   <ion-card *ngIf="!play">
     <ion-card-header>
-      <ion-card-title>Locate the note on the fretboard!</ion-card-title>
+      <ion-card-title>
+        <ng-container *ngTemplateOutlet="modeTitle"></ng-container>
+      </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
-      <p>In this game you have to locate the note on the fretboard and click on it.</p>
+    <ion-card-content class="game-mode">
+      <p>
+        <ng-container *ngTemplateOutlet="modeSubtitle"></ng-container>
+      </p>
 
       <hr />
 
-      <form
-        class="settings"
-        *ngIf="showSettings"
-        [formGroup]="locateForm"
-        @slideAnimation
-      >
+      <form class="game-mode-settings" *ngIf="showSettings" [formGroup]="form" @slideAnimation>
         <ion-item>
           <ion-label>Notes</ion-label>
           <ion-select multiple="true" formControlName="selectedNotes">
@@ -57,36 +60,26 @@
         </ion-item>
       </form>
 
-      <p class="result" *ngIf="!showSettings">
+      <p class="game-mode-result" *ngIf="!showSettings">
         <ng-container *ngIf="!scoreHistoric || !scoreHistoric.length">
           Press the button to start playing
         </ng-container>
         <ng-container *ngIf="scoreHistoric && scoreHistoric.length">
-          Your score is <b>{{ score.good }}</b> out of {{ scoreHistoric?.length }}. And
-          your average time is: <b>{{ getAverageTime() | number }}</b> seconds.
+          Your score is <b>{{ score.good }}</b> out of {{ scoreHistoric?.length }}. And your average time
+          is: <b>{{ getAverageTime() | number }}</b> seconds.
         </ng-container>
       </p>
 
       <br />
 
-      <div class="start">
+      <div class="game-mode-start">
         <ion-button color="secondary" (click)="togglePlay()" [disabled]="noteToFind">
           <div>
             <span *ngIf="!noteToFind">GO</span>
             <span *ngIf="noteToFind">...</span>
             &nbsp;
-            <img
-              src="assets/imgs/player.svg"
-              alt="start"
-              height="26"
-              *ngIf="!noteToFind"
-            />
-            <img
-              src="assets/imgs/refresh.svg"
-              alt="start"
-              height="26"
-              *ngIf="noteToFind"
-            />
+            <img src="assets/imgs/player.svg" alt="start" height="26" *ngIf="!noteToFind" />
+            <img src="assets/imgs/refresh.svg" alt="start" height="26" *ngIf="noteToFind" />
           </div>
         </ion-button>
       </div>
@@ -95,10 +88,14 @@
 
   <ion-card *ngIf="play" class="hide-on-mobile">
     <ion-card-header>
-      <ion-card-title>Locate the note on the fretboard!</ion-card-title>
+      <ion-card-title>
+        <ng-container *ngTemplateOutlet="modeTitle"></ng-container>
+      </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p>In this game you have to locate the note on the fretboard and click on it.</p>
+      <p>
+        <ng-container *ngTemplateOutlet="modeSubtitle"></ng-container>
+      </p>
       <br />
 
       <ng-container *ngTemplateOutlet="playingControls"></ng-container>
@@ -112,7 +109,7 @@
     [ngClass]="{'hide-on-mobile': !play}"
     [notes]="fretboardNotes"
     [showAll]="showAll"
-    [selectedFrets]="[locateForm?.value.fretStart, locateForm?.value.fretEnd]"
+    [selectedFrets]="[form?.value.fretStart, form?.value.fretEnd]"
     [selectedNotes]="noteToFind ? [noteToFind.note.noteName] : null"
     (noteClick)="onNoteClicked($event)"
   ></app-fretboard>
@@ -134,7 +131,7 @@
           alt="thumbs-up"
           style="width: 26px; height: 26px;"
         />
-        &nbsp; <b [@popAnimation]="score.good">{{score.good}}</b> &nbsp; / {{maxRange}}
+        &nbsp; <b [@popAnimation]="score.good">{{score.good}}</b> &nbsp; / {{config.MAX_RANGE}}
       </p>
       <p class="bad">
         <img
@@ -143,15 +140,9 @@
           alt="thumbs-down"
           style="width: 26px; height: 26px;"
         />
-        &nbsp; <b [@popAnimation]="score.bad">{{score.bad}} </b> &nbsp; / {{maxRange}}
+        &nbsp; <b [@popAnimation]="score.bad">{{score.bad}} </b> &nbsp; / {{config.MAX_RANGE}}
       </p>
-      <ion-button
-        fill="outline"
-        color="danger"
-        size="small"
-        style="width: 9ch"
-        (click)="togglePlay()"
-      >
+      <ion-button fill="outline" color="danger" size="small" style="width: 9ch" (click)="togglePlay()">
         Stop
       </ion-button>
     </div>

@@ -1,0 +1,38 @@
+.playing {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 2ch;
+
+  .note {
+    grid-column: 2 / 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(var(--ion-color-primary-contrast-rgb));
+    font-size: 2rem;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: rgba($color: var(--ion-color-primary-rgb), $alpha: 1);
+    margin: auto;
+  }
+  .score {
+    grid-column: 1 / 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .good,
+    .bad {
+      font-feature-settings: 'tnum';
+      margin: 0;
+      height: 3ch;
+      display: flex;
+      align-items: center;
+
+      &:nth-child(1) {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

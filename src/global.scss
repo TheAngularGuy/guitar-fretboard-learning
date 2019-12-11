@@ -25,7 +25,8 @@ h3 {
 .page {
   padding: 1rem;
 
-  .image {
+  .image,
+  .page-image {
     max-width: 300px;
     max-height: 300px;
     width: 70vw;
@@ -48,11 +49,70 @@ h3 {
   font-size: 80%;
 }
 
+.game-mode {
+  .game-mode-settings {
+    ion-item {
+      ion-input {
+        text-align: end;
+      }
+    }
+
+    @media screen and (min-width: 760px) {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 1rem;
+
+      ion-item {
+        width: 100%;
+
+        ion-input {
+          text-align: end;
+        }
+      }
+    }
+  }
+
+  .game-mode-start {
+    display: flex;
+    justify-content: center;
+
+    ion-button {
+      height: 100%;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+      border-radius: 15px;
+      overflow: hidden;
+
+      div {
+        padding: 1rem 0;
+        display: flex;
+        align-items: center;
+        align-items: center;
+
+        img {
+          width: 26px;
+        }
+      }
+
+      @media screen and (max-width: 760px) {
+        width: 90%;
+      }
+    }
+  }
+
+  .game-mode-result {
+    color: black;
+    font-size: 1.1rem;
+    text-align: center;
+    margin: 1.9rem 0 0;
+  }
+}
+
 @media screen and (max-width: 760px) {
   .hide-on-mobile {
     display: none;
   }
 }
+
 @media screen and (min-width: 760px) {
   .hide-on-desktop {
     display: none;
