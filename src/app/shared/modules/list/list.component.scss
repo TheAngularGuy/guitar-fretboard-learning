@@ -1,9 +1,9 @@
 .page-list-item-disabled {
+  cursor: not-allowed;
   position: relative;
 
   &::after {
     content: '';
-    cursor: not-allowed;
     position: absolute;
     top: 0;
     left: 0;
