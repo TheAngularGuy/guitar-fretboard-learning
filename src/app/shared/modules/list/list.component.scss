@@ -70,8 +70,10 @@
   .page-list {
     display: flex;
     flex-direction: column;
+    margin: 0;
 
     .page-list-item {
+      margin: 0;
       width: 100%;
       border-bottom: 1px solid var(--ion-color-fourth);
       overflow: hidden;
@@ -79,6 +81,7 @@
       padding: 3ch 0 3ch 3ch;
 
       .page-list-item-inside {
+        margin: 0;
         display: grid;
         grid-template-columns: repeat(6, 1fr);
         grid-template-rows: 1fr 1fr;

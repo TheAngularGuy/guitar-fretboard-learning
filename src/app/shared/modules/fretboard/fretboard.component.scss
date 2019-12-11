@@ -33,6 +33,8 @@
       }
 
       .tile-blocked {
+        position: relative;
+        z-index: 3;
         cursor: not-allowed;
         position: absolute;
         width: 100%;

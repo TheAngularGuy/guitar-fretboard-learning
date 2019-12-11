@@ -15,16 +15,16 @@ export interface GameModeEvents {
 }
 
 export class GameMode {
-  protected config = GAMES_CONFIG;
-  protected chromaticScale = CHROMATIC_SCALE;
-  protected play: boolean;
-  protected showSettings: boolean;
-  protected showAll: boolean;
-  protected lastClickRegistered: number;
-  protected noteToFind: { note: Note; time: number };
-  protected score: { good: number; bad: number };
-  protected fretboardNotes: string[][];
-  protected form: FormGroup; // must contain [selectedNotes, fretStart, fretEnd] properties
+  config = GAMES_CONFIG;
+  chromaticScale = CHROMATIC_SCALE;
+  play: boolean;
+  showSettings: boolean;
+  showAll: boolean;
+  lastClickRegistered: number;
+  noteToFind: { note: Note; time: number };
+  score: { good: number; bad: number };
+  fretboardNotes: string[][];
+  form: FormGroup; // must contain [selectedNotes, fretStart, fretEnd] properties
   private initialized: boolean;
   private callbacks: GameModeEvents;
 

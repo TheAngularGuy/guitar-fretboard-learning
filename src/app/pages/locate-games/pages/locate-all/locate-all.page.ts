@@ -48,7 +48,6 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
   ngOnInit() {
     this.locateState = this.store.selectSnapshot<LocateStateModel>(LocateState.getState);
     this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
-    this.config.MAX_RANGE = 5;
 
     const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
     const form = this.setForm();
