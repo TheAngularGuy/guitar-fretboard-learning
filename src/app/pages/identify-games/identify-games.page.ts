@@ -2,25 +2,24 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-locate-games',
-  templateUrl: './locate-games.page.html',
-  styleUrls: ['./locate-games.page.scss'],
+  selector: 'app-identify-games',
+  templateUrl: './identify-games.page.html',
+  styleUrls: ['./identify-games.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LocateGamesPage {
+export class IdentifyGamesPage {
   gameModes = [
     {
-      path: 'locate',
-      img: 'assets/imgs/locate.svg',
-      title: 'Locate',
-      subtitle: 'In this game you have to locate the note on the fretboard and click on it.',
+      path: 'identify',
+      img: 'assets/imgs/identified.svg',
+      title: 'Identify',
+      subtitle: 'In this game you have to identify which note is highlighted on the fretboard.',
     },
     {
-      path: 'locate-all',
-      img: 'assets/imgs/connection.svg',
-      title: 'Locate all',
-      subtitle:
-        'In this game you have to locate all the instances of a note in the fretboard and click on them.',
+      img: 'assets/imgs/headphones.svg',
+      title: 'Identify by sound',
+      subtitle: `In this game you have to identify which note is played.`,
+      disabled: true,
     },
     {
       img: 'assets/imgs/megaphone.svg',

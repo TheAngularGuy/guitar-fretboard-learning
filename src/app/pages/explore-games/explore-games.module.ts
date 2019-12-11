@@ -5,20 +5,20 @@ import { IonicModule } from '@ionic/angular';
 import { NgxsModule } from '@ngxs/store';
 import { ListModule } from 'src/app/shared/modules/list/list.module';
 
-import { LocateGamesPageRoutingModule } from './locate-games-routing.module';
-import { LocateGamesPage } from './locate-games.page';
-import { LocateState } from './store/locate.state';
+import { ExploreGamesPageRoutingModule } from './explore-games-routing.module';
+import { ExploreGamesPage } from './explore-games.page';
+import { ExploreState } from './store/explore.state';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    LocateGamesPageRoutingModule,
+    ExploreGamesPageRoutingModule,
     ListModule,
 
-    NgxsModule.forFeature([LocateState]),
+    NgxsModule.forFeature([ExploreState]),
   ],
-  declarations: [LocateGamesPage],
+  declarations: [ExploreGamesPage],
 })
-export class LocateGamesPageModule {}
+export class ExploreGamesPageModule {}

@@ -18,13 +18,13 @@ export class HomePage {
       color: 'secondary',
     },
     {
-      path: 'identify',
+      path: 'identify-games',
       img: 'assets/imgs/identified.svg',
       name: 'Identify',
       color: 'secondary',
     },
     {
-      path: 'explore',
+      path: 'explore-games',
       img: 'assets/imgs/explore.svg',
       name: 'Explore',
       color: 'secondary',

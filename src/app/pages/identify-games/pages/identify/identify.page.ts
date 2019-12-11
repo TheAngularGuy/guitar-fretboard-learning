@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { IonContent, ToastController } from '@ionic/angular';
+import { IonButton, IonContent, ToastController } from '@ionic/angular';
 import { Store } from '@ngxs/store';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
@@ -12,20 +12,26 @@ import { FretboardManipulationService } from 'src/app/shared/services/fretboard-
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
 
-import { LocateSetFretEndAction, LocateSetFretStartAction, LocateSetSelectedNotesAction } from '../../store/locate.actions';
-import { LocateState, LocateStateModel } from '../../store/locate.state';
+import {
+  IdentifySetFretEndAction,
+  IdentifySetFretStartAction,
+  IdentifySetSelectedNotesAction,
+} from '../../store/identify.actions';
+import { IdentifyState, IdentifyStateModel } from '../../store/identify.state';
+
+const HEIGHT_OFFSET = 300; // topbar + footer height -- maybe improve this later with the actual height
 
 @Component({
-  selector: 'app-locate',
-  templateUrl: './locate.page.html',
-  styleUrls: ['./locate.page.scss'],
+  selector: 'app-identify',
+  templateUrl: './identify.page.html',
+  styleUrls: ['./identify.page.scss'],
   animations: [popAnimation, slideAnimation],
 })
-export class LocatePage extends GameMode implements OnInit, OnDestroy {
+export class IdentifyPage extends GameMode implements OnInit, OnDestroy {
   @ViewChild('content', { static: false }) content: IonContent;
   destroyed$ = new Subject();
   preferences: PreferencesStateModel;
-  locateState: LocateStateModel;
+  identifyState: IdentifyStateModel;
   scoreHistoric: { timeTook: number; noteToFind: Note; noteGuessed: Note }[];
 
   constructor(
@@ -43,11 +49,11 @@ export class LocatePage extends GameMode implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.locateState = this.store.selectSnapshot<LocateStateModel>(LocateState.getState);
+    this.identifyState = this.store.selectSnapshot<IdentifyStateModel>(IdentifyState.getState);
     this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
-
     const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
     const form = this.setForm();
+
     this.initGameMode(fretboardNotes, form, {
       onBeforeStart: () => {
         this.scoreHistoric = [];
@@ -55,13 +61,16 @@ export class LocatePage extends GameMode implements OnInit, OnDestroy {
       onEnd: () => {
         this.content.scrollToTop(250);
       },
+      onNotePicked: () => {
+        this.onNotePicked();
+      },
     });
   }
 
   setForm(): FormGroup {
     const form = this.fb.group({
       selectedNotes: [
-        this.locateState.selectedNotes,
+        this.identifyState.selectedNotes,
         [
           Validators.required,
           (c: FormControl) => {
@@ -75,10 +84,13 @@ export class LocatePage extends GameMode implements OnInit, OnDestroy {
         ],
       ],
       fretStart: [
-        this.locateState.fretStart,
+        this.identifyState.fretStart,
         [Validators.required, Validators.min(0), Validators.max(12)],
       ],
-      fretEnd: [this.locateState.fretEnd, [Validators.required, Validators.min(0), Validators.max(12)]],
+      fretEnd: [
+        this.identifyState.fretEnd,
+        [Validators.required, Validators.min(0), Validators.max(12)],
+      ],
     });
     this.setFormListener(form);
     return form;
@@ -87,26 +99,26 @@ export class LocatePage extends GameMode implements OnInit, OnDestroy {
   setFormListener(form: FormGroup) {
     form.valueChanges
       .pipe(takeUntil(this.destroyed$), debounceTime(500))
-      .subscribe((formValue: LocateStateModel) => {
-        const locateState = this.store.selectSnapshot<LocateStateModel>(LocateState.getState);
+      .subscribe((formValue: IdentifyStateModel) => {
+        const identifyState = this.store.selectSnapshot<IdentifyStateModel>(IdentifyState.getState);
 
-        if (formValue.selectedNotes !== locateState.selectedNotes) {
+        if (formValue.selectedNotes !== identifyState.selectedNotes) {
           this.store.dispatch(
-            new LocateSetSelectedNotesAction({
+            new IdentifySetSelectedNotesAction({
               selectedNotes: formValue.selectedNotes,
             }),
           );
         }
-        if (formValue.fretStart !== locateState.fretStart) {
+        if (formValue.fretStart !== identifyState.fretStart) {
           this.store.dispatch(
-            new LocateSetFretStartAction({
+            new IdentifySetFretStartAction({
               fretStart: formValue.fretStart,
             }),
           );
         }
-        if (formValue.fretEnd !== locateState.fretEnd) {
+        if (formValue.fretEnd !== identifyState.fretEnd) {
           this.store.dispatch(
-            new LocateSetFretEndAction({
+            new IdentifySetFretEndAction({
               fretEnd: formValue.fretEnd,
             }),
           );
@@ -114,21 +126,55 @@ export class LocatePage extends GameMode implements OnInit, OnDestroy {
       });
   }
 
-  onNoteClicked(noteGuessed: Note) {
+  onNotePicked() {
+    // scroll to the note
+    setTimeout(
+      () => {
+        if (
+          (window as any).fretboard &&
+          (window as any).fretboard.clientHeight > window.screen.height - HEIGHT_OFFSET
+        ) {
+          const el = window['idFretNb' + this.noteToFind.note.fret];
+          if (el) {
+            el.scrollIntoView({
+              behavior: 'smooth',
+              block: 'center',
+            });
+          }
+        }
+      },
+      this.scoreHistoric.length === 0 ? 100 : 10,
+    );
+  }
+
+  onNoteClicked(noteGuessed: string, btn: IonButton | any): boolean {
     const now = Date.now();
     if (!this.play || now - this.lastClickRegistered <= this.config.CLICK_INTERVAL) {
       return;
     }
     this.lastClickRegistered = now;
-    if (noteGuessed.noteName === this.noteToFind.note.noteName) {
+    if (noteGuessed === this.noteToFind.note.noteName) {
       this.score.good += 1;
+      btn.el.color = 'success';
+      setTimeout(() => {
+        btn.el.color = 'light';
+      }, this.config.ANIMATION_DELAY);
     } else {
       // bad answer
       this.score.bad += 1;
       UtilsService.vibrate([100, 30, 100]);
+      this.showAll = true;
+      btn.el.color = 'danger';
+      setTimeout(() => {
+        btn.el.color = 'light';
+      }, this.config.ANIMATION_DELAY);
     }
     this.scoreHistoric.push({
-      noteGuessed,
+      noteGuessed: {
+        fret: 0,
+        string: 0,
+        noteName: noteGuessed,
+      },
       noteToFind: this.noteToFind.note,
       timeTook: Date.now() - this.noteToFind.time - this.config.ANIMATION_TIME,
     });

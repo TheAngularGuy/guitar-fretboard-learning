@@ -2,25 +2,24 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-locate-games',
-  templateUrl: './locate-games.page.html',
-  styleUrls: ['./locate-games.page.scss'],
+  selector: 'app-explore-games',
+  templateUrl: './explore-games.page.html',
+  styleUrls: ['./explore-games.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LocateGamesPage {
+export class ExploreGamesPage {
   gameModes = [
     {
-      path: 'locate',
-      img: 'assets/imgs/locate.svg',
-      title: 'Locate',
-      subtitle: 'In this game you have to locate the note on the fretboard and click on it.',
+      path: 'explore',
+      img: 'assets/imgs/explore.svg',
+      title: 'Explore',
+      subtitle: 'You can explore the fretboard, show or hide the notes as you wish.',
     },
     {
-      path: 'locate-all',
-      img: 'assets/imgs/connection.svg',
-      title: 'Locate all',
-      subtitle:
-        'In this game you have to locate all the instances of a note in the fretboard and click on them.',
+      img: 'assets/imgs/file.svg',
+      title: 'Explore chords',
+      subtitle: 'You can explore all the chords in the standard tuning.',
+      disabled: true,
     },
     {
       img: 'assets/imgs/megaphone.svg',

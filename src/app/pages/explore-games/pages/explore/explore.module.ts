@@ -9,7 +9,6 @@ import { FretboardManipulationService } from 'src/app/shared/services/fretboard-
 
 import { ExplorePageRoutingModule } from './explore-routing.module';
 import { ExplorePage } from './explore.page';
-import { ExploreState } from './store/explore.state';
 
 @NgModule({
   imports: [
@@ -21,7 +20,7 @@ import { ExploreState } from './store/explore.state';
     FretboardModule,
     GlobalModule,
 
-    NgxsModule.forFeature([ExploreState]),
+    NgxsModule.forFeature(),
   ],
   declarations: [ExplorePage],
   providers: [FretboardManipulationService],
