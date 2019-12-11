@@ -25,7 +25,8 @@ export class IdentifyGamesPage {
       img: 'assets/imgs/megaphone.svg',
       title: 'More games soon',
       subtitle: `More game modes are coming soon. If you like this app please share it with your
-        friends or consider buying me a cofee by <a href="https://www.buymeacoffee.com/fiywQH2Dc">clicking here</a>.`,
+        friends or consider buying me a cofee by
+        <a target="_blank" rel="noopener noreferrer" href="https://www.buymeacoffee.com/fiywQH2Dc">clicking here</a>.`,
       disabled: true,
     },
   ];
