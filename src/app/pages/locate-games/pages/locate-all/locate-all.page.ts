@@ -38,7 +38,7 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
     private readonly fretboardManipulationService: FretboardManipulationService,
     private readonly store: Store,
   ) {
-    super(toastCtrl);
+    super();
   }
 
   ngOnDestroy() {
@@ -65,6 +65,9 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
       },
       onEnd: () => {
         this.content.scrollToTop(250);
+      },
+      onError: msg => {
+        this.handleError(msg);
       },
     });
   }
@@ -234,5 +237,16 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
       return;
     }
     return this.scoreHistoric.reduce((acc, n) => acc + n.timeTook, 0) / this.scoreHistoric.length / 1000;
+  }
+
+  handleError(message: string) {
+    this.toastCtrl
+      .create({
+        message,
+        duration: 3000,
+      })
+      .then(toast => {
+        toast.present();
+      });
   }
 }

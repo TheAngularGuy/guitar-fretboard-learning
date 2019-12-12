@@ -1,5 +1,4 @@
 import { FormGroup } from '@angular/forms';
-import { ToastController } from '@ionic/angular';
 
 import { CHROMATIC_SCALE } from '../constants/chromatic-scale.constant';
 import { GAMES_CONFIG } from '../constants/games-config.constant';
@@ -12,6 +11,7 @@ export interface GameModeEvents {
   onBeforeEnd?: () => void;
   onEnd?: () => void;
   onNotePicked?: () => void;
+  onError?: (msg: string) => void;
 }
 
 export class GameMode {
@@ -27,8 +27,9 @@ export class GameMode {
   form: FormGroup; // must contain [selectedNotes, fretStart, fretEnd] properties
   private initialized: boolean;
   private callbacks: GameModeEvents;
+  private notesAppearence: { [key: string]: number } = {};
 
-  constructor(protected readonly toastController: ToastController) {}
+  constructor() {}
 
   initGameMode(fretboardNotes: string[][], form: FormGroup, callbacks: GameModeEvents) {
     if (!!fretboardNotes && !!form) {
@@ -64,14 +65,9 @@ export class GameMode {
         this.form.value.fretStart >= this.form.value.fretEnd
           ? 'Please set the ending fret to be greater than the starting fret.'
           : 'Invalid form, please select at least two notes and two frets (between 0 and 12).';
-      this.toastController
-        .create({
-          message,
-          duration: 3000,
-        })
-        .then(toast => {
-          toast.present();
-        });
+      if (this.callbacks && this.callbacks.onError) {
+        this.callbacks.onError(message);
+      }
       return;
     }
     for (const n of this.form.value.selectedNotes) {
@@ -79,14 +75,9 @@ export class GameMode {
         const message =
           'The notes you selected are not all present in the interval of frets. ' +
           `For example ${n} is not present. Please change the settings.`;
-        this.toastController
-          .create({
-            message,
-            duration: 3000,
-          })
-          .then(toast => {
-            toast.present();
-          });
+        if (this.callbacks && this.callbacks.onError) {
+          this.callbacks.onError(message);
+        }
         return;
       }
     }
@@ -106,6 +97,7 @@ export class GameMode {
       good: 0,
       bad: 0,
     };
+    this.setNotesAppearance();
 
     if (this.callbacks && this.callbacks.onBeforeStart) {
       this.callbacks.onBeforeStart();
@@ -144,19 +136,22 @@ export class GameMode {
     return allSelectedNotes.includes(noteName);
   }
 
-  pickRandomNote() {
+  pickRandomNote(loop = 0) {
     const selectedNotes = this.form.value.selectedNotes;
     const randomString = UtilsService.getRandomInt(0, 6);
     const randomFret = UtilsService.getRandomInt(this.form.value.fretStart, this.form.value.fretEnd + 1);
     const note = this.fretboardNotes[randomFret][randomString];
+
     if (
       !note ||
       !selectedNotes.includes(note) ||
-      (this.noteToFind && this.noteToFind.note && note === this.noteToFind.note.noteName)
+      this.compareWithNoteToFind(note) ||
+      this.isNoteAppearancetooHight(note)
     ) {
-      return this.pickRandomNote();
+      return this.pickRandomNote(loop + 1);
     }
     this.showAll = false;
+    this.notesAppearence[note] = this.notesAppearence[note] ? this.notesAppearence[note] + 1 : 1;
     this.noteToFind = {
       time: Date.now(),
       note: {
@@ -169,5 +164,34 @@ export class GameMode {
     if (this.callbacks && this.callbacks.onNotePicked) {
       this.callbacks.onNotePicked();
     }
+  }
+
+  private compareWithNoteToFind(noteName: string) {
+    return this.noteToFind && this.noteToFind.note && noteName === this.noteToFind.note.noteName;
+  }
+
+  private setNotesAppearance() {
+    for (const n of this.form.value.selectedNotes) {
+      this.notesAppearence[n] = 0;
+    }
+  }
+
+  private isNoteAppearancetooHight(noteName: string) {
+    if (!this.notesAppearence) {
+      return false;
+    }
+    let maxAppearance = 0;
+    let minAppearance = +Infinity;
+    for (const noteKey in this.notesAppearence) {
+      if (noteName === noteKey) {
+        continue;
+      }
+      maxAppearance = Math.max(maxAppearance, this.notesAppearence[noteKey]);
+      minAppearance = Math.min(minAppearance, this.notesAppearence[noteKey]);
+    }
+    if (maxAppearance === minAppearance) {
+      return this.notesAppearence[noteName] > maxAppearance;
+    }
+    return this.notesAppearence[noteName] >= maxAppearance;
   }
 }
