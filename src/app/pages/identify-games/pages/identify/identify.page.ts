@@ -7,10 +7,16 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 import { popAnimation } from 'src/app/animations/pop.animation';
 import { slideAnimation } from 'src/app/animations/slide.animation';
 import { GameMode } from 'src/app/classes/game-mode.class';
+import { CHROMATIC_SCALE } from 'src/app/constants/chromatic-scale.constant';
 import { Note } from 'src/app/models/note.model';
-import { FretboardManipulationService } from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
+import {
+  FretboardManipulationService,
+} from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
-import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
+import {
+  PreferencesState,
+  PreferencesStateModel,
+} from 'src/app/shared/store/preferences/preferences.state';
 
 import {
   IdentifySetFretEndAction,
@@ -32,6 +38,8 @@ export class IdentifyPage extends GameMode implements OnInit, OnDestroy {
   destroyed$ = new Subject();
   preferences: PreferencesStateModel;
   identifyState: IdentifyStateModel;
+  chromaticScale = CHROMATIC_SCALE;
+  lastClickRegistered: number;
   scoreHistoric: { timeTook: number; noteToFind: Note; noteGuessed: Note }[];
 
   constructor(
@@ -49,9 +57,15 @@ export class IdentifyPage extends GameMode implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.identifyState = this.store.selectSnapshot<IdentifyStateModel>(IdentifyState.getState);
-    this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
-    const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
+    this.identifyState = this.store.selectSnapshot<IdentifyStateModel>(
+      IdentifyState.getState,
+    );
+    this.preferences = this.store.selectSnapshot<PreferencesStateModel>(
+      PreferencesState.getState,
+    );
+    const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(
+      this.preferences,
+    );
     const form = this.setForm();
 
     this.initGameMode(fretboardNotes, form, {
@@ -103,7 +117,9 @@ export class IdentifyPage extends GameMode implements OnInit, OnDestroy {
     form.valueChanges
       .pipe(takeUntil(this.destroyed$), debounceTime(500))
       .subscribe((formValue: IdentifyStateModel) => {
-        const identifyState = this.store.selectSnapshot<IdentifyStateModel>(IdentifyState.getState);
+        const identifyState = this.store.selectSnapshot<IdentifyStateModel>(
+          IdentifyState.getState,
+        );
 
         if (formValue.selectedNotes !== identifyState.selectedNotes) {
           this.store.dispatch(
@@ -137,7 +153,7 @@ export class IdentifyPage extends GameMode implements OnInit, OnDestroy {
           (window as any).fretboard &&
           (window as any).fretboard.clientHeight > window.screen.height - HEIGHT_OFFSET
         ) {
-          const el = window['idFretNb' + this.noteToFind.note.fret];
+          const el = window['idFretNb' + this.getNoteToFind().note.fret];
           if (el) {
             el.scrollIntoView({
               behavior: 'smooth',
@@ -152,25 +168,28 @@ export class IdentifyPage extends GameMode implements OnInit, OnDestroy {
 
   onNoteClicked(noteGuessed: string, btn: IonButton | any): boolean {
     const now = Date.now();
-    if (!this.play || now - this.lastClickRegistered <= this.config.CLICK_INTERVAL) {
+    if (
+      !this.isGamePlaying() ||
+      now - this.lastClickRegistered <= this.getGameConfig().CLICK_INTERVAL
+    ) {
       return;
     }
     this.lastClickRegistered = now;
-    if (noteGuessed === this.noteToFind.note.noteName) {
-      this.score.good += 1;
+    if (noteGuessed === this.getNoteToFind().note.noteName) {
+      this.increaseScoreGood();
       btn.el.color = 'success';
       setTimeout(() => {
         btn.el.color = 'light';
-      }, this.config.ANIMATION_DELAY);
+      }, this.getGameConfig().ANIMATION_DELAY);
     } else {
       // bad answer
-      this.score.bad += 1;
+      this.increaseScoreBad();
       UtilsService.vibrate([100, 30, 100]);
-      this.showAll = true;
+      this.setShowAllNotes(true);
       btn.el.color = 'danger';
       setTimeout(() => {
         btn.el.color = 'light';
-      }, this.config.ANIMATION_DELAY);
+      }, this.getGameConfig().ANIMATION_DELAY);
     }
     this.scoreHistoric.push({
       noteGuessed: {
@@ -178,17 +197,18 @@ export class IdentifyPage extends GameMode implements OnInit, OnDestroy {
         string: 0,
         noteName: noteGuessed,
       },
-      noteToFind: this.noteToFind.note,
-      timeTook: Date.now() - this.noteToFind.time - this.config.ANIMATION_TIME,
+      noteToFind: this.getNoteToFind().note,
+      timeTook:
+        Date.now() - this.getNoteToFind().time - this.getGameConfig().ANIMATION_TIME,
     });
 
-    if (this.scoreHistoric.length === this.config.MAX_RANGE) {
+    if (this.scoreHistoric.length === this.getGameConfig().MAX_RANGE) {
       setTimeout(() => {
         this.togglePlay();
-      }, this.config.ANIMATION_DELAY);
+      }, this.getGameConfig().ANIMATION_DELAY);
       return;
     }
-    setTimeout(() => this.pickRandomNote(), this.config.ANIMATION_DELAY);
+    setTimeout(() => this.pickRandomNote(), this.getGameConfig().ANIMATION_DELAY);
     return;
   }
 
@@ -196,7 +216,11 @@ export class IdentifyPage extends GameMode implements OnInit, OnDestroy {
     if (!this.scoreHistoric || !this.scoreHistoric.length) {
       return;
     }
-    return this.scoreHistoric.reduce((acc, n) => acc + n.timeTook, 0) / this.scoreHistoric.length / 1000;
+    return (
+      this.scoreHistoric.reduce((acc, n) => acc + n.timeTook, 0) /
+      this.scoreHistoric.length /
+      1000
+    );
   }
 
   handleError(message: string) {

@@ -7,12 +7,22 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 import { popAnimation } from 'src/app/animations/pop.animation';
 import { slideAnimation } from 'src/app/animations/slide.animation';
 import { GameMode } from 'src/app/classes/game-mode.class';
+import { CHROMATIC_SCALE } from 'src/app/constants/chromatic-scale.constant';
 import { Note } from 'src/app/models/note.model';
-import { FretboardManipulationService } from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
+import {
+  FretboardManipulationService,
+} from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
-import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
+import {
+  PreferencesState,
+  PreferencesStateModel,
+} from 'src/app/shared/store/preferences/preferences.state';
 
-import { LocateSetFretEndAction, LocateSetFretStartAction, LocateSetSelectedNotesAction } from '../../store/locate.actions';
+import {
+  LocateSetFretEndAction,
+  LocateSetFretStartAction,
+  LocateSetSelectedNotesAction,
+} from '../../store/locate.actions';
 import { LocateState, LocateStateModel } from '../../store/locate.state';
 
 @Component({
@@ -26,6 +36,8 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
   destroyed$ = new Subject();
   preferences: PreferencesStateModel;
   locateState: LocateStateModel;
+  chromaticScale = CHROMATIC_SCALE;
+  lastClickRegistered: number;
   series: { good: boolean; noteGuessed: Note }[];
   seriesMaxRange: number;
   seriesDisplay: any[];
@@ -47,18 +59,22 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.locateState = this.store.selectSnapshot<LocateStateModel>(LocateState.getState);
-    this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
+    this.preferences = this.store.selectSnapshot<PreferencesStateModel>(
+      PreferencesState.getState,
+    );
 
-    const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
+    const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(
+      this.preferences,
+    );
     const form = this.setForm();
     this.initGameMode(fretboardNotes, form, {
       onBeforeStart: () => {
         this.scoreHistoric = [];
       },
       onNotePicked: () => {
-        this.seriesMaxRange = this.numberOfNoteOccurences(
-          this.noteToFind.note.noteName,
-          this.fretboardNotes,
+        this.seriesMaxRange = this.numberOfNoteOccurrences(
+          this.getNoteToFind().note.noteName,
+          this.getFretboardNotes(),
         );
         this.series = [];
         this.seriesDisplay = new Array(this.seriesMaxRange).fill(undefined);
@@ -92,7 +108,10 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
         this.locateState.fretStart,
         [Validators.required, Validators.min(0), Validators.max(12)],
       ],
-      fretEnd: [this.locateState.fretEnd, [Validators.required, Validators.min(0), Validators.max(12)]],
+      fretEnd: [
+        this.locateState.fretEnd,
+        [Validators.required, Validators.min(0), Validators.max(12)],
+      ],
     });
     this.setFormListener(form);
     return form;
@@ -102,7 +121,9 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
     form.valueChanges
       .pipe(takeUntil(this.destroyed$), debounceTime(500))
       .subscribe((formValue: LocateStateModel) => {
-        const locateState = this.store.selectSnapshot<LocateStateModel>(LocateState.getState);
+        const locateState = this.store.selectSnapshot<LocateStateModel>(
+          LocateState.getState,
+        );
 
         if (formValue.selectedNotes !== locateState.selectedNotes) {
           this.store.dispatch(
@@ -128,23 +149,26 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
       });
   }
 
-  numberOfNoteOccurences(noteName: string, fretboard: string[][]): number {
-    const box = this.fretboardNotes
-      .slice(this.form.value.fretStart, this.form.value.fretEnd + 1)
+  numberOfNoteOccurrences(noteName: string, fretboard: string[][]): number {
+    const box = this.getFretboardNotes()
+      .slice(this.getForm().value.fretStart, this.getForm().value.fretEnd + 1)
       .join(',')
       .split(',');
-    let occurences = 0;
+    let occurrences = 0;
     for (const n of box) {
       if (n.toLowerCase() === noteName.toLowerCase()) {
-        occurences++;
+        occurrences++;
       }
     }
-    return occurences;
+    return occurrences;
   }
 
   onNoteClicked(noteGuessed: Note) {
     const now = Date.now();
-    if (!this.play || now - this.lastClickRegistered <= this.config.CLICK_INTERVAL) {
+    if (
+      !this.isGamePlaying() ||
+      now - this.lastClickRegistered <= this.getGameConfig().CLICK_INTERVAL
+    ) {
       return;
     }
     this.lastClickRegistered = now;
@@ -189,7 +213,7 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
   }
 
   registerSeriesNoteClick(noteGuessed: Note) {
-    if (noteGuessed.noteName === this.noteToFind.note.noteName) {
+    if (noteGuessed.noteName === this.getNoteToFind().note.noteName) {
       this.series.push({
         good: true,
         noteGuessed,
@@ -204,7 +228,7 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
       UtilsService.vibrate([100, 30, 100]);
       this.seriesDisplay[this.series.length - 1] = false;
     }
-    this.showAll = false;
+    this.setShowAllNotes(false);
   }
 
   nextSeries() {
@@ -212,23 +236,24 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
       return current.good && accu;
     }, true);
     if (good) {
-      this.score.good += 1;
+      this.increaseScoreGood();
     } else {
-      this.score.bad += 1;
+      this.increaseScoreBad();
     }
     this.scoreHistoric.push({
-      timeTook: Date.now() - this.noteToFind.time - this.config.ANIMATION_TIME,
+      timeTook:
+        Date.now() - this.getNoteToFind().time - this.getGameConfig().ANIMATION_TIME,
       good,
       result: JSON.parse(JSON.stringify(this.series)),
     });
 
-    if (this.scoreHistoric.length === this.config.MAX_RANGE) {
+    if (this.scoreHistoric.length === this.getGameConfig().MAX_RANGE) {
       setTimeout(() => {
         this.togglePlay();
-      }, this.config.ANIMATION_DELAY);
+      }, this.getGameConfig().ANIMATION_DELAY);
       return;
     } else {
-      setTimeout(() => this.pickRandomNote(), this.config.ANIMATION_DELAY);
+      setTimeout(() => this.pickRandomNote(), this.getGameConfig().ANIMATION_DELAY);
     }
   }
 
@@ -236,7 +261,11 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
     if (!this.scoreHistoric || !this.scoreHistoric.length) {
       return;
     }
-    return this.scoreHistoric.reduce((acc, n) => acc + n.timeTook, 0) / this.scoreHistoric.length / 1000;
+    return (
+      this.scoreHistoric.reduce((acc, n) => acc + n.timeTook, 0) /
+      this.scoreHistoric.length /
+      1000
+    );
   }
 
   handleError(message: string) {

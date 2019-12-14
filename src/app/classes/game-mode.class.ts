@@ -1,6 +1,5 @@
 import { FormGroup } from '@angular/forms';
 
-import { CHROMATIC_SCALE } from '../constants/chromatic-scale.constant';
 import { GAMES_CONFIG } from '../constants/games-config.constant';
 import { Note } from '../models/note.model';
 import { UtilsService } from '../shared/services/utils/utils.service';
@@ -15,19 +14,32 @@ export interface GameModeEvents {
 }
 
 export class GameMode {
-  config = GAMES_CONFIG;
-  chromaticScale = CHROMATIC_SCALE;
+  config = { ...GAMES_CONFIG }; // cuz the values are past by reference
   play: boolean;
   showSettings: boolean;
-  showAll: boolean;
-  lastClickRegistered: number;
-  noteToFind: { note: Note; time: number };
+  showAll: boolean; // show all notes of the fretboard
+  noteToFind: { note: Note; time: number }; // time: time of appearance
   score: { good: number; bad: number };
   fretboardNotes: string[][];
   form: FormGroup; // must contain [selectedNotes, fretStart, fretEnd] properties
   private initialized: boolean;
   private callbacks: GameModeEvents;
-  private notesAppearence: { [key: string]: number } = {};
+  private notesAppearances: { [key: string]: number } = {};
+
+  // getters
+  getForm = () => this.form;
+  getFretboardNotes = () => this.fretboardNotes;
+  getNoteToFind = () => this.noteToFind;
+  getGameConfig = () => this.config;
+  getScoreGood = () => this.score && this.score.good;
+  getScoreBad = () => this.score && this.score.bad;
+  getShowSettings = () => this.showSettings;
+  getShowAllNotes = () => this.showAll;
+  isGamePlaying = () => this.play;
+
+  // setters
+  setShowSettings = (v: boolean) => (this.showSettings = v);
+  setShowAllNotes = (v: boolean) => (this.showAll = v);
 
   constructor() {}
 
@@ -54,6 +66,14 @@ export class GameMode {
 
   toggleShowSettings() {
     return (this.showSettings = !this.showSettings);
+  }
+
+  increaseScoreGood() {
+    this.score.good += 1;
+  }
+
+  increaseScoreBad() {
+    this.score.bad += 1;
   }
 
   togglePlay(): boolean {
@@ -139,19 +159,24 @@ export class GameMode {
   pickRandomNote(loop = 0) {
     const selectedNotes = this.form.value.selectedNotes;
     const randomString = UtilsService.getRandomInt(0, 6);
-    const randomFret = UtilsService.getRandomInt(this.form.value.fretStart, this.form.value.fretEnd + 1);
+    const randomFret = UtilsService.getRandomInt(
+      this.form.value.fretStart,
+      this.form.value.fretEnd + 1,
+    );
     const note = this.fretboardNotes[randomFret][randomString];
 
     if (
       !note ||
       !selectedNotes.includes(note) ||
       this.compareWithNoteToFind(note) ||
-      this.isNoteAppearancetooHight(note)
+      this.isNotesAppearanceTooHight(note)
     ) {
       return this.pickRandomNote(loop + 1);
     }
     this.showAll = false;
-    this.notesAppearence[note] = this.notesAppearence[note] ? this.notesAppearence[note] + 1 : 1;
+    this.notesAppearances[note] = this.notesAppearances[note]
+      ? this.notesAppearances[note] + 1
+      : 1;
     this.noteToFind = {
       time: Date.now(),
       note: {
@@ -167,31 +192,35 @@ export class GameMode {
   }
 
   private compareWithNoteToFind(noteName: string) {
-    return this.noteToFind && this.noteToFind.note && noteName === this.noteToFind.note.noteName;
+    return (
+      this.noteToFind &&
+      this.noteToFind.note &&
+      noteName === this.noteToFind.note.noteName
+    );
   }
 
   private setNotesAppearance() {
     for (const n of this.form.value.selectedNotes) {
-      this.notesAppearence[n] = 0;
+      this.notesAppearances[n] = 0;
     }
   }
 
-  private isNoteAppearancetooHight(noteName: string) {
-    if (!this.notesAppearence) {
+  private isNotesAppearanceTooHight(noteName: string) {
+    if (!this.notesAppearances) {
       return false;
     }
     let maxAppearance = 0;
     let minAppearance = +Infinity;
-    for (const noteKey in this.notesAppearence) {
+    for (const noteKey in this.notesAppearances) {
       if (noteName === noteKey) {
         continue;
       }
-      maxAppearance = Math.max(maxAppearance, this.notesAppearence[noteKey]);
-      minAppearance = Math.min(minAppearance, this.notesAppearence[noteKey]);
+      maxAppearance = Math.max(maxAppearance, this.notesAppearances[noteKey]);
+      minAppearance = Math.min(minAppearance, this.notesAppearances[noteKey]);
     }
     if (maxAppearance === minAppearance) {
-      return this.notesAppearence[noteName] > maxAppearance;
+      return this.notesAppearances[noteName] > maxAppearance;
     }
-    return this.notesAppearence[noteName] >= maxAppearance;
+    return this.notesAppearances[noteName] >= maxAppearance;
   }
 }
