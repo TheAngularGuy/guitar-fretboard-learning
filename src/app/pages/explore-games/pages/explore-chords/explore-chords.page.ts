@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { Chord } from 'src/app/models/chord.model';
-import { Note } from 'src/app/models/note.model';
 import {
   FretboardManipulationService,
 } from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
@@ -20,7 +19,7 @@ export class ExploreChordsPage implements OnInit {
   preferences: PreferencesStateModel;
 
   chord: Chord = {
-    fretStart: 8,
+    fretStart: 7,
     fretEnd: 10,
     notes: [
       {
@@ -38,8 +37,13 @@ export class ExploreChordsPage implements OnInit {
         noteName: 'E',
         string: 2,
       },
+      {
+        fret: 7,
+        noteName: 'A',
+        string: 3,
+      },
     ],
-    disabledStrings: [3, 4, 5],
+    disabledStrings: [4, 5],
   };
 
   constructor(
@@ -57,9 +61,6 @@ export class ExploreChordsPage implements OnInit {
   }
 
   getSelectedNotesFromChord(c: Chord) {
-    const notes = c.notes.map((note: Note) => {
-      return note.noteName;
-    });
-    return notes;
+    return c.notes;
   }
 }

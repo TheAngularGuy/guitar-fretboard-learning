@@ -57,8 +57,8 @@
           Press the button to start playing
         </ng-container>
         <ng-container *ngIf="scoreHistoric && scoreHistoric.length">
-          Your score is <b>{{ score.good }}</b> out of {{ scoreHistoric?.length }}. And your average time
-          is: <b>{{ getAverageTime() | number }}</b> seconds.
+          Your score is <b>{{ score.good }}</b> out of {{ scoreHistoric?.length }}. And
+          your average time is: <b>{{ getAverageTime() | number }}</b> seconds.
         </ng-container>
       </p>
 
@@ -70,8 +70,18 @@
             <span *ngIf="!noteToFind">GO</span>
             <span *ngIf="noteToFind">...</span>
             &nbsp;
-            <img src="assets/imgs/player.svg" alt="start" height="26" *ngIf="!noteToFind" />
-            <img src="assets/imgs/refresh.svg" alt="start" height="26" *ngIf="noteToFind" />
+            <img
+              src="assets/imgs/player.svg"
+              alt="start"
+              height="26"
+              *ngIf="!noteToFind"
+            />
+            <img
+              src="assets/imgs/refresh.svg"
+              alt="start"
+              height="26"
+              *ngIf="noteToFind"
+            />
           </div>
         </ion-button>
       </div>
@@ -101,7 +111,7 @@
     [disableClick]="true"
     [showAll]="showAll"
     [selectedFrets]="[form?.value.fretStart, form?.value.fretEnd]"
-    [selectedNotes]="noteToFind ? [noteToFind.note.noteName] : null"
+    [selectedNoteNames]="noteToFind ? [noteToFind.note.noteName] : null"
   >
   </app-fretboard>
 </ion-content>
@@ -121,7 +131,8 @@
           alt="thumbs-up"
           style="width: 26px; height: 26px;"
         />
-        &nbsp; <b [@popAnimation]="score.good">{{score.good}}</b> &nbsp; / {{config.MAX_RANGE}}
+        &nbsp; <b [@popAnimation]="score.good">{{score.good}}</b> &nbsp; /
+        {{config.MAX_RANGE}}
       </p>
       <p class="bad">
         <img
@@ -130,9 +141,16 @@
           alt="thumbs-down"
           style="width: 26px; height: 26px;"
         />
-        &nbsp; <b [@popAnimation]="score.bad">{{score.bad}} </b> &nbsp; / {{config.MAX_RANGE}}
+        &nbsp; <b [@popAnimation]="score.bad">{{score.bad}} </b> &nbsp; /
+        {{config.MAX_RANGE}}
       </p>
-      <ion-button fill="outline" color="danger" size="small" style="width: 9ch" (click)="togglePlay()">
+      <ion-button
+        fill="outline"
+        color="danger"
+        size="small"
+        style="width: 9ch"
+        (click)="togglePlay()"
+      >
         Stop
       </ion-button>
     </div>

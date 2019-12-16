@@ -13,7 +13,9 @@ export class FretboardComponent implements OnInit {
   @Input() disabledStrings: number[];
   @Input() selectedFrets: [number, number];
   @Input() showOnlySelectedFrets: boolean;
-  @Input() selectedNotes: string[];
+  @Input() selectedNoteNames: string[];
+  @Input() showSelectedNoteNames: boolean;
+  @Input() selectedNotes: Note[];
   @Input() showSelectedNotes: boolean;
   @Input() highlightNote: Note;
   @Input() disableClick: boolean;
@@ -34,7 +36,7 @@ export class FretboardComponent implements OnInit {
     this.noteClick.next(noteObject);
     if (
       this.showAll ||
-      (this.showSelectedNotes && this.isGoodNote(noteObject.noteName))
+      (this.showSelectedNoteNames && this.isGoodNoteName(noteObject.noteName))
     ) {
       return;
     }
@@ -45,11 +47,25 @@ export class FretboardComponent implements OnInit {
     }, 1000);
   }
 
-  isGoodNote(note: string): boolean {
-    if (!this.selectedNotes) {
+  isGoodNoteName(noteName: string): boolean {
+    console.log('Debbug log: FretboardComponent -> ngOnInit -> noteName', noteName);
+    if (!this.selectedNoteNames) {
       return false;
     }
-    return this.selectedNotes.includes(note);
+    return this.selectedNoteNames.includes(noteName);
+  }
+
+  isGoodNote(n: Note) {
+    return this.selectedNotes.reduce((accumulator: boolean, current: Note) => {
+      return accumulator || (current.fret === n.fret && current.string === n.string);
+    }, false);
+  }
+
+  showNote(n: Note) {
+    return (
+      (this.showSelectedNoteNames && this.isGoodNoteName(n.noteName)) ||
+      (this.showSelectedNotes && this.isGoodNote(n))
+    );
   }
 
   isSelectedFret(fret: number): boolean {
