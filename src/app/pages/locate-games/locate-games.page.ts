@@ -13,7 +13,8 @@ export class LocateGamesPage {
       path: 'locate',
       img: 'assets/imgs/locate.svg',
       title: 'Locate',
-      subtitle: 'In this game you have to locate the note on the fretboard and click on it.',
+      subtitle:
+        'In this game you have to locate the note on the fretboard and click on it.',
     },
     {
       path: 'locate-all',
@@ -26,7 +27,7 @@ export class LocateGamesPage {
       img: 'assets/imgs/megaphone.svg',
       title: 'More games soon',
       subtitle: `More game modes are coming soon. If you like this app please share it with your
-        friends or consider buying me a cofee by
+        friends or consider buying me a coffee by
         <a target="_blank" rel="noopener noreferrer" href="https://www.buymeacoffee.com/fiywQH2Dc">clicking here</a>.`,
       disabled: true,
     },

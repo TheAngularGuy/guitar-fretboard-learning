@@ -16,16 +16,16 @@ export class ExploreGamesPage {
       subtitle: 'You can explore the fretboard, show or hide the notes as you wish.',
     },
     {
+      path: 'explore-chords',
       img: 'assets/imgs/file.svg',
       title: 'Explore chords',
       subtitle: 'You can explore all the chords in the standard tuning.',
-      disabled: true,
     },
     {
       img: 'assets/imgs/megaphone.svg',
       title: 'More games soon',
       subtitle: `More game modes are coming soon. If you like this app please share it with your
-        friends or consider buying me a cofee by
+        friends or consider buying me a coffee by
         <a target="_blank" rel="noopener noreferrer" href="https://www.buymeacoffee.com/fiywQH2Dc">clicking here</a>.`,
       disabled: true,
     },

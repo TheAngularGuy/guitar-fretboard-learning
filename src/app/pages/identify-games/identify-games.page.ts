@@ -13,7 +13,8 @@ export class IdentifyGamesPage {
       path: 'identify',
       img: 'assets/imgs/identified.svg',
       title: 'Identify',
-      subtitle: 'In this game you have to identify which note is highlighted on the fretboard.',
+      subtitle:
+        'In this game you have to identify which note is highlighted on the fretboard.',
     },
     {
       img: 'assets/imgs/headphones.svg',
@@ -25,7 +26,7 @@ export class IdentifyGamesPage {
       img: 'assets/imgs/megaphone.svg',
       title: 'More games soon',
       subtitle: `More game modes are coming soon. If you like this app please share it with your
-        friends or consider buying me a cofee by
+        friends or consider buying me a coffee by
         <a target="_blank" rel="noopener noreferrer" href="https://www.buymeacoffee.com/fiywQH2Dc">clicking here</a>.`,
       disabled: true,
     },

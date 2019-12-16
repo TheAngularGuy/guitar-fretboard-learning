@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Explore chords</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Explore chords</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p>You can explore all the chords in the standard tuning.</p>
+
+      <hr />
+    </ion-card-content>
+  </ion-card>
+
+  <br />
+  <app-fretboard
+    [invertedStrings]="preferences?.invertedStrings"
+    [invertedFrets]="preferences?.invertedFrets"
+    [notes]="fretboardNotes"
+    [showSelectedNotes]="true"
+    [selectedNotes]="getSelectedNotesFromChord(chord)"
+    [selectedFrets]="[chord.fretStart, chord.fretEnd]"
+    [showAll]="false"
+    [disabledStrings]="chord.disabledStrings"
+  ></app-fretboard>
+  <br />
+</ion-content>

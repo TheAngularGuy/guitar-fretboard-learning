@@ -11,7 +11,15 @@ const routes: Routes = [
 
   {
     path: 'explore',
-    loadChildren: () => import('./pages/explore/explore.module').then(m => m.ExplorePageModule),
+    loadChildren: () =>
+      import('./pages/explore/explore.module').then(m => m.ExplorePageModule),
+  },
+  {
+    path: 'explore-chords',
+    loadChildren: () =>
+      import('./pages/explore-chords/explore-chords.module').then(
+        m => m.ExploreChordsPageModule,
+      ),
   },
 ];
 

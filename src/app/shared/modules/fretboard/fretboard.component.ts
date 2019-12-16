@@ -10,7 +10,9 @@ import { Note } from '../../../models/note.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FretboardComponent implements OnInit {
+  @Input() disabledStrings: number[];
   @Input() selectedFrets: [number, number];
+  @Input() showOnlySelectedFrets: boolean;
   @Input() selectedNotes: string[];
   @Input() showSelectedNotes: boolean;
   @Input() highlightNote: Note;
@@ -98,5 +100,12 @@ export class FretboardComponent implements OnInit {
       top + height <= window.pageYOffset + window.innerHeight &&
       left + width <= window.pageXOffset + window.innerWidth
     );
+  }
+
+  isStringDisabled(stringNumber: number) {
+    if (!this.disabledStrings || !this.disabledStrings.length) {
+      return false;
+    }
+    return this.disabledStrings.includes(stringNumber);
   }
 }

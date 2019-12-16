@@ -8,11 +8,13 @@ const routes: Routes = [
   },
   {
     path: 'settings',
-    loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule),
+    loadChildren: () =>
+      import('./pages/settings/settings.module').then(m => m.SettingsPageModule),
   },
   {
     path: 'profile',
-    loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule),
+    loadChildren: () =>
+      import('./pages/profile/profile.module').then(m => m.ProfilePageModule),
   },
   {
     path: 'about',
@@ -26,17 +28,23 @@ const routes: Routes = [
   {
     path: 'locate-games',
     loadChildren: () =>
-      import('./pages/locate-games/locate-games.module').then(m => m.LocateGamesPageModule),
+      import('./pages/locate-games/locate-games.module').then(
+        m => m.LocateGamesPageModule,
+      ),
   },
   {
     path: 'identify-games',
     loadChildren: () =>
-      import('./pages/identify-games/identify-games.module').then(m => m.IdentifyGamesPageModule),
+      import('./pages/identify-games/identify-games.module').then(
+        m => m.IdentifyGamesPageModule,
+      ),
   },
   {
     path: 'explore-games',
     loadChildren: () =>
-      import('./pages/explore-games/explore-games.module').then(m => m.ExploreGamesPageModule),
+      import('./pages/explore-games/explore-games.module').then(
+        m => m.ExploreGamesPageModule,
+      ),
   },
 ];
 
@@ -54,7 +62,9 @@ const redirections: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot([...routes, ...redirections], { preloadingStrategy: PreloadAllModules }),
+    RouterModule.forRoot([...routes, ...redirections], {
+      preloadingStrategy: PreloadAllModules,
+    }),
   ],
   exports: [RouterModule],
 })

@@ -7,69 +7,75 @@
       'fretboard-inverted-strings': invertedStrings
     }"
   >
-    <div
-      class="tile width-{{ fret }}"
-      [ngClass]="{
-        'tile-hide': !isSelectedFret(fret),
-        'no-click': disableClick,
-        'tile-nut': fret === 0,
-        'tile-one-dot': [3, 5, 7, 9].includes(fret),
-        'tile-two-dot': fret === 12
-      }"
-      *ngFor="let fretnotes of notes; let fret = index"
-      [id]="'idFretNb' + fret"
-    >
-      <span class="tile-number">
-        <span
-          *ngIf="getNum(fret) == 0"
-          [ngClass]="{
-            'hide-on-mobile': !invertedStrings,
-            'hide-on-desktop': invertedStrings
-          }"
-        >
-          {{ fretnotes[0] | lowercase }}
-        </span>
-        <span
-          *ngIf="getNum(fret) == 0"
-          [ngClass]="{
-            'hide-on-mobile': invertedStrings,
-            'hide-on-desktop': !invertedStrings
-          }"
-        >
-          {{ fretnotes[5] | uppercase }}
-        </span>
-        <span *ngIf="getNum(fret) > 0">{{ fret }}</span>
-      </span>
-
-      <button
-        class="note string-{{ string }}"
-        [ngClass]="{ 'note-highlighted': isNoteHighlighted(fret, string) }"
-        *ngFor="let note of fretnotes; let string = index"
-        (click)="
-          onNoteClicked(
-            {
-              noteName: note,
-              fret: fret,
-              string: string
-            },
-            noteName
-          )
-        "
+    <ng-container *ngFor="let fretnotes of notes; let fret = index">
+      <div
+        class="tile width-{{ fret }}"
+        [ngClass]="{
+          'tile-hide': !isSelectedFret(fret),
+          'no-click': disableClick,
+          'tile-nut': fret === 0,
+          'tile-one-dot': [3, 5, 7, 9].includes(fret),
+          'tile-two-dot': fret === 12
+        }"
+        *ngIf="isSelectedFret(fret) || !showOnlySelectedFrets"
+        [id]="'idFretNb' + fret"
       >
-        <span
-          class="note-name"
-          #noteName
-          [ngClass]="{
-            'note-false': selectedNotes && !isGoodNote(note),
-            'note-show-all': showAll,
-            'note-show': showSelectedNotes && isGoodNote(note)
-          }"
-        >
-          {{ note | note }}
+        <span class="tile-number">
+          <span
+            *ngIf="getNum(fret) == 0"
+            [ngClass]="{
+              'hide-on-mobile': !invertedStrings,
+              'hide-on-desktop': invertedStrings
+            }"
+          >
+            {{ fretnotes[0] | lowercase }}
+          </span>
+          <span
+            *ngIf="getNum(fret) == 0"
+            [ngClass]="{
+              'hide-on-mobile': invertedStrings,
+              'hide-on-desktop': !invertedStrings
+            }"
+          >
+            {{ fretnotes[5] | uppercase }}
+          </span>
+          <span *ngIf="getNum(fret) > 0">{{ fret }}</span>
         </span>
-      </button>
 
-      <div class="tile-blocked" *ngIf="!isSelectedFret(fret)"></div>
-    </div>
+        <button
+          class="note string-{{ string }}"
+          [ngClass]="{
+            'note-highlighted': isNoteHighlighted(fret, string),
+            'disabled-string': isStringDisabled(string),
+            'disabled-fret': !isSelectedFret(fret)
+          }"
+          *ngFor="let note of fretnotes; let string = index"
+          (click)="
+            onNoteClicked(
+              {
+                noteName: note,
+                fret: fret,
+                string: string
+              },
+              noteName
+            )
+          "
+        >
+          <span
+            class="note-name"
+            #noteName
+            [ngClass]="{
+              'note-false': selectedNotes && !isGoodNote(note),
+              'note-show-all': showAll,
+              'note-show': showSelectedNotes && isGoodNote(note)
+            }"
+          >
+            {{ note | note }}
+          </span>
+        </button>
+
+        <div class="tile-blocked" *ngIf="!isSelectedFret(fret)"></div>
+      </div>
+    </ng-container>
   </div>
 </div>
