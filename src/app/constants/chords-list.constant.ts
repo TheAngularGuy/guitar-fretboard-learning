@@ -249,7 +249,7 @@ export const A_MAJOR_CHORDS: Chord[] = [
   },
 ];
 
-export const A_MINOR_CHORDS = [
+export const A_MINOR_CHORDS: Chord[] = [
   {
     name: 'Minor',
     fretStart: 0,
