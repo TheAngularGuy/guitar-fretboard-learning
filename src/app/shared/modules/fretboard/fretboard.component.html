@@ -65,8 +65,8 @@
             class="note-name"
             #noteName
             [ngClass]="{
-              'note-false': selectedNoteNames && !isGoodNoteName(note),
               'note-show-all': showAll,
+              'note-false': !showNote({ noteName: note, fret: fret, string: string }),
               'note-show': showNote({ noteName: note, fret: fret, string: string })
             }"
           >
