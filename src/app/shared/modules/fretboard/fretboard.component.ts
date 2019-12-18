@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
+import { Barre } from 'src/app/models/chord.model';
 
 import { Note } from '../../../models/note.model';
 
@@ -23,6 +24,7 @@ export class FretboardComponent implements OnInit {
   @Input() invertedStrings: boolean;
   @Input() invertedFrets: boolean;
   @Input() notes: string[][];
+  @Input() barre: Barre;
   @Output() noteClick: Subject<Note> = new Subject();
 
   constructor() {}
@@ -34,10 +36,7 @@ export class FretboardComponent implements OnInit {
       return;
     }
     this.noteClick.next(noteObject);
-    if (
-      this.showAll ||
-      (this.showSelectedNoteNames && this.isGoodNoteName(noteObject.noteName))
-    ) {
+    if (this.showAll || (this.showSelectedNoteNames && this.isGoodNoteName(noteObject.noteName))) {
       return;
     }
     noteElement.style.opacity = 1;
@@ -83,10 +82,7 @@ export class FretboardComponent implements OnInit {
     if (!this.highlightNote) {
       return false;
     }
-    if (
-      this.highlightNote.fret === fret &&
-      selectedString === this.highlightNote.string
-    ) {
+    if (this.highlightNote.fret === fret && selectedString === this.highlightNote.string) {
       return true;
     }
     return false;

@@ -205,6 +205,7 @@
 }
 
 @media screen and (max-width: 760px) {
+  // Mobile
   .fretboard-wrapper {
     width: calc(100% - 20px);
     margin: auto;
@@ -255,14 +256,28 @@
           box-shadow: none;
           margin: 0;
           padding: 0;
-          background-image: linear-gradient(
-            90deg,
-            rgba(0, 0, 0, 0.8),
-            rgba(0, 0, 0, 0.2)
-          );
+          background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2));
           background-size: 3px 100%;
           background-repeat: no-repeat;
           background-position-x: 50%;
+
+          .barre {
+            width: calc(100% + 2px);
+            height: 50px;
+            background: var(--ion-color-sixth-tint);
+            opacity: 0.4;
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
+          .barre-start {
+            border-radius: 0 15px 15px 0;
+          }
+          .barre-end {
+            border-radius: 15px 0 0 15px;
+          }
         }
 
         .disabled-string {
@@ -332,6 +347,15 @@
     .fretboard-inverted-strings {
       .tile {
         flex-direction: row;
+
+        .note {
+          .barre-start {
+            border-radius: 15px 0 0 15px;
+          }
+          .barre-end {
+            border-radius: 0 15px 15px 0;
+          }
+        }
       }
     }
   }
@@ -386,6 +410,7 @@
 }
 
 @media screen and (min-width: 760px) {
+  // Desktop
   .fretboard-wrapper {
     margin: auto;
     width: calc(100% - 20px);
@@ -409,6 +434,26 @@
         }
         .string-5 {
           background-size: 100% 5.5px;
+        }
+
+        .note {
+          .barre {
+            height: calc(100% + 2px);
+            width: 50px;
+            background: var(--ion-color-sixth-tint);
+            opacity: 0.4;
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
+          .barre-start {
+            border-radius: 15px 15px 0 0;
+          }
+          .barre-end {
+            border-radius: 0 0 15px 15px;
+          }
         }
       }
     }
@@ -434,6 +479,15 @@
     .fretboard-inverted-strings {
       .tile {
         flex-direction: column-reverse;
+
+        .note {
+          .barre-start {
+            border-radius: 0 0 15px 15px;
+          }
+          .barre-end {
+            border-radius: 15px 15px 0 0;
+          }
+        }
       }
     }
   }

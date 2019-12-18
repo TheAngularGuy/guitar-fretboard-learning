@@ -62,6 +62,16 @@
           "
         >
           <span
+            class="barre"
+            [ngClass]="{
+              'barre-start': barre && barre.stringStart === string,
+              'barre-end': barre && barre.stringEnd === string
+            }"
+            *ngIf="
+              barre && barre.fret === fret && string >= barre.stringStart && barre.stringEnd >= string
+            "
+          ></span>
+          <span
             class="note-name"
             #noteName
             [ngClass]="{
