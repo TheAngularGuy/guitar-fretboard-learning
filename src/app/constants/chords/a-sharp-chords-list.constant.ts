@@ -1,6 +1,6 @@
 import { Chord } from 'src/app/models/chord.model';
 
-export const A_SHARP_MAJOR_CHORDS: Chord[] = [
+export const A_SHARP_CHORDS: Chord[] = [
   {
     type: 'Major',
     fretStart: 1,
@@ -99,8 +99,7 @@ export const A_SHARP_MAJOR_CHORDS: Chord[] = [
     disabledStrings: [5],
     barre: { fret: 10, stringEnd: 2, stringStart: 0 },
   },
-];
-export const A_SHARP_MINOR_CHORDS: Chord[] = [
+  // ----------------------------------
   {
     type: 'Minor',
     fretStart: 1,
@@ -142,8 +141,7 @@ export const A_SHARP_MINOR_CHORDS: Chord[] = [
     ],
     disabledStrings: [4, 5],
   },
-];
-export const A_SHARP_FIVE_CHORDS: Chord[] = [
+  // ----------------------------------
   {
     type: '5',
     fretStart: 1,
@@ -207,8 +205,7 @@ export const A_SHARP_FIVE_CHORDS: Chord[] = [
     ],
     disabledStrings: [0, 1, 4, 5],
   },
-];
-export const A_SHARP_SEVEN_CHORDS: Chord[] = [
+  // ----------------------------------
   {
     type: '7',
     fretStart: 1,
@@ -262,8 +259,7 @@ export const A_SHARP_SEVEN_CHORDS: Chord[] = [
     ],
     disabledStrings: [0, 5],
   },
-];
-export const A_SHARP_MAJ7_CHORDS: Chord[] = [
+  // ----------------------------------
   {
     type: 'maj7',
     fretStart: 1,
@@ -343,8 +339,7 @@ export const A_SHARP_MAJ7_CHORDS: Chord[] = [
     disabledStrings: [5],
     barre: { fret: 10, stringEnd: 2, stringStart: 0 },
   },
-];
-export const A_SHARP_M7_CHORDS: Chord[] = [
+  // ----------------------------------
   {
     type: 'm7',
     fretStart: 1,
@@ -386,8 +381,7 @@ export const A_SHARP_M7_CHORDS: Chord[] = [
     ],
     disabledStrings: [4, 5],
   },
-];
-export const A_SHARP_SUS4_CHORDS: Chord[] = [
+  // ----------------------------------
   {
     type: 'sus4',
     fretStart: 1,
@@ -429,8 +423,7 @@ export const A_SHARP_SUS4_CHORDS: Chord[] = [
     ],
     disabledStrings: [4, 5],
   },
-];
-export const A_SHARP_ADD9_CHORDS: Chord[] = [
+  // ----------------------------------
   {
     type: 'add9',
     fretStart: 6,
@@ -443,8 +436,7 @@ export const A_SHARP_ADD9_CHORDS: Chord[] = [
     ],
     disabledStrings: [4, 5],
   },
-];
-export const A_SHARP_SUS2_CHORDS: Chord[] = [
+  // ----------------------------------
   {
     type: 'sus2',
     fretStart: 1,
@@ -472,8 +464,7 @@ export const A_SHARP_SUS2_CHORDS: Chord[] = [
     disabledStrings: [5, 4],
     barre: { fret: 8, stringEnd: 3, stringStart: 0 },
   },
-];
-export const A_SHARP_7SUS4_CHORDS: Chord[] = [
+  // ----------------------------------
   {
     type: '7sus4',
     fretStart: 1,
@@ -515,8 +506,7 @@ export const A_SHARP_7SUS4_CHORDS: Chord[] = [
     ],
     disabledStrings: [4, 5],
   },
-];
-export const A_SHARP_9_CHORDS: Chord[] = [
+  // ----------------------------------
   {
     type: '9',
     disabledStrings: [0, 5],
@@ -529,8 +519,7 @@ export const A_SHARP_9_CHORDS: Chord[] = [
       { fret: 1, string: 1 },
     ],
   },
-];
-export const A_SHARP_7SHARP9_CHORDS: Chord[] = [
+  // ----------------------------------
   {
     type: '7#9',
     disabledStrings: [0, 5],

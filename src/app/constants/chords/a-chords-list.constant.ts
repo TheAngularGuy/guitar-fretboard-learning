@@ -1,6 +1,6 @@
 import { Chord } from 'src/app/models/chord.model';
 
-export const A_MAJOR_CHORDS: Chord[] = [
+export const A_CHORDS: Chord[] = [
   {
     type: 'Major',
     fretStart: 0,
@@ -98,8 +98,7 @@ export const A_MAJOR_CHORDS: Chord[] = [
     disabledStrings: [5],
     barre: { fret: 9, stringEnd: 2, stringStart: 0 },
   },
-];
-export const A_MINOR_CHORDS: Chord[] = [
+  // ----------------------------------
   {
     type: 'Minor',
     fretStart: 0,
@@ -140,8 +139,7 @@ export const A_MINOR_CHORDS: Chord[] = [
     ],
     disabledStrings: [4, 5],
   },
-];
-export const A_FIVE_CHORDS: Chord[] = [
+  // ----------------------------------
   {
     type: '5',
     fretStart: 0,
@@ -205,8 +203,7 @@ export const A_FIVE_CHORDS: Chord[] = [
     ],
     disabledStrings: [0, 1, 4, 5],
   },
-];
-export const A_SEVEN_CHORDS: Chord[] = [
+  // ----------------------------------
   {
     type: '7',
     fretStart: 0,
@@ -259,8 +256,7 @@ export const A_SEVEN_CHORDS: Chord[] = [
     ],
     disabledStrings: [0, 5],
   },
-];
-export const A_MAJ7_CHORDS: Chord[] = [
+  // ----------------------------------
   {
     type: 'maj7',
     fretStart: 0,
@@ -339,8 +335,7 @@ export const A_MAJ7_CHORDS: Chord[] = [
     disabledStrings: [5],
     barre: { fret: 9, stringEnd: 2, stringStart: 0 },
   },
-];
-export const A_M7_CHORDS: Chord[] = [
+  // ----------------------------------
   {
     type: 'm7',
     fretStart: 0,
@@ -381,8 +376,7 @@ export const A_M7_CHORDS: Chord[] = [
     ],
     disabledStrings: [4, 5],
   },
-];
-export const A_SUS4_CHORDS: Chord[] = [
+  // ----------------------------------
   {
     type: 'sus4',
     fretStart: 0,
@@ -423,8 +417,7 @@ export const A_SUS4_CHORDS: Chord[] = [
     ],
     disabledStrings: [4, 5],
   },
-];
-export const A_ADD9_CHORDS: Chord[] = [
+  // ----------------------------------
   {
     type: 'add9',
     fretStart: 5,
@@ -437,8 +430,7 @@ export const A_ADD9_CHORDS: Chord[] = [
     ],
     disabledStrings: [4, 5],
   },
-];
-export const A_SUS2_CHORDS: Chord[] = [
+  // ----------------------------------
   {
     type: 'sus2',
     fretStart: 0,
@@ -465,8 +457,7 @@ export const A_SUS2_CHORDS: Chord[] = [
     disabledStrings: [5, 4],
     barre: { fret: 7, stringEnd: 3, stringStart: 0 },
   },
-];
-export const A_7SUS4_CHORDS: Chord[] = [
+  // ----------------------------------
   {
     type: '7sus4',
     fretStart: 0,
@@ -507,8 +498,7 @@ export const A_7SUS4_CHORDS: Chord[] = [
     ],
     disabledStrings: [4, 5],
   },
-];
-export const A_9_CHORDS: Chord[] = [
+  // ----------------------------------
   {
     type: '9',
     disabledStrings: [4, 5],
@@ -547,8 +537,7 @@ export const A_9_CHORDS: Chord[] = [
       { fret: 12, string: 1 },
     ],
   },
-];
-export const A_7SHARP9_CHORDS: Chord[] = [
+  // ----------------------------------
   {
     type: '7#9',
     disabledStrings: [4, 5],

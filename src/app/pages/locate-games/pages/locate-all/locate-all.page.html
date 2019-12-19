@@ -110,7 +110,7 @@
     [notes]="fretboardNotes"
     [showAll]="showAll"
     [selectedFrets]="[form?.value.fretStart, form?.value.fretEnd]"
-    [selectedNotes]="noteToFind ? [noteToFind.note.noteName] : null"
+    [selectedNoteNames]="noteToFind ? [noteToFind.note.noteName] : null"
     (noteClick)="onNoteClicked($event)"
   ></app-fretboard>
   <br />
