@@ -1,38 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { CHORD_TYPES } from 'src/app/constants/chord-types.constant';
-import {
-  A_7SHARP9_CHORDS,
-  A_7SUS4_CHORDS,
-  A_9_CHORDS,
-  A_ADD9_CHORDS,
-  A_FIVE_CHORDS,
-  A_M7_CHORDS,
-  A_MAJ7_CHORDS,
-  A_MAJOR_CHORDS,
-  A_MINOR_CHORDS,
-  A_SEVEN_CHORDS,
-  A_SUS2_CHORDS,
-  A_SUS4_CHORDS,
-} from 'src/app/constants/chords/a-chords-list.constant';
-import {
-  A_SHARP_7SHARP9_CHORDS,
-  A_SHARP_7SUS4_CHORDS,
-  A_SHARP_9_CHORDS,
-  A_SHARP_ADD9_CHORDS,
-  A_SHARP_FIVE_CHORDS,
-  A_SHARP_M7_CHORDS,
-  A_SHARP_MAJ7_CHORDS,
-  A_SHARP_MAJOR_CHORDS,
-  A_SHARP_MINOR_CHORDS,
-  A_SHARP_SEVEN_CHORDS,
-  A_SHARP_SUS2_CHORDS,
-  A_SHARP_SUS4_CHORDS,
-} from 'src/app/constants/chords/a-sharp-chords-list.constant';
+import { ALL_CHORDS_HASH } from 'src/app/constants/chords/all-chords-hash.constant';
 import { CHROMATIC_SCALE } from 'src/app/constants/chromatic-scale.constant';
-import { Chord } from 'src/app/models/chord.model';
+import { FRETBOARD_STANDARD } from 'src/app/constants/fretboard-notes.constant';
+import { Chord, ChordType } from 'src/app/models/chord.model';
 import { FretboardManipulationService } from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
 import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
+
+import { ExploreSetSelectedChordAction } from '../../store/explore.actions';
+import { ExploreState, ExploreStateModel } from '../../store/explore.state';
 
 @Component({
   selector: 'app-explore-chords',
@@ -42,13 +19,14 @@ import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/pr
 export class ExploreChordsPage implements OnInit {
   fretboardNotes: string[][];
   preferences: PreferencesStateModel;
+  exploreState: ExploreStateModel;
   chromaticScale = CHROMATIC_SCALE;
   chordTypes = CHORD_TYPES;
 
   allChordsHash: { [key: string]: Chord[] };
 
   selectedNote: string;
-  selectedType: string;
+  selectedType: ChordType;
 
   selectedChords: Chord[];
 
@@ -59,44 +37,19 @@ export class ExploreChordsPage implements OnInit {
 
   ngOnInit() {
     this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
-    this.fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
+    this.exploreState = this.store.selectSnapshot<ExploreStateModel>(ExploreState.getState);
+    this.fretboardNotes = FRETBOARD_STANDARD;
+    this.allChordsHash = ALL_CHORDS_HASH;
 
-    this.allChordsHash = {
-      A_MAJOR: A_MAJOR_CHORDS,
-      A_MINOR: A_MINOR_CHORDS,
-      A_5: A_FIVE_CHORDS,
-      A_7: A_SEVEN_CHORDS,
-      A_MAJ7: A_MAJ7_CHORDS,
-      A_M7: A_M7_CHORDS,
-      A_SUS4: A_SUS4_CHORDS,
-      A_SUS2: A_SUS2_CHORDS,
-      A_7SUS4: A_7SUS4_CHORDS,
-      A_ADD9: A_ADD9_CHORDS,
-      A_9: A_9_CHORDS,
-      A_7SHARP9: A_7SHARP9_CHORDS,
-
-      A_SHARP_MAJOR: A_SHARP_MAJOR_CHORDS,
-      A_SHARP_MINOR: A_SHARP_MINOR_CHORDS,
-      A_SHARP_5: A_SHARP_FIVE_CHORDS,
-      A_SHARP_7: A_SHARP_SEVEN_CHORDS,
-      A_SHARP_MAJ7: A_SHARP_MAJ7_CHORDS,
-      A_SHARP_M7: A_SHARP_M7_CHORDS,
-      A_SHARP_SUS4: A_SHARP_SUS4_CHORDS,
-      A_SHARP_SUS2: A_SHARP_SUS2_CHORDS,
-      A_SHARP_7SUS4: A_SHARP_7SUS4_CHORDS,
-      A_SHARP_ADD9: A_SHARP_ADD9_CHORDS,
-      A_SHARP_9: A_SHARP_9_CHORDS,
-      A_SHARP_7SHARP9: A_SHARP_7SHARP9_CHORDS,
-    };
-    this.onSelectNote('A');
+    this.onSelectNote(this.exploreState.selectedChord.noteName);
   }
 
   onSelectNote(n: string) {
     this.selectedNote = n;
-    this.onSelectType(this.chordTypes[0]);
+    this.onSelectType(this.selectedType || this.exploreState.selectedChord.type);
   }
 
-  onSelectType(n: string) {
+  onSelectType(n: ChordType) {
     this.selectedType = n;
     this.onUpdateChord();
   }
@@ -107,6 +60,12 @@ export class ExploreChordsPage implements OnInit {
         '_' +
         this.selectedType.toUpperCase().replace('#', 'SHARP')
     ];
+    this.store.dispatch(
+      new ExploreSetSelectedChordAction({
+        noteName: this.selectedNote,
+        type: this.selectedType,
+      }),
+    );
   }
 
   getSelectedNotesFromChord(c: Chord) {

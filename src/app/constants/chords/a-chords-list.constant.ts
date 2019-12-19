@@ -250,7 +250,7 @@ export const A_SEVEN_CHORDS: Chord[] = [
   {
     type: '7',
     fretStart: 10,
-    fretEnd: 12,
+    fretEnd: 13,
     notes: [
       { fret: 12, string: 4 },
       { fret: 11, string: 3 },
@@ -563,7 +563,7 @@ export const A_7SHARP9_CHORDS: Chord[] = [
   },
   {
     type: '7#9',
-    disabledStrings: [0, 1, 5],
+    disabledStrings: [0, 5],
     fretStart: 10,
     fretEnd: 13,
     notes: [
