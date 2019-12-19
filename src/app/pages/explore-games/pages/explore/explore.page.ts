@@ -54,9 +54,9 @@ export class ExplorePage implements OnInit, OnDestroy {
       selectedNotes: [this.exploreState.selectedNotes, [Validators.required]],
       fretStart: [
         this.exploreState.fretStart,
-        [Validators.required, Validators.min(0), Validators.max(12)],
+        [Validators.required, Validators.min(0), Validators.max(17)],
       ],
-      fretEnd: [this.exploreState.fretEnd, [Validators.required, Validators.min(0), Validators.max(12)]],
+      fretEnd: [this.exploreState.fretEnd, [Validators.required, Validators.min(0), Validators.max(17)]],
     });
     this.exploreForm = form;
     this.setFormListener();

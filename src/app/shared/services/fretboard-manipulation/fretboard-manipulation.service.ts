@@ -26,7 +26,7 @@ export class FretboardManipulationService {
     }
     output.push(nut);
 
-    for (let i = 1; i <= 12; i++) {
+    for (let i = 1; i <= 17; i++) {
       const fret = output[i - 1].map(n => this.getNextNote(n));
       output.push(fret);
     }

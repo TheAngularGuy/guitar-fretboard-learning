@@ -14,12 +14,13 @@
           'tile-hide': !isSelectedFret(fret),
           'no-click': disableClick,
           'tile-nut': fret === 0,
-          'tile-one-dot': [3, 5, 7, 9].includes(fret),
-          'tile-two-dot': fret === 12
+          'tile-one-dot': [3, 5, 7, 9, 15, 17].includes(fret)
         }"
         *ngIf="isSelectedFret(fret) || !showOnlySelectedFrets"
         [id]="'idFretNb' + fret"
       >
+        <div class="tile-two-dot" *ngIf="fret === 12"></div>
+
         <span class="tile-number">
           <span
             *ngIf="getNum(fret) == 0"
@@ -76,7 +77,8 @@
             #noteName
             [ngClass]="{
               'note-show-all': showAll,
-              'note-false': !showNote({ noteName: note, fret: fret, string: string }),
+              'note-false':
+                !isGoodNote({ noteName: note, fret: fret, string: string }) && !isGoodNoteName(note),
               'note-show': showNote({ noteName: note, fret: fret, string: string })
             }"
           >

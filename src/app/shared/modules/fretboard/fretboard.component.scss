@@ -157,7 +157,12 @@
     }
 
     .tile-two-dot {
-      position: relative;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
 
       &::before {
         content: '';
@@ -305,7 +310,12 @@
       }
 
       .tile-two-dot {
-        position: relative;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
 
         &::before {
           content: '';
@@ -363,49 +373,53 @@
   .width-1 {
     max-height: calc(var(--tileWidth) - 5px);
   }
-
   .width-2 {
     max-height: calc(var(--tileWidth) - 7px);
   }
-
   .width-3 {
     max-height: calc(var(--tileWidth) - 10px);
   }
-
   .width-4 {
     max-height: calc(var(--tileWidth) - 14px);
   }
-
   .width-5 {
     max-height: calc(var(--tileWidth) - 19px);
   }
-
   .width-6 {
     max-height: calc(var(--tileWidth) - 23px);
   }
-
   .width-7 {
     max-height: calc(var(--tileWidth) - 27px);
   }
-
   .width-8 {
     max-height: calc(var(--tileWidth) - 32px);
   }
-
   .width-9 {
     max-height: calc(var(--tileWidth) - 38px);
   }
-
   .width-10 {
     max-height: calc(var(--tileWidth) - 42px);
   }
-
   .width-11 {
     max-height: calc(var(--tileWidth) - 49px);
   }
-
   .width-12 {
     max-height: calc(var(--tileWidth) - 55px);
+  }
+  .width-13 {
+    max-height: calc(var(--tileWidth) - 57px);
+  }
+  .width-14 {
+    max-height: calc(var(--tileWidth) - 60px);
+  }
+  .width-15 {
+    max-height: calc(var(--tileWidth) - 62px);
+  }
+  .width-16 {
+    max-height: calc(var(--tileWidth) - 67px);
+  }
+  .width-17 {
+    max-height: calc(var(--tileWidth) - 69px);
   }
 }
 
@@ -496,40 +510,55 @@
     width: calc(2.5%);
   }
   .width-1 {
-    width: calc(8% + 3.5%);
+    width: calc(5.73% + 3.5%);
   }
   .width-2 {
-    width: calc(8% + 3%);
+    width: calc(5.73% + 3%);
   }
   .width-3 {
-    width: calc(8% + 2%);
+    width: calc(5.73% + 2.25%);
   }
   .width-4 {
-    width: calc(8% + 1%);
+    width: calc(5.73% + 1.25%);
   }
   .width-5 {
-    width: calc(8% + 0.5%);
+    width: calc(5.73% + 0.5%);
   }
   .width-6 {
-    width: calc(8% + 0.25%);
+    width: calc(5.73% + 0.25%);
   }
   .width-7 {
-    width: calc(8% - 0.25%);
+    width: calc(5.73% - 0%);
   }
   .width-8 {
-    width: calc(8% - 0.5%);
+    width: calc(5.73% - 0.15%);
   }
   .width-9 {
-    width: calc(8% - 1%);
+    width: calc(5.73% - 0.25%);
   }
   .width-10 {
-    width: calc(8% - 1.5%);
+    width: calc(5.73% - 0.5%);
   }
   .width-11 {
-    width: calc(8% - 2.5%);
+    width: calc(5.73% - 0.75%);
   }
   .width-12 {
-    width: calc(8% - 3%);
+    width: calc(5.73% - 0.9%);
+  }
+  .width-13 {
+    width: calc(5.73% - 1.35%);
+  }
+  .width-14 {
+    width: calc(5.73% - 1.5%);
+  }
+  .width-15 {
+    width: calc(5.73% - 1.75%);
+  }
+  .width-16 {
+    width: calc(5.73% - 2%);
+  }
+  .width-17 {
+    width: calc(5.73% - 2%);
   }
 }
 

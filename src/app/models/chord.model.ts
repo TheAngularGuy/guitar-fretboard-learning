@@ -7,7 +7,7 @@ export interface Barre {
 }
 
 export interface Chord {
-  notes: Note[];
+  notes: Note[] | { fret: number; string: number }[];
   fretStart: number;
   fretEnd: number;
   disabledStrings: number[];

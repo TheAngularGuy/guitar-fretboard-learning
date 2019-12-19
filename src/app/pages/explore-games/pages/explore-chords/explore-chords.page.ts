@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { CHORD_TYPES } from 'src/app/constants/chord-types.constant';
 import {
+  A_7SHARP9_CHORDS,
   A_7SUS4_CHORDS,
   A_9_CHORDS,
   A_ADD9_CHORDS,
@@ -13,7 +14,21 @@ import {
   A_SEVEN_CHORDS,
   A_SUS2_CHORDS,
   A_SUS4_CHORDS,
-} from 'src/app/constants/chords-list.constant';
+} from 'src/app/constants/chords/a-chords-list.constant';
+import {
+  A_SHARP_7SHARP9_CHORDS,
+  A_SHARP_7SUS4_CHORDS,
+  A_SHARP_9_CHORDS,
+  A_SHARP_ADD9_CHORDS,
+  A_SHARP_FIVE_CHORDS,
+  A_SHARP_M7_CHORDS,
+  A_SHARP_MAJ7_CHORDS,
+  A_SHARP_MAJOR_CHORDS,
+  A_SHARP_MINOR_CHORDS,
+  A_SHARP_SEVEN_CHORDS,
+  A_SHARP_SUS2_CHORDS,
+  A_SHARP_SUS4_CHORDS,
+} from 'src/app/constants/chords/a-sharp-chords-list.constant';
 import { CHROMATIC_SCALE } from 'src/app/constants/chromatic-scale.constant';
 import { Chord } from 'src/app/models/chord.model';
 import { FretboardManipulationService } from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
@@ -58,6 +73,20 @@ export class ExploreChordsPage implements OnInit {
       A_7SUS4: A_7SUS4_CHORDS,
       A_ADD9: A_ADD9_CHORDS,
       A_9: A_9_CHORDS,
+      A_7SHARP9: A_7SHARP9_CHORDS,
+
+      A_SHARP_MAJOR: A_SHARP_MAJOR_CHORDS,
+      A_SHARP_MINOR: A_SHARP_MINOR_CHORDS,
+      A_SHARP_5: A_SHARP_FIVE_CHORDS,
+      A_SHARP_7: A_SHARP_SEVEN_CHORDS,
+      A_SHARP_MAJ7: A_SHARP_MAJ7_CHORDS,
+      A_SHARP_M7: A_SHARP_M7_CHORDS,
+      A_SHARP_SUS4: A_SHARP_SUS4_CHORDS,
+      A_SHARP_SUS2: A_SHARP_SUS2_CHORDS,
+      A_SHARP_7SUS4: A_SHARP_7SUS4_CHORDS,
+      A_SHARP_ADD9: A_SHARP_ADD9_CHORDS,
+      A_SHARP_9: A_SHARP_9_CHORDS,
+      A_SHARP_7SHARP9: A_SHARP_7SHARP9_CHORDS,
     };
     this.onSelectNote('A');
   }
@@ -74,7 +103,9 @@ export class ExploreChordsPage implements OnInit {
 
   onUpdateChord() {
     this.selectedChords = this.allChordsHash[
-      this.selectedNote.toUpperCase() + '_' + this.selectedType.toUpperCase()
+      this.selectedNote.toUpperCase().replace('#', '_SHARP') +
+        '_' +
+        this.selectedType.toUpperCase().replace('#', 'SHARP')
     ];
   }
 

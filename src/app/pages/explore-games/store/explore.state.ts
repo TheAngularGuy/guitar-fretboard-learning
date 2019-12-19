@@ -2,11 +2,7 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { CAGED_SCALE } from 'src/app/constants/caged-scale.constant';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
-import {
-  ExploreSetFretEndAction,
-  ExploreSetFretStartAction,
-  ExploreSetSelectedNotesAction,
-} from './explore.actions';
+import { ExploreSetFretEndAction, ExploreSetFretStartAction, ExploreSetSelectedNotesAction } from './explore.actions';
 
 enum stateEnums {
   selectedNotes = 'explore_selectedNotes',
@@ -23,10 +19,9 @@ export interface ExploreStateModel {
 @State<ExploreStateModel>({
   name: 'explore',
   defaults: {
-    selectedNotes:
-      UtilsService.getParsedItemFromLS(stateEnums.selectedNotes) || CAGED_SCALE,
+    selectedNotes: UtilsService.getParsedItemFromLS(stateEnums.selectedNotes) || CAGED_SCALE,
     fretStart: UtilsService.getParsedItemFromLS(stateEnums.fretStart) || 0,
-    fretEnd: UtilsService.getParsedItemFromLS(stateEnums.fretEnd) || 12,
+    fretEnd: UtilsService.getParsedItemFromLS(stateEnums.fretEnd) || 17,
   },
 })
 export class ExploreState {

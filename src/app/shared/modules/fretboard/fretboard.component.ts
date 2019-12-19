@@ -47,7 +47,6 @@ export class FretboardComponent implements OnInit {
   }
 
   isGoodNoteName(noteName: string): boolean {
-    console.log('Debbug log: FretboardComponent -> ngOnInit -> noteName', noteName);
     if (!this.selectedNoteNames) {
       return false;
     }
@@ -55,6 +54,9 @@ export class FretboardComponent implements OnInit {
   }
 
   isGoodNote(n: Note) {
+    if (!this.selectedNotes) {
+      return false;
+    }
     return this.selectedNotes.reduce((accumulator: boolean, current: Note) => {
       return accumulator || (current.fret === n.fret && current.string === n.string);
     }, false);
