@@ -63,8 +63,14 @@
       [showAll]="false"
       [disabledStrings]="chord.disabledStrings"
       [barre]="chord.barre"
-      [showOnlySelectedFrets]="true"
+      [showOnlySelectedFrets]="!true"
     ></app-fretboard>
+    <hr class="hide-on-mobile" />
+  </ng-container>
+  <ng-container *ngIf="!selectedChords || !selectedChords.length">
+    <p class="text-muted">
+      No available chords for the moment.
+    </p>
   </ng-container>
   <br />
 </ion-content>

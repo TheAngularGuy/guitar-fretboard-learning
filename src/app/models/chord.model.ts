@@ -11,7 +11,7 @@ export interface Chord {
   fretStart: number;
   fretEnd: number;
   disabledStrings: number[];
-  type: string;
+  type: ChordType;
   name?: string;
   barre?: Barre;
 }
