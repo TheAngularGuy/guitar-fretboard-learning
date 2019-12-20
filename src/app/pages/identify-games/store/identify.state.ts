@@ -23,7 +23,7 @@ export interface IdentifyStateModel {
       UtilsService.getParsedItemFromLS(stateEnums.selectedNotes) ||
       (window.innerWidth > 760 ? CHROMATIC_SCALE : [...CHROMATIC_SCALE].filter(n => !n.includes('#'))),
     fretStart: UtilsService.getParsedItemFromLS(stateEnums.fretStart) || 0,
-    fretEnd: UtilsService.getParsedItemFromLS(stateEnums.fretEnd) || (window.innerWidth > 760 ? 17 : 3),
+    fretEnd: UtilsService.getParsedItemFromLS(stateEnums.fretEnd) || (window.innerWidth > 760 ? 12 : 3),
   },
 })
 export class IdentifyState {
