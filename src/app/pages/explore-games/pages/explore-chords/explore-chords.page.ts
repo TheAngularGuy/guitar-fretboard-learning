@@ -5,7 +5,6 @@ import { ALL_CHORDS_HASH } from 'src/app/constants/chords/all-chords-hash.consta
 import { CHROMATIC_SCALE } from 'src/app/constants/chromatic-scale.constant';
 import { FRETBOARD_STANDARD } from 'src/app/constants/fretboard-notes.constant';
 import { Chord, ChordType } from 'src/app/models/chord.model';
-import { FretboardManipulationService } from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
 import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
 
 import { ExploreSetSelectedChordAction } from '../../store/explore.actions';
@@ -22,18 +21,12 @@ export class ExploreChordsPage implements OnInit {
   exploreState: ExploreStateModel;
   chromaticScale = CHROMATIC_SCALE;
   chordTypes = CHORD_TYPES;
-
   allChordsHash: { [key: string]: Chord[] };
-
   selectedNote: string;
   selectedType: ChordType;
-
   selectedChords: Chord[];
 
-  constructor(
-    private readonly fretboardManipulationService: FretboardManipulationService,
-    private readonly store: Store,
-  ) {}
+  constructor(private readonly store: Store) {}
 
   ngOnInit() {
     this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
@@ -55,17 +48,21 @@ export class ExploreChordsPage implements OnInit {
   }
 
   onUpdateChord() {
-    this.selectedChords = this.allChordsHash[
-      this.selectedNote.toUpperCase().replace('#', '_SHARP') +
-        '_' +
-        this.selectedType.toUpperCase().replace('#', 'SHARP')
-    ];
-    this.store.dispatch(
-      new ExploreSetSelectedChordAction({
-        noteName: this.selectedNote,
-        type: this.selectedType,
-      }),
-    );
+    const chordsKey = this.selectedNote.toUpperCase().replace('#', '_SHARP') + '_CHORDS';
+    this.selectedChords = this.allChordsHash[chordsKey].filter(c => c.type === this.selectedType);
+
+    if (
+      !this.exploreState.selectedChord ||
+      this.selectedNote !== this.exploreState.selectedChord.noteName ||
+      this.selectedType !== this.exploreState.selectedChord.type
+    ) {
+      this.store.dispatch(
+        new ExploreSetSelectedChordAction({
+          noteName: this.selectedNote,
+          type: this.selectedType,
+        }),
+      );
+    }
   }
 
   getSelectedNotesFromChord(c: Chord) {
