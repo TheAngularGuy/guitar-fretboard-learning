@@ -15,7 +15,7 @@
     }
   }
 
-  &::after {
+  /* &::after {
     content: '';
     pointer-events: none;
     position: absolute;
@@ -24,7 +24,7 @@
     right: 0;
     bottom: 0;
     background-image: linear-gradient(to right, #fff 0%, transparent 7%, transparent 93%, #fff 100%);
-  }
+  } */
 }
 
 .btn {
