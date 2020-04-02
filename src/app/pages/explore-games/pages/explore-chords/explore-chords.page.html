@@ -17,19 +17,60 @@
       <p>You can explore all the chords in the standard tuning.</p>
 
       <hr />
+
+      <div class="horizontal-list-wrapper">
+        <div class="horizontal-list">
+          <ion-button
+            *ngFor="let n of chromaticScale.sort()"
+            color="{{ selectedNote === n ? 'secondary' : 'light'  }}"
+            class="btn"
+            (click)="onSelectNote(n)"
+          >
+            <div style="text-transform: none;">
+              {{ n | note }}
+            </div>
+          </ion-button>
+          <div class="horizontal-list-scroll-padding"></div>
+        </div>
+      </div>
+      <div class="horizontal-list-wrapper">
+        <div class="horizontal-list">
+          <ion-button
+            *ngFor="let type of chordTypes"
+            color="{{ selectedType === type ? 'secondary' : 'light'  }}"
+            class="btn"
+            (click)="onSelectType(type)"
+          >
+            <div style="text-transform: none;">
+              {{ type }}
+            </div>
+          </ion-button>
+          <div class="horizontal-list-scroll-padding"></div>
+        </div>
+      </div>
     </ion-card-content>
   </ion-card>
 
   <br />
-  <app-fretboard
-    [invertedStrings]="preferences?.invertedStrings"
-    [invertedFrets]="preferences?.invertedFrets"
-    [notes]="fretboardNotes"
-    [showSelectedNotes]="true"
-    [selectedNotes]="getSelectedNotesFromChord(chord)"
-    [selectedFrets]="[chord.fretStart, chord.fretEnd]"
-    [showAll]="false"
-    [disabledStrings]="chord.disabledStrings"
-  ></app-fretboard>
+  <ng-container *ngFor="let chord of selectedChords">
+    <app-fretboard
+      [invertedStrings]="preferences?.invertedStrings"
+      [invertedFrets]="preferences?.invertedFrets"
+      [notes]="fretboardNotes"
+      [showSelectedNotes]="true"
+      [selectedNotes]="getSelectedNotesFromChord(chord)"
+      [selectedFrets]="[chord.fretStart, chord.fretEnd]"
+      [showAll]="false"
+      [disabledStrings]="chord.disabledStrings"
+      [barre]="chord.barre"
+      [showOnlySelectedFrets]="!true"
+    ></app-fretboard>
+    <hr class="hide-on-mobile" />
+  </ng-container>
+  <ng-container *ngIf="!selectedChords || !selectedChords.length">
+    <p class="text-muted">
+      No available chords for the moment.
+    </p>
+  </ng-container>
   <br />
 </ion-content>

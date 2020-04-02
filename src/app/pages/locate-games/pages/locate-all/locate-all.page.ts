@@ -9,20 +9,11 @@ import { slideAnimation } from 'src/app/animations/slide.animation';
 import { GameMode } from 'src/app/classes/game-mode.class';
 import { CHROMATIC_SCALE } from 'src/app/constants/chromatic-scale.constant';
 import { Note } from 'src/app/models/note.model';
-import {
-  FretboardManipulationService,
-} from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
+import { FretboardManipulationService } from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
-import {
-  PreferencesState,
-  PreferencesStateModel,
-} from 'src/app/shared/store/preferences/preferences.state';
+import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
 
-import {
-  LocateSetFretEndAction,
-  LocateSetFretStartAction,
-  LocateSetSelectedNotesAction,
-} from '../../store/locate.actions';
+import { LocateSetFretEndAction, LocateSetFretStartAction, LocateSetSelectedNotesAction } from '../../store/locate.actions';
 import { LocateState, LocateStateModel } from '../../store/locate.state';
 
 @Component({
@@ -59,13 +50,9 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.locateState = this.store.selectSnapshot<LocateStateModel>(LocateState.getState);
-    this.preferences = this.store.selectSnapshot<PreferencesStateModel>(
-      PreferencesState.getState,
-    );
+    this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
 
-    const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(
-      this.preferences,
-    );
+    const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
     const form = this.setForm();
     this.initGameMode(fretboardNotes, form, {
       onBeforeStart: () => {
@@ -106,12 +93,9 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
       ],
       fretStart: [
         this.locateState.fretStart,
-        [Validators.required, Validators.min(0), Validators.max(12)],
+        [Validators.required, Validators.min(0), Validators.max(17)],
       ],
-      fretEnd: [
-        this.locateState.fretEnd,
-        [Validators.required, Validators.min(0), Validators.max(12)],
-      ],
+      fretEnd: [this.locateState.fretEnd, [Validators.required, Validators.min(0), Validators.max(17)]],
     });
     this.setFormListener(form);
     return form;
@@ -121,9 +105,7 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
     form.valueChanges
       .pipe(takeUntil(this.destroyed$), debounceTime(500))
       .subscribe((formValue: LocateStateModel) => {
-        const locateState = this.store.selectSnapshot<LocateStateModel>(
-          LocateState.getState,
-        );
+        const locateState = this.store.selectSnapshot<LocateStateModel>(LocateState.getState);
 
         if (formValue.selectedNotes !== locateState.selectedNotes) {
           this.store.dispatch(
@@ -165,10 +147,7 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
 
   onNoteClicked(noteGuessed: Note) {
     const now = Date.now();
-    if (
-      !this.isGamePlaying() ||
-      now - this.lastClickRegistered <= this.getGameConfig().CLICK_INTERVAL
-    ) {
+    if (!this.isGamePlaying() || now - this.lastClickRegistered <= this.getGameConfig().CLICK_INTERVAL) {
       return;
     }
     this.lastClickRegistered = now;
@@ -241,8 +220,7 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
       this.increaseScoreBad();
     }
     this.scoreHistoric.push({
-      timeTook:
-        Date.now() - this.getNoteToFind().time - this.getGameConfig().ANIMATION_TIME,
+      timeTook: Date.now() - this.getNoteToFind().time - this.getGameConfig().ANIMATION_TIME,
       good,
       result: JSON.parse(JSON.stringify(this.series)),
     });
@@ -261,11 +239,7 @@ export class LocateAllPage extends GameMode implements OnInit, OnDestroy {
     if (!this.scoreHistoric || !this.scoreHistoric.length) {
       return;
     }
-    return (
-      this.scoreHistoric.reduce((acc, n) => acc + n.timeTook, 0) /
-      this.scoreHistoric.length /
-      1000
-    );
+    return this.scoreHistoric.reduce((acc, n) => acc + n.timeTook, 0) / this.scoreHistoric.length / 1000;
   }
 
   handleError(message: string) {

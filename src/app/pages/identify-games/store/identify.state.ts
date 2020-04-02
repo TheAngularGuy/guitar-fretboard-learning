@@ -2,11 +2,7 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { CHROMATIC_SCALE } from 'src/app/constants/chromatic-scale.constant';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
-import {
-  IdentifySetFretEndAction,
-  IdentifySetFretStartAction,
-  IdentifySetSelectedNotesAction,
-} from './identify.actions';
+import { IdentifySetFretEndAction, IdentifySetFretStartAction, IdentifySetSelectedNotesAction } from './identify.actions';
 
 enum stateEnums {
   selectedNotes = 'identify_selectedNotes',
@@ -25,13 +21,9 @@ export interface IdentifyStateModel {
   defaults: {
     selectedNotes:
       UtilsService.getParsedItemFromLS(stateEnums.selectedNotes) ||
-      (window.innerWidth > 760
-        ? CHROMATIC_SCALE
-        : [...CHROMATIC_SCALE].filter(n => !n.includes('#'))),
+      (window.innerWidth > 760 ? CHROMATIC_SCALE : [...CHROMATIC_SCALE].filter(n => !n.includes('#'))),
     fretStart: UtilsService.getParsedItemFromLS(stateEnums.fretStart) || 0,
-    fretEnd:
-      UtilsService.getParsedItemFromLS(stateEnums.fretEnd) ||
-      (window.innerWidth > 760 ? 12 : 3),
+    fretEnd: UtilsService.getParsedItemFromLS(stateEnums.fretEnd) || (window.innerWidth > 760 ? 12 : 3),
   },
 })
 export class IdentifyState {

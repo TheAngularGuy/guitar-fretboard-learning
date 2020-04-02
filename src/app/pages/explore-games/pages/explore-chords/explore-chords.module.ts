@@ -5,9 +5,6 @@ import { IonicModule } from '@ionic/angular';
 import { NgxsModule } from '@ngxs/store';
 import { FretboardModule } from 'src/app/shared/modules/fretboard/fretboard.module';
 import { GlobalModule } from 'src/app/shared/modules/global/global.module';
-import {
-  FretboardManipulationService,
-} from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
 
 import { ExploreChordsPageRoutingModule } from './explore-chords-routing.module';
 import { ExploreChordsPage } from './explore-chords.page';
@@ -21,10 +18,11 @@ import { ExploreChordsPage } from './explore-chords.page';
     FretboardModule,
     GlobalModule,
     ExploreChordsPageRoutingModule,
+    GlobalModule,
 
     NgxsModule.forFeature(),
   ],
   declarations: [ExploreChordsPage],
-  providers: [FretboardManipulationService],
+  providers: [],
 })
 export class ExploreChordsPageModule {}

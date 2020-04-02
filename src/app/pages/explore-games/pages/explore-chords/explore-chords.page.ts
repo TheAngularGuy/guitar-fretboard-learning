@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { Chord } from 'src/app/models/chord.model';
-import {
-  FretboardManipulationService,
-} from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
-import {
-  PreferencesState,
-  PreferencesStateModel,
-} from 'src/app/shared/store/preferences/preferences.state';
+import { CHORD_TYPES } from 'src/app/constants/chord-types.constant';
+import { ALL_CHORDS_HASH } from 'src/app/constants/chords/all-chords-hash.constant';
+import { CHROMATIC_SCALE } from 'src/app/constants/chromatic-scale.constant';
+import { FRETBOARD_STANDARD } from 'src/app/constants/fretboard-notes.constant';
+import { Chord, ChordType } from 'src/app/models/chord.model';
+import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
+
+import { ExploreSetSelectedChordAction } from '../../store/explore.actions';
+import { ExploreState, ExploreStateModel } from '../../store/explore.state';
 
 @Component({
   selector: 'app-explore-chords',
@@ -17,47 +18,51 @@ import {
 export class ExploreChordsPage implements OnInit {
   fretboardNotes: string[][];
   preferences: PreferencesStateModel;
+  exploreState: ExploreStateModel;
+  chromaticScale = CHROMATIC_SCALE;
+  chordTypes = CHORD_TYPES;
+  allChordsHash: { [key: string]: Chord[] };
+  selectedNote: string;
+  selectedType: ChordType;
+  selectedChords: Chord[];
 
-  chord: Chord = {
-    fretStart: 7,
-    fretEnd: 10,
-    notes: [
-      {
-        fret: 8,
-        noteName: 'C',
-        string: 0,
-      },
-      {
-        fret: 10,
-        noteName: 'A',
-        string: 1,
-      },
-      {
-        fret: 9,
-        noteName: 'E',
-        string: 2,
-      },
-      {
-        fret: 7,
-        noteName: 'A',
-        string: 3,
-      },
-    ],
-    disabledStrings: [4, 5],
-  };
-
-  constructor(
-    private readonly fretboardManipulationService: FretboardManipulationService,
-    private readonly store: Store,
-  ) {}
+  constructor(private readonly store: Store) {}
 
   ngOnInit() {
-    this.preferences = this.store.selectSnapshot<PreferencesStateModel>(
-      PreferencesState.getState,
-    );
-    this.fretboardNotes = this.fretboardManipulationService.getFretboardNotes(
-      this.preferences,
-    );
+    this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
+    this.exploreState = this.store.selectSnapshot<ExploreStateModel>(ExploreState.getState);
+    this.fretboardNotes = FRETBOARD_STANDARD;
+    this.allChordsHash = ALL_CHORDS_HASH;
+
+    this.onSelectNote(this.exploreState.selectedChord.noteName);
+  }
+
+  onSelectNote(n: string) {
+    this.selectedNote = n;
+    this.onSelectType(this.selectedType || this.exploreState.selectedChord.type);
+  }
+
+  onSelectType(n: ChordType) {
+    this.selectedType = n;
+    this.onUpdateChord();
+  }
+
+  onUpdateChord() {
+    const chordsKey = this.selectedNote.toUpperCase().replace('#', '_SHARP') + '_CHORDS';
+    this.selectedChords = this.allChordsHash[chordsKey].filter(c => c.type === this.selectedType);
+
+    if (
+      !this.exploreState.selectedChord ||
+      this.selectedNote !== this.exploreState.selectedChord.noteName ||
+      this.selectedType !== this.exploreState.selectedChord.type
+    ) {
+      this.store.dispatch(
+        new ExploreSetSelectedChordAction({
+          noteName: this.selectedNote,
+          type: this.selectedType,
+        }),
+      );
+    }
   }
 
   getSelectedNotesFromChord(c: Chord) {

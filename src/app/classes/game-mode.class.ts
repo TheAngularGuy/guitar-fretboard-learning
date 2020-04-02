@@ -84,7 +84,7 @@ export class GameMode {
       const message =
         this.form.value.fretStart >= this.form.value.fretEnd
           ? 'Please set the ending fret to be greater than the starting fret.'
-          : 'Invalid form, please select at least two notes and two frets (between 0 and 12).';
+          : 'Invalid form, please select at least two notes and two frets (between 0 and 17).';
       if (this.callbacks && this.callbacks.onError) {
         this.callbacks.onError(message);
       }
@@ -159,10 +159,7 @@ export class GameMode {
   pickRandomNote(loop = 0) {
     const selectedNotes = this.form.value.selectedNotes;
     const randomString = UtilsService.getRandomInt(0, 6);
-    const randomFret = UtilsService.getRandomInt(
-      this.form.value.fretStart,
-      this.form.value.fretEnd + 1,
-    );
+    const randomFret = UtilsService.getRandomInt(this.form.value.fretStart, this.form.value.fretEnd + 1);
     const note = this.fretboardNotes[randomFret][randomString];
 
     if (
@@ -174,9 +171,7 @@ export class GameMode {
       return this.pickRandomNote(loop + 1);
     }
     this.showAll = false;
-    this.notesAppearances[note] = this.notesAppearances[note]
-      ? this.notesAppearances[note] + 1
-      : 1;
+    this.notesAppearances[note] = this.notesAppearances[note] ? this.notesAppearances[note] + 1 : 1;
     this.noteToFind = {
       time: Date.now(),
       note: {
@@ -192,11 +187,7 @@ export class GameMode {
   }
 
   private compareWithNoteToFind(noteName: string) {
-    return (
-      this.noteToFind &&
-      this.noteToFind.note &&
-      noteName === this.noteToFind.note.noteName
-    );
+    return this.noteToFind && this.noteToFind.note && noteName === this.noteToFind.note.noteName;
   }
 
   private setNotesAppearance() {

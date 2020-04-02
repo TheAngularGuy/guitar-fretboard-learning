@@ -9,14 +9,9 @@ import { slideAnimation } from 'src/app/animations/slide.animation';
 import { GameMode } from 'src/app/classes/game-mode.class';
 import { CHROMATIC_SCALE } from 'src/app/constants/chromatic-scale.constant';
 import { Note } from 'src/app/models/note.model';
-import {
-  FretboardManipulationService,
-} from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
+import { FretboardManipulationService } from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
-import {
-  PreferencesState,
-  PreferencesStateModel,
-} from 'src/app/shared/store/preferences/preferences.state';
+import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
 
 import {
   IdentifySetFretEndAction,
@@ -57,15 +52,9 @@ export class IdentifyPage extends GameMode implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.identifyState = this.store.selectSnapshot<IdentifyStateModel>(
-      IdentifyState.getState,
-    );
-    this.preferences = this.store.selectSnapshot<PreferencesStateModel>(
-      PreferencesState.getState,
-    );
-    const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(
-      this.preferences,
-    );
+    this.identifyState = this.store.selectSnapshot<IdentifyStateModel>(IdentifyState.getState);
+    this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
+    const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
     const form = this.setForm();
 
     this.initGameMode(fretboardNotes, form, {
@@ -102,11 +91,11 @@ export class IdentifyPage extends GameMode implements OnInit, OnDestroy {
       ],
       fretStart: [
         this.identifyState.fretStart,
-        [Validators.required, Validators.min(0), Validators.max(12)],
+        [Validators.required, Validators.min(0), Validators.max(17)],
       ],
       fretEnd: [
         this.identifyState.fretEnd,
-        [Validators.required, Validators.min(0), Validators.max(12)],
+        [Validators.required, Validators.min(0), Validators.max(17)],
       ],
     });
     this.setFormListener(form);
@@ -117,9 +106,7 @@ export class IdentifyPage extends GameMode implements OnInit, OnDestroy {
     form.valueChanges
       .pipe(takeUntil(this.destroyed$), debounceTime(500))
       .subscribe((formValue: IdentifyStateModel) => {
-        const identifyState = this.store.selectSnapshot<IdentifyStateModel>(
-          IdentifyState.getState,
-        );
+        const identifyState = this.store.selectSnapshot<IdentifyStateModel>(IdentifyState.getState);
 
         if (formValue.selectedNotes !== identifyState.selectedNotes) {
           this.store.dispatch(
@@ -168,10 +155,7 @@ export class IdentifyPage extends GameMode implements OnInit, OnDestroy {
 
   onNoteClicked(noteGuessed: string, btn: IonButton | any): boolean {
     const now = Date.now();
-    if (
-      !this.isGamePlaying() ||
-      now - this.lastClickRegistered <= this.getGameConfig().CLICK_INTERVAL
-    ) {
+    if (!this.isGamePlaying() || now - this.lastClickRegistered <= this.getGameConfig().CLICK_INTERVAL) {
       return;
     }
     this.lastClickRegistered = now;
@@ -198,8 +182,7 @@ export class IdentifyPage extends GameMode implements OnInit, OnDestroy {
         noteName: noteGuessed,
       },
       noteToFind: this.getNoteToFind().note,
-      timeTook:
-        Date.now() - this.getNoteToFind().time - this.getGameConfig().ANIMATION_TIME,
+      timeTook: Date.now() - this.getNoteToFind().time - this.getGameConfig().ANIMATION_TIME,
     });
 
     if (this.scoreHistoric.length === this.getGameConfig().MAX_RANGE) {
@@ -216,11 +199,7 @@ export class IdentifyPage extends GameMode implements OnInit, OnDestroy {
     if (!this.scoreHistoric || !this.scoreHistoric.length) {
       return;
     }
-    return (
-      this.scoreHistoric.reduce((acc, n) => acc + n.timeTook, 0) /
-      this.scoreHistoric.length /
-      1000
-    );
+    return this.scoreHistoric.reduce((acc, n) => acc + n.timeTook, 0) / this.scoreHistoric.length / 1000;
   }
 
   handleError(message: string) {

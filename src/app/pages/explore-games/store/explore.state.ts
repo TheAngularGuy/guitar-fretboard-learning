@@ -1,10 +1,12 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { CAGED_SCALE } from 'src/app/constants/caged-scale.constant';
+import { ChordType } from 'src/app/models/chord.model';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
 import {
   ExploreSetFretEndAction,
   ExploreSetFretStartAction,
+  ExploreSetSelectedChordAction,
   ExploreSetSelectedNotesAction,
 } from './explore.actions';
 
@@ -12,21 +14,26 @@ enum stateEnums {
   selectedNotes = 'explore_selectedNotes',
   fretStart = 'explore_fretStart',
   fretEnd = 'explore_fretEnd',
+  selectedChord = 'explore_selectedChord',
 }
 
 export interface ExploreStateModel {
   selectedNotes: string[];
   fretStart: number;
   fretEnd: number;
+  selectedChord: { noteName: string; type: ChordType };
 }
 
 @State<ExploreStateModel>({
   name: 'explore',
   defaults: {
-    selectedNotes:
-      UtilsService.getParsedItemFromLS(stateEnums.selectedNotes) || CAGED_SCALE,
+    selectedNotes: UtilsService.getParsedItemFromLS(stateEnums.selectedNotes) || CAGED_SCALE,
     fretStart: UtilsService.getParsedItemFromLS(stateEnums.fretStart) || 0,
-    fretEnd: UtilsService.getParsedItemFromLS(stateEnums.fretEnd) || 12,
+    fretEnd: UtilsService.getParsedItemFromLS(stateEnums.fretEnd) || 17,
+    selectedChord: UtilsService.getParsedItemFromLS(stateEnums.selectedChord) || {
+      noteName: 'A',
+      type: 'Major',
+    },
   },
 })
 export class ExploreState {
@@ -66,5 +73,15 @@ export class ExploreState {
       fretEnd: payload.fretEnd,
     });
     UtilsService.setParsedItemToLS(stateEnums.fretEnd, payload.fretEnd);
+  }
+  @Action(ExploreSetSelectedChordAction)
+  public setSelectedChord(
+    { patchState }: StateContext<ExploreStateModel>,
+    { payload }: ExploreSetSelectedChordAction,
+  ) {
+    patchState({
+      selectedChord: payload,
+    });
+    UtilsService.setParsedItemToLS(stateEnums.selectedChord, payload);
   }
 }
