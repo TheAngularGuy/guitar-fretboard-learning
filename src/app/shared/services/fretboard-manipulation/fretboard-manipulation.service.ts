@@ -1,6 +1,8 @@
 import { CHROMATIC_SCALE } from 'src/app/constants/chromatic-scale.constant';
 import { FRETBOARD_STANDARD } from 'src/app/constants/fretboard-notes.constant';
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class FretboardManipulationService {
   getFretboardNotes(preferences: { tuning: string; invertedStrings: boolean }): string[][] {
     let output: string[][];

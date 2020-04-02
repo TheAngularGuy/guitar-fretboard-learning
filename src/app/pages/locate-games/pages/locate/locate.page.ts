@@ -32,7 +32,7 @@ import { LocateState, LocateStateModel } from '../../store/locate.state';
   animations: [popAnimation, slideAnimation],
 })
 export class LocatePage extends GameMode implements OnInit, OnDestroy {
-  @ViewChild('content', { static: false }) content: IonContent;
+  @ViewChild('content') content: IonContent;
   destroyed$ = new Subject();
   preferences: PreferencesStateModel;
   locateState: LocateStateModel;

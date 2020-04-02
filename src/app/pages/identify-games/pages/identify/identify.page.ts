@@ -34,7 +34,7 @@ const HEIGHT_OFFSET = 300; // topbar + footer height -- maybe improve this later
   animations: [popAnimation, slideAnimation],
 })
 export class IdentifyPage extends GameMode implements OnInit, OnDestroy {
-  @ViewChild('content', { static: false }) content: IonContent;
+  @ViewChild('content') content: IonContent;
   destroyed$ = new Subject();
   preferences: PreferencesStateModel;
   identifyState: IdentifyStateModel;
