@@ -8,6 +8,7 @@ import {
   PreferencesSetSoundAction,
   PreferencesSetTunningAction,
 } from './preferences.actions';
+import {Injectable} from '@angular/core';
 
 enum stateEnums {
   invertedStrings = 'preferences_invertedStrings',
@@ -36,6 +37,7 @@ export interface PreferencesStateModel {
     tuning: UtilsService.getParsedItemFromLS(stateEnums.tuning) || 'Standard',
   },
 })
+@Injectable()
 export class PreferencesState {
   // Selectors
   @Selector()

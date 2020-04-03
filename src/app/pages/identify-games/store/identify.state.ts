@@ -3,6 +3,7 @@ import { CHROMATIC_SCALE } from 'src/app/constants/chromatic-scale.constant';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
 import { IdentifySetFretEndAction, IdentifySetFretStartAction, IdentifySetSelectedNotesAction } from './identify.actions';
+import {Injectable} from '@angular/core';
 
 enum stateEnums {
   selectedNotes = 'identify_selectedNotes',
@@ -26,6 +27,7 @@ export interface IdentifyStateModel {
     fretEnd: UtilsService.getParsedItemFromLS(stateEnums.fretEnd) || (window.innerWidth > 760 ? 12 : 3),
   },
 })
+@Injectable()
 export class IdentifyState {
   @Selector()
   public static getState(state: IdentifyStateModel) {

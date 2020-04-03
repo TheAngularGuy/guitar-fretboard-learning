@@ -9,6 +9,7 @@ import {
   ExploreSetSelectedChordAction,
   ExploreSetSelectedNotesAction,
 } from './explore.actions';
+import {Injectable} from '@angular/core';
 
 enum stateEnums {
   selectedNotes = 'explore_selectedNotes',
@@ -36,6 +37,7 @@ export interface ExploreStateModel {
     },
   },
 })
+@Injectable()
 export class ExploreState {
   @Selector()
   public static getState(state: ExploreStateModel) {

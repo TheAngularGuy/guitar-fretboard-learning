@@ -7,6 +7,7 @@ import {
   LocateSetFretStartAction,
   LocateSetSelectedNotesAction,
 } from './locate.actions';
+import {Injectable} from '@angular/core';
 
 enum stateEnums {
   selectedNotes = 'locate_selectedNotes',
@@ -31,6 +32,7 @@ export interface LocateStateModel {
       (window.innerWidth > 760 ? 12 : 3),
   },
 })
+@Injectable()
 export class LocateState {
   @Selector()
   public static getState(state: LocateStateModel) {
