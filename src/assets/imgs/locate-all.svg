@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg x="0pt" y="0pt" width="1000pt" height="1000pt" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g id="1">
+    <title>Layer 1</title>
+    <linearGradient x1="1032.09" y1="1054.95" x2="-10.3593" y2="322.049" gradientUnits="userSpaceOnUse" id="4">
+      <stop style="stop-color:#c18b4c;stop-opacity:1;"/>
+      <stop offset="1" style="stop-color:#faebd7;stop-opacity:1;"/>
+    </linearGradient>
+    <defs>
+      <title>Path</title>
+      <g id="2">
+        <defs>
+          <path id="3" d="M-47.0209,43.7867 C-47.0209,43.7867,1009.6,-7.54797,1009.6,-7.54797 C1009.6,-7.54797,1096.63,1783.9,1096.63,1783.9 C1096.63,1783.9,40.0144,1835.23,40.0144,1835.23 C40.0144,1835.23,-47.0209,43.7867,-47.0209,43.7867 z"/>
+        </defs>
+        <use xlink:href="#3" style="fill:url(#4);fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+        <use xlink:href="#3" style="fill:none;opacity:1;stroke:#000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:1;"/>
+      </g>
+    </defs>
+    <use xlink:href="#2"/>
+    <defs>
+      <title>Smart Rectangle</title>
+      <g id="5">
+        <defs>
+          <path id="6" d="M1038.22,19.8802 C1038.44,24.2933,1035.03,28.0446,1030.62,28.259 C1030.62,28.259,-64.4721,81.4628,-64.4721,81.4628 C-68.8851,81.6772,-72.6364,78.2735,-72.8508,73.8604 C-72.8508,73.8604,-73.8595,53.1,-73.8595,53.1 C-74.0739,48.687,-70.6702,44.9356,-66.2571,44.7212 C-66.2571,44.7212,1028.83,-8.48254,1028.83,-8.48254 C1033.25,-8.69695,1037,-5.29325,1037.21,-0.88018 C1037.21,-0.88018,1038.22,19.8802,1038.22,19.8802 z"/>
+        </defs>
+        <use xlink:href="#6" style="fill:#40413e;fill-opacity:1;fill-rule:nonzero;opacity:1;stroke:none;"/>
+        <use xlink:href="#6" style="fill:none;opacity:1;stroke:#000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:1;"/>
+      </g>
+    </defs>
+    <use xlink:href="#5"/>
+    <defs>
+      <title>Path</title>
+      <g id="7">
+        <defs>
+          <path id="8" d="M-47.0209,43.7866 C-47.0209,43.7866,1009.6,-7.54804,1009.6,-7.54804 C1009.6,-7.54804,991.031,-331.248,1163.33,-380.738 C1163.33,-380.738,574.718,-1620.05,574.718,-1620.05 C574.718,-1620.05,-318.151,-1892.76,-430.147,-1352.94 C-542.144,-813.122,-47.0209,43.7866,-47.0209,43.7866 z"/>
+        </defs>
+        <use xlink:href="#8" style="fill:#ccc7b4;fill-opacity:1;fill-rule:nonzero;opacity:1;stroke:none;"/>
+      </g>
+    </defs>
+    <use xlink:href="#7"/>
+    <defs>
+      <title>Smart Rectangle</title>
+      <g id="9">
+        <defs>
+          <path id="10" d="M656.011,1939.3 C656.225,1943.72,652.822,1947.47,648.409,1947.68 C648.409,1947.68,647.191,1947.74,647.191,1947.74 C642.778,1947.96,639.027,1944.55,638.813,1940.14 C638.813,1940.14,499.736,-922.462,499.736,-922.462 C499.522,-926.875,502.926,-930.626,507.339,-930.841 C507.339,-930.841,508.556,-930.9,508.556,-930.9 C512.969,-931.114,516.72,-927.71,516.935,-923.297 C516.935,-923.297,656.011,1939.3,656.011,1939.3 z"/>
+        </defs>
+        <use xlink:href="#10" style="fill:#fffefe;fill-opacity:1;fill-rule:nonzero;opacity:1;stroke:none;"/>
+        <use xlink:href="#10" style="fill:none;opacity:1;stroke:#000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:1;"/>
+      </g>
+    </defs>
+    <use xlink:href="#9"/>
+    <defs>
+      <title>Smart Rectangle Copy</title>
+      <g id="11">
+        <defs>
+          <path id="12" d="M840.331,1930.35 C840.545,1934.76,837.142,1938.51,832.729,1938.73 C832.729,1938.73,831.512,1938.79,831.512,1938.79 C827.098,1939,823.347,1935.6,823.133,1931.18 C823.133,1931.18,688.151,-847.15,688.151,-847.15 C687.936,-851.563,691.34,-855.315,695.753,-855.529 C695.753,-855.529,696.97,-855.588,696.97,-855.588 C701.383,-855.803,705.134,-852.399,705.349,-847.986 C705.349,-847.986,840.331,1930.35,840.331,1930.35 z"/>
+        </defs>
+        <use xlink:href="#12" style="fill:#fffefe;fill-opacity:1;fill-rule:nonzero;opacity:1;stroke:none;"/>
+        <use xlink:href="#12" style="fill:none;opacity:1;stroke:#000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:1;"/>
+      </g>
+    </defs>
+    <use xlink:href="#11"/>
+    <defs>
+      <title>Smart Rectangle Copy Copy</title>
+      <g id="13">
+        <defs>
+          <path id="14" d="M1048.48,1920.24 C1048.69,1924.65,1045.29,1928.4,1040.87,1928.62 C1040.87,1928.62,1039.66,1928.67,1039.66,1928.67 C1035.24,1928.89,1031.49,1925.49,1031.28,1921.07 C1031.28,1921.07,900.418,-772.43,900.418,-772.43 C900.203,-776.843,903.607,-780.594,908.02,-780.809 C908.02,-780.809,909.237,-780.868,909.237,-780.868 C913.65,-781.082,917.402,-777.678,917.616,-773.265 C917.616,-773.265,1048.48,1920.24,1048.48,1920.24 z"/>
+        </defs>
+        <use xlink:href="#14" style="fill:#fffefe;fill-opacity:1;fill-rule:nonzero;opacity:1;stroke:none;"/>
+        <use xlink:href="#14" style="fill:none;opacity:1;stroke:#000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:1;"/>
+      </g>
+    </defs>
+    <use xlink:href="#13"/>
+    <defs>
+      <title>Smart Rectangle Copy</title>
+      <g id="15">
+        <defs>
+          <path id="16" d="M97.5247,1966.43 C97.7391,1970.85,94.3354,1974.6,89.9223,1974.81 C89.9223,1974.81,88.7052,1974.87,88.7052,1974.87 C84.2921,1975.08,80.5408,1971.68,80.3264,1967.27 C80.3264,1967.27,-53.0746,-778.521,-53.0746,-778.521 C-53.289,-782.934,-49.8853,-786.685,-45.4722,-786.899 C-45.4722,-786.899,-44.2551,-786.959,-44.2551,-786.959 C-39.842,-787.173,-36.0907,-783.769,-35.8763,-779.356 C-35.8763,-779.356,97.5247,1966.43,97.5247,1966.43 z"/>
+        </defs>
+        <use xlink:href="#16" style="fill:#fffefe;fill-opacity:1;fill-rule:nonzero;opacity:1;stroke:none;"/>
+        <use xlink:href="#16" style="fill:none;opacity:1;stroke:#000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:1;"/>
+      </g>
+    </defs>
+    <use xlink:href="#15"/>
+    <defs>
+      <title>Smart Rectangle Copy Copy</title>
+      <g id="17">
+        <defs>
+          <path id="18" d="M264.769,1939.58 C264.983,1943.99,261.579,1947.74,257.166,1947.95 C257.166,1947.95,255.949,1948.01,255.949,1948.01 C251.536,1948.23,247.785,1944.82,247.57,1940.41 C247.57,1940.41,112.196,-846.004,112.196,-846.004 C111.981,-850.417,115.385,-854.169,119.798,-854.383 C119.798,-854.383,121.015,-854.442,121.015,-854.442 C125.428,-854.656,129.18,-851.253,129.394,-846.84 C129.394,-846.84,264.769,1939.58,264.769,1939.58 z"/>
+        </defs>
+        <use xlink:href="#18" style="fill:#fffefe;fill-opacity:1;fill-rule:nonzero;opacity:1;stroke:none;"/>
+        <use xlink:href="#18" style="fill:none;opacity:1;stroke:#000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:1;"/>
+      </g>
+    </defs>
+    <use xlink:href="#17"/>
+    <defs>
+      <title>Smart Rectangle Copy Copy Copy</title>
+      <g id="19">
+        <defs>
+          <path id="20" d="M467.571,1962.5 C467.785,1966.91,464.381,1970.66,459.968,1970.87 C459.968,1970.87,458.751,1970.93,458.751,1970.93 C454.338,1971.15,450.587,1967.74,450.372,1963.33 C450.372,1963.33,313.409,-855.78,313.409,-855.78 C313.195,-860.193,316.598,-863.944,321.012,-864.159 C321.012,-864.159,322.229,-864.218,322.229,-864.218 C326.642,-864.432,330.393,-861.028,330.607,-856.615 C330.607,-856.615,467.571,1962.5,467.571,1962.5 z"/>
+        </defs>
+        <use xlink:href="#20" style="fill:#fffefe;fill-opacity:1;fill-rule:nonzero;opacity:1;stroke:none;"/>
+        <use xlink:href="#20" style="fill:none;opacity:1;stroke:#000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:1;"/>
+      </g>
+    </defs>
+    <use xlink:href="#19"/>
+  </g>
+  <g id="21">
+    <title>Layer 2</title>
+    <defs>
+      <title>Path Copy</title>
+      <g id="22">
+        <defs>
+          <path id="23" d="M748.375,81.4724 C805.068,81.4724,851.027,127.431,851.027,184.124 C851.027,240.817,805.068,286.776,748.375,286.776 C691.682,286.776,645.723,240.817,645.723,184.124 C645.723,127.431,691.682,81.4724,748.375,81.4724 z"/>
+        </defs>
+        <use xlink:href="#23" style="fill:#72bf46;fill-opacity:0.592581;fill-rule:evenodd;opacity:1;stroke:none;"/>
+      </g>
+    </defs>
+    <use xlink:href="#22"/>
+    <defs>
+      <title>Path Copy Copy</title>
+      <g id="24">
+        <defs>
+          <path id="25" d="M214.838,779.693 C271.531,779.693,317.49,825.651,317.49,882.344 C317.49,939.037,271.531,984.996,214.838,984.996 C158.145,984.996,112.186,939.037,112.186,882.344 C112.186,825.651,158.145,779.693,214.838,779.693 z"/>
+        </defs>
+        <use xlink:href="#25" style="fill:#72bf46;fill-opacity:0.592581;fill-rule:evenodd;opacity:1;stroke:none;"/>
+      </g>
+    </defs>
+    <use xlink:href="#24"/>
+    <g id="26">
+      <title>Group</title>
+      <linearGradient x1="-335.339" y1="379.806" x2="82.1581" y2="848.498" gradientUnits="userSpaceOnUse" id="29">
+        <stop style="stop-color:#faebd7;stop-opacity:1;"/>
+        <stop offset="1" style="stop-color:#faebd7;stop-opacity:1;"/>
+      </linearGradient>
+      <defs>
+        <title>Shape 28</title>
+        <g id="27">
+          <defs>
+            <path id="28" d="M-137.284,793.602 C-122.59,819.613,-130.37,851.812,-154.648,865.527 C-154.973,865.711,-155.299,865.895,-155.625,866.079 C-179.863,879.771,-211.391,869.889,-226.116,843.955 C-274.308,759.12,-278.887,750.709,-350.441,623.762 C-390.618,552.481,-369.28,464.315,-302.777,426.748 C-255.183,399.862,-207.589,372.977,-159.996,346.092 C-116.304,321.411,-61.7049,324.002,-17.3243,352.855 C71.1622,410.41,159.649,467.965,248.135,525.52 C245.78,531.701,243.424,537.882,241.068,544.063 C227.827,584.932,184.644,605.218,144.209,589.587 C124.166,581.838,104.123,574.089,84.0805,566.339 C140.196,665.837,196.312,765.335,252.427,864.833 C267.097,890.842,259.312,923.03,235.045,936.738 C235.041,936.74,235.038,936.742,235.034,936.744 C210.75,950.462,179.147,940.487,164.454,914.476 C130.451,854.283,96.4485,794.09,62.4459,733.897 C76.2485,759.684,68.3268,791.087,44.4239,804.589 C44.081,804.783,43.7381,804.977,43.3952,805.17 C19.1116,818.888,-12.4849,808.924,-27.1785,782.913 C-30.0335,777.859,-32.8886,772.805,-35.7436,767.751 C-21.0468,793.768,-28.8201,825.963,-53.1209,839.691 C-53.1549,839.71,-53.189,839.729,-53.2231,839.748 C-77.5012,853.463,-109.094,843.505,-123.791,817.488 z M-137.284,793.602"/>
+          </defs>
+          <use xlink:href="#28" style="fill:url(#29);fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+          <use xlink:href="#28" style="fill:none;opacity:1;stroke:#473764;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:15;"/>
+        </g>
+      </defs>
+      <use xlink:href="#27"/>
+    </g>
+    <g id="30">
+      <title>Group Copy</title>
+      <linearGradient x1="1405.36" y1="567.1" x2="894.778" y2="202.021" gradientUnits="userSpaceOnUse" id="33">
+        <stop style="stop-color:#f9ebd6;stop-opacity:1;"/>
+        <stop offset="1" style="stop-color:#f9ebd6;stop-opacity:1;"/>
+      </linearGradient>
+      <defs>
+        <title>Shape 28</title>
+        <g id="31">
+          <defs>
+            <path id="32" d="M1120.92,207.171 C1100.86,185.041,1101.34,151.919,1122,133.188 C1122.28,132.937,1122.55,132.685,1122.83,132.434 C1143.45,113.734,1176.38,116.42,1196.46,138.468 C1262.18,210.586,1268.5,217.78,1366.29,325.822 C1421.2,386.488,1419.83,477.189,1363.24,528.497 C1322.75,565.217,1282.26,601.936,1241.77,638.655 C1204.59,672.364,1150.77,681.877,1101.12,663.522 C1002.12,626.898,903.115,590.274,804.114,553.651 C805.049,547.102,805.983,540.554,806.918,534.006 C810.82,491.222,848.466,461.913,891.353,468.241 C912.611,471.38,933.87,474.518,955.128,477.657 C878.451,392.984,801.775,308.311,725.099,223.638 C705.054,201.504,705.549,168.392,726.195,149.67 C726.198,149.667,726.202,149.664,726.205,149.661 C746.866,130.926,779.89,133.686,799.958,155.816 C846.398,207.029,892.838,258.241,939.278,309.454 C920.128,287.345,920.93,254.969,941.266,236.527 C941.558,236.263,941.85,235.998,942.142,235.733 C962.802,216.998,995.818,219.748,1015.89,241.879 C1019.79,246.179,1023.68,250.479,1027.58,254.779 C1007.51,232.644,1007.99,199.526,1028.67,180.778 C1028.7,180.752,1028.73,180.725,1028.76,180.699 C1049.41,161.968,1082.42,164.714,1102.5,186.849 z M1120.92,207.171"/>
+          </defs>
+          <use xlink:href="#32" style="fill:url(#33);fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+          <use xlink:href="#32" style="fill:none;opacity:1;stroke:#463664;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:15;"/>
+        </g>
+      </defs>
+      <use xlink:href="#31"/>
+    </g>
+    <defs>
+      <title>Path</title>
+      <g id="34">
+        <defs>
+          <path id="35" d="M4.41265,368.816 C4.41265,368.816,3.99997,802.671,3.99997,802.671"/>
+        </defs>
+        <use xlink:href="#35" style="fill:#72bf46;fill-opacity:0.592581;fill-rule:evenodd;opacity:1;stroke:none;"/>
+        <use xlink:href="#35" style="fill:none;opacity:1;stroke:#473764;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:10;"/>
+      </g>
+    </defs>
+    <use xlink:href="#34"/>
+    <defs>
+      <title>Path</title>
+      <g id="36">
+        <defs>
+          <path id="37" d="M995.568,229.115 C995.568,229.115,995.568,621.93,995.568,621.93"/>
+        </defs>
+        <use xlink:href="#37" style="fill:#72bf46;fill-opacity:0.592581;fill-rule:evenodd;opacity:1;stroke:none;"/>
+        <use xlink:href="#37" style="fill:none;opacity:1;stroke:#473764;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:10;"/>
+      </g>
+    </defs>
+    <use xlink:href="#36"/>
+  </g>
+</svg>

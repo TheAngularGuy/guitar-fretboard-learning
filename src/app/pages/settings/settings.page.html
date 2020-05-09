@@ -1,21 +1,10 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-back-button text="" defaultHref="home"></ion-back-button>
-    </ion-buttons>
+  <ion-toolbar>
     <ion-title>Settings</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="page">
-    <img
-      class="image"
-      src="assets/imgs/undraw_personal_settings_kihd.svg"
-      alt="messaging illustration"
-    />
-  </div>
-
   <form [formGroup]="settingsForm">
     <ion-list>
       <ion-list-header>
@@ -37,21 +26,17 @@
       <ion-item>
         <ion-label>Activate sound</ion-label>
         <ion-toggle
-          [disabled]="true"
-          formControlName="activateSound"
-          color="tertiary"
+                [disabled]="true"
+                formControlName="activateSound"
+                color="tertiary"
         ></ion-toggle>
       </ion-item>
       <ion-item>
         <ion-label>Tuning</ion-label>
         <ion-select formControlName="tuning">
-          <ng-container
-            *ngIf="settingsState?.customTunings && settingsState?.customTunings.length"
-          >
-            <ion-select-option
-              *ngFor="let customTuning of settingsState.customTunings"
-              [value]="customTuning"
-            >
+          <ng-container *ngIf="customTunnings | async as cts">
+            <ion-select-option *ngFor="let customTuning of cts"
+                               [value]="customTuning">
               {{customTuning}}
             </ion-select-option>
           </ng-container>
@@ -61,7 +46,7 @@
           </ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-item button (click)="openCustomTuningModal()">
+      <ion-item button (click)="goToCustomSettingsPage()">
         <ion-label>
           Didn't find the tuning you were looking for? &nbsp;
           <b>Click here to add your own custom tunings</b> &nbsp;
@@ -69,6 +54,19 @@
       </ion-item>
     </ion-list>
   </form>
-  <br />
-  <br />
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>About</ion-label>
+    </ion-list-header>
+
+    <ion-item button (click)="goToAboutPage()">
+      <ion-label>
+        See more
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <br/>
+  <br/>
 </ion-content>

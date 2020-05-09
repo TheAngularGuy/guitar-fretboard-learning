@@ -1,0 +1,73 @@
+.bpm-title {
+  display: flex;
+  place-items: center;
+  place-content: space-between;
+}
+
+.dots {
+  padding: 1rem 0 2rem;
+  display: flex;
+  place-items: center;
+  place-content: space-evenly;
+
+  .dot {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 100%;
+    overflow: hidden;
+    background-color: var(--ion-color-fourth);
+
+    &.selected {
+      background-color: var(--ion-color-primary);
+    }
+
+    &:first-of-type {
+      &.selected {
+        background-color: var(--ion-color-success);
+      }
+    }
+  }
+}
+
+
+.btn {
+  font-size: 120%;
+  min-height: 150px;
+  width: calc(100% - 2rem);
+  margin: auto;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  background-image: linear-gradient(to right,
+          var(--ion-color-light) 0%,
+          var(--ion-color-light) 65%,
+          var(--ion-color-secondary) 65%,
+          var(--ion-color-secondary) 100%
+  );
+  display: flex;
+  justify-content: space-between;
+  place-items: center;
+
+
+  button {
+    all: unset;
+    min-height: 150px;
+
+    &:first-of-type {
+      display: flex;
+      place-content: center;
+      place-items: center;
+      color: var(--ion-color-light-contrast);
+      width: 65%;
+    }
+
+    &:last-of-type {
+      display: flex;
+      place-content: center;
+      place-items: center;
+      color: var(--ion-color-secondary-contrast);
+      width: 35%;
+    }
+  }
+}

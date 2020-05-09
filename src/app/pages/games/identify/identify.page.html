@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar *ngIf="!game.isPlaying">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="games"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Identify</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar *ngIf="game.isPlaying">
+    <ion-buttons slot="start">
+      <ion-button (click)="game.togglePlay()">
+        <ion-icon slot="icon-only" name="pause-outline">
+        </ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="score">
+      <span class="good">
+        <b [@popAnimation]="game.score.good">{{game.score.good}}</b>
+      </span>
+        <span class="all">
+        <b>{{game.score.bad + game.score.good}} </b> /
+          {{game.config.MAX_RANGE}}
+      </span>
+      </div>
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #content>
+  <ion-card *ngIf="!game.isPlaying">
+    <ion-card-header>
+      <ion-card-title>Identify the note!</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content class="game-mode">
+      <p class="game-mode-result">
+        <ng-container *ngIf="!scoreHistoric || !scoreHistoric.length">
+          Press the button to start playing
+        </ng-container>
+        <ng-container *ngIf="scoreHistoric && scoreHistoric.length">
+          Your score is <b>{{ game.score.good }}</b> out of {{ scoreHistoric?.length }}. And
+          your average time is: <b>{{ averageTime | number }}</b> seconds.
+        </ng-container>
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <br/>
+
+  <app-btn color="secondary"
+           pulsate
+           *ngIf="!game.isPlaying"
+           [disabled]="!!game.noteToFind"
+           (clicked)="game.togglePlay()">
+    START
+  </app-btn>
+
+  <app-fretboard
+          *ngIf="game.isPlaying"
+          [invertedStrings]="preferences?.invertedStrings"
+          [invertedFrets]="preferences?.invertedFrets"
+          [notes]="game.fretboardNotes"
+          [highlightNote]="game.noteToFind && game.noteToFind.note"
+          [disableClick]="true"
+          [showAll]="false"
+          [selectedFrets]="[0, 17]"
+          [selectedNoteNames]="game.noteToFind ? [game.noteToFind.note.name] : null"
+  >
+  </app-fretboard>
+</ion-content>
+
+<ion-footer *ngIf="game.isPlaying" class="hide-on-desktop">
+  <ng-container *ngTemplateOutlet="playingControls"></ng-container>
+
+  <div *ngIf="utils.isIOSPWA()" style="height: 2ch;"></div>
+</ion-footer>
+
+<ng-template #playingControls>
+  <div class="notes">
+    <ion-button #btn
+                color="light"
+                *ngFor="let note of chromaticScale"
+                (click)="onNoteClicked(note, btn)">
+        <span style="min-width: 2.4ch; display: inline-block; font-feature-settings: 'tnum'; text-transform: none;">
+          {{note | note}}
+        </span>
+    </ion-button>
+  </div>
+</ng-template>

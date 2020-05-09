@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="explore"></ion-back-button>
+    </ion-buttons>
+    <ion-title>metronome</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <div class="bpm-title">
+          <span>
+            {{bpmForm?.get('bpm')?.value}} bpm
+          </span>
+          <span>
+            <ion-icon appLonpPress (pressing)="subBpm()" size="large" name="remove-circle-outline">
+            </ion-icon>
+            &nbsp;
+            <ion-icon appLonpPress (pressing)="addBpm()" size="large" name="add-circle-outline">
+            </ion-icon>
+          </span>
+        </div>
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form class="settings" [formGroup]="bpmForm">
+        <ion-item>
+          <ion-label>Beat</ion-label>
+          <ion-select multiple="false" formControlName="beats">
+            <ion-select-option *ngFor="let beat of beatsList" [value]="beat">
+              {{beat}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </form>
+
+    </ion-card-content>
+  </ion-card>
+
+  <div class="btn">
+    <button (click)="tap()">
+      Tap
+    </button>
+    <button (click)="toggleMetronome()">
+      <ion-icon name="play" size="large" *ngIf="!interval"></ion-icon>
+      <ion-icon name="stop" size="large" *ngIf="interval"></ion-icon>
+    </button>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <div class="dots">
+    <div class="dot"
+         [class.selected]="beat === i"
+         *ngFor="let d of dots; let i = index"></div>
+  </div>
+</ion-footer>

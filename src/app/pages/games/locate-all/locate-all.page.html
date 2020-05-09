@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar *ngIf="!game.isPlaying">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="games"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Locate all instances</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar *ngIf="game.isPlaying">
+    <ion-buttons slot="start">
+      <ion-button (click)="game.togglePlay()">
+        <ion-icon slot="icon-only" name="pause-outline">
+        </ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="score">
+      <span class="good">
+        <b [@popAnimation]="game.score.good">{{game.score.good}}</b>
+      </span>
+        <span class="all">
+        <b>{{game.score.bad + game.score.good}} </b> /
+          {{game.config.MAX_RANGE}}
+      </span>
+      </div>
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #content>
+  <ion-card *ngIf="!game.isPlaying">
+    <ion-card-header>
+      <ion-card-title>
+        Locate all instances of a note!
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content class="game-mode">
+      <p class="game-mode-result">
+        <ng-container *ngIf="!scoreHistoric || !scoreHistoric.length">
+          Press the button to start playing
+        </ng-container>
+        <ng-container *ngIf="scoreHistoric && scoreHistoric.length">
+          Your score is <b>{{ game.score.good }}</b>
+          out of {{ scoreHistoric?.length }}. And your average time
+          is: <b>{{ averageTime | number }}</b> seconds.
+        </ng-container>
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <br/>
+
+  <app-btn color="secondary"
+           pulsate
+           *ngIf="!game.isPlaying"
+           [disabled]="!!game.noteToFind"
+           (clicked)="game.togglePlay()">
+    START
+  </app-btn>
+
+  <app-fretboard
+          *ngIf="game.isPlaying"
+          [invertedStrings]="preferences?.invertedStrings"
+          [invertedFrets]="preferences?.invertedFrets"
+          [notes]="game.fretboardNotes"
+          [showAll]="false"
+          [selectedFrets]="[0, 17]"
+          [selectedNoteNames]="game.noteToFind ? [game.noteToFind.note.name] : null"
+          (noteClick)="onNoteClicked($event)"
+  ></app-fretboard>
+  <br/>
+</ion-content>
+
+<ion-footer *ngIf="game.isPlaying">
+  <div class="series">
+    <div class="series-dot"
+         [ngClass]="{'series-dot-success': dot === true, 'series-dot-fail': dot === false}"
+         *ngFor="let dot of seriesDisplay">
+      <div class="series-dot-circle"></div>
+    </div>
+  </div>
+
+  <div class="playing">
+    <div class="note" [@popAnimation]="game.noteToFind?.note?.name">
+      {{game.noteToFind?.note?.name | note}}
+    </div>
+  </div>
+
+  <div *ngIf="utils.isIOSPWA()" style="height: 2ch;"></div>
+</ion-footer>
+

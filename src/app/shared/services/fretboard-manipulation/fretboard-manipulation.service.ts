@@ -1,10 +1,25 @@
+import { Injectable } from '@angular/core';
+import { Store } from '@ngxs/store';
+import { PreferencesState, PreferencesStateModel } from '@shared-modules/store/preferences/preferences.state';
+import { tap } from 'rxjs/operators';
 import { CHROMATIC_SCALE } from 'src/app/constants/chromatic-scale.constant';
 import { FRETBOARD_STANDARD } from 'src/app/constants/fretboard-notes.constant';
-import { Injectable } from "@angular/core";
 
 @Injectable()
 export class FretboardManipulationService {
-  getFretboardNotes(preferences: { tuning: string; invertedStrings: boolean }): string[][] {
+  preferences: { tuning: string; invertedStrings: boolean };
+
+  constructor(private store: Store) {
+    this.store.select<PreferencesStateModel>(PreferencesState.getState)
+      .pipe(
+        tap((preference) => {
+          this.preferences = preference;
+        })
+      )
+      .subscribe();
+  }
+
+  getFretboardNotes(preferences = this.preferences): string[][] {
     let output: string[][];
 
     if (preferences.tuning.toLowerCase().includes('standard')) {

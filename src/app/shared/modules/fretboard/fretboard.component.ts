@@ -13,7 +13,7 @@ import { Note } from '../../../models/note.model';
 export class FretboardComponent implements OnInit {
   @Input() disabledStrings: number[];
   @Input() selectedFrets: [number, number];
-  @Input() showOnlySelectedFrets: boolean;
+  @Input() showOnlySelectedFrets = true;
   @Input() selectedNoteNames: string[];
   @Input() showSelectedNoteNames: boolean;
   @Input() selectedNotes: Note[];
@@ -36,7 +36,7 @@ export class FretboardComponent implements OnInit {
       return;
     }
     this.noteClick.next(noteObject);
-    if (this.showAll || (this.showSelectedNoteNames && this.isGoodNoteName(noteObject.noteName))) {
+    if (this.showAll || (this.showSelectedNoteNames && this.isGoodNoteName(noteObject.name))) {
       return;
     }
     noteElement.style.opacity = 1;
@@ -64,7 +64,7 @@ export class FretboardComponent implements OnInit {
 
   showNote(n: Note) {
     return (
-      (this.showSelectedNoteNames && this.isGoodNoteName(n.noteName)) ||
+      (this.showSelectedNoteNames && this.isGoodNoteName(n.name)) ||
       (this.showSelectedNotes && this.isGoodNote(n))
     );
   }

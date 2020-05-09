@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { Store } from '@ngxs/store';
-import { Subject } from 'rxjs';
+import { Select, Store } from '@ngxs/store';
+import { Observable, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import {
   PreferencesSetFlatsModeAction,
@@ -11,15 +12,7 @@ import {
   PreferencesSetSoundAction,
   PreferencesSetTunningAction,
 } from 'src/app/shared/store/preferences/preferences.actions';
-import {
-  PreferencesState,
-  PreferencesStateModel,
-} from 'src/app/shared/store/preferences/preferences.state';
-
-import {
-  CustomTuningModalComponent,
-} from './modals/custom-tuning-modal/custom-tuning-modal.component';
-import { SettingsAddCustomTuningAction } from './store/settings.actions';
+import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
 import { SettingsState, SettingsStateModel } from './store/settings.state';
 
 @Component({
@@ -30,7 +23,7 @@ import { SettingsState, SettingsStateModel } from './store/settings.state';
 export class SettingsPage implements OnInit, OnDestroy {
   destroyed$ = new Subject();
   settingsForm: FormGroup;
-  settingsState: SettingsStateModel;
+  @Select(SettingsState.getCustomTunings) customTunnings: Observable<string[]>;
   tunings = [
     'Standard',
     'A-E-A-E-A-C#',
@@ -64,10 +57,12 @@ export class SettingsPage implements OnInit, OnDestroy {
     private readonly fb: FormBuilder,
     private readonly modalController: ModalController,
     private readonly store: Store,
+    private readonly router: Router,
   ) {}
 
   ngOnDestroy() {
-    this.destroyed$.next(), this.destroyed$.complete();
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 
   ngOnInit() {
@@ -75,18 +70,16 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   setForm() {
-    this.settingsState = this.store.selectSnapshot(SettingsState.getState);
     const preferences = this.store.selectSnapshot<PreferencesStateModel>(
       PreferencesState.getState,
     );
-    const form = this.fb.group({
+    this.settingsForm = this.fb.group({
       invertedStrings: [preferences.invertedStrings, [Validators.required]],
       invertedFrets: [preferences.invertedFrets, [Validators.required]],
       activateSound: [preferences.activateSound, [Validators.required]],
       useFlats: [preferences.useFlats, [Validators.required]],
       tuning: [preferences.tuning, [Validators.required]],
     });
-    this.settingsForm = form;
     this.setFormListeners();
   }
 
@@ -130,29 +123,11 @@ export class SettingsPage implements OnInit, OnDestroy {
       });
   }
 
-  async openCustomTuningModal() {
-    const modal = await this.modalController.create({
-      component: CustomTuningModalComponent,
-    });
-    await modal.present();
-    const { data } = (await modal.onWillDismiss()) as {
-      data: { customTuning: string; save: boolean };
-    };
-    if (data && data.save) {
-      this.store.dispatch(
-        new SettingsAddCustomTuningAction({
-          customTuning: data.customTuning,
-        }),
-      );
+  goToCustomSettingsPage() {
+    this.router.navigate(['settings', 'custom-tuning']);
+  }
 
-      setTimeout(() => {
-        this.settingsState = this.store.selectSnapshot(SettingsState.getState);
-        setTimeout(() => {
-          this.settingsForm.patchValue({
-            tuning: data.customTuning,
-          });
-        }, 250);
-      }, 10);
-    }
+  goToAboutPage() {
+    this.router.navigate(['settings', 'about']);
   }
 }

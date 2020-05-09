@@ -1,0 +1,107 @@
+button {
+  --bg: transparent;
+  --color: var(--ion-text-color);
+
+  all: unset;
+  font-size: 120%;
+  min-height: 150px;
+  width: calc(100% - 2rem);
+  margin: 1rem auto;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  place-items: center;
+
+  background-color: var(--bg);
+  color: rgb(var(--color));
+
+  &[color="primary"] {
+    --bg: var(--ion-color-primary);
+    --color: var(--ion-color-primary-contrast-rgb);
+  }
+
+  &[color="secondary"] {
+    --bg: var(--ion-color-secondary);
+    --color: var(--ion-color-primary-contrast-rgb);
+  }
+
+  &[color="light"] {
+    --bg: var(--ion-color-light);
+    --color: var(--ion-color-primary-contrast-rgb);
+  }
+
+  &[disabled] {
+    filter: grayscale(100%);
+    color: rgba(var(--color), .5);
+
+    &::before {
+      display: none;
+    }
+  }
+
+  &[pulsate] {
+    z-index: 0;
+    overflow: unset;
+
+    &::before {
+      z-index: -1;
+      content: "";
+      position: absolute;
+      background-color: var(--bg);
+      border-radius: 15px;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+
+      animation-name: pulse;
+      animation-duration: 6s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+      animation-delay: 1s;
+    }
+
+    @keyframes pulse {
+      0%, 30%, 100% {
+        opacity: 0;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+      }
+      10%, 18% {
+        opacity: .4;
+        top: -8px;
+        left: -8px;
+        bottom: -8px;
+        right: -8px;
+      }
+    }
+  }
+
+  &:focus:not(:hover) {
+    filter: brightness(92%);
+  }
+
+  &.active {
+    animation-name: skew;
+    animation-duration: 250ms;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes skew {
+    from {
+      transform: skew(0deg);
+    }
+    50% {
+      transform: skew(5deg);
+    }
+    to {
+      transform: skew(0deg);
+    }
+  }
+}

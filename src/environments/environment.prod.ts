@@ -4,4 +4,6 @@ export const environment = {
   ...shareBetweenEnv,
   production: true,
   version: '1.4.1',
+  enableNgxsLogger: false,
+  enableAnalyticsDebug: false,
 };

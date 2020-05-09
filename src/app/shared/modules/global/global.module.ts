@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { NotePipe } from './pipes/note/note.pipe';
+import { NotePipe } from './pipes/note.pipe';
+import { LonpPressDirective } from './directives/lonp-press.directive';
 
 @NgModule({
-  declarations: [NotePipe],
+  declarations: [NotePipe, LonpPressDirective],
   imports: [CommonModule],
-  exports: [NotePipe],
+  exports: [NotePipe, LonpPressDirective],
 })
 export class GlobalModule {}

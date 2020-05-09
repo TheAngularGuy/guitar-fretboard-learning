@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="settings"></ion-back-button>
+    </ion-buttons>
+    <ion-title>About</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="page">
+    <h1>Hey there!</h1>
+    <div>
+      <p>
+        You liked this app or you have a great idea to enhance it? Give me your feedback on one of my
+        social media below:
+      </p>
+    </div>
+  </div>
+
+  <ion-list>
+    <ion-item button (click)="goTwitter()">
+      <ion-label> Twitter </ion-label>
+      <ion-icon name="logo-twitter" slot="end"></ion-icon>
+    </ion-item>
+    <ion-item button (click)="goLinkedIn()">
+      <ion-label> LinkedIn </ion-label>
+      <ion-icon name="logo-linkedin" slot="end"></ion-icon>
+    </ion-item>
+  </ion-list>
+
+  <br /><br />
+  <p class="text-muted">
+    <br />
+    App version: {{appVersion}}
+  </p>
+</ion-content>

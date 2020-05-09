@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="explore"></ion-back-button>
+    </ion-buttons>
+    <ion-title>tuner</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ng-container *ngIf="lastNote | async as note;">
+    <ion-card>
+      <ion-card-content>
+        <div class="tuner">
+        <span class="note">
+          {{note.name | note}}
+          <span class="octave">
+          {{note.octave}}
+        </span>
+        </span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <div class="canva">
+      <div class="grid"></div>
+      <div class="left">♭</div>
+      <div class="right">♯</div>
+      <div class="cents" [style.left]="'calc(' + (note.cents + 50) + '%'  + ' - 23px)'">
+        {{note.cents}}
+      </div>
+    </div>
+  </ng-container>
+
+
+</ion-content>

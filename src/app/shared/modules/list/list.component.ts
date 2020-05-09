@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { listAnimation } from 'src/app/animations/list.animation';
+import { SoundService } from '../../services/sound/sound.service';
 
 interface ListItem {
   title: string;
@@ -21,9 +22,14 @@ export class ListComponent {
   @Input() list: ListItem[];
   @Output() itemClick = new Subject<ListItem>();
 
-  constructor() {}
+  constructor(private sound: SoundService) {}
 
-  onItemClicked(e: ListItem) {
-    this.itemClick.next(e);
+  onItemClicked(item: ListItem, event: MouseEvent) {
+    this.sound.playClick();
+    (event.target as HTMLButtonElement).classList.add('active');
+    setTimeout(() => {
+      (event.target as HTMLButtonElement).classList.remove('active');
+      this.itemClick.next(item);
+    }, 150);
   }
 }

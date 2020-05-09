@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg x="0pt" y="0pt" width="1000pt" height="1000pt" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g id="1">
+    <title>Layer 1</title>
+    <linearGradient x1="1028.39" y1="994.634" x2="518.99" y2="450.186" gradientUnits="userSpaceOnUse" id="4">
+      <stop style="stop-color:#c18a4b;stop-opacity:1;"/>
+      <stop offset="1" style="stop-color:#f9ebd6;stop-opacity:1;"/>
+    </linearGradient>
+    <defs>
+      <title>Smart Rectangle</title>
+      <g id="2">
+        <defs>
+          <path id="3" d="M944.671,644.671 C944.671,810.356,810.356,944.671,644.671,944.671 C644.671,944.671,355.329,944.671,355.329,944.671 C189.644,944.671,55.3293,810.356,55.3293,644.671 C55.3293,644.671,55.3293,355.329,55.3293,355.329 C55.3293,189.644,189.644,55.3293,355.329,55.3293 C355.329,55.3293,644.671,55.3293,644.671,55.3293 C810.356,55.3293,944.671,189.644,944.671,355.329 C944.671,355.329,944.671,644.671,944.671,644.671 z"/>
+        </defs>
+        <use xlink:href="#3" style="fill:url(#4);fill-opacity:1;fill-rule:nonzero;opacity:1;stroke:none;"/>
+      </g>
+    </defs>
+    <use xlink:href="#2"/>
+    <linearGradient x1="795.228" y1="384.581" x2="158.519" y2="384.581" gradientUnits="userSpaceOnUse" id="7">
+      <stop style="stop-color:#c18a4b;stop-opacity:1;"/>
+      <stop offset="1" style="stop-color:#f9ebd6;stop-opacity:1;"/>
+    </linearGradient>
+    <defs>
+      <title>Path</title>
+      <g id="5">
+        <defs>
+          <path id="6" d="M157.985,384.581 C157.985,384.581,842.016,384.581,842.016,384.581"/>
+        </defs>
+        <use xlink:href="#6" style="fill:url(#7);fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+        <use xlink:href="#6" style="fill:none;opacity:1;stroke:#463664;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:32;"/>
+      </g>
+    </defs>
+    <use xlink:href="#5"/>
+    <linearGradient x1="795.228" y1="615.42" x2="158.519" y2="615.42" gradientUnits="userSpaceOnUse" id="10">
+      <stop style="stop-color:#c18a4b;stop-opacity:1;"/>
+      <stop offset="1" style="stop-color:#f9ebd6;stop-opacity:1;"/>
+    </linearGradient>
+    <defs>
+      <title>Path Copy</title>
+      <g id="8">
+        <defs>
+          <path id="9" d="M157.985,615.42 C157.985,615.42,842.016,615.42,842.016,615.42"/>
+        </defs>
+        <use xlink:href="#9" style="fill:url(#10);fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+        <use xlink:href="#9" style="fill:none;opacity:1;stroke:#463664;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:32;"/>
+      </g>
+    </defs>
+    <use xlink:href="#8"/>
+    <linearGradient x1="720.226" y1="456.677" x2="720.226" y2="314.821" gradientUnits="userSpaceOnUse" id="13">
+      <stop style="stop-color:#c18a4b;stop-opacity:1;"/>
+      <stop offset="1" style="stop-color:#f9ebd6;stop-opacity:1;"/>
+    </linearGradient>
+    <defs>
+      <title>Path</title>
+      <g id="11">
+        <defs>
+          <path id="12" d="M720.226,313.287 C720.226,313.287,720.226,455.876,720.226,455.876"/>
+        </defs>
+        <use xlink:href="#12" style="fill:url(#13);fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+        <use xlink:href="#12" style="fill:none;opacity:1;stroke:#463664;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:47;"/>
+      </g>
+    </defs>
+    <use xlink:href="#11"/>
+    <linearGradient x1="460.732" y1="687.516" x2="460.732" y2="545.66" gradientUnits="userSpaceOnUse" id="16">
+      <stop style="stop-color:#c18a4b;stop-opacity:1;"/>
+      <stop offset="1" style="stop-color:#f9ebd6;stop-opacity:1;"/>
+    </linearGradient>
+    <defs>
+      <title>Path Copy</title>
+      <g id="14">
+        <defs>
+          <path id="15" d="M460.732,544.126 C460.732,544.126,460.732,686.715,460.732,686.715"/>
+        </defs>
+        <use xlink:href="#15" style="fill:url(#16);fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+        <use xlink:href="#15" style="fill:none;opacity:1;stroke:#463664;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:47;"/>
+      </g>
+    </defs>
+    <use xlink:href="#14"/>
+  </g>
+</svg>

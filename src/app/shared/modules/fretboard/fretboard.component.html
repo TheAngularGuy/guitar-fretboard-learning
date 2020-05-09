@@ -54,7 +54,7 @@
           (click)="
             onNoteClicked(
               {
-                noteName: note,
+                name: note,
                 fret: fret,
                 string: string
               },
@@ -78,8 +78,8 @@
             [ngClass]="{
               'note-show-all': showAll,
               'note-false':
-                !isGoodNote({ noteName: note, fret: fret, string: string }) && !isGoodNoteName(note),
-              'note-show': showNote({ noteName: note, fret: fret, string: string })
+                !isGoodNote({ name: note, fret: fret, string: string }) && !isGoodNoteName(note),
+              'note-show': showNote({ name: note, fret: fret, string: string })
             }"
           >
             {{ note | note }}

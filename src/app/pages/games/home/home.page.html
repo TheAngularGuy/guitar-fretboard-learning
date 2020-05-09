@@ -1,0 +1,14 @@
+<ion-content>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title style="text-align: center">
+        Let's learn the fretboard
+      </ion-card-title>
+    </ion-card-header>
+    <!--<ion-card-content>
+    </ion-card-content>-->
+  </ion-card>
+
+  <app-list [list]="gameModes" (itemClick)="goTo($event)"></app-list>
+</ion-content>

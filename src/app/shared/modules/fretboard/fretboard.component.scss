@@ -5,6 +5,11 @@
 
   max-height: var(--fretboardHeight);
   overflow-y: hidden;
+  outline: none;
+
+  & > * {
+    outline: none;
+  }
 
   .fretboard {
     display: flex;
@@ -33,7 +38,6 @@
       }
 
       .tile-blocked {
-        position: relative;
         z-index: 3;
         cursor: not-allowed;
         position: absolute;
@@ -43,6 +47,7 @@
       }
 
       .tile-number {
+        color: var(--ion-color-secondary-contrast);
         position: absolute;
         top: 0.2rem;
         left: 0.2rem;

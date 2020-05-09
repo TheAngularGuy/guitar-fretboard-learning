@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg x="0pt" y="0pt" width="1000pt" height="1000pt" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g id="1">
+    <title>Layer 2</title>
+    <linearGradient x1="634.547" y1="1193.51" x2="465.603" y2="517.138" gradientUnits="userSpaceOnUse" id="4">
+      <stop style="stop-color:#c7975e;stop-opacity:1;"/>
+      <stop offset="1" style="stop-color:#faebd7;stop-opacity:1;"/>
+    </linearGradient>
+    <defs>
+      <title>Path</title>
+      <g id="2">
+        <defs>
+          <path id="3" d="M120.691,871.389 C-41.2693,691.546,34.235,566.495,66.134,533.248 C98.033,500,136.832,471.335,190.372,465.105 C243.912,458.875,250.125,459.838,279.654,439.071 C309.183,418.304,368.426,273.519,478.128,283.197 C587.829,292.874,683.616,391.953,712.056,479.648 C740.495,567.343,673.029,649.838,631.805,670.018 C590.582,690.199,541.243,730.662,538.437,779.415 C535.63,828.167,527.359,890.65,452.968,945.325 C378.576,1000,275.063,985.034,197.046,932.829 C197.046,932.829,143.142,896.318,120.691,871.389 z"/>
+        </defs>
+        <use xlink:href="#3" style="fill:url(#4);fill-opacity:1;fill-rule:nonzero;opacity:1;stroke:none;"/>
+      </g>
+    </defs>
+    <use xlink:href="#2"/>
+    <defs>
+      <title>Smart Rectangle</title>
+      <g id="5">
+        <defs>
+          <path id="6" d="M367.666,803.921 C360.271,811.365,348.24,811.405,340.796,804.01 C340.796,804.01,195.738,659.909,195.738,659.909 C188.294,652.514,188.254,640.484,195.649,633.04 C195.649,633.04,208.331,620.273,208.331,620.273 C215.727,612.829,227.757,612.789,235.201,620.184 C235.201,620.184,380.259,764.284,380.259,764.284 C387.704,771.68,387.743,783.71,380.348,791.154 C380.348,791.154,367.666,803.921,367.666,803.921 z"/>
+        </defs>
+        <use xlink:href="#6" style="fill:#aa7a43;fill-opacity:1;fill-rule:nonzero;opacity:1;stroke:none;"/>
+      </g>
+    </defs>
+    <use xlink:href="#5"/>
+    <defs>
+      <title>Path</title>
+      <g id="7">
+        <defs>
+          <path id="8" d="M767.485,111.074 C767.485,111.074,888.529,227.296,888.529,227.296"/>
+        </defs>
+        <use xlink:href="#8" style="fill:none;opacity:1;stroke:#322153;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:27;"/>
+      </g>
+    </defs>
+    <use xlink:href="#7"/>
+    <defs>
+      <title>Path</title>
+      <g id="9">
+        <defs>
+          <path id="10" d="M792.285,70.4473 C792.285,70.4473,928.124,203.921,928.124,203.921"/>
+        </defs>
+        <use xlink:href="#10" style="fill:none;opacity:1;stroke:#322153;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:27;"/>
+      </g>
+    </defs>
+    <use xlink:href="#9"/>
+    <defs>
+      <title>Path</title>
+      <g id="11">
+        <defs>
+          <path id="12" d="M820.15,31.7246 C820.15,31.7246,969.567,176.843,969.567,176.843"/>
+        </defs>
+        <use xlink:href="#12" style="fill:none;opacity:1;stroke:#322153;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:27;"/>
+      </g>
+    </defs>
+    <use xlink:href="#11"/>
+    <defs>
+      <title>Path</title>
+      <g id="13">
+        <defs>
+          <path id="14" d="M777.211,155.631 C777.211,155.631,848.304,32.717,865.99,24.9248 C883.675,17.1325,894.265,19.3721,907.318,24.1782 C920.37,28.9844,924.488,33.3102,938.993,26.7159 C953.498,20.1215,963.411,24.4589,969.664,29.8785 C975.917,35.298,979.549,52.1904,973.634,63.2378 C967.72,74.2853,971.172,84.103,973.767,93.2292 C976.363,102.355,981.976,112.355,972.786,136.331 C958.194,158.073,846.531,221.105,846.531,221.105 C846.531,221.105,777.211,155.631,777.211,155.631 z"/>
+        </defs>
+        <use xlink:href="#14" style="fill:#aa7a43;fill-opacity:1;fill-rule:nonzero;opacity:1;stroke:none;"/>
+      </g>
+    </defs>
+    <use xlink:href="#13"/>
+    <defs>
+      <title>Path</title>
+      <g id="15">
+        <defs>
+          <path id="16" d="M778.684,152.935 C778.684,152.935,847.695,221.247,847.695,221.247 C847.695,221.247,412.106,661.295,412.106,661.295 C412.106,661.295,343.095,592.984,343.095,592.984 C343.095,592.984,778.684,152.935,778.684,152.935 z"/>
+        </defs>
+        <use xlink:href="#16" style="fill:#c18b4c;fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+      </g>
+    </defs>
+    <use xlink:href="#15"/>
+    <defs>
+      <title>Smart Rectangle</title>
+      <g id="17">
+        <defs>
+          <path id="18" d="M642.959,427.686 C642.959,427.686,574.291,359.804,574.291,359.804 C574.291,359.804,625.027,308.481,625.027,308.481 C625.027,308.481,693.695,376.364,693.695,376.364 C693.695,376.364,642.959,427.686,642.959,427.686 z"/>
+        </defs>
+        <use xlink:href="#18" style="fill:#aa7942;fill-opacity:1;fill-rule:nonzero;opacity:1;stroke:none;"/>
+      </g>
+    </defs>
+    <use xlink:href="#17"/>
+    <defs>
+      <title>Smart Rectangle</title>
+      <g id="19">
+        <defs>
+          <path id="20" d="M519.014,553.44 C519.014,553.44,450.346,485.557,450.346,485.557 C450.346,485.557,501.082,434.235,501.082,434.235 C501.082,434.235,569.75,502.117,569.75,502.117 C569.75,502.117,519.014,553.44,519.014,553.44 z"/>
+        </defs>
+        <use xlink:href="#20" style="fill:#aa7942;fill-opacity:1;fill-rule:nonzero;opacity:1;stroke:none;"/>
+      </g>
+    </defs>
+    <use xlink:href="#19"/>
+    <defs>
+      <title>Smart Rectangle</title>
+      <g id="21">
+        <defs>
+          <path id="22" d="M764.345,305.292 C764.345,305.292,695.677,237.409,695.677,237.409 C695.677,237.409,746.413,186.087,746.413,186.087 C746.413,186.087,815.081,253.969,815.081,253.969 C815.081,253.969,764.345,305.292,764.345,305.292 z"/>
+        </defs>
+        <use xlink:href="#22" style="fill:#aa7942;fill-opacity:1;fill-rule:nonzero;opacity:1;stroke:none;"/>
+      </g>
+    </defs>
+    <use xlink:href="#21"/>
+    <defs>
+      <title>Path</title>
+      <g id="23">
+        <defs>
+          <path id="24" d="M421.098,479.989 C475.973,479.989,520.458,524.474,520.458,579.349 C520.458,634.224,475.973,678.71,421.098,678.71 C366.222,678.71,321.737,634.224,321.737,579.349 C321.737,524.474,366.222,479.989,421.098,479.989 z"/>
+        </defs>
+        <use xlink:href="#24" style="fill:#c18b4c;fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+      </g>
+    </defs>
+    <use xlink:href="#23"/>
+  </g>
+</svg>
