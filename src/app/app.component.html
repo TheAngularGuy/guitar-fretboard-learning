@@ -52,12 +52,13 @@
     <ion-tab-bar style="height: 65px"
                  translucent="false"
                  slot="bottom"
-                 *ngIf="!(isUserPlaying$ | async)">
+                 [class.hide]="(isUserPlaying$ | async)">
       <ion-tab-button *ngFor="let p of morePages" [tab]="p.url">
-        <img src="../assets/imgs/{{p.svg}}.svg" alt="games icon" height="40">
+        <img src="../assets/imgs/{{p.svg}}.svg" alt="games icon" height="34">
         <ion-label>{{p.title}}</ion-label>
         <!--<ion-badge>6</ion-badge>-->
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
 </ion-app>
+

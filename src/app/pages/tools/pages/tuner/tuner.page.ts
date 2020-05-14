@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
+import { CHROMATIC_SCALE } from '@constants/chromatic-scale.constant';
 
 declare var Aubio: any;
 
@@ -15,6 +16,7 @@ export class TunerPage implements OnInit, AfterViewInit, OnDestroy {
     frequency: number, volume: number
   }>;
   timeout: any;
+  chromaticScale = [...CHROMATIC_SCALE].sort();
 
   constructor() { }
 
@@ -55,7 +57,7 @@ export class TunerPage implements OnInit, AfterViewInit, OnDestroy {
       octave: undefined,
       frequency: undefined,
       volume: undefined,
-    })
+    });
   }
 
 }
@@ -121,13 +123,18 @@ class Tuner {
               event.inputBuffer.getChannelData(0),
             );
             const volume = Math.round(this.volumeMeter.volume * 1000) / 10;
-            if (frequency && self.onNoteDetected && volume > 0) {
-              const note = self.getNote(frequency);
+            const note = self.getNote(frequency);
+            const cents = self.getCents(frequency, note);
+            const octave = parseInt(String(note / 12), 10) - 1;
+
+            if (frequency && self.onNoteDetected
+              && volume > 0
+              && octave <= 4) {
               self.onNoteDetected({
                 name: self.noteStrings[note % 12],
                 value: note,
-                cents: self.getCents(frequency, note),
-                octave: parseInt(String(note / 12), 10) - 1,
+                cents,
+                octave,
                 volume,
                 frequency,
               });

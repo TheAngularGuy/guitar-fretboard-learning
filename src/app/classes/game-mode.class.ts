@@ -1,8 +1,5 @@
-import { FormGroup } from '@angular/forms';
-import { CHROMATIC_SCALE } from '../constants/chromatic-scale.constant';
-
-import { GAMES_CONFIG } from '../constants/games-config.constant';
-import { Note } from '../models/note.model';
+import { GAMES_CONFIG } from '@constants/games-config.constant';
+import { Note } from '@models/note.model';
 import { UtilsService } from '../shared/services/utils/utils.service';
 
 export interface GameModeEvents {
@@ -10,6 +7,7 @@ export interface GameModeEvents {
   onStart?: () => void;
   onBeforeEnd?: () => void;
   onEnd?: () => void;
+  onComplete?: () => void;
   onNotePicked?: () => void;
   onError?: (msg: string) => void;
 }
@@ -25,6 +23,9 @@ export class GameMode {
   private notesAppearances: { [key: string]: number } = {};
   private _fretboardNotes: string[][];
 
+  notesAvailable: string[];
+  fretsAvailable: [number, number];
+
   // setters
   set fretboardNotes(notes: string[][]) {this._fretboardNotes = notes;}
 
@@ -33,8 +34,9 @@ export class GameMode {
 
   get gameConfig() {return this.config;}
 
-  getScoreGood = () => this.score && this.score.good;
-  getScoreBad = () => this.score && this.score.bad;
+  get scoreGood() {return this.score && this.score.good;};
+
+  get scoreBad() {return this.score && this.score.bad;};
 
   constructor() {}
 
@@ -42,6 +44,11 @@ export class GameMode {
     this.fretboardNotes = fretboardNotes;
     this.callbacks = callbacks;
     this.initialized = true;
+  }
+
+  initRound(notes: string[], frets: [number, number]) {
+    this.notesAvailable = notes;
+    this.fretsAvailable = frets;
   }
 
   increaseScoreGood() {
@@ -53,9 +60,6 @@ export class GameMode {
   }
 
   togglePlay(): boolean {
-    if (!this.initialized || !this.fretboardNotes) {
-      throw 'fretboardNotes && form must be set from children';
-    }
     if (!this.isPlaying) {
       this.startRound();
     } else {
@@ -65,6 +69,10 @@ export class GameMode {
   }
 
   startRound() {
+    if (!this.initialized || !this.fretboardNotes || !this.notesAvailable || !this.fretsAvailable) {
+      throw 'fretboardNotes, etc... must be set from page';
+    }
+
     this.isPlaying = true;
     this.score = {
       good: 0,
@@ -86,11 +94,18 @@ export class GameMode {
     if (this.callbacks && this.callbacks.onBeforeEnd) {
       this.callbacks.onBeforeEnd();
     }
+    if (this.score.bad + this.score.good === this.config.MAX_RANGE) {
+      if (this.callbacks && this.callbacks.onComplete) {
+        this.callbacks.onComplete();
+      }
+    }
     this.isPlaying = false;
     setTimeout(() => {
       // we need a timeout so if the user is wrong on the last guess
       // the note stay in red a little so he knows he was wrong.
       this.noteToFind = null;
+      this.notesAvailable = null;
+      this.fretsAvailable = null;
     }, this.config.ANIMATION_DELAY);
     if (this.callbacks && this.callbacks.onEnd) {
       setTimeout(() => {
@@ -105,9 +120,9 @@ export class GameMode {
       return;
     }
 
-    const selectedNotes = CHROMATIC_SCALE;
+    const selectedNotes = this.notesAvailable;
     const randomString = UtilsService.getRandomInt(0, 6);
-    const randomFret = UtilsService.getRandomInt(0, 17);
+    const randomFret = UtilsService.getRandomInt(this.fretsAvailable[0], this.fretsAvailable[1]);
     const note = this.fretboardNotes[randomFret][randomString];
 
     if (
@@ -138,7 +153,7 @@ export class GameMode {
   }
 
   private setNotesAppearance() {
-    for (const n of CHROMATIC_SCALE) {
+    for (const n of this.notesAvailable) {
       this.notesAppearances[n] = 0;
     }
   }

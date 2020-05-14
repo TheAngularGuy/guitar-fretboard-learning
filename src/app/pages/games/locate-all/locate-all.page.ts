@@ -1,7 +1,15 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { IonContent, ToastController } from '@ionic/angular';
 import { Store } from '@ngxs/store';
-import { BadNoteFound, GameStart, GameStop, GoodNoteFound } from '@shared-modules/store/game/game.actions';
+import { SoundService } from '@shared-modules/services/sound/sound.service';
+import {
+  BadNoteFound,
+  GameComplete,
+  GameStart,
+  GameStop,
+  GoodNoteFound,
+} from '@shared-modules/store/game/game.actions';
+import { GameState } from '@shared-modules/store/game/game.state';
 import { Subject } from 'rxjs';
 import { popAnimation } from 'src/app/animations/pop.animation';
 import { slideAnimation } from 'src/app/animations/slide.animation';
@@ -29,6 +37,7 @@ export class LocateAllPage implements OnInit, OnDestroy {
   seriesMaxRange: number;
   seriesDisplay: any[];
   scoreHistoric: { timeTook: number; good: boolean; result: any }[];
+  lastPointsOnStart: number;
 
   get averageTime(): string | number {
     if (!this.scoreHistoric?.length) {
@@ -39,10 +48,11 @@ export class LocateAllPage implements OnInit, OnDestroy {
   }
 
   constructor(
+    private readonly store: Store,
     public readonly utils: UtilsService,
     public readonly toastCtrl: ToastController,
+    private readonly sound: SoundService,
     private readonly fretboardManipulationService: FretboardManipulationService,
-    private readonly store: Store,
   ) {}
 
   ngOnDestroy() {
@@ -54,12 +64,13 @@ export class LocateAllPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
     const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
-    this.game.config.MAX_RANGE = 3;
+    this.game.config.MAX_RANGE = 5;
 
     this.game.initGameMode(fretboardNotes, {
       onBeforeStart: () => {
-        this.scoreHistoric = [];
         this.store.dispatch(new GameStart({ tuning: this.preferences.tuning }));
+        this.scoreHistoric = [];
+        this.lastPointsOnStart = this.store.selectSnapshot(GameState.scoreGlobal);
       },
       onNotePicked: () => {
         this.seriesMaxRange = this.numberOfNoteOccurrences(
@@ -72,14 +83,14 @@ export class LocateAllPage implements OnInit, OnDestroy {
       onEnd: () => {
         this.store.dispatch(new GameStop({ tuning: this.preferences.tuning }));
         this.content.scrollToTop(250);
+        this.store.dispatch(new GameComplete({ previous: this.lastPointsOnStart }));
       },
-      onError: msg => {},
     });
   }
 
   numberOfNoteOccurrences(noteName: string, fretboard: string[][]): number {
     const box = this.game.fretboardNotes
-      .slice(0, 17 + 1)
+      .slice(this.game.fretsAvailable[0], this.game.fretsAvailable[1] + 1)
       .join(',')
       .split(',');
     let occurrences = 0;
@@ -93,17 +104,19 @@ export class LocateAllPage implements OnInit, OnDestroy {
 
   onNoteClicked(noteGuessed: Note) {
     const now = Date.now();
-    if (!this.game.isPlaying || now - this.lastClickRegistered <= this.game.config.CLICK_INTERVAL) {
+    if (!this.game.isPlaying ||
+      this.series.length === this.seriesMaxRange ||
+      now - this.lastClickRegistered <= this.game.config.CLICK_INTERVAL) {
       return;
     }
     this.lastClickRegistered = now;
 
     if (!this.isNotePresentInSeries(noteGuessed)) {
       this.registerSeriesNoteClick(noteGuessed);
-    }
 
-    if (this.series.length === this.seriesMaxRange) {
-      this.nextSeries();
+      if (this.series.length === this.seriesMaxRange) {
+        this.nextSeries();
+      }
     }
   }
 
@@ -119,7 +132,7 @@ export class LocateAllPage implements OnInit, OnDestroy {
       ) {
         this.toastCtrl
           .create({
-            message: 'You already clicked on this note 🤭',
+            message: 'You already clicked on this note!',
             duration: 3000,
             buttons: [
               {
@@ -145,7 +158,7 @@ export class LocateAllPage implements OnInit, OnDestroy {
         noteGuessed,
       });
       this.seriesDisplay[this.series.length - 1] = true;
-
+      this.sound.playGood();
       this.store.dispatch(
         new GoodNoteFound({ note: noteGuessed, tuning: this.preferences.tuning }),
       );
@@ -155,9 +168,8 @@ export class LocateAllPage implements OnInit, OnDestroy {
         good: false,
         noteGuessed,
       });
-      UtilsService.vibrate([100, 30, 100]);
       this.seriesDisplay[this.series.length - 1] = false;
-
+      this.sound.playError();
       this.store.dispatch(
         new BadNoteFound({ note: noteGuessed, tuning: this.preferences.tuning }),
       );
@@ -180,5 +192,14 @@ export class LocateAllPage implements OnInit, OnDestroy {
     });
 
     setTimeout(() => this.game.pickRandomNote(), this.game.config.ANIMATION_DELAY);
+  }
+
+  start() {
+    const notes = this.store.selectSnapshot(GameState.unlockedNotesSegment);
+    const frets = this.store.selectSnapshot(GameState.unlockedFretsSegment);
+    console.log(frets);
+
+    this.game.initRound(notes, frets);
+    this.game.togglePlay();
   }
 }

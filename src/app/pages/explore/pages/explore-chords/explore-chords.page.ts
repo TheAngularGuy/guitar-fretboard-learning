@@ -26,9 +26,25 @@ export class ExploreChordsPage implements OnInit {
   selectedType: ChordType;
   selectedChords: Chord[];
 
-  showNb = 1;
+  showNb = 0;
 
   constructor(private readonly store: Store) {}
+
+  nextChord() {
+    if (this.showNb < this.selectedChords?.length - 1) {
+      this.showNb++;
+    } else {
+      this.showNb = 0;
+    }
+  }
+
+  prevChord() {
+    if (this.showNb > 0) {
+      this.showNb--;
+    } else {
+      this.showNb = this.selectedChords?.length - 1;
+    }
+  }
 
   ngOnInit() {
     this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
@@ -50,6 +66,7 @@ export class ExploreChordsPage implements OnInit {
   }
 
   onUpdateChord() {
+    this.showNb = 0;
     const chordsKey = this.selectedNote.toUpperCase().replace('#', '_SHARP') + '_CHORDS';
     this.selectedChords = this.allChordsHash[chordsKey].filter(c => c.type === this.selectedType);
 

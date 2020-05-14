@@ -36,9 +36,10 @@ export class HomePage {
         'on the fretboard',
     },
     {
-      img: 'assets/imgs/amp.svg',
+      path: 'identify-sound',
+      img: 'assets/imgs/headphones.svg',
       title: 'Identify by sound',
-      subtitle: `Identify which note is played. Practice your musical ear`,
+      subtitle: `Identify which chord is played by sound. Practice your musical ear`,
     },
   ];
 

@@ -1,7 +1,15 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { IonContent } from '@ionic/angular';
 import { Store } from '@ngxs/store';
-import { BadNoteFound, GameStart, GameStop, GoodNoteFound } from '@shared-modules/store/game/game.actions';
+import { SoundService } from '@shared-modules/services/sound/sound.service';
+import {
+  BadNoteFound,
+  GameComplete,
+  GameStart,
+  GameStop,
+  GoodNoteFound,
+} from '@shared-modules/store/game/game.actions';
+import { GameState } from '@shared-modules/store/game/game.state';
 import { Subject } from 'rxjs';
 import { popAnimation } from 'src/app/animations/pop.animation';
 import { slideAnimation } from 'src/app/animations/slide.animation';
@@ -23,6 +31,7 @@ export class LocatePage implements OnInit, OnDestroy {
   game: GameMode = new GameMode();
   preferences: PreferencesStateModel;
   lastClickRegistered: number;
+  lastPointsOnStart: number;
   scoreHistoric: { timeTook: number; noteToFind: Note; noteGuessed: Note }[];
 
   get averageTime(): string | number {
@@ -36,6 +45,7 @@ export class LocatePage implements OnInit, OnDestroy {
   constructor(
     private readonly store: Store,
     public readonly utils: UtilsService,
+    private readonly sound: SoundService,
     private readonly fretboardManipulationService: FretboardManipulationService,
   ) {}
 
@@ -49,16 +59,21 @@ export class LocatePage implements OnInit, OnDestroy {
     this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
     const fretboardNotes = this.fretboardManipulationService.getFretboardNotes();
 
-    this.game.initGameMode(fretboardNotes, {
-      onBeforeStart: () => {
-        this.store.dispatch(new GameStart({ tuning: this.preferences.tuning }));
-        this.scoreHistoric = [];
-      },
-      onEnd: () => {
-        this.store.dispatch(new GameStop({ tuning: this.preferences.tuning }));
-        this.content.scrollToTop(250);
-      },
-    });
+    this.game.initGameMode(
+      fretboardNotes,
+      {
+        onBeforeStart: () => {
+          this.store.dispatch(new GameStart({ tuning: this.preferences.tuning }));
+          this.scoreHistoric = [];
+          this.lastPointsOnStart = this.store.selectSnapshot(GameState.scoreGlobal);
+        },
+        onEnd: () => {
+          this.store.dispatch(new GameStop({ tuning: this.preferences.tuning }));
+          this.content.scrollToTop(250);
+          this.store.dispatch(new GameComplete({ previous: this.lastPointsOnStart }));
+        },
+        onComplete: () => { },
+      });
   }
 
   onNoteClicked(noteGuessed: Note) {
@@ -72,16 +87,16 @@ export class LocatePage implements OnInit, OnDestroy {
     if (noteGuessed.name === this.game.noteToFind.note.name) {
       // good answer
       this.game.increaseScoreGood();
-
+      this.sound.playGood();
       this.store.dispatch(
-        new GoodNoteFound({ note: noteGuessed, tuning: this.preferences.tuning })
+        new GoodNoteFound({ note: noteGuessed, tuning: this.preferences.tuning }),
       );
     } else {
       // bad answer
       this.game.increaseScoreBad();
-
+      this.sound.playError();
       this.store.dispatch(
-        new BadNoteFound({ note: noteGuessed, tuning: this.preferences.tuning })
+        new BadNoteFound({ note: noteGuessed, tuning: this.preferences.tuning }),
       );
     }
     this.scoreHistoric.push({
@@ -91,5 +106,13 @@ export class LocatePage implements OnInit, OnDestroy {
     });
 
     setTimeout(() => this.game.pickRandomNote(), this.game.gameConfig.ANIMATION_DELAY);
+  }
+
+  start() {
+    const notes = this.store.selectSnapshot(GameState.unlockedNotesSegment);
+    const frets = this.store.selectSnapshot(GameState.unlockedFretsSegment);
+
+    this.game.initRound(notes, frets);
+    this.game.togglePlay();
   }
 }

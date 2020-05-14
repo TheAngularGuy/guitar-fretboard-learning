@@ -7,7 +7,7 @@ import { CAGED_SCALE } from 'src/app/constants/caged-scale.constant';
 import { FretboardManipulationService } from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
 import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
 
-import { CHROMATIC_SCALE } from '../../../../constants/chromatic-scale.constant';
+import { CHROMATIC_SCALE } from '@constants/chromatic-scale.constant';
 import {
   ExploreSetFretEndAction,
   ExploreSetFretStartAction,
@@ -26,6 +26,8 @@ export class ExploreNotesPage implements OnInit, OnDestroy {
   fretboardNotes: string[][];
   chromaticScale: string[];
   cagedScale: string[];
+
+  frets = new Array(17).fill(null).map((item, i) => i);
 
   preferences: PreferencesStateModel;
   exploreState: ExploreStateModel;

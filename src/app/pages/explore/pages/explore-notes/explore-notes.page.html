@@ -27,13 +27,18 @@
             </ion-select-option>
           </ion-select>
         </ion-item>
+
         <ion-item>
           <ion-label>From fret number</ion-label>
-          <ion-input formControlName="fretStart" type="number"></ion-input>
+          <ion-select multiple="false" formControlName="fretStart">
+            <ion-select-option *ngFor="let f of frets" [value]="f"> {{f}} </ion-select-option>
+          </ion-select>
         </ion-item>
         <ion-item>
           <ion-label>To fret number</ion-label>
-          <ion-input formControlName="fretEnd" type="number"></ion-input>
+          <ion-select multiple="false" formControlName="fretEnd">
+            <ion-select-option *ngFor="let f of frets" [value]="f"> {{f}} </ion-select-option>
+          </ion-select>
         </ion-item>
       </form>
     </ion-card-content>

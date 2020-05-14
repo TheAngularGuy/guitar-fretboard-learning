@@ -22,6 +22,10 @@ import { RouterModule } from '@angular/router';
       path: 'identify',
       loadChildren: () =>
         import('./identify/identify.module').then(m => m.IdentifyPageModule),
+    }, {
+      path: 'identify-sound',
+      loadChildren: () =>
+        import('./identify-sound/identify-sound.module').then(m => m.IdentifySoundPageModule),
     }]),
   ],
 })

@@ -10,30 +10,25 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ExplorePage {
   gameModes = [
     {
-      path: 'explore',
+      path: 'explore-notes',
       img: 'assets/imgs/explore-all.svg',
       title: 'Fretboard',
       subtitle: 'Explore the fretboard,' +
         ' show or hide the notes of any scale you wish',
     },
     {
-      path: 'explore-notes-chords',
+      path: 'explore-chords',
       img: 'assets/imgs/chords.svg',
       title: 'Explore chords',
       subtitle: 'Explore and learn all the chords with all variations' +
         ' in the standard tuning',
     },
     {
-      path: 'metronome',
-      img: 'assets/imgs/metro.svg',
-      title: 'Metronome',
-      subtitle: 'Perfect your precision and speed by playing with a metronome',
-    },
-    {
-      path: 'tuner',
-      img: 'assets/imgs/tuner.svg',
-      title: 'Tuner',
-      subtitle: 'Tune your guitar in any tuning, or practice your pitch with this tuner',
+      path: 'explore-scales',
+      img: 'assets/imgs/scales.svg',
+      title: 'Explore scales',
+      subtitle: 'Explore and learn all the chords with all variations' +
+        ' in the standard tuning',
     },
   ];
 

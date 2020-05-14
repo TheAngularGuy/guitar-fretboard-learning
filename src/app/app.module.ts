@@ -14,7 +14,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { IonicModule, IonicRouteStrategy, ToastController } from '@ionic/angular';
+import { IonicModule, IonicRouteStrategy, ModalController, ToastController } from '@ionic/angular';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsModule } from '@ngxs/store';
@@ -25,10 +25,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PreferencesState } from './shared/store/preferences/preferences.state';
 import { UserState } from './shared/store/user/user.state';
+import { ProgressModal } from './modals/progress/progress.modal';
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent, ProgressModal],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -40,11 +40,12 @@ import { UserState } from './shared/store/user/user.state';
     AppRoutingModule,
 
     NgxsModule.forRoot([
-        UserState,
-        PreferencesState,
-        GameState,
-      ],
-      { developmentMode: !environment.production }),
+      UserState,
+      PreferencesState,
+      GameState,
+    ], {
+      developmentMode: !environment.production,
+    }),
     !environment.production && environment.enableNgxsLogger ? [
       NgxsLoggerPluginModule.forRoot(),
     ] : [],
@@ -57,6 +58,7 @@ import { UserState } from './shared/store/user/user.state';
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     ToastController,
+    ModalController,
     ScreenTrackingService,
     { provide: DEBUG_MODE, useValue: environment.enableAnalyticsDebug },
     { provide: APP_VERSION, useValue: environment.version },

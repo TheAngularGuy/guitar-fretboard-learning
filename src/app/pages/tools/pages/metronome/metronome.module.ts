@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
-import { GlobalModule } from '../../../../shared/modules/global/global.module';
+import { GlobalModule } from '@shared-modules/modules/global/global.module';
 
 import { MetronomePageRoutingModule } from './metronome-routing.module';
 

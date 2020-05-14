@@ -1,7 +1,15 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { IonButton, IonContent, ToastController } from '@ionic/angular';
+import { IonButton, IonContent } from '@ionic/angular';
 import { Store } from '@ngxs/store';
-import { BadNoteFound, GameStart, GameStop, GoodNoteFound } from '@shared-modules/store/game/game.actions';
+import { SoundService } from '@shared-modules/services/sound/sound.service';
+import {
+  BadNoteFound,
+  GameComplete,
+  GameStart,
+  GameStop,
+  GoodNoteFound,
+} from '@shared-modules/store/game/game.actions';
+import { GameState } from '@shared-modules/store/game/game.state';
 import { Subject } from 'rxjs';
 import { popAnimation } from 'src/app/animations/pop.animation';
 import { slideAnimation } from 'src/app/animations/slide.animation';
@@ -28,6 +36,7 @@ export class IdentifyPage implements OnInit, OnDestroy {
   game: GameMode = new GameMode();
   lastClickRegistered: number;
   scoreHistoric: { timeTook: number; noteToFind: Note; noteGuessed: Note }[];
+  lastPointsOnStart: number;
 
   get averageTime(): string | number {
     if (!this.scoreHistoric?.length) {
@@ -38,9 +47,10 @@ export class IdentifyPage implements OnInit, OnDestroy {
   }
 
   constructor(
-    public readonly utils: UtilsService,
-    private readonly fretboardManipulationService: FretboardManipulationService,
     private readonly store: Store,
+    public readonly utils: UtilsService,
+    private readonly sound: SoundService,
+    private readonly fretboardManipulationService: FretboardManipulationService,
   ) {
   }
 
@@ -58,15 +68,16 @@ export class IdentifyPage implements OnInit, OnDestroy {
       onBeforeStart: () => {
         this.store.dispatch(new GameStart({ tuning: this.preferences.tuning }));
         this.scoreHistoric = [];
+        this.lastPointsOnStart = this.store.selectSnapshot(GameState.scoreGlobal);
       },
       onEnd: () => {
         this.store.dispatch(new GameStop({ tuning: this.preferences.tuning }));
         this.content.scrollToTop(250);
+        this.store.dispatch(new GameComplete({ previous: this.lastPointsOnStart }));
       },
       onNotePicked: () => {
         this.onNotePicked();
       },
-      onError: msg => {},
     });
   }
 
@@ -93,7 +104,8 @@ export class IdentifyPage implements OnInit, OnDestroy {
 
   onNoteClicked(noteGuessed: string, btn: IonButton | any): boolean {
     const now = Date.now();
-    if (!this.game.isPlaying || now - this.lastClickRegistered <= this.game.config.CLICK_INTERVAL) {
+    if (!this.game.isPlaying ||
+      now - this.lastClickRegistered <= this.game.config.CLICK_INTERVAL) {
       return;
     }
     this.lastClickRegistered = now;
@@ -103,7 +115,7 @@ export class IdentifyPage implements OnInit, OnDestroy {
         note: this.game.noteToFind.note,
         tuning: this.preferences.tuning,
       }));
-
+      this.sound.playGood();
       this.game.increaseScoreGood();
       btn.el.color = 'success';
       setTimeout(() => {
@@ -115,9 +127,9 @@ export class IdentifyPage implements OnInit, OnDestroy {
         note: this.game.noteToFind.note,
         tuning: this.preferences.tuning,
       }));
-
+      this.sound.playError();
       this.game.increaseScoreBad();
-      UtilsService.vibrate([100, 30, 100]);
+      // UtilsService.vibrate([100, 30, 100]);
       btn.el.color = 'danger';
       setTimeout(() => {
         btn.el.color = 'light';
@@ -134,5 +146,13 @@ export class IdentifyPage implements OnInit, OnDestroy {
     });
 
     setTimeout(() => this.game.pickRandomNote(), this.game.config.ANIMATION_DELAY);
+  }
+
+  start() {
+    const notes = this.store.selectSnapshot(GameState.unlockedNotesSegment);
+    const frets = this.store.selectSnapshot(GameState.unlockedFretsSegment);
+
+    this.game.initRound(notes, frets);
+    this.game.togglePlay();
   }
 }

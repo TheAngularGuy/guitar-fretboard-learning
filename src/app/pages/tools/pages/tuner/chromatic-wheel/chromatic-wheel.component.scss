@@ -1,0 +1,31 @@
+:host {
+  display: block;
+  width: 100%;
+  position: relative;
+}
+
+svg {
+  #B, #C, #Cs, #D, #Ds, #E, #F, #Fs, #G, #Gs, #A, #As, #B {
+    fill: #1a1a1a;
+  }
+}
+
+
+.note {
+  font-variant: tabular-nums;
+  position: absolute;
+  display: inline-block;
+  font-size: 4rem;
+  color: var(--ion-text-color);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.octave {
+  position: absolute;
+  bottom: 1ch;
+  right: 0;
+  color: var(--ion-text-color);
+  font-size: .8rem;
+}

@@ -117,7 +117,7 @@
             "assets": [
               {
                 "glob": "favicon.ico",
-                "input": "src/assets/icon",
+                "input": "src/assets",
                 "output": "/"
               },
               {

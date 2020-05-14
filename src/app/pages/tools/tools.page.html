@@ -1,0 +1,11 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Tools</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="page">
+    <app-list [list]="gameModes" (itemClick)="onItemClicked($event)"></app-list>
+  </div>
+</ion-content>

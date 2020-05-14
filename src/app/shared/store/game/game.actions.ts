@@ -1,4 +1,4 @@
-import { Note } from '../../../models/note.model';
+import { Note } from '@models/note.model';
 
 export class GameStart {
   public static readonly type = '[GAME] GameStart';
@@ -12,6 +12,12 @@ export class GameStop {
   constructor(public payload: { tuning: string }) { }
 }
 
+export class GameComplete {
+  public static readonly type = '[GAME] GameComplete';
+
+  constructor(public payload: { previous: number }) { }
+}
+
 export class GoodNoteFound {
   public static readonly type = '[GAME] GoodNoteFound';
 
@@ -22,4 +28,16 @@ export class BadNoteFound {
   public static readonly type = '[GAME] BadNoteFound';
 
   constructor(public payload: { note: Note, tuning: string }) { }
+}
+
+export class UnlockedFrets {
+  public static readonly type = '[GAME] UnlockedFrets';
+
+  constructor(public payload: { frets: number[] }) { }
+}
+
+export class UnlockedNotes {
+  public static readonly type = '[GAME] UnlockedNotes';
+
+  constructor(public payload: { notes: string[] }) { }
 }

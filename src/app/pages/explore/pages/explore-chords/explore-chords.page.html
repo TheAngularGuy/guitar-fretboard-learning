@@ -52,8 +52,9 @@
   </ion-card>
 
   <br/>
-  <ng-container *ngFor="let chord of selectedChords | slice:0:showNb">
+  <ng-container *ngFor="let chord of selectedChords; let i = index">
     <app-fretboard
+            *ngIf="i === showNb"
             [invertedStrings]="preferences?.invertedStrings"
             [invertedFrets]="preferences?.invertedFrets"
             [notes]="fretboardNotes"
@@ -63,19 +64,27 @@
             [showAll]="false"
             [disabledStrings]="chord.disabledStrings"
             [barre]="chord.barre"
-            [showOnlySelectedFrets]="!true"
+            [showOnlySelectedFrets]="true"
     ></app-fretboard>
-    <hr class="hide-on-mobile"/>
   </ng-container>
   <ng-container *ngIf="!selectedChords || !selectedChords.length">
     <p class="text-muted">
       No available chords for the moment.
     </p>
   </ng-container>
+</ion-content>
 
+<ion-footer>
   <div class="page">
-    <ion-button expand="block" color="primary" *ngIf="showNb < selectedChords.length" (click)="showNb = showNb + 1">
-      Next
+    <ion-button color="primary"
+                *ngIf="showNb < selectedChords.length"
+                (click)="prevChord()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <ion-button color="primary"
+                *ngIf="showNb < selectedChords.length"
+                (click)="nextChord()">
+      <ion-icon name="chevron-forward-outline"></ion-icon>
     </ion-button>
   </div>
-</ion-content>
+</ion-footer>

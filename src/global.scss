@@ -14,9 +14,21 @@
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
 
+@font-face {
+  font-family: 'Tabasco';
+  src: url('assets/fonts/tabasco/fonts/Tabasco.eot');
+  src: url('assets/fonts/tabasco/fonts/Tabasco.eot') format('embedded-opentype'),
+  url('assets/fonts/tabasco/fonts/Tabasco.woff2') format('woff2'),
+  url('assets/fonts/tabasco/fonts/Tabasco.woff') format('woff'),
+  url('assets/fonts/tabasco/fonts/Tabasco.ttf') format('truetype'),
+  url('assets/fonts/tabasco/fonts/Tabasco.svg#Tabasco') format('svg');
+}
+
 h1,
 h2,
-h3 {
+h3,
+h4,
+h5 {
   font-family: 'Avenir', sans-serif;
   margin-top: 0;
 }
@@ -77,10 +89,24 @@ h3 {
   }
 }
 
+.taba {
+  font-family: Tabasco, var(--ion-font-family);
+}
+
 // ionic ajustements
 ion-tab-button {
   filter: grayscale(100%);
 }
+
 .tab-selected {
   filter: grayscale(0%);
+}
+
+.modal-transparent {
+  .modal-wrapper {
+    background: transparent;
+  }
+}
+.swiper-pagination-bullet {
+  background: var(--ion-text-color) !important;
 }

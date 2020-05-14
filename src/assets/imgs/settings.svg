@@ -1,80 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg x="0pt" y="0pt" width="1000pt" height="1000pt" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg x="0pt" y="0pt" width="512pt" height="512pt" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g id="1">
     <title>Layer 1</title>
-    <linearGradient x1="1028.39" y1="994.634" x2="518.99" y2="450.186" gradientUnits="userSpaceOnUse" id="4">
-      <stop style="stop-color:#c18a4b;stop-opacity:1;"/>
-      <stop offset="1" style="stop-color:#f9ebd6;stop-opacity:1;"/>
-    </linearGradient>
-    <defs>
-      <title>Smart Rectangle</title>
-      <g id="2">
-        <defs>
-          <path id="3" d="M944.671,644.671 C944.671,810.356,810.356,944.671,644.671,944.671 C644.671,944.671,355.329,944.671,355.329,944.671 C189.644,944.671,55.3293,810.356,55.3293,644.671 C55.3293,644.671,55.3293,355.329,55.3293,355.329 C55.3293,189.644,189.644,55.3293,355.329,55.3293 C355.329,55.3293,644.671,55.3293,644.671,55.3293 C810.356,55.3293,944.671,189.644,944.671,355.329 C944.671,355.329,944.671,644.671,944.671,644.671 z"/>
-        </defs>
-        <use xlink:href="#3" style="fill:url(#4);fill-opacity:1;fill-rule:nonzero;opacity:1;stroke:none;"/>
-      </g>
-    </defs>
-    <use xlink:href="#2"/>
-    <linearGradient x1="795.228" y1="384.581" x2="158.519" y2="384.581" gradientUnits="userSpaceOnUse" id="7">
-      <stop style="stop-color:#c18a4b;stop-opacity:1;"/>
-      <stop offset="1" style="stop-color:#f9ebd6;stop-opacity:1;"/>
-    </linearGradient>
-    <defs>
-      <title>Path</title>
+    <clipPath id="3">
+      <use xlink:href="#2"/>
+      <path id="2" d="M27.2553,27.2553 C27.2553,27.2553,484.649,27.2553,484.649,27.2553 C484.649,27.2553,484.649,484.649,484.649,484.649 C484.649,484.649,27.2553,484.649,27.2553,484.649 C27.2553,484.649,27.2553,27.2553,27.2553,27.2553 z"/>
+    </clipPath>
+    <g id="4" style="clip-path:url(#3);">
+      <title>ClipGroup</title>
       <g id="5">
+        <title>Group</title>
+        <linearGradient x1="472.422" y1="465.46" x2="85.9835" y2="64.1667" gradientUnits="userSpaceOnUse" id="8">
+          <stop style="stop-color:#c18b4c;stop-opacity:1;"/>
+          <stop offset="1" style="stop-color:#faebd7;stop-opacity:1;"/>
+        </linearGradient>
         <defs>
-          <path id="6" d="M157.985,384.581 C157.985,384.581,842.016,384.581,842.016,384.581"/>
+          <title>Shape 1</title>
+          <g id="6">
+            <defs>
+              <path id="7" d="M282.753,484.649 C264.886,484.649,247.019,484.649,229.152,484.649 C222.588,484.649,216.992,479.896,215.928,473.419 C213.182,456.685,210.435,439.951,207.688,423.217 C195.223,419.624,183.212,414.638,171.812,408.322 C158.236,418.019,144.66,427.716,131.085,437.413 C125.754,441.219,118.453,440.615,113.821,435.983 C101.187,423.35,88.5538,410.717,75.9204,398.084 C71.2884,393.452,70.6845,386.15,74.491,380.82 C84.1877,367.244,93.8844,353.668,103.581,340.092 C97.266,328.692,92.2794,316.681,88.6863,304.216 C71.9527,301.47,55.2191,298.723,38.4855,295.977 C32.0088,294.913,27.2553,289.316,27.2553,282.753 C27.2553,264.886,27.2553,247.019,27.2553,229.152 C27.2553,222.588,32.0088,216.992,38.4855,215.928 C55.2191,213.182,71.9527,210.436,88.6863,207.689 C92.2794,195.224,97.266,183.213,103.581,171.813 C93.8844,158.237,84.1877,144.661,74.491,131.085 C70.6836,125.755,71.2884,118.454,75.9204,113.822 C88.5538,101.188,101.187,88.5541,113.821,75.9203 C118.453,71.2883,125.754,70.6844,131.085,74.491 C144.66,84.1877,158.236,93.8844,171.812,103.581 C183.212,97.266,195.223,92.2793,207.688,88.6863 C210.435,71.9524,213.182,55.2185,215.928,38.4846 C216.992,32.0087,222.588,27.2552,229.152,27.2552 C247.019,27.2552,264.886,27.2552,282.753,27.2552 C289.316,27.2552,294.913,32.0087,295.976,38.4855 C298.723,55.2191,301.469,71.9527,304.216,88.6863 C316.681,92.2793,328.692,97.266,340.092,103.581 C353.668,93.8844,367.244,84.1877,380.82,74.491 C386.15,70.6835,393.452,71.2874,398.084,75.9203 C410.717,88.5538,423.351,101.187,435.984,113.821 C440.616,118.453,441.22,125.754,437.413,131.085 C427.717,144.66,418.02,158.236,408.323,171.812 C414.638,183.213,419.625,195.224,423.218,207.688 C439.952,210.435,456.685,213.181,473.419,215.928 C479.896,216.992,484.649,222.588,484.649,229.152 C484.649,247.019,484.649,264.886,484.649,282.753 C484.649,289.316,479.896,294.913,473.419,295.976 C456.685,298.722,439.952,301.469,423.218,304.215 C419.626,316.68,414.638,328.691,408.323,340.091 C418.02,353.667,427.717,367.243,437.413,380.819 C441.221,386.15,440.616,393.451,435.984,398.083 C423.351,410.717,410.717,423.35,398.084,435.984 C393.451,440.616,386.151,441.22,380.82,437.413 C367.244,427.717,353.668,418.02,340.092,408.323 C328.692,414.638,316.68,419.625,304.216,423.218 C301.47,439.952,298.723,456.685,295.976,473.419 C294.913,479.896,289.316,484.649,282.753,484.649 z M471.249,282.753 C471.252,282.753,471.255,282.753,471.258,282.753 z"/>
+            </defs>
+            <use xlink:href="#7" style="fill:url(#8);fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+          </g>
         </defs>
-        <use xlink:href="#6" style="fill:url(#7);fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
-        <use xlink:href="#6" style="fill:none;opacity:1;stroke:#463664;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:32;"/>
-      </g>
-    </defs>
-    <use xlink:href="#5"/>
-    <linearGradient x1="795.228" y1="615.42" x2="158.519" y2="615.42" gradientUnits="userSpaceOnUse" id="10">
-      <stop style="stop-color:#c18a4b;stop-opacity:1;"/>
-      <stop offset="1" style="stop-color:#f9ebd6;stop-opacity:1;"/>
-    </linearGradient>
-    <defs>
-      <title>Path Copy</title>
-      <g id="8">
+        <use xlink:href="#6"/>
+        <linearGradient x1="342.44" y1="341.06" x2="220.603" y2="198.405" gradientUnits="userSpaceOnUse" id="11">
+          <stop offset="0.177174" style="stop-color:#40413e;stop-opacity:1;"/>
+          <stop offset="1" style="stop-color:#473764;stop-opacity:1;"/>
+        </linearGradient>
         <defs>
-          <path id="9" d="M157.985,615.42 C157.985,615.42,842.016,615.42,842.016,615.42"/>
+          <title>Shape 2</title>
+          <g id="9">
+            <defs>
+              <path id="10" d="M255.952,349.754 C204.23,349.754,162.151,307.674,162.151,255.952 C162.151,204.23,204.23,162.151,255.952,162.151 C307.674,162.151,349.754,204.23,349.754,255.952 C349.754,307.674,307.674,349.754,255.952,349.754 z"/>
+            </defs>
+            <use xlink:href="#10" style="fill:url(#11);fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+          </g>
         </defs>
-        <use xlink:href="#9" style="fill:url(#10);fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
-        <use xlink:href="#9" style="fill:none;opacity:1;stroke:#463664;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:32;"/>
+        <use xlink:href="#9"/>
       </g>
-    </defs>
-    <use xlink:href="#8"/>
-    <linearGradient x1="720.226" y1="456.677" x2="720.226" y2="314.821" gradientUnits="userSpaceOnUse" id="13">
-      <stop style="stop-color:#c18a4b;stop-opacity:1;"/>
-      <stop offset="1" style="stop-color:#f9ebd6;stop-opacity:1;"/>
-    </linearGradient>
-    <defs>
-      <title>Path</title>
-      <g id="11">
-        <defs>
-          <path id="12" d="M720.226,313.287 C720.226,313.287,720.226,455.876,720.226,455.876"/>
-        </defs>
-        <use xlink:href="#12" style="fill:url(#13);fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
-        <use xlink:href="#12" style="fill:none;opacity:1;stroke:#463664;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:47;"/>
-      </g>
-    </defs>
-    <use xlink:href="#11"/>
-    <linearGradient x1="460.732" y1="687.516" x2="460.732" y2="545.66" gradientUnits="userSpaceOnUse" id="16">
-      <stop style="stop-color:#c18a4b;stop-opacity:1;"/>
-      <stop offset="1" style="stop-color:#f9ebd6;stop-opacity:1;"/>
-    </linearGradient>
-    <defs>
-      <title>Path Copy</title>
-      <g id="14">
-        <defs>
-          <path id="15" d="M460.732,544.126 C460.732,544.126,460.732,686.715,460.732,686.715"/>
-        </defs>
-        <use xlink:href="#15" style="fill:url(#16);fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
-        <use xlink:href="#15" style="fill:none;opacity:1;stroke:#463664;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:47;"/>
-      </g>
-    </defs>
-    <use xlink:href="#14"/>
+    </g>
+    <clipPath id="13">
+      <use xlink:href="#12"/>
+      <path id="12" d="M27.2553,27.2553 C27.2553,27.2553,484.649,27.2553,484.649,27.2553 C484.649,27.2553,484.649,484.649,484.649,484.649 C484.649,484.649,27.2553,484.649,27.2553,484.649 C27.2553,484.649,27.2553,27.2553,27.2553,27.2553 z"/>
+    </clipPath>
+    <g id="14" style="clip-path:url(#13);"/>
   </g>
 </svg>

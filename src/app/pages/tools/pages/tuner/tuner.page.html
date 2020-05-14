@@ -13,12 +13,16 @@
     <ion-card>
       <ion-card-content>
         <div class="tuner">
-        <span class="note">
-          {{note.name | note}}
-          <span class="octave">
-          {{note.octave}}
-        </span>
-        </span>
+          <div class="chromatic">
+            <app-chromatic-wheel [note]="note"
+            ></app-chromatic-wheel>
+          </div>
+          <!--<span class="note">
+            {{note.name | note}}
+            <span class="octave">
+            {{note.octave}}
+            </span>
+          </span>-->
         </div>
       </ion-card-content>
     </ion-card>
@@ -33,5 +37,5 @@
     </div>
   </ng-container>
 
-
+  <br>
 </ion-content>

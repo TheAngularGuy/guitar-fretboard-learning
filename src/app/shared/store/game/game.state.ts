@@ -1,10 +1,19 @@
+import { Note } from '@models/note.model';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { UtilsService } from '@shared-modules/services/utils/utils.service';
-import { BadNoteFound, GameStart, GameStop, GoodNoteFound } from '@shared-modules/store/game/game.actions';
-import { Note } from '../../../models/note.model';
+import {
+  BadNoteFound,
+  GameComplete,
+  GameStart,
+  GameStop,
+  GoodNoteFound, UnlockedFrets, UnlockedNotes,
+} from '@shared-modules/store/game/game.actions';
 
 enum stateEnums {
   scoreByTunings = 'game_scoreByTunings',
+  unlockedFrets = 'game_unlockedFrets',
+  unlockedNotes = 'game_unlockedNotes',
+  globalPoints = 'game_globalPoints',
 }
 
 interface NoteScore extends Note {
@@ -13,6 +22,8 @@ interface NoteScore extends Note {
 
 export interface GameStateModel {
   isPlaying: boolean;
+  lastCompletedGame: { previous: number; current: number; time: number };
+  globalPoints: number;
   scoreByTunings: {
     tuning: string;
     score: {
@@ -34,8 +45,10 @@ export interface GameStateModel {
   name: 'game',
   defaults: {
     isPlaying: false,
-    unlockedFrets: [0, 1, 2, 3],
-    unlockedNotes: ['C', 'A', 'E', 'G'],
+    lastCompletedGame: { previous: 0, current: 0, time: 0 },
+    globalPoints: UtilsService.getParsedItemFromLS(stateEnums.globalPoints) || 0,
+    unlockedFrets: UtilsService.getParsedItemFromLS(stateEnums.unlockedFrets) || [0, 1, 2, 3],
+    unlockedNotes: UtilsService.getParsedItemFromLS(stateEnums.unlockedNotes) || ['C', 'A', 'G', 'E'],
     scoreByTunings: UtilsService.getParsedItemFromLS(stateEnums.scoreByTunings) || [],
   },
 })
@@ -52,8 +65,34 @@ export class GameState {
   }
 
   @Selector()
+  public static scoreGlobal(state: GameStateModel) {
+    return state.globalPoints;
+  }
+
+  @Selector()
   public static unlockedNotes(state: GameStateModel) {
     return state.unlockedNotes;
+  }
+
+  @Selector()
+  public static unlockedNotesSegment(state: GameStateModel) {
+    if (state.unlockedNotes.length < 9) {
+      return state.unlockedNotes;
+    }
+    const arr = UtilsService.shuffleArray(state.unlockedNotes);
+    return arr.slice(0, 8).sort();
+  }
+
+  @Selector()
+  public static unlockedFretsSegment(state: GameStateModel): [number, number] {
+    const fretMin = Math.min(...state.unlockedFrets);
+    const fretMax = Math.max(...state.unlockedFrets);
+
+    if (state.unlockedFrets.length < 5) {
+      return [fretMin, fretMax];
+    }
+    const n = UtilsService.getRandomInt(fretMin, fretMax - 4);
+    return [n, n + 3];
   }
 
   @Selector()
@@ -64,6 +103,37 @@ export class GameState {
   @Selector()
   public static isPlaying(state: GameStateModel) {
     return state.isPlaying;
+  }
+
+  @Selector()
+  public static lastCompleted(state: GameStateModel) {
+    return state.lastCompletedGame;
+  }
+
+  @Action(UnlockedFrets)
+  private unlockedFrets(ctx: StateContext<GameStateModel>, action: UnlockedFrets) {
+    if (!action.payload.frets) {
+      return;
+    }
+    let frets = [...ctx.getState().unlockedFrets];
+    frets = Array.from(new Set([...frets, ...action.payload.frets]));
+    ctx.patchState({
+      unlockedFrets: frets,
+    });
+    UtilsService.setParsedItemToLS(stateEnums.unlockedFrets, frets);
+  }
+
+  @Action(UnlockedNotes)
+  private unlockedNotes(ctx: StateContext<GameStateModel>, action: UnlockedNotes) {
+    if (!action.payload.notes) {
+      return;
+    }
+    let notes = [...ctx.getState().unlockedNotes];
+    notes = Array.from(new Set([...notes, ...action.payload.notes]));
+    ctx.patchState({
+      unlockedNotes: notes,
+    });
+    UtilsService.setParsedItemToLS(stateEnums.unlockedNotes, notes);
   }
 
   @Action(GameStop)
@@ -103,6 +173,17 @@ export class GameState {
     this.goodOrBadNoteFound(ctx, action);
   }
 
+  @Action(GameComplete)
+  private gameComplete(ctx: StateContext<GameStateModel>, action: GameComplete) {
+    ctx.patchState({
+      lastCompletedGame: {
+        previous: action.payload.previous,
+        current: ctx.getState().globalPoints,
+        time: Date.now(),
+      },
+    });
+  }
+
   // utils ----
   private goodOrBadNoteFound(ctx: StateContext<GameStateModel>,
                              action: GoodNoteFound | BadNoteFound) {
@@ -111,11 +192,13 @@ export class GameState {
     const tuning = action.payload.tuning;
     const note = action.payload.note;
 
+    let globalPoints = ctx.getState().globalPoints;
     const scoreByTunings = UtilsService.clone(ctx.getState().scoreByTunings);
     const scoreByTuning = scoreByTunings.find(t => t.tuning === tuning).score;
     const scoreNote = scoreByTuning.notes.find(sn => sn.name === note.name);
 
     scoreByTuning.points += bad ? -10 : 10;
+    globalPoints += bad ? 0 : 10;
     if (!!scoreNote) {
       scoreNote.value += bad ? -1 : 1;
       scoreNote[bad ? 'bad' : 'good'] += 1;
@@ -153,8 +236,12 @@ export class GameState {
       scoreByTuning.notes.push(sn);
     }
 
-    ctx.patchState({ scoreByTunings });
+    ctx.patchState({
+      scoreByTunings,
+      globalPoints,
+    });
     UtilsService.setParsedItemToLS(stateEnums.scoreByTunings, scoreByTunings);
+    UtilsService.setParsedItemToLS(stateEnums.globalPoints, globalPoints);
   }
 
 }

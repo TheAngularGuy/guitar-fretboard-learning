@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [{
   path: 'games',
@@ -25,6 +25,9 @@ const routes: Routes = [{
   path: 'lost',
   loadChildren: () => import('./pages/lost/lost.module')
     .then(m => m.LostPageModule),
+}, {
+  path: 'tools',
+  loadChildren: () => import('./pages/tools/tools.module').then(m => m.ToolsPageModule),
 },
 ];
 

@@ -26,7 +26,7 @@ import { IdentifyPage } from './identify.page';
     NgxsModule.forFeature(),
   ],
   declarations: [IdentifyPage],
-  providers: [UtilsService, ToastController, CanDeactivateGuard, FretboardManipulationService],
+  providers: [UtilsService, CanDeactivateGuard, FretboardManipulationService],
 })
 export class IdentifyPageModule {
 }

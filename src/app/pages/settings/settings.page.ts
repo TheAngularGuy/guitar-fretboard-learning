@@ -13,7 +13,7 @@ import {
   PreferencesSetTunningAction,
 } from 'src/app/shared/store/preferences/preferences.actions';
 import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
-import { SettingsState, SettingsStateModel } from './store/settings.state';
+import { SettingsState } from './store/settings.state';
 
 @Component({
   selector: 'app-settings',

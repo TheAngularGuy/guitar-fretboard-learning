@@ -27,7 +27,7 @@
   margin: auto;
   border-radius: 10px;
   position: relative;
-  height: calc(50vh - 100px);
+  height: 130px;
   overflow: hidden;
   background-image: linear-gradient(to right,
           var(--ion-color-light) 0%,
@@ -100,18 +100,24 @@
                     var(--ion-text-color) 100%
     );
 
-    animation-name: route;
+    animation-name: glisse;
     animation-duration: 2s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
   }
 }
 
-@keyframes route {
+@keyframes glisse {
   from {
     transform: translateY(0);
   }
   to {
     transform: translateY(-50px);
   }
+}
+
+.chromatic {
+  margin: auto;
+  width: 80%;
+  position: relative;
 }

@@ -55,7 +55,7 @@
            pulsate
            *ngIf="!game.isPlaying"
            [disabled]="!!game.noteToFind"
-           (clicked)="game.togglePlay()">
+           (clicked)="start()">
     START
   </app-btn>
 
@@ -64,7 +64,8 @@
           [invertedStrings]="preferences?.invertedStrings"
           [invertedFrets]="preferences?.invertedFrets"
           [notes]="game.fretboardNotes"
-          [selectedFrets]="[0, 17]"
+          [showAll]="false"
+          [selectedFrets]="game.fretsAvailable"
           [selectedNoteNames]="game.noteToFind ? [game.noteToFind.note.name] : null"
           (noteClick)="onNoteClicked($event)"
   ></app-fretboard>

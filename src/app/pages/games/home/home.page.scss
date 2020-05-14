@@ -1,0 +1,20 @@
+.title {
+  text-align: center;
+  font-family: 'Tabasco', sans-serif;
+  font-size: 2rem;
+  letter-spacing: 3px;
+
+  color: transparent;
+  background: linear-gradient(to left top,
+          var(--ion-color-tertiary),
+          var(--ion-color-secondary) 60%,
+          var(--ion-color-secondary) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  &:first-letter {
+    // color: var(--ion-color-primary);
+    font-size: 2.7rem;
+  }
+}

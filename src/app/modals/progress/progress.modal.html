@@ -1,0 +1,77 @@
+<div class="timer">
+  <div class="line" #timer></div>
+</div>
+
+<button class="close" (click)="close()">
+  <ion-icon name="chevron-down-outline" size="large"></ion-icon>
+</button>
+
+<div class="wrapper">
+
+  <div class="illu">
+    <img src="assets/imgs/progress.svg"
+         alt="progress illustration">
+  </div>
+
+  <div class="placeholder"></div>
+
+  <p class="score">
+    Your current score <b>{{current}}</b>
+  </p>
+
+  <div class="progress">
+    <div class="line" #line></div>
+  </div>
+  <p class="min-max">
+    <span>{{level?.min}}</span>
+    <span>{{level?.max}}</span>
+  </p>
+
+  <ng-container *ngIf="showNewLevel">
+    <div class="new-level" @popAnimation>
+      {{level?.name}}
+    </div>
+    <hr>
+    <div class="slides" @delayAnimation>
+      <ion-icon (click)="slides.slidePrev()"
+                name="chevron-back-outline" size="large" class="left"></ion-icon>
+      <ion-icon  (click)="slides.slideNext()"
+                 name="chevron-forward-outline" size="large" class="right"></ion-icon>
+
+      <ion-slides pager="true" #slides>
+        <ion-slide *ngIf="level?.unlockedNotes">
+          <div class="unlocked-notes">
+            <p>
+              You have unlocked new notes!
+            </p>
+            <div class="notes">
+              <ion-button color="success" *ngFor="let n of level?.unlockedNotes">
+                {{n}}
+              </ion-button>
+            </div>
+          </div>
+        </ion-slide>
+        <ion-slide *ngIf="level?.unlockedFrets">
+          <div class="unlocked-notes">
+            <p>
+              You have unlocked new frets!
+            </p>
+            <div class="notes">
+              <ion-button color="success" *ngFor="let f of level?.unlockedFrets">
+                {{f}}
+              </ion-button>
+            </div>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+  </ng-container>
+
+  <p class="encouragement" *ngIf="!showNewLevel">
+    You're doing good, keep going!
+  </p>
+
+  <ion-button class="ok" color="success" expand="block" (click)="close()">
+    OK
+  </ion-button>
+</div>

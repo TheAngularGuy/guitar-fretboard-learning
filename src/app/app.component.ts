@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { SwUpdate } from '@angular/service-worker';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Platform, ToastController } from '@ionic/angular';
+import { ModalController, Platform, ToastController } from '@ionic/angular';
 import { Select, Store } from '@ngxs/store';
 import { GameState } from '@shared-modules/store/game/game.state';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { ProgressModal } from './modals/progress/progress.modal';
 import { UserLogInAction, UserLogOutAction } from './shared/store/user/user.actions';
 
 @Component({
@@ -18,8 +19,9 @@ export class AppComponent {
   @Select(GameState.isPlaying) isUserPlaying$: Observable<boolean>;
   morePages = [
     { title: 'Preferences', url: 'settings', svg: 'settings' },
-    { title: 'Explore', url: 'explore', svg: 'explore' },
+    { title: 'Tools', url: 'tools', svg: 'tools' },
     { title: 'Games', url: 'games', svg: 'games' },
+    { title: 'Explore', url: 'explore', svg: 'explore' },
     { title: 'Profile', url: 'profile', svg: 'user' },
   ];
   // icons set: https://www.flaticon.com/packs/seo-55
@@ -27,12 +29,13 @@ export class AppComponent {
   // https://www.flaticon.com/packs/ecology-69
 
   constructor(
+    private readonly store: Store,
     private readonly platform: Platform,
     private readonly splashScreen: SplashScreen,
     private readonly statusBar: StatusBar,
     private readonly swUpdate: SwUpdate,
     private readonly toastController: ToastController,
-    private readonly store: Store,
+    private readonly modalCtrl: ModalController,
   ) {
     this.initializeApp();
   }
@@ -43,6 +46,30 @@ export class AppComponent {
       this.splashScreen.hide();
       this.checkSWVersion();
     });
+
+    this.listenToGameEnd();
+  }
+
+  listenToGameEnd() {
+    this.store.select(GameState.lastCompleted)
+      .pipe(
+        tap(async ({ time, previous, current }) => {
+          if ((Math.abs(time - Date.now()) <= 1000) && current > previous) {
+            const modal = await this.modalCtrl.create({
+              component: ProgressModal,
+              animated: true,
+              swipeToClose: true,
+              cssClass: 'modal-transparent',
+              componentProps: {
+                current,
+                previous,
+              },
+            });
+            modal.present();
+          }
+        }),
+      )
+      .subscribe();
   }
 
   login() {

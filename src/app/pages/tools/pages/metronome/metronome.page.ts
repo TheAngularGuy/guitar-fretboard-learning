@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-metronome',
   templateUrl: './metronome.page.html',
   styleUrls: ['./metronome.page.scss'],
 })
-export class MetronomePage implements OnInit {
+export class MetronomePage implements OnInit, OnDestroy {
+  destroyed$ = new Subject();
   bpmForm: FormGroup;
   beatsList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
   lastClick: number;
@@ -19,11 +22,27 @@ export class MetronomePage implements OnInit {
 
   constructor() { }
 
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete();
+  }
+
   ngOnInit() {
     this.bpmForm = new FormGroup({
       beats: new FormControl(4, [Validators.requiredTrue]),
+      mesure: new FormControl(1, [Validators.requiredTrue]),
       bpm: new FormControl(120, [Validators.requiredTrue]),
     });
+
+    this.bpmForm.valueChanges.pipe(
+      takeUntil(this.destroyed$),
+      tap(() => {
+        if (!!this.interval) {
+          this.toggleMetronome();
+          requestAnimationFrame(() => this.toggleMetronome());
+        }
+      }),
+    ).subscribe();
   }
 
   addBpm() {
@@ -70,7 +89,8 @@ export class MetronomePage implements OnInit {
       (window as any).mozAudioContext ||
       (window as any).msAudioContext;
     const bpm = this.minMaxBpm(this.bpmForm?.get('bpm').value);
-    const t = Math.round(60 / bpm * 1000);
+    const mesure = this.bpmForm?.get('mesure').value;
+    const t = Math.round(60 / bpm * 1000) / mesure;
     const beats = this.bpmForm?.get('beats').value;
     const context = new AudioContext();
     const accentPitch = 350, offBeatPitch = 190;

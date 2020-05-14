@@ -30,11 +30,11 @@ export interface PreferencesStateModel {
   name: 'preferences',
   defaults: {
     invertedStrings:
-      UtilsService.getParsedItemFromLS(stateEnums.invertedStrings) || false,
-    invertedFrets: UtilsService.getParsedItemFromLS(stateEnums.invertedFrets) || false,
-    activateSound: UtilsService.getParsedItemFromLS(stateEnums.activateSound) || false,
-    useFlats: UtilsService.getParsedItemFromLS(stateEnums.useFlats) || false,
-    tuning: UtilsService.getParsedItemFromLS(stateEnums.tuning) || 'Standard',
+      UtilsService.getParsedItemFromLS(stateEnums.invertedStrings) ?? false,
+    invertedFrets: UtilsService.getParsedItemFromLS(stateEnums.invertedFrets) ?? false,
+    activateSound: UtilsService.getParsedItemFromLS(stateEnums.activateSound) ?? true,
+    useFlats: UtilsService.getParsedItemFromLS(stateEnums.useFlats) ?? false,
+    tuning: UtilsService.getParsedItemFromLS(stateEnums.tuning) ?? 'Standard',
   },
 })
 @Injectable()

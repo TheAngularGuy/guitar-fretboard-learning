@@ -15,6 +15,9 @@
         <div class="bpm-title">
           <span>
             {{bpmForm?.get('bpm')?.value}} bpm
+            <small>
+              ({{bpmForm?.get('beats')?.value}}/{{bpmForm?.get('mesure')?.value * 4}})
+            </small>
           </span>
           <span>
             <ion-icon appLonpPress (pressing)="subBpm()" size="large" name="remove-circle-outline">
@@ -35,6 +38,16 @@
             <ion-select-option *ngFor="let beat of beatsList" [value]="beat">
               {{beat}}
             </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>Mesure</ion-label>
+          <ion-select multiple="false" formControlName="mesure">
+            <ion-select-option [value]="0.5"> 2 </ion-select-option>
+            <ion-select-option [value]="1"> 4 </ion-select-option>
+            <ion-select-option [value]="2"> 8 </ion-select-option>
+            <ion-select-option [value]="3"> 16 </ion-select-option>
+            <ion-select-option [value]="4"> 32 </ion-select-option>
           </ion-select>
         </ion-item>
       </form>
