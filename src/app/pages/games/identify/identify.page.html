@@ -31,18 +31,17 @@
 <ion-content #content>
   <ion-card *ngIf="!game.isPlaying">
     <ion-card-header>
-      <ion-card-title>Identify the note!</ion-card-title>
+      <ion-card-title>Identify the highlighted note!</ion-card-title>
     </ion-card-header>
 
     <ion-card-content class="game-mode">
       <p class="game-mode-result">
-        <ng-container *ngIf="!scoreHistoric || !scoreHistoric.length">
+        <ng-container *ngIf="scoreHistoric?.length !== game.gameConfig.MAX_RANGE; else alreadyPlayedOneTime">
           Press the button to start playing
         </ng-container>
-        <ng-container *ngIf="scoreHistoric && scoreHistoric.length">
-          Your score is <b>{{ game.score.good }}</b> out of {{ scoreHistoric?.length }}. And
-          your average time is: <b>{{ averageTime | number }}</b> seconds.
-        </ng-container>
+        <ng-template #alreadyPlayedOneTime>
+          You figured out <b>{{ game.score.good }}</b> of the {{ scoreHistoric?.length }} notes for a speed of <b>{{ averageTime | number }}</b> seconds per note.
+        </ng-template>
       </p>
     </ion-card-content>
   </ion-card>

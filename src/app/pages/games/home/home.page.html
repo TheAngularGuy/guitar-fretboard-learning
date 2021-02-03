@@ -10,6 +10,7 @@
       Let's learn the fretboard
     </ion-card-content>-->
   </ion-card>
-
-  <app-list [list]="gameModes" (itemClick)="goTo($event)"></app-list>
+  <div class="page">
+    <app-list [list]="gameModes" (itemClick)="goTo($event)"></app-list>
+  </div>
 </ion-content>

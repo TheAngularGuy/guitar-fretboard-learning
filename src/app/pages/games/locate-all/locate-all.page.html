@@ -3,13 +3,13 @@
     <ion-buttons slot="start">
       <ion-back-button text="" defaultHref="games"></ion-back-button>
     </ion-buttons>
-    <ion-title>Locate all instances</ion-title>
+    <ion-title>Locate all locations</ion-title>
   </ion-toolbar>
 
   <ion-toolbar *ngIf="game.isPlaying">
     <ion-buttons slot="start">
       <ion-button (click)="game.togglePlay()">
-        <ion-icon slot="icon-only" name="pause-outline">
+        <ion-icon slot="icon-only" name="stop">
         </ion-icon>
       </ion-button>
     </ion-buttons>
@@ -32,20 +32,18 @@
   <ion-card *ngIf="!game.isPlaying">
     <ion-card-header>
       <ion-card-title>
-        Locate all instances of a note!
+        Locate all locations of a note!
       </ion-card-title>
     </ion-card-header>
 
     <ion-card-content class="game-mode">
       <p class="game-mode-result">
-        <ng-container *ngIf="!scoreHistoric || !scoreHistoric.length">
-          Press the button to start playing
+        <ng-container *ngIf="scoreHistoric?.length !== game.gameConfig.MAX_RANGE; else alreadyPlayedOneTime">
+          Press the start button to begin
         </ng-container>
-        <ng-container *ngIf="scoreHistoric && scoreHistoric.length">
-          Your score is <b>{{ game.score.good }}</b>
-          out of {{ scoreHistoric?.length }}. And your average time
-          is: <b>{{ averageTime | number }}</b> seconds.
-        </ng-container>
+        <ng-template #alreadyPlayedOneTime>
+          You figured out <b>{{ game.score.good }}</b> of the {{ scoreHistoric?.length }} note-groups for a speed of <b>{{ averageTime | number }}</b> seconds per note-group.
+        </ng-template>
       </p>
     </ion-card-content>
   </ion-card>

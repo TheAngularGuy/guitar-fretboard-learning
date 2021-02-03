@@ -1,19 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Store } from '@ngxs/store';
-import { Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
-import { CAGED_SCALE } from 'src/app/constants/caged-scale.constant';
-import { FretboardManipulationService } from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
-import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Store} from '@ngxs/store';
+import {Subject} from 'rxjs';
+import {debounceTime, takeUntil} from 'rxjs/operators';
+import {CAGED_SCALE} from 'src/app/constants/caged-scale.constant';
+import {FretboardManipulationService} from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
+import {PreferencesState, PreferencesStateModel} from 'src/app/shared/store/preferences/preferences.state';
 
-import { CHROMATIC_SCALE } from '@constants/chromatic-scale.constant';
+import {CHROMATIC_SCALE} from '@constants/chromatic-scale.constant';
 import {
   ExploreSetFretEndAction,
   ExploreSetFretStartAction,
   ExploreSetSelectedNotesAction,
 } from '../../store/explore.actions';
-import { ExploreState, ExploreStateModel } from '../../store/explore.state';
+import {ExploreState, ExploreStateModel} from '../../store/explore.state';
 
 @Component({
   selector: 'app-explore-notes',
@@ -27,7 +27,7 @@ export class ExploreNotesPage implements OnInit, OnDestroy {
   chromaticScale: string[];
   cagedScale: string[];
 
-  frets = new Array(17).fill(null).map((item, i) => i);
+  frets = new Array(18).fill(null).map((item, i) => i);
 
   preferences: PreferencesStateModel;
   exploreState: ExploreStateModel;
@@ -36,10 +36,11 @@ export class ExploreNotesPage implements OnInit, OnDestroy {
     private readonly fb: FormBuilder,
     private readonly fretboardManipulationService: FretboardManipulationService,
     private readonly store: Store,
-  ) {}
+  ) {
+  }
 
   ngOnDestroy() {
-    this.destroyed$.next(), this.destroyed$.complete();
+    this.destroyed$.next();
   }
 
   ngOnInit() {

@@ -18,7 +18,7 @@ import { UserLogInAction, UserLogOutAction } from './shared/store/user/user.acti
 export class AppComponent {
   @Select(GameState.isPlaying) isUserPlaying$: Observable<boolean>;
   morePages = [
-    { title: 'Preferences', url: 'settings', svg: 'settings' },
+    { title: 'Settings', url: 'settings', svg: 'settings' },
     { title: 'Tools', url: 'tools', svg: 'tools' },
     { title: 'Games', url: 'games', svg: 'games' },
     { title: 'Explore', url: 'explore', svg: 'explore' },
@@ -35,7 +35,6 @@ export class AppComponent {
     private readonly statusBar: StatusBar,
     private readonly swUpdate: SwUpdate,
     private readonly toastController: ToastController,
-    private readonly modalCtrl: ModalController,
   ) {
     this.initializeApp();
   }
@@ -46,30 +45,6 @@ export class AppComponent {
       this.splashScreen.hide();
       this.checkSWVersion();
     });
-
-    this.listenToGameEnd();
-  }
-
-  listenToGameEnd() {
-    this.store.select(GameState.lastCompleted)
-      .pipe(
-        tap(async ({ time, previous, current }) => {
-          if ((Math.abs(time - Date.now()) <= 1000) && current > previous) {
-            const modal = await this.modalCtrl.create({
-              component: ProgressModal,
-              animated: true,
-              swipeToClose: true,
-              cssClass: 'modal-transparent',
-              componentProps: {
-                current,
-                previous,
-              },
-            });
-            modal.present();
-          }
-        }),
-      )
-      .subscribe();
   }
 
   login() {

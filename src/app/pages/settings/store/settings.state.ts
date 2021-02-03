@@ -12,13 +12,13 @@ export interface SettingsStateModel {
   customTunings: string[];
 }
 
+@Injectable()
 @State<SettingsStateModel>({
   name: 'settings',
   defaults: {
     customTunings: UtilsService.getParsedItemFromLS(stateEnums.customTunings) || [],
   },
 })
-@Injectable()
 export class SettingsState {
   @Selector()
   public static getState(state: SettingsStateModel) {

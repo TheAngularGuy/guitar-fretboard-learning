@@ -32,11 +32,9 @@ export class IdentifyPage implements OnInit, OnDestroy {
   @ViewChild('content') content: IonContent;
   destroyed$ = new Subject();
   preferences: PreferencesStateModel;
-  chromaticScale = CHROMATIC_SCALE;
   game: GameMode = new GameMode();
   lastClickRegistered: number;
-  scoreHistoric: { timeTook: number; noteToFind: Note; noteGuessed: Note }[];
-  lastPointsOnStart: number;
+  scoreHistoric: { timeTook: number; }[];
 
   get averageTime(): string | number {
     if (!this.scoreHistoric?.length) {
@@ -68,12 +66,13 @@ export class IdentifyPage implements OnInit, OnDestroy {
       onBeforeStart: () => {
         this.store.dispatch(new GameStart({ tuning: this.preferences.tuning }));
         this.scoreHistoric = [];
-        this.lastPointsOnStart = this.store.selectSnapshot(GameState.scoreGlobal);
       },
       onEnd: () => {
         this.store.dispatch(new GameStop({ tuning: this.preferences.tuning }));
         this.content.scrollToTop(250);
-        this.store.dispatch(new GameComplete({ previous: this.lastPointsOnStart }));
+      },
+      onComplete: () => {
+        this.store.dispatch(new GameComplete({tuning: this.preferences.tuning}));
       },
       onNotePicked: () => {
         this.onNotePicked();
@@ -129,19 +128,12 @@ export class IdentifyPage implements OnInit, OnDestroy {
       }));
       this.sound.playError();
       this.game.increaseScoreBad();
-      // UtilsService.vibrate([100, 30, 100]);
       btn.el.color = 'danger';
       setTimeout(() => {
         btn.el.color = 'light';
       }, this.game.config.ANIMATION_DELAY);
     }
     this.scoreHistoric.push({
-      noteGuessed: {
-        fret: 0,
-        string: 0,
-        name: noteGuessed,
-      },
-      noteToFind: this.game.noteToFind.note,
       timeTook: Date.now() - this.game.noteToFind.time - this.game.config.ANIMATION_TIME,
     });
 

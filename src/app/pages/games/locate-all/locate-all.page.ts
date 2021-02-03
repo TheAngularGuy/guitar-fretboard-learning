@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { IonContent, ToastController } from '@ionic/angular';
-import { Store } from '@ngxs/store';
-import { SoundService } from '@shared-modules/services/sound/sound.service';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {IonContent, ToastController} from '@ionic/angular';
+import {Store} from '@ngxs/store';
+import {SoundService} from '@shared-modules/services/sound/sound.service';
 import {
   BadNoteFound,
   GameComplete,
@@ -9,16 +9,16 @@ import {
   GameStop,
   GoodNoteFound,
 } from '@shared-modules/store/game/game.actions';
-import { GameState } from '@shared-modules/store/game/game.state';
-import { Subject } from 'rxjs';
-import { popAnimation } from 'src/app/animations/pop.animation';
-import { slideAnimation } from 'src/app/animations/slide.animation';
-import { GameMode } from 'src/app/classes/game-mode.class';
-import { CHROMATIC_SCALE } from 'src/app/constants/chromatic-scale.constant';
-import { Note } from 'src/app/models/note.model';
-import { FretboardManipulationService } from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
-import { UtilsService } from 'src/app/shared/services/utils/utils.service';
-import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
+import {GameState} from '@shared-modules/store/game/game.state';
+import {Subject} from 'rxjs';
+import {popAnimation} from 'src/app/animations/pop.animation';
+import {slideAnimation} from 'src/app/animations/slide.animation';
+import {GameMode} from 'src/app/classes/game-mode.class';
+import {CHROMATIC_SCALE} from 'src/app/constants/chromatic-scale.constant';
+import {Note} from 'src/app/models/note.model';
+import {FretboardManipulationService} from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
+import {UtilsService} from 'src/app/shared/services/utils/utils.service';
+import {PreferencesState, PreferencesStateModel} from 'src/app/shared/store/preferences/preferences.state';
 
 @Component({
   selector: 'app-locate-all',
@@ -31,13 +31,11 @@ export class LocateAllPage implements OnInit, OnDestroy {
   destroyed$ = new Subject();
   preferences: PreferencesStateModel;
   game: GameMode = new GameMode();
-  chromaticScale = CHROMATIC_SCALE;
   lastClickRegistered: number;
   series: { good: boolean; noteGuessed: Note }[];
   seriesMaxRange: number;
-  seriesDisplay: any[];
-  scoreHistoric: { timeTook: number; good: boolean; result: any }[];
-  lastPointsOnStart: number;
+  seriesDisplay: boolean[];
+  scoreHistoric: { timeTook: number; }[];
 
   get averageTime(): string | number {
     if (!this.scoreHistoric?.length) {
@@ -53,10 +51,11 @@ export class LocateAllPage implements OnInit, OnDestroy {
     public readonly toastCtrl: ToastController,
     private readonly sound: SoundService,
     private readonly fretboardManipulationService: FretboardManipulationService,
-  ) {}
+  ) {
+  }
 
   ngOnDestroy() {
-    this.store.dispatch(new GameStop({ tuning: this.preferences.tuning }));
+    this.store.dispatch(new GameStop({tuning: this.preferences.tuning}));
     this.destroyed$.next();
     this.destroyed$.complete();
   }
@@ -68,27 +67,25 @@ export class LocateAllPage implements OnInit, OnDestroy {
 
     this.game.initGameMode(fretboardNotes, {
       onBeforeStart: () => {
-        this.store.dispatch(new GameStart({ tuning: this.preferences.tuning }));
+        this.store.dispatch(new GameStart({tuning: this.preferences.tuning}));
         this.scoreHistoric = [];
-        this.lastPointsOnStart = this.store.selectSnapshot(GameState.scoreGlobal);
       },
       onNotePicked: () => {
-        this.seriesMaxRange = this.numberOfNoteOccurrences(
-          this.game.noteToFind.note.name,
-          this.game.fretboardNotes,
-        );
+        this.seriesMaxRange = this.numberOfNoteOccurrences(this.game.noteToFind.note.name, this.game.fretboardNotes);
         this.series = [];
         this.seriesDisplay = new Array(this.seriesMaxRange).fill(undefined);
       },
       onEnd: () => {
-        this.store.dispatch(new GameStop({ tuning: this.preferences.tuning }));
+        this.store.dispatch(new GameStop({tuning: this.preferences.tuning}));
         this.content.scrollToTop(250);
-        this.store.dispatch(new GameComplete({ previous: this.lastPointsOnStart }));
       },
+      onComplete: () => {
+        this.store.dispatch(new GameComplete({tuning: this.preferences.tuning}));
+      }
     });
   }
 
-  numberOfNoteOccurrences(noteName: string, fretboard: string[][]): number {
+  private numberOfNoteOccurrences(noteName: string, fretboard: string[][]): number {
     const box = this.game.fretboardNotes
       .slice(this.game.fretsAvailable[0], this.game.fretsAvailable[1] + 1)
       .join(',')
@@ -103,13 +100,9 @@ export class LocateAllPage implements OnInit, OnDestroy {
   }
 
   onNoteClicked(noteGuessed: Note) {
-    const now = Date.now();
-    if (!this.game.isPlaying ||
-      this.series.length === this.seriesMaxRange ||
-      now - this.lastClickRegistered <= this.game.config.CLICK_INTERVAL) {
+    if (!this.game.isPlaying || this.isLastClickTooCloseInTime()) {
       return;
     }
-    this.lastClickRegistered = now;
 
     if (!this.isNotePresentInSeries(noteGuessed)) {
       this.registerSeriesNoteClick(noteGuessed);
@@ -120,7 +113,16 @@ export class LocateAllPage implements OnInit, OnDestroy {
     }
   }
 
-  isNotePresentInSeries(note: Note) {
+  private isLastClickTooCloseInTime() {
+    const now = Date.now();
+    const bool = now - this.lastClickRegistered <= this.game.gameConfig.CLICK_INTERVAL;
+    if (!bool) {
+      this.lastClickRegistered = now;
+    }
+    return bool;
+  }
+
+  private isNotePresentInSeries(note: Note) {
     for (const guess of this.series) {
       if (guess.good === false) {
         continue;
@@ -150,7 +152,7 @@ export class LocateAllPage implements OnInit, OnDestroy {
     return false;
   }
 
-  registerSeriesNoteClick(noteGuessed: Note) {
+  private registerSeriesNoteClick(noteGuessed: Note) {
     if (noteGuessed.name === this.game.noteToFind.note.name) {
       // good answer
       this.series.push({
@@ -160,7 +162,7 @@ export class LocateAllPage implements OnInit, OnDestroy {
       this.seriesDisplay[this.series.length - 1] = true;
       this.sound.playGood();
       this.store.dispatch(
-        new GoodNoteFound({ note: noteGuessed, tuning: this.preferences.tuning }),
+        new GoodNoteFound({note: noteGuessed, tuning: this.preferences.tuning}),
       );
     } else {
       // bad answer
@@ -171,12 +173,12 @@ export class LocateAllPage implements OnInit, OnDestroy {
       this.seriesDisplay[this.series.length - 1] = false;
       this.sound.playError();
       this.store.dispatch(
-        new BadNoteFound({ note: noteGuessed, tuning: this.preferences.tuning }),
+        new BadNoteFound({note: noteGuessed, tuning: this.preferences.tuning}),
       );
     }
   }
 
-  nextSeries() {
+  private nextSeries() {
     const good = this.series.reduce((accu: boolean, current) => {
       return current.good && accu;
     }, true);
@@ -187,8 +189,6 @@ export class LocateAllPage implements OnInit, OnDestroy {
     }
     this.scoreHistoric.push({
       timeTook: Date.now() - this.game.noteToFind.time - this.game.config.ANIMATION_TIME,
-      good,
-      result: JSON.parse(JSON.stringify(this.series)),
     });
 
     setTimeout(() => this.game.pickRandomNote(), this.game.config.ANIMATION_DELAY);
@@ -197,7 +197,6 @@ export class LocateAllPage implements OnInit, OnDestroy {
   start() {
     const notes = this.store.selectSnapshot(GameState.unlockedNotesSegment);
     const frets = this.store.selectSnapshot(GameState.unlockedFretsSegment);
-    console.log(frets);
 
     this.game.initRound(notes, frets);
     this.game.togglePlay();

@@ -13,6 +13,7 @@ export interface UserStateModel {
   emailVerified: boolean;
 }
 
+@Injectable()
 @State<UserStateModel>({
   name: 'user',
   defaults: {
@@ -23,7 +24,6 @@ export interface UserStateModel {
     emailVerified: undefined,
   },
 })
-@Injectable()
 export class UserState {
 
   constructor(private readonly firebaseauth: AngularFireAuth) {

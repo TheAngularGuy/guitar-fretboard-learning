@@ -26,6 +26,7 @@ export interface PreferencesStateModel {
   tuning: string;
 }
 
+@Injectable()
 @State<PreferencesStateModel>({
   name: 'preferences',
   defaults: {
@@ -37,7 +38,6 @@ export interface PreferencesStateModel {
     tuning: UtilsService.getParsedItemFromLS(stateEnums.tuning) ?? 'Standard',
   },
 })
-@Injectable()
 export class PreferencesState {
   // Selectors
   @Selector()

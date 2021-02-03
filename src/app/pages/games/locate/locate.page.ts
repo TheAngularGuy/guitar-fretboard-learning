@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { IonContent } from '@ionic/angular';
-import { Store } from '@ngxs/store';
-import { SoundService } from '@shared-modules/services/sound/sound.service';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {IonContent} from '@ionic/angular';
+import {Store} from '@ngxs/store';
+import {SoundService} from '@shared-modules/services/sound/sound.service';
 import {
   BadNoteFound,
   GameComplete,
@@ -9,15 +9,15 @@ import {
   GameStop,
   GoodNoteFound,
 } from '@shared-modules/store/game/game.actions';
-import { GameState } from '@shared-modules/store/game/game.state';
-import { Subject } from 'rxjs';
-import { popAnimation } from 'src/app/animations/pop.animation';
-import { slideAnimation } from 'src/app/animations/slide.animation';
-import { GameMode } from 'src/app/classes/game-mode.class';
-import { Note } from 'src/app/models/note.model';
-import { FretboardManipulationService } from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
-import { UtilsService } from 'src/app/shared/services/utils/utils.service';
-import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
+import {GameState} from '@shared-modules/store/game/game.state';
+import {Subject} from 'rxjs';
+import {popAnimation} from 'src/app/animations/pop.animation';
+import {slideAnimation} from 'src/app/animations/slide.animation';
+import {GameMode} from 'src/app/classes/game-mode.class';
+import {Note} from 'src/app/models/note.model';
+import {FretboardManipulationService} from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
+import {UtilsService} from 'src/app/shared/services/utils/utils.service';
+import {PreferencesState, PreferencesStateModel} from 'src/app/shared/store/preferences/preferences.state';
 
 @Component({
   selector: 'app-locate',
@@ -25,14 +25,13 @@ import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/pr
   styleUrls: ['./locate.page.scss'],
   animations: [popAnimation, slideAnimation],
 })
-export class LocatePage implements OnInit, OnDestroy {
+export class LocatePage implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('content') content: IonContent;
   destroyed$ = new Subject();
   game: GameMode = new GameMode();
   preferences: PreferencesStateModel;
   lastClickRegistered: number;
-  lastPointsOnStart: number;
-  scoreHistoric: { timeTook: number; noteToFind: Note; noteGuessed: Note }[];
+  scoreHistoric: { timeTook: number; }[];
 
   get averageTime(): string | number {
     if (!this.scoreHistoric?.length) {
@@ -47,65 +46,73 @@ export class LocatePage implements OnInit, OnDestroy {
     public readonly utils: UtilsService,
     private readonly sound: SoundService,
     private readonly fretboardManipulationService: FretboardManipulationService,
-  ) {}
+  ) {
+  }
 
   ngOnDestroy() {
-    this.store.dispatch(new GameStop({ tuning: this.preferences.tuning }));
+    this.store.dispatch(new GameStop({tuning: this.preferences.tuning}));
     this.destroyed$.next();
     this.destroyed$.complete();
   }
 
   ngOnInit() {
     this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
-    const fretboardNotes = this.fretboardManipulationService.getFretboardNotes();
+    const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
 
     this.game.initGameMode(
       fretboardNotes,
       {
         onBeforeStart: () => {
-          this.store.dispatch(new GameStart({ tuning: this.preferences.tuning }));
+          this.store.dispatch(new GameStart({tuning: this.preferences.tuning}));
           this.scoreHistoric = [];
-          this.lastPointsOnStart = this.store.selectSnapshot(GameState.scoreGlobal);
         },
         onEnd: () => {
-          this.store.dispatch(new GameStop({ tuning: this.preferences.tuning }));
+          this.store.dispatch(new GameStop({tuning: this.preferences.tuning}));
           this.content.scrollToTop(250);
-          this.store.dispatch(new GameComplete({ previous: this.lastPointsOnStart }));
         },
-        onComplete: () => { },
+        onComplete: () => {
+          this.store.dispatch(new GameComplete({tuning: this.preferences.tuning}));
+        },
       });
   }
 
+  ngAfterViewInit() {
+  }
+
   onNoteClicked(noteGuessed: Note) {
-    const now = Date.now();
-    if (!this.game.isPlaying ||
-      now - this.lastClickRegistered <= this.game.gameConfig.CLICK_INTERVAL) {
+    if (!this.game.isPlaying || this.isLastClickTooCloseInTime()) {
       return;
     }
 
-    this.lastClickRegistered = now;
     if (noteGuessed.name === this.game.noteToFind.note.name) {
       // good answer
       this.game.increaseScoreGood();
       this.sound.playGood();
       this.store.dispatch(
-        new GoodNoteFound({ note: noteGuessed, tuning: this.preferences.tuning }),
+        new GoodNoteFound({note: noteGuessed, tuning: this.preferences.tuning}),
       );
     } else {
       // bad answer
       this.game.increaseScoreBad();
       this.sound.playError();
       this.store.dispatch(
-        new BadNoteFound({ note: noteGuessed, tuning: this.preferences.tuning }),
+        new BadNoteFound({note: noteGuessed, tuning: this.preferences.tuning}),
       );
     }
     this.scoreHistoric.push({
-      noteGuessed,
-      noteToFind: this.game.noteToFind.note,
       timeTook: Date.now() - this.game.noteToFind.time - this.game.gameConfig.ANIMATION_TIME,
     });
 
     setTimeout(() => this.game.pickRandomNote(), this.game.gameConfig.ANIMATION_DELAY);
+  }
+
+  private isLastClickTooCloseInTime() {
+    const now = Date.now();
+    const bool = now - this.lastClickRegistered <= this.game.gameConfig.CLICK_INTERVAL;
+    if (!bool) {
+      this.lastClickRegistered = now;
+    }
+    return bool;
   }
 
   start() {

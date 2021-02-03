@@ -15,7 +15,7 @@ export class GameStop {
 export class GameComplete {
   public static readonly type = '[GAME] GameComplete';
 
-  constructor(public payload: { previous: number }) { }
+  constructor(public payload: { tuning: string }) { }
 }
 
 export class GoodNoteFound {

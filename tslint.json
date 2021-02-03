@@ -2,6 +2,7 @@
   "extends": "tslint:recommended",
   "rulesDirectory": ["codelyzer"],
   "rules": {
+    "adjacent-overload-signatures": false,
     "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
     "no-string-throw": false,
     "array-type": false,

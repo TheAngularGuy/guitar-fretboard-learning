@@ -1,6 +1,7 @@
-import { GAMES_CONFIG } from '@constants/games-config.constant';
-import { Note } from '@models/note.model';
-import { UtilsService } from '../shared/services/utils/utils.service';
+import {GAMES_CONFIG} from '@constants/games-config.constant';
+import {Note} from '@models/note.model';
+import {UtilsService} from '../shared/services/utils/utils.service';
+import {GameComplete, GameStop} from '@shared-modules/store/game/game.actions';
 
 export interface GameModeEvents {
   onBeforeStart?: () => void;
@@ -13,7 +14,7 @@ export interface GameModeEvents {
 }
 
 export class GameMode {
-  config = { ...GAMES_CONFIG }; // cuz the values are past by reference
+  config = {...GAMES_CONFIG}; // cuz the values are past by reference
   isPlaying: boolean;
   noteToFind: { note: Note; time: number }; // time: time of appearance
   score: { good: number; bad: number; total: number; };
@@ -27,18 +28,29 @@ export class GameMode {
   fretsAvailable: [number, number];
 
   // setters
-  set fretboardNotes(notes: string[][]) {this._fretboardNotes = notes;}
+  set fretboardNotes(notes: string[][]) {
+    this._fretboardNotes = notes;
+  }
 
   // getters
-  get fretboardNotes() {return this._fretboardNotes;}
+  get fretboardNotes() {
+    return this._fretboardNotes;
+  }
 
-  get gameConfig() {return this.config;}
+  get gameConfig() {
+    return this.config;
+  }
 
-  get scoreGood() {return this.score && this.score.good;};
+  get scoreGood() {
+    return this.score && this.score.good;
+  };
 
-  get scoreBad() {return this.score && this.score.bad;};
+  get scoreBad() {
+    return this.score && this.score.bad;
+  };
 
-  constructor() {}
+  constructor() {
+  }
 
   initGameMode(fretboardNotes: string[][], callbacks: GameModeEvents) {
     this.fretboardNotes = fretboardNotes;
@@ -94,11 +106,7 @@ export class GameMode {
     if (this.callbacks && this.callbacks.onBeforeEnd) {
       this.callbacks.onBeforeEnd();
     }
-    if (this.score.bad + this.score.good === this.config.MAX_RANGE) {
-      if (this.callbacks && this.callbacks.onComplete) {
-        this.callbacks.onComplete();
-      }
-    }
+
     this.isPlaying = false;
     setTimeout(() => {
       // we need a timeout so if the user is wrong on the last guess
@@ -107,11 +115,18 @@ export class GameMode {
       this.notesAvailable = null;
       this.fretsAvailable = null;
     }, this.config.ANIMATION_DELAY);
-    if (this.callbacks && this.callbacks.onEnd) {
-      setTimeout(() => {
+
+    setTimeout(() => {
+      if (this.callbacks && this.callbacks.onEnd) {
         this.callbacks.onEnd();
-      }, this.config.ANIMATION_TIME);
-    }
+      }
+
+      if (!!this.score && this.score.bad + this.score.good === this.config.MAX_RANGE) {
+        if (this.callbacks && this.callbacks.onComplete) {
+          this.callbacks.onComplete();
+        }
+      }
+    }, this.config.ANIMATION_TIME);
   }
 
   pickRandomNote(loop = 0) {
@@ -131,7 +146,12 @@ export class GameMode {
       this.isSameAsNoteToFindName(note) ||
       this.isNoteNameAppearanceTooHigh(note)
     ) {
-      return this.pickRandomNote(loop + 1);
+      if (loop > 100) {
+        console.error('Error picking random note!');
+        console.log(note, UtilsService.clone(this.notesAppearances));
+      } else {
+        return this.pickRandomNote(loop + 1);
+      }
     }
     this.notesAppearances[note] = this.notesAppearances[note] ? this.notesAppearances[note] + 1 : 1;
     this.noteToFind = {

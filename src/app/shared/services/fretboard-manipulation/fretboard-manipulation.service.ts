@@ -7,19 +7,10 @@ import { FRETBOARD_STANDARD } from 'src/app/constants/fretboard-notes.constant';
 
 @Injectable()
 export class FretboardManipulationService {
-  preferences: { tuning: string; invertedStrings: boolean };
 
-  constructor(private store: Store) {
-    this.store.select<PreferencesStateModel>(PreferencesState.getState)
-      .pipe(
-        tap((preference) => {
-          this.preferences = preference;
-        })
-      )
-      .subscribe();
-  }
+  constructor() {  }
 
-  getFretboardNotes(preferences = this.preferences): string[][] {
+  getFretboardNotes(preferences: { tuning: string; invertedStrings: boolean }): string[][] {
     let output: string[][];
 
     if (preferences.tuning.toLowerCase().includes('standard')) {

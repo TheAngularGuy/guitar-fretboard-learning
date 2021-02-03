@@ -1,6 +1,6 @@
-import { Note } from '@models/note.model';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { UtilsService } from '@shared-modules/services/utils/utils.service';
+import {Note} from '@models/note.model';
+import {Action, Selector, State, StateContext} from '@ngxs/store';
+import {UtilsService} from '@shared-modules/services/utils/utils.service';
 import {
   BadNoteFound,
   GameComplete,
@@ -8,6 +8,10 @@ import {
   GameStop,
   GoodNoteFound, UnlockedFrets, UnlockedNotes,
 } from '@shared-modules/store/game/game.actions';
+import {ModalController} from '@ionic/angular';
+import {ProgressModal} from '../../../modals/progress/progress.modal';
+import {Injectable} from '@angular/core';
+import {LEVELS} from '@constants/levels';
 
 enum stateEnums {
   scoreByTunings = 'game_scoreByTunings',
@@ -20,39 +24,50 @@ interface NoteScore extends Note {
   occurance: number;
 }
 
+interface ScoreByTunings {
+  tuning: string;
+  score: {
+    points: number;
+    notes: {
+      name: string;
+      value: number;
+      good: number;
+      bad: number;
+      placements: NoteScore[];
+    }[];
+  };
+};
+
 export interface GameStateModel {
   isPlaying: boolean;
-  lastCompletedGame: { previous: number; current: number; time: number };
   globalPoints: number;
-  scoreByTunings: {
-    tuning: string;
-    score: {
-      points: number;
-      notes: {
-        name: string;
-        value: number;
-        good: number;
-        bad: number;
-        placements: NoteScore[];
-      }[];
-    };
-  }[];
+  scoreByTunings: ScoreByTunings[];
   unlockedNotes: string[];
   unlockedFrets: number[];
+  currentSession: {
+    globalPoints: number;
+    scoreByTunings: ScoreByTunings[];
+  }
 }
 
+@Injectable()
 @State<GameStateModel>({
   name: 'game',
   defaults: {
     isPlaying: false,
-    lastCompletedGame: { previous: 0, current: 0, time: 0 },
-    globalPoints: UtilsService.getParsedItemFromLS(stateEnums.globalPoints) || 0,
-    unlockedFrets: UtilsService.getParsedItemFromLS(stateEnums.unlockedFrets) || [0, 1, 2, 3],
-    unlockedNotes: UtilsService.getParsedItemFromLS(stateEnums.unlockedNotes) || ['C', 'A', 'G', 'E'],
+    globalPoints: UtilsService.getParsedItemFromLS(stateEnums.globalPoints) || 990,
+    unlockedFrets: UtilsService.getParsedItemFromLS(stateEnums.unlockedFrets) || LEVELS[0].unlockedFrets,
+    unlockedNotes: UtilsService.getParsedItemFromLS(stateEnums.unlockedNotes) || LEVELS[0].unlockedNotes,
     scoreByTunings: UtilsService.getParsedItemFromLS(stateEnums.scoreByTunings) || [],
+    currentSession: null,
   },
 })
 export class GameState {
+
+  constructor(
+    private readonly modalCtrl: ModalController,
+  ) {
+  }
 
   @Selector()
   public static getState(state: GameStateModel) {
@@ -105,11 +120,6 @@ export class GameState {
     return state.isPlaying;
   }
 
-  @Selector()
-  public static lastCompleted(state: GameStateModel) {
-    return state.lastCompletedGame;
-  }
-
   @Action(UnlockedFrets)
   private unlockedFrets(ctx: StateContext<GameStateModel>, action: UnlockedFrets) {
     if (!action.payload.frets) {
@@ -147,6 +157,7 @@ export class GameState {
   private gameStart(ctx: StateContext<GameStateModel>, action: GameStart) {
     const tuning = action.payload.tuning;
     const scoreByTunings = UtilsService.clone(ctx.getState().scoreByTunings);
+
     if (!scoreByTunings.filter(t => t.tuning === tuning).length) {
       scoreByTunings.push({
         tuning,
@@ -156,11 +167,19 @@ export class GameState {
         },
       });
 
-      ctx.patchState({ scoreByTunings, isPlaying: true });
+      ctx.patchState({
+        scoreByTunings,
+      });
       UtilsService.setParsedItemToLS(stateEnums.scoreByTunings, scoreByTunings);
-    } else {
-      ctx.patchState({ isPlaying: true });
     }
+
+    ctx.patchState({
+      isPlaying: true,
+      currentSession: {
+        scoreByTunings,
+        globalPoints: ctx.getState().globalPoints,
+      }
+    })
   }
 
   @Action(GoodNoteFound)
@@ -175,25 +194,33 @@ export class GameState {
 
   @Action(GameComplete)
   private gameComplete(ctx: StateContext<GameStateModel>, action: GameComplete) {
-    ctx.patchState({
-      lastCompletedGame: {
-        previous: action.payload.previous,
-        current: ctx.getState().globalPoints,
-        time: Date.now(),
-      },
+    const state = ctx.getState();
+    this.gameStop(ctx, new GameStop({tuning: action.payload.tuning}));
+
+    // NOTE: apply current session to store
+    const globalPoints = state.currentSession.globalPoints;
+    const scoreByTunings = state.currentSession.scoreByTunings;
+    this.openProgressModal({
+      previous: state.globalPoints,
+      current: state.currentSession.globalPoints,
     });
+    ctx.patchState({
+      scoreByTunings,
+      globalPoints,
+    });
+    UtilsService.setParsedItemToLS(stateEnums.scoreByTunings, scoreByTunings);
+    UtilsService.setParsedItemToLS(stateEnums.globalPoints, globalPoints);
   }
 
   // utils ----
-  private goodOrBadNoteFound(ctx: StateContext<GameStateModel>,
-                             action: GoodNoteFound | BadNoteFound) {
-
+  private goodOrBadNoteFound(ctx: StateContext<GameStateModel>, action: GoodNoteFound | BadNoteFound) {
+    const state = ctx.getState();
     const bad = action.constructor.name !== 'GoodNoteFound';
     const tuning = action.payload.tuning;
     const note = action.payload.note;
 
-    let globalPoints = ctx.getState().globalPoints;
-    const scoreByTunings = UtilsService.clone(ctx.getState().scoreByTunings);
+    let globalPoints = state.currentSession.globalPoints;
+    const scoreByTunings = UtilsService.clone(state.currentSession.scoreByTunings);
     const scoreByTuning = scoreByTunings.find(t => t.tuning === tuning).score;
     const scoreNote = scoreByTuning.notes.find(sn => sn.name === note.name);
 
@@ -218,7 +245,6 @@ export class GameState {
           });
         }
       }
-
     } else {
       const sn = {
         name: note.name,
@@ -237,11 +263,25 @@ export class GameState {
     }
 
     ctx.patchState({
-      scoreByTunings,
-      globalPoints,
+      currentSession: {
+        scoreByTunings,
+        globalPoints,
+      }
     });
-    UtilsService.setParsedItemToLS(stateEnums.scoreByTunings, scoreByTunings);
-    UtilsService.setParsedItemToLS(stateEnums.globalPoints, globalPoints);
+  }
+
+  private async openProgressModal(lastCompletedGame: { previous: number, current: number }) {
+    const modal = await this.modalCtrl.create({
+      component: ProgressModal,
+      animated: true,
+      swipeToClose: true,
+      cssClass: 'modal-transparent',
+      componentProps: {
+        current: lastCompletedGame.current,
+        previous: lastCompletedGame.previous,
+      },
+    });
+    return modal.present();
   }
 
 }

@@ -7,42 +7,14 @@ import {
   Input,
   ViewChild,
 } from '@angular/core';
-import { IonSlides, ModalController } from '@ionic/angular';
-import { Store } from '@ngxs/store';
-import { SoundService } from '@shared-modules/services/sound/sound.service';
-import { UnlockedFrets, UnlockedNotes } from '@shared-modules/store/game/game.actions';
-import { delayAnimation } from '../../animations/delay.animation';
-import { popAnimation } from '../../animations/pop.animation';
+import {IonSlides, ModalController} from '@ionic/angular';
+import {Store} from '@ngxs/store';
+import {SoundService} from '@shared-modules/services/sound/sound.service';
+import {UnlockedFrets, UnlockedNotes} from '@shared-modules/store/game/game.actions';
+import {delayAnimation} from '../../animations/delay.animation';
+import {popAnimation} from '../../animations/pop.animation';
+import {LEVELS} from '@constants/levels';
 
-const LEVELS = [{
-  name: 'Level 1',
-  min: 0,
-  max: 500,
-}, {
-  name: 'Level 2',
-  min: 500,
-  max: 1000,
-  unlockedNotes: ['D', 'F', 'B'],
-  unlockedFrets: [5, 6, 7, 8],
-}, {
-  name: 'Level 3',
-  min: 1000,
-  max: 1500,
-  unlockedNotes: ['A#', 'C#', 'D#'],
-  unlockedFrets: [9, 10],
-}, {
-  name: 'Level 4',
-  min: 1500,
-  max: 2500,
-  unlockedNotes: ['F#', 'G#'],
-  unlockedFrets: [11, 12, 13, 14, 15],
-}, {
-  name: 'Level 5',
-  min: 2500,
-  max: 4000,
-  unlockedNotes: [],
-  unlockedFrets: [16, 17],
-}];
 
 @Component({
   selector: 'app-progress',
@@ -71,7 +43,8 @@ export class ProgressModal implements AfterViewInit {
     private modalCtrl: ModalController,
     private sound: SoundService,
     private changeDetection: ChangeDetectorRef,
-  ) { }
+  ) {
+  }
 
   ngAfterViewInit(): void {
     this.updateProgress();
@@ -92,8 +65,8 @@ export class ProgressModal implements AfterViewInit {
   updateProgress() {
     LEVELS.forEach(async (level) => {
       if (this.previous >= level.min && this.previous < level.max) {
-        this.store.dispatch(new UnlockedNotes({ notes: level.unlockedNotes }));
-        this.store.dispatch(new UnlockedFrets({ frets: level.unlockedFrets }));
+        this.store.dispatch(new UnlockedNotes({notes: level.unlockedNotes}));
+        this.store.dispatch(new UnlockedFrets({frets: level.unlockedFrets}));
 
         requestAnimationFrame(() => {
           this.level = level;
@@ -103,15 +76,15 @@ export class ProgressModal implements AfterViewInit {
         if (this.current >= level.max) {
           const percentPrev = (this.previous - level.min) * (100 / (level.max - level.min));
           const percentNow = 100;
-
           await this.animate(percentPrev, percentNow);
+
+          // start new animation
           this.previous = level.max;
           this.updateProgress();
           this.newLevel();
         } else {
           const percentPrev = (this.previous - level.min) * (100 / (level.max - level.min));
           const percentNow = (this.current - level.min) * (100 / (level.max - level.min));
-
           await this.animate(percentPrev, percentNow);
         }
 
@@ -119,9 +92,13 @@ export class ProgressModal implements AfterViewInit {
     });
   }
 
-  newLevel() {
+  clearTimmer() {
     clearInterval(this.interval);
     this.timer.nativeElement.style.display = 'none';
+  }
+
+  newLevel() {
+    this.clearTimmer();
 
     setTimeout(() => {
       this.sound.playSuccess();
@@ -133,7 +110,7 @@ export class ProgressModal implements AfterViewInit {
   }
 
   animate(from: number, to: number) {
-    this.sound.playCoins();
+    // this.sound.playCoins();
 
     this.line.nativeElement.style.transition = 'none';
     requestAnimationFrame(() => {

@@ -21,7 +21,7 @@ export class HomePage {
     {
       path: 'locate-all',
       img: 'assets/imgs/locate-all.svg',
-      title: 'Locate all',
+      title: 'Locate all locations',
       subtitle:
         'Locate all the instances of ' +
         'a note in the fretboard and click on them all',
@@ -38,7 +38,7 @@ export class HomePage {
     {
       path: 'identify-sound',
       img: 'assets/imgs/headphones.svg',
-      title: 'Identify by sound',
+      title: 'Identify by tone',
       subtitle: `Identify which chord is played by sound. Practice your musical ear`,
     },
   ];
