@@ -1,14 +1,12 @@
-import { Component } from '@angular/core';
-import { SwUpdate } from '@angular/service-worker';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { ModalController, Platform, ToastController } from '@ionic/angular';
-import { Select, Store } from '@ngxs/store';
-import { GameState } from '@shared-modules/store/game/game.state';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { ProgressModal } from './modals/progress/progress.modal';
-import { UserLogInAction, UserLogOutAction } from './shared/store/user/user.actions';
+import {Component} from '@angular/core';
+import {SwUpdate} from '@angular/service-worker';
+import {SplashScreen} from '@ionic-native/splash-screen/ngx';
+import {StatusBar} from '@ionic-native/status-bar/ngx';
+import {Platform, ToastController} from '@ionic/angular';
+import {Select, Store} from '@ngxs/store';
+import {GameState} from '@shared-modules/store/game/game.state';
+import {Observable} from 'rxjs';
+import {UserLogInAction, UserLogOutAction} from './shared/store/user/user.actions';
 
 @Component({
   selector: 'app-root',
