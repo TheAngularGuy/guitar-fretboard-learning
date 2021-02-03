@@ -38,6 +38,10 @@ export class ProgressModal implements AfterViewInit {
   showNewLevel = false;
   interval: any;
 
+  get isThereMultipleSlides() {
+    return this.level?.unlockedNotes?.length && this.level?.unlockedFrets?.length;
+  }
+
   constructor(
     private store: Store,
     private modalCtrl: ModalController,
@@ -48,7 +52,9 @@ export class ProgressModal implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.updateProgress();
+  }
 
+  startTimmer() {
     let percent = 0;
     this.interval = setInterval(() => {
       requestAnimationFrame(() => {
@@ -103,10 +109,8 @@ export class ProgressModal implements AfterViewInit {
     setTimeout(() => {
       this.sound.playSuccess();
     }, 1000);
-    setTimeout(() => {
-      this.showNewLevel = true;
-      this.changeDetection.markForCheck();
-    }, 750);
+    this.showNewLevel = true;
+    this.changeDetection.markForCheck();
   }
 
   animate(from: number, to: number) {
@@ -131,8 +135,10 @@ export class ProgressModal implements AfterViewInit {
 
   close() {
     clearInterval(this.interval);
-    this.modalCtrl.dismiss();
-    this.sound.playClick();
+    if (this.modalCtrl) {
+      this.modalCtrl.dismiss();
+      this.sound.playClick();
+    }
   }
 
 }

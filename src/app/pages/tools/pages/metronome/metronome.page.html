@@ -34,7 +34,7 @@
       <form class="settings" [formGroup]="bpmForm">
         <ion-item>
           <ion-label>Beat</ion-label>
-          <ion-select multiple="false" formControlName="beats">
+          <ion-select multiple="false" interface="popover" formControlName="beats">
             <ion-select-option *ngFor="let beat of beatsList" [value]="beat">
               {{beat}}
             </ion-select-option>
@@ -42,7 +42,7 @@
         </ion-item>
         <ion-item>
           <ion-label>Mesure</ion-label>
-          <ion-select multiple="false" formControlName="mesure">
+          <ion-select multiple="false" interface="popover" formControlName="mesure">
             <ion-select-option [value]="0.5"> 2 </ion-select-option>
             <ion-select-option [value]="1"> 4 </ion-select-option>
             <ion-select-option [value]="2"> 8 </ion-select-option>

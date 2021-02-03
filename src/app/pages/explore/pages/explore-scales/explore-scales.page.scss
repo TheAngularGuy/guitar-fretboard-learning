@@ -1,12 +1,3 @@
-
-.page {
-  display: flex;
-
-  ion-button {
-    width: 100%;
-  }
-}
-
 .settings {
   ion-item {
     ion-input {
@@ -26,4 +17,9 @@
       }
     }
   }
+}
+
+
+.small {
+  transform: scale(.7);
 }

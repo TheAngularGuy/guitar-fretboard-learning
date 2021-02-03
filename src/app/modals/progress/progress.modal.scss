@@ -54,7 +54,7 @@
   position: absolute;
   left: 1.5rem;
   right: 1.5rem;
-  top: calc(55% - 30px);
+  top: calc(55% - 5px);
   transform: translateY(-50%);
   background: var(--ion-color-light);
   min-height: 25vh;
@@ -72,6 +72,7 @@
     img {
       display: inline-block;
       width: 45%;
+      max-width: 140px;
       padding: 0 1rem;
       border-radius: 10px;
       overflow: hidden;
@@ -83,7 +84,14 @@
   }
 
   .score {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      height: 18px;
+      width: 18px;
+    }
   }
 
   .progress {
@@ -127,6 +135,8 @@
     font-size: 2.5rem;
     width: calc(44vh / 2);
     height: calc(44vh / 2);
+    max-height: 145px;
+    max-width: 145px;
     display: flex;
     place-items: center;
     place-content: center;
@@ -162,8 +172,8 @@
       transform: translateY(-50%);
     }
 
-    .unlocked-notes {
-      font-size: 1.8rem;
+    .unlocked-stuff {
+      font-size: 1.6rem;
       text-align: center;
       margin-bottom: 2rem;
 
@@ -181,7 +191,12 @@
   .encouragement {
     text-align: center;
     margin-top: 2rem;
-    font-size: 2.1rem;
+    font-size: 1.36rem;
+
+    img {
+      height: 25px;
+      width: 25px;
+    }
   }
 
   .ok {
@@ -198,7 +213,7 @@
     .ok {
       display: none;
     }
-    .unlocked-notes, .encouragement {
+    .unlocked-stuff, .encouragement {
       font-size: 1rem;
     }
 

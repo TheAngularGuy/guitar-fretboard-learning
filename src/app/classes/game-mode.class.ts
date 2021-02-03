@@ -64,10 +64,16 @@ export class GameMode {
   }
 
   increaseScoreGood() {
+    if (this.score.good + this.score.bad >= this.config.MAX_RANGE) {
+      return;
+    }
     this.score.good += 1;
   }
 
   increaseScoreBad() {
+    if (this.score.good + this.score.bad >= this.config.MAX_RANGE) {
+      return;
+    }
     this.score.bad += 1;
   }
 
@@ -130,6 +136,9 @@ export class GameMode {
   }
 
   pickRandomNote(loop = 0) {
+    if (!this.isPlaying) {
+      return;
+    }
     if (this.score.total === this.score.good + this.score.bad) {
       this.togglePlay();
       return;

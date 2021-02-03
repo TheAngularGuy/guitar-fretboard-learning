@@ -37,8 +37,7 @@ export class LocatePage implements OnInit, AfterViewInit, OnDestroy {
     if (!this.scoreHistoric?.length) {
       return '';
     }
-    return this.scoreHistoric
-      .reduce((acc, n) => acc + n.timeTook, 0) / this.scoreHistoric.length / 1000;
+    return this.scoreHistoric.reduce((acc, n) => acc + n.timeTook, 0) / this.scoreHistoric.length / 1000;
   }
 
   constructor(
@@ -58,7 +57,7 @@ export class LocatePage implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
     const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
-
+    this.game.config.MAX_RANGE = 1; // TODO remove this
     this.game.initGameMode(
       fretboardNotes,
       {

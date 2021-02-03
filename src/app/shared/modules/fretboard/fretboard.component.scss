@@ -426,13 +426,28 @@
   .width-17 {
     max-height: calc(var(--tileWidth) - 69px);
   }
+  .width-18 {
+    max-height: calc(var(--tileWidth) - 71px);
+  }
+  .width-19 {
+    max-height: calc(var(--tileWidth) - 75px);
+  }
+  .width-20 {
+    max-height: calc(var(--tileWidth) - 79px);
+  }
+  .width-21 {
+    max-height: calc(var(--tileWidth) - 85px);
+  }
+  .width-22 {
+    max-height: calc(var(--tileWidth) - 87px);
+  }
 }
 
 @media screen and (min-width: 760px) {
   // Desktop
   .fretboard-wrapper {
     margin: auto;
-    width: calc(100% - 20px);
+    width: calc(100% - 40px);
 
     .fretboard {
       .tile {
@@ -511,60 +526,84 @@
     }
   }
 
+  .tile {
+    width: 100%;
+    max-width: 10%;
+  }
+
   .tile-nut {
+    max-width: calc(5%);
+  }
+
+  /*.tile-nut {
     width: calc(2.5%);
   }
   .width-1 {
-    width: calc(5.73% + 3.5%);
+    width: calc(4.4%);
   }
   .width-2 {
-    width: calc(5.73% + 3%);
+    width: calc(4.4%);
   }
   .width-3 {
-    width: calc(5.73% + 2.25%);
+    width: calc(4.4%);
   }
   .width-4 {
-    width: calc(5.73% + 1.25%);
+    width: calc(4.4%);
   }
   .width-5 {
-    width: calc(5.73% + 0.5%);
+    width: calc(4.4%);
   }
   .width-6 {
-    width: calc(5.73% + 0.25%);
+    width: calc(4.4%);
   }
   .width-7 {
-    width: calc(5.73% - 0%);
+    width: calc(4.4%);
   }
   .width-8 {
-    width: calc(5.73% - 0.15%);
+    width: calc(4.4%);
   }
   .width-9 {
-    width: calc(5.73% - 0.25%);
+    width: calc(4.4%);
   }
   .width-10 {
-    width: calc(5.73% - 0.5%);
+    width: calc(4.4%);
   }
   .width-11 {
-    width: calc(5.73% - 0.75%);
+    width: calc(4.4%);
   }
   .width-12 {
-    width: calc(5.73% - 0.9%);
+    width: calc(4.4%);
   }
   .width-13 {
-    width: calc(5.73% - 1.35%);
+    width: calc(4.4%);
   }
   .width-14 {
-    width: calc(5.73% - 1.5%);
+    width: calc(4.4%);
   }
   .width-15 {
-    width: calc(5.73% - 1.75%);
+    width: calc(4.4%);
   }
   .width-16 {
-    width: calc(5.73% - 2%);
+    width: calc(4.4%);
   }
   .width-17 {
-    width: calc(5.73% - 2%);
+    width: calc(4.4%);
   }
+  .width-18 {
+    width: calc(4.4%);
+  }
+  .width-19 {
+    width: calc(4.4%);
+  }
+  .width-20 {
+    width: calc(4.4%);
+  }
+  .width-21 {
+    width: calc(4.4%);
+  }
+  .width-22 {
+    width: calc(4.4%);
+  }*/
 }
 
 @keyframes pop {

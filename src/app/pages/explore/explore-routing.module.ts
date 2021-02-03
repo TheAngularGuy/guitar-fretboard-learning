@@ -18,6 +18,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/explore-chords/explore-chords.module').then(m => m.ExploreChordsPageModule),
   },
+  {
+    path: 'explore-scales',
+    loadChildren: () => import('./pages/explore-scales/explore-scales.module').then( m => m.ExploreScalesPageModule)
+  },
+
 ];
 
 @NgModule({

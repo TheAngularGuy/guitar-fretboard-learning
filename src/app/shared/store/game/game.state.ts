@@ -55,7 +55,7 @@ export interface GameStateModel {
   name: 'game',
   defaults: {
     isPlaying: false,
-    globalPoints: UtilsService.getParsedItemFromLS(stateEnums.globalPoints) || 990,
+    globalPoints: UtilsService.getParsedItemFromLS(stateEnums.globalPoints) || 490, // TODO remove this
     unlockedFrets: UtilsService.getParsedItemFromLS(stateEnums.unlockedFrets) || LEVELS[0].unlockedFrets,
     unlockedNotes: UtilsService.getParsedItemFromLS(stateEnums.unlockedNotes) || LEVELS[0].unlockedNotes,
     scoreByTunings: UtilsService.getParsedItemFromLS(stateEnums.scoreByTunings) || [],

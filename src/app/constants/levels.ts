@@ -15,23 +15,23 @@ export const LEVELS = [{
   min: 1000,
   max: 2000,
   unlockedNotes: [],
-  unlockedFrets: [5, 6, 7, 8],
+  unlockedFrets: [6, 7, 8],
 }, {
   name: 'Level 4',
   min: 2000,
   max: 3500,
   unlockedNotes: ['A#', 'C#', 'D#'],
-  unlockedFrets: [9, 10],
+  unlockedFrets: [9, 10, 11, 12],
 }, {
   name: 'Level 5',
   min: 3500,
   max: 5500,
   unlockedNotes: ['F#', 'G#'],
-  unlockedFrets: [11, 12, 13, 14, 15],
+  unlockedFrets: [13, 14, 15, 16, 17],
 }, {
   name: 'Level 6',
   min: 5500,
   max: 8000,
   unlockedNotes: [],
-  unlockedFrets: [16, 17],
+  unlockedFrets: [18, 19, 20, 21, 22],
 }];

@@ -16,3 +16,7 @@ export class ExploreSetSelectedChordAction {
   public static readonly type = '[Explore] set selected chord';
   constructor(public payload: { noteName: string; type: ChordType }) {}
 }
+export class ExploreSetSelectedScaleAction {
+  public static readonly type = '[Explore] set selected scale';
+  constructor(public payload: { rootNote: string; scale: string; segment: string }) {}
+}

@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngxs/store';
-import { CHORD_TYPES } from 'src/app/constants/chord-types.constant';
-import { ALL_CHORDS_HASH } from 'src/app/constants/chords/all-chords-hash.constant';
-import { CHROMATIC_SCALE } from 'src/app/constants/chromatic-scale.constant';
-import { FRETBOARD_STANDARD } from 'src/app/constants/fretboard-notes.constant';
-import { Chord, ChordType } from 'src/app/models/chord.model';
-import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
+import {Component, OnInit} from '@angular/core';
+import {Store} from '@ngxs/store';
+import {CHORD_TYPES} from 'src/app/constants/chord-types.constant';
+import {ALL_CHORDS_HASH} from 'src/app/constants/chords/all-chords-hash.constant';
+import {CHROMATIC_SCALE} from 'src/app/constants/chromatic-scale.constant';
+import {FRETBOARD_STANDARD} from 'src/app/constants/fretboard-notes.constant';
+import {Chord, ChordType} from 'src/app/models/chord.model';
+import {PreferencesState, PreferencesStateModel} from 'src/app/shared/store/preferences/preferences.state';
 
-import { ExploreSetSelectedChordAction } from '../../store/explore.actions';
-import { ExploreState, ExploreStateModel } from '../../store/explore.state';
+import {ExploreSetSelectedChordAction} from '../../store/explore.actions';
+import {ExploreState, ExploreStateModel} from '../../store/explore.state';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-explore-chords',
@@ -26,23 +27,33 @@ export class ExploreChordsPage implements OnInit {
   selectedType: ChordType;
   selectedChords: Chord[];
 
-  showNb = 0;
+  exploreForm: FormGroup;
+  showChordNb = 0;
 
-  constructor(private readonly store: Store) {}
+  get isNextChordAvailable() {
+    return this.showChordNb < this.selectedChords?.length - 1;
+  }
+
+  get isPrevChordAvailable() {
+    return this.showChordNb > 0;
+  }
+
+  constructor(private readonly store: Store, private readonly fb: FormBuilder) {
+  }
 
   nextChord() {
-    if (this.showNb < this.selectedChords?.length - 1) {
-      this.showNb++;
+    if (this.showChordNb < this.selectedChords?.length - 1) {
+      this.showChordNb++;
     } else {
-      this.showNb = 0;
+      this.showChordNb = 0;
     }
   }
 
   prevChord() {
-    if (this.showNb > 0) {
-      this.showNb--;
+    if (this.showChordNb > 0) {
+      this.showChordNb--;
     } else {
-      this.showNb = this.selectedChords?.length - 1;
+      this.showChordNb = this.selectedChords?.length - 1;
     }
   }
 
@@ -52,10 +63,16 @@ export class ExploreChordsPage implements OnInit {
     this.fretboardNotes = FRETBOARD_STANDARD;
     this.allChordsHash = ALL_CHORDS_HASH;
 
+    this.exploreForm = this.fb.group({
+      note: [this.exploreState.selectedChord.noteName, [Validators.required]],
+      type: [this.exploreState.selectedChord.type, [Validators.required]],
+    });
+
     this.onSelectNote(this.exploreState.selectedChord.noteName);
   }
 
   onSelectNote(n: string) {
+    console.log(n)
     this.selectedNote = n;
     this.onSelectType(this.selectedType || this.exploreState.selectedChord.type);
   }
@@ -66,7 +83,7 @@ export class ExploreChordsPage implements OnInit {
   }
 
   onUpdateChord() {
-    this.showNb = 0;
+    this.showChordNb = 0;
     const chordsKey = this.selectedNote.toUpperCase().replace('#', '_SHARP') + '_CHORDS';
     this.selectedChords = this.allChordsHash[chordsKey].filter(c => c.type === this.selectedType);
 

@@ -14,7 +14,7 @@
           'tile-hide': !isSelectedFret(fret),
           'no-click': disableClick,
           'tile-nut': fret === 0,
-          'tile-one-dot': [3, 5, 7, 9, 15, 17].includes(fret)
+          'tile-one-dot': [3, 5, 7, 9, 15, 17, 19, 21].includes(fret)
         }"
         *ngIf="isSelectedFret(fret) || !showOnlySelectedFrets"
         [id]="'idFretNb' + fret"

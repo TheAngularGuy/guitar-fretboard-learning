@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit, Output } from '@angu
 import { Subject } from 'rxjs';
 import { Barre } from 'src/app/models/chord.model';
 
-import { Note } from '../../../models/note.model';
+import { Note } from '@models/note.model';
 
 @Component({
   selector: 'app-fretboard',

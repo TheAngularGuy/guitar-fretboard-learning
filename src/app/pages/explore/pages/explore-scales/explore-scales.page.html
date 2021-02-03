@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="explore"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Explore scales</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Explore scales!</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p>Select the scale you want on any key.</p>
+
+      <hr/>
+
+      <form class="settings" [formGroup]="exploreForm">
+        <ion-item>
+          <ion-label>Root note</ion-label>
+          <ion-select multiple="false" interface="popover" formControlName="rootNote" (ionChange)="onSelectedNotes($event.detail.value)">
+            <ion-select-option *ngFor="let note of chromaticScale" [value]="note">
+              {{note | note}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Scale</ion-label>
+          <ion-select multiple="false" interface="popover" formControlName="scaleType" (ionChange)="onSelectedScale($event.detail.value)">
+            <ng-container *ngFor="let scale of scaleTypesList">
+              <ion-select-option *ngIf="!scale.divider" [value]="scale.key">
+                {{scale.name}}
+              </ion-select-option>
+              <ion-select-option [disabled]="true" *ngIf="scale.divider">
+                {{scale.name | uppercase}}
+              </ion-select-option>
+            </ng-container>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Segment of the fretboard</ion-label>
+          <ion-select multiple="false" interface="popover" formControlName="segment" (ionChange)="onSelectedSegment($event.detail.value)">
+            <ion-select-option [value]="'all'">
+              All
+            </ion-select-option>
+            <ng-container *ngFor="let segment of fretsSegments">
+              <ion-select-option [value]="segment">
+                {{segment.split(',')[0]}} - {{segment.split(',')[1]}}
+              </ion-select-option>
+            </ng-container>
+          </ion-select>
+        </ion-item>
+
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <br/>
+  <app-fretboard
+      [invertedStrings]="preferences?.invertedStrings"
+      [invertedFrets]="preferences?.invertedFrets"
+      [notes]="fretboardNotes"
+      [showSelectedNoteNames]="true"
+      [selectedNoteNames]="selectedNotes"
+      [selectedFrets]="[fretStart, fretEnd]"
+      [showAll]="false"
+  ></app-fretboard>
+  <br/>
+</ion-content>

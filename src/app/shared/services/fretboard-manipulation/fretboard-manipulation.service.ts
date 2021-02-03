@@ -4,6 +4,7 @@ import { PreferencesState, PreferencesStateModel } from '@shared-modules/store/p
 import { tap } from 'rxjs/operators';
 import { CHROMATIC_SCALE } from 'src/app/constants/chromatic-scale.constant';
 import { FRETBOARD_STANDARD } from 'src/app/constants/fretboard-notes.constant';
+import {MAX_FRETS} from '@constants/max-frets';
 
 @Injectable()
 export class FretboardManipulationService {
@@ -34,7 +35,7 @@ export class FretboardManipulationService {
     }
     output.push(nut);
 
-    for (let i = 1; i <= 17; i++) {
+    for (let i = 1; i <= MAX_FRETS; i++) {
       const fret = output[i - 1].map(n => this.getNextNote(n));
       output.push(fret);
     }
