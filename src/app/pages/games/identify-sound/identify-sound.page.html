@@ -49,13 +49,15 @@
 
   <br/>
 
-  <app-btn color="secondary"
-           pulsate
-           *ngIf="!game.isPlaying"
-           [disabled]="!!game.noteToFind"
-           (clicked)="start()">
-    START
-  </app-btn>
+  <div class="start">
+    <app-btn color="secondary"
+             pulsate
+             *ngIf="!game.isPlaying"
+             [disabled]="!!game.noteToFind"
+             (clicked)="start()">
+      START
+    </app-btn>
+  </div>
 
   <div class="amp" [class.playing]="soundPlaying$ | async" *ngIf="game.isPlaying">
     <div class="image" (click)="onNotePicked()">

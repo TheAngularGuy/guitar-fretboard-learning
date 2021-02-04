@@ -46,8 +46,8 @@ const redirections: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot([...routes, ...redirections], {
-      // preloadingStrategy: PreloadAllModules,
-    }),
+    // relativeLinkResolution: 'legacy'
+}),
   ],
   exports: [RouterModule],
 })

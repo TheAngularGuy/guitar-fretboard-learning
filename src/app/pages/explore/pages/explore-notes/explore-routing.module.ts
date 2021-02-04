@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ExploreScalesPage} from '@pages/explore/pages/explore-scales/explore-scales.page';
+import {ExploreNotesPage} from '@pages/explore/pages/explore-notes/explore-notes.page';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: ExploreScalesPage
+    component: ExploreNotesPage
   }
 ];
 

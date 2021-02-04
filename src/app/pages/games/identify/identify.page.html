@@ -48,13 +48,15 @@
 
   <br/>
 
-  <app-btn color="secondary"
-           pulsate
-           *ngIf="!game.isPlaying"
-           [disabled]="!!game.noteToFind"
-           (clicked)="start()">
-    START
-  </app-btn>
+  <div class="start">
+    <app-btn color="secondary"
+             pulsate
+             *ngIf="!game.isPlaying"
+             [disabled]="!!game.noteToFind"
+             (clicked)="start()">
+      START
+    </app-btn>
+  </div>
 
   <app-fretboard
           *ngIf="game.isPlaying"

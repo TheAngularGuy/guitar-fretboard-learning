@@ -24,7 +24,8 @@
 
 .canva {
   width: 90%;
-  margin: auto;
+  max-width: 950px;
+  margin: 2rem auto 0;
   border-radius: 10px;
   position: relative;
   height: 130px;
@@ -119,5 +120,6 @@
 .chromatic {
   margin: auto;
   width: 80%;
+  max-width: 308px;
   position: relative;
 }
