@@ -1,30 +1,30 @@
 <div class="fretboard-wrapper">
   <div
-    class="fretboard"
-    id="fretboard"
-    [ngClass]="{
+      class="fretboard"
+      id="fretboard"
+      [ngClass]="{
       'fretboard-inverted-frets': invertedFrets,
       'fretboard-inverted-strings': invertedStrings
     }"
   >
     <ng-container *ngFor="let fretnotes of notes; let fret = index">
       <div
-        class="tile width-{{ fret }}"
-        [ngClass]="{
+          class="tile width-{{ fret }}"
+          [ngClass]="{
           'tile-hide': !isSelectedFret(fret),
           'no-click': disableClick,
           'tile-nut': fret === 0,
           'tile-one-dot': [3, 5, 7, 9, 15, 17, 19, 21].includes(fret)
         }"
-        *ngIf="isSelectedFret(fret) || !showOnlySelectedFrets"
-        [id]="'idFretNb' + fret"
+          *ngIf="isSelectedFret(fret) || !showOnlySelectedFrets"
+          [id]="'idFretNb' + fret"
       >
         <div class="tile-two-dot" *ngIf="fret === 12"></div>
 
         <span class="tile-number">
           <span
-            *ngIf="getNum(fret) == 0"
-            [ngClass]="{
+              *ngIf="getNum(fret) == 0"
+              [ngClass]="{
               'hide-on-mobile': !invertedStrings,
               'hide-on-desktop': invertedStrings
             }"
@@ -32,8 +32,8 @@
             {{ fretnotes[0] | lowercase }}
           </span>
           <span
-            *ngIf="getNum(fret) == 0"
-            [ngClass]="{
+              *ngIf="getNum(fret) == 0"
+              [ngClass]="{
               'hide-on-mobile': invertedStrings,
               'hide-on-desktop': !invertedStrings
             }"
@@ -44,14 +44,14 @@
         </span>
 
         <button
-          class="note string-{{ string }}"
-          [ngClass]="{
+            class="note string-{{ string }}"
+            [ngClass]="{
             'note-highlighted': isNoteHighlighted(fret, string),
             'disabled-string': isStringDisabled(string),
             'disabled-fret': !isSelectedFret(fret)
           }"
-          *ngFor="let note of fretnotes; let string = index"
-          (click)="
+            *ngFor="let note of fretnotes; let string = index"
+            (click)="
             onNoteClicked(
               {
                 name: note,
@@ -63,23 +63,23 @@
           "
         >
           <span
-            class="barre"
-            [ngClass]="{
+              class="barre"
+              [ngClass]="{
               'barre-start': barre && barre.stringStart === string,
               'barre-end': barre && barre.stringEnd === string
             }"
-            *ngIf="
+              *ngIf="
               barre && barre.fret === fret && string >= barre.stringStart && barre.stringEnd >= string
             "
           ></span>
           <span
-            class="note-name"
-            #noteName
-            [ngClass]="{
+              class="note-name"
+              #noteName
+              [ngClass]="{
               'note-show-all': showAll,
-              'note-false':
-                !isGoodNote({ name: note, fret: fret, string: string }) && !isGoodNoteName(note),
-              'note-show': showNote({ name: note, fret: fret, string: string })
+              'note-false': !isGoodNote({ name: note, fret: fret, string: string }) && !isGoodNoteName(note),
+              'note-show': showNote({ name: note, fret: fret, string: string }),
+              'root-note': rootNote === note
             }"
           >
             {{ note | note }}

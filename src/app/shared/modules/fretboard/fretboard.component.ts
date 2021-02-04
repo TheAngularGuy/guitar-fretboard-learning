@@ -15,6 +15,7 @@ export class FretboardComponent implements OnInit {
   @Input() selectedFrets: [number, number];
   @Input() showOnlySelectedFrets = true;
   @Input() selectedNoteNames: string[];
+  @Input() rootNote: string;
   @Input() showSelectedNoteNames: boolean;
   @Input() selectedNotes: Note[];
   @Input() showSelectedNotes: boolean;

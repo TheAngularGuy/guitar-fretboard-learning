@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Store} from '@ngxs/store';
 import {CHORD_TYPES} from 'src/app/constants/chord-types.constant';
 import {ALL_CHORDS_HASH} from 'src/app/constants/chords/all-chords-hash.constant';
@@ -10,13 +10,17 @@ import {PreferencesState, PreferencesStateModel} from 'src/app/shared/store/pref
 import {ExploreSetSelectedChordAction} from '../../store/explore.actions';
 import {ExploreState, ExploreStateModel} from '../../store/explore.state';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {BehaviorSubject, Subject} from 'rxjs';
+import {takeUntil, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-explore-chords',
   templateUrl: './explore-chords.page.html',
   styleUrls: ['./explore-chords.page.scss'],
 })
-export class ExploreChordsPage implements OnInit {
+export class ExploreChordsPage implements OnInit, OnDestroy {
+  destroyed$ = new Subject();
+  dropDownOpen$ = new BehaviorSubject(true);
   fretboardNotes: string[][];
   preferences: PreferencesStateModel;
   exploreState: ExploreStateModel;
@@ -38,6 +42,10 @@ export class ExploreChordsPage implements OnInit {
     return this.showChordNb > 0;
   }
 
+  get isStandardTuning() {
+    return this.preferences.tuning.toLowerCase() === 'standard';
+  }
+
   constructor(private readonly store: Store, private readonly fb: FormBuilder) {
   }
 
@@ -57,6 +65,10 @@ export class ExploreChordsPage implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    this.destroyed$.next(true);
+  }
+
   ngOnInit() {
     this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
     this.exploreState = this.store.selectSnapshot<ExploreStateModel>(ExploreState.getState);
@@ -69,6 +81,14 @@ export class ExploreChordsPage implements OnInit {
     });
 
     this.onSelectNote(this.exploreState.selectedChord.noteName);
+    this.listenToPreferences();
+  }
+
+  listenToPreferences() {
+    this.store.select(PreferencesState.getState).pipe(
+      tap(pref => this.preferences = pref),
+      takeUntil(this.destroyed$),
+    ).subscribe();
   }
 
   onSelectNote(n: string) {
@@ -103,5 +123,10 @@ export class ExploreChordsPage implements OnInit {
 
   getSelectedNotesFromChord(c: Chord) {
     return c.notes;
+  }
+
+  toggleDropDown() {
+    const bool = this.dropDownOpen$.getValue();
+    this.dropDownOpen$.next(!bool);
   }
 }

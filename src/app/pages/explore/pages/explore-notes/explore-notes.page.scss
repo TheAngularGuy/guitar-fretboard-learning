@@ -18,3 +18,18 @@
     }
   }
 }
+
+.split-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .ico {
+    transition: transform 250ms ease-in-out;
+
+    &.rotate {
+      transform-origin: center;
+      transform: rotate(-180deg);
+    }
+  }
+}

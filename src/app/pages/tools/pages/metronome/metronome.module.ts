@@ -8,6 +8,8 @@ import { GlobalModule } from '@shared-modules/modules/global/global.module';
 import { MetronomePageRoutingModule } from './metronome-routing.module';
 
 import { MetronomePage } from './metronome.page';
+import {NgxsModule} from '@ngxs/store';
+import { TempoNamePipe } from './tempo-name.pipe';
 
 @NgModule({
   imports: [
@@ -17,8 +19,10 @@ import { MetronomePage } from './metronome.page';
     IonicModule,
     MetronomePageRoutingModule,
     GlobalModule,
+
+    NgxsModule.forFeature(),
   ],
-  declarations: [MetronomePage],
+  declarations: [MetronomePage, TempoNamePipe],
 })
 export class MetronomePageModule {
 }

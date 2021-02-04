@@ -8,19 +8,23 @@
 </ion-header>
 
 <ion-content>
-  <div class="page">
-    <h1>Create your own custom tuning</h1>
-    <div>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+          <span> Create your own custom tuning </span>
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
       <p>
         Here you can create your custom tunings, then you can select them in the settings page, under the
         preferences section.
       </p>
+    </ion-card-content>
+  </ion-card>
 
-      <p class="text-muted" style="text-align: start;">
-        <b>Set the tuning for right handed</b>. You can after enable the left handed mode if you wish
-        from the settings page.
-      </p>
-    </div>
+  <div class="page">
+
 
     <div class="tuning">
       <div class="tuning-machines">
@@ -71,9 +75,9 @@
 <ion-footer>
   <div class="btns">
     <p class="text-muted">
-      Once you save, the tuning will be available in the settings page.
+      Once you save, the tuning will be listed in the settings page.
     </p>
-    <ion-button color="primary" fill="outline" (click)="save()">
+    <ion-button color="primary" (click)="save()">
       <div>
         Save
       </div>

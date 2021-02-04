@@ -16,7 +16,6 @@ export class TunerPage implements OnInit, AfterViewInit, OnDestroy {
     frequency: number, volume: number
   }>;
   timeout: any;
-  chromaticScale = [...CHROMATIC_SCALE].sort();
 
   constructor() { }
 

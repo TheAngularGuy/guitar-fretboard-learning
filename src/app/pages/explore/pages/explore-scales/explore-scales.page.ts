@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FretboardManipulationService} from '@shared-modules/services/fretboard-manipulation/fretboard-manipulation.service';
 import {Store} from '@ngxs/store';
-import {Subject} from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 import {PreferencesState, PreferencesStateModel} from '@shared-modules/store/preferences/preferences.state';
 import {ExploreState, ExploreStateModel} from '@pages/explore/store/explore.state';
 import {CHROMATIC_SCALE} from '@constants/chromatic-scale.constant';
@@ -20,11 +20,13 @@ import {takeUntil, tap} from 'rxjs/operators';
 })
 export class ExploreScalesPage implements OnInit, OnDestroy {
   destroyed$ = new Subject();
+  dropDownOpen$ = new BehaviorSubject(true);
   exploreForm: FormGroup;
   fretboardNotes: string[][];
 
   fretsSegments: string[] = [];
   selectedNotes: string[] = [];
+  rootNote: string = null;
   fretStart = 0;
   fretEnd = MAX_FRETS;
   scaleTypesList = ALL_SCALES_TYPES_LIST;
@@ -33,6 +35,10 @@ export class ExploreScalesPage implements OnInit, OnDestroy {
 
   preferences: PreferencesStateModel;
   exploreState: ExploreStateModel;
+
+  get isStandardTuning() {
+    return this.preferences.tuning.toLowerCase() === 'standard';
+  }
 
   constructor(
     private readonly fb: FormBuilder,
@@ -52,18 +58,41 @@ export class ExploreScalesPage implements OnInit, OnDestroy {
     this.setForm();
 
     this.store.select(ExploreState.getSelectedScale).pipe(
-      tap((rootNoteAndScaleType) => {
-        const scaleGroup: ScaleGroup = this.allScales[rootNoteAndScaleType.rootNote];
+      tap((selectedScale) => {
+        const scaleGroup: ScaleGroup = this.allScales[selectedScale.rootNote];
         if (!scaleGroup) {
           return console.error('No scaleGroup found');
         }
-        const scale: Scale = scaleGroup.scales[rootNoteAndScaleType.scale];
+        const scale: Scale = scaleGroup.scales[selectedScale.scale];
         if (!scale) {
           return console.error('No scale found');
         }
+        this.rootNote = selectedScale.rootNote;
         this.selectedNotes = scale.notes;
         this.fretsSegments = scale.segments;
-        this.setFretStartAndEndFromSegment(rootNoteAndScaleType.segment);
+        this.setFretStartAndEndFromSegment(selectedScale.segment);
+      }),
+      takeUntil(this.destroyed$),
+    ).subscribe();
+
+    this.listenToPreferences();
+  }
+
+  listenToPreferences() {
+    if (this.preferences.tuning.toLowerCase() !== 'standard') {
+      this.exploreForm.get('segment').patchValue('all');
+      this.exploreForm.get('segment').disable();
+    }
+    this.store.select(PreferencesState.getState).pipe(
+      tap(pref => {
+        this.preferences = pref;
+        this.fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
+        if (this.preferences.tuning.toLowerCase() !== 'standard') {
+          this.exploreForm.get('segment').patchValue('all');
+          this.exploreForm.get('segment').disable();
+        } else {
+          this.exploreForm.get('segment').enable();
+        }
       }),
       takeUntil(this.destroyed$),
     ).subscribe();
@@ -129,6 +158,11 @@ export class ExploreScalesPage implements OnInit, OnDestroy {
         })
       );
     }
+  }
+
+  toggleDropDown() {
+    const bool = this.dropDownOpen$.getValue();
+    this.dropDownOpen$.next(!bool);
   }
 
 }

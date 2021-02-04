@@ -17,6 +17,17 @@
   .page {
     text-align: center;
   }
+
+  .btns {
+    width: 100%;
+    max-width: 950px;
+    flex-direction: column;
+    margin: auto;
+
+    ion-button {
+      width: 100%;
+    }
+  }
 }
 
 .tuning,
@@ -98,4 +109,11 @@
       width: 90%;
     }
   }
+}
+
+.warning {
+  border-radius: 3px;
+  overflow: hidden;
+  background: rgba(var(--ion-color-danger-rgb), 0.15);
+  padding: 1rem;
 }

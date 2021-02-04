@@ -94,6 +94,10 @@
           z-index: 1;
         }
 
+        .root-note {
+          background: rgba(var(--ion-color-sixth-rgb), 0.8);
+        }
+
         .note-false {
           background: rgba(var(--ion-color-danger-rgb), 0.8);
         }

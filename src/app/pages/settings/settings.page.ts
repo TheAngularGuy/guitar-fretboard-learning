@@ -1,10 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
-import { Select, Store } from '@ngxs/store';
-import { Observable, Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {ModalController} from '@ionic/angular';
+import {Select, Store} from '@ngxs/store';
+import {Observable, Subject} from 'rxjs';
+import {debounceTime, takeUntil} from 'rxjs/operators';
 import {
   PreferencesSetFlatsModeAction,
   PreferencesSetInvertedFretsModeAction,
@@ -12,8 +12,8 @@ import {
   PreferencesSetSoundAction,
   PreferencesSetTunningAction,
 } from 'src/app/shared/store/preferences/preferences.actions';
-import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
-import { SettingsState } from './store/settings.state';
+import {PreferencesState, PreferencesStateModel} from 'src/app/shared/store/preferences/preferences.state';
+import {SettingsState} from './store/settings.state';
 
 @Component({
   selector: 'app-settings',
@@ -53,12 +53,17 @@ export class SettingsPage implements OnInit, OnDestroy {
     'G-G-D-G-B-D',
   ];
 
+  get isLeftHanded() {
+    return this.settingsForm.get('invertedStrings').value;
+  }
+
   constructor(
     private readonly fb: FormBuilder,
     private readonly modalController: ModalController,
     private readonly store: Store,
     private readonly router: Router,
-  ) {}
+  ) {
+  }
 
   ngOnDestroy() {
     this.destroyed$.next();
@@ -107,17 +112,17 @@ export class SettingsPage implements OnInit, OnDestroy {
         }
         if (formValue.activateSound !== preferences.activateSound) {
           this.store.dispatch(
-            new PreferencesSetSoundAction({ activateSound: formValue.activateSound }),
+            new PreferencesSetSoundAction({activateSound: formValue.activateSound}),
           );
         }
         if (formValue.useFlats !== preferences.useFlats) {
           this.store.dispatch(
-            new PreferencesSetFlatsModeAction({ useFlats: formValue.useFlats }),
+            new PreferencesSetFlatsModeAction({useFlats: formValue.useFlats}),
           );
         }
         if (formValue.tuning !== preferences.tuning) {
           this.store.dispatch(
-            new PreferencesSetTunningAction({ tuning: formValue.tuning }),
+            new PreferencesSetTunningAction({tuning: formValue.tuning}),
           );
         }
       });

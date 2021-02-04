@@ -72,7 +72,7 @@
 
   <p class="encouragement" *ngIf="!showNewLevel && level">
     <span *ngIf="level.max - current > 0; else wellDoneTemplate">
-      Only {{ level.max - current }}
+      <span *ngIf="current > level.max / 1.75">Only</span> {{ level.max - current }}
       <img src="assets/imgs/guitar-pick.svg" alt="level coins loge"/>
       until the next level. <br> Keep going!
     </span>

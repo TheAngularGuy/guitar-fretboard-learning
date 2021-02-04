@@ -85,6 +85,6 @@ export class SoundService {
 
     setTimeout(() => {
       oscillator.stop();
-    }, 500);
+    }, 750);
   }
 }

@@ -33,12 +33,14 @@
           <ng-container *ngIf="customTunnings | async as cts">
             <ion-select-option *ngFor="let customTuning of cts"
                                [value]="customTuning">
-              {{customTuning}}
+              <span *ngIf="!isLeftHanded">{{customTuning}}</span>
+              <span *ngIf="isLeftHanded">{{customTuning.split('-').reverse().join('-')}}</span>
             </ion-select-option>
           </ng-container>
 
           <ion-select-option *ngFor="let tuning of tunings" [value]="tuning">
-            {{tuning}}
+            <span *ngIf="!isLeftHanded">{{tuning}}</span>
+            <span *ngIf="isLeftHanded">{{tuning.split('-').reverse().join('-')}}</span>
           </ion-select-option>
         </ion-select>
       </ion-item>

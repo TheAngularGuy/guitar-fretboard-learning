@@ -10,18 +10,28 @@
 <ion-content>
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Explore scales!</ion-card-title>
+      <ion-card-title>
+        <div class="split-title">
+          <span> Explore scales </span>
+          <span>
+            <ion-icon class="ico" [class.rotate]="!(dropDownOpen$ | async)" (click)="toggleDropDown()" size="large" name="chevron-up-circle-outline">
+            </ion-icon>
+          </span>
+        </div>
+      </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content *ngIf="dropDownOpen$ | async">
       <p>Select the scale you want on any key.</p>
+      <p class="warning" *ngIf="!isStandardTuning">You can select the different segments only when using the standard tuning.</p>
 
       <hr/>
 
       <form class="settings" [formGroup]="exploreForm">
         <ion-item>
           <ion-label>Root note</ion-label>
-          <ion-select multiple="false" interface="popover" formControlName="rootNote" (ionChange)="onSelectedNotes($event.detail.value)">
+          <ion-select multiple="false" interface="popover" formControlName="rootNote"
+                      (ionChange)="onSelectedNotes($event.detail.value)">
             <ion-select-option *ngFor="let note of chromaticScale" [value]="note">
               {{note | note}}
             </ion-select-option>
@@ -30,7 +40,8 @@
 
         <ion-item>
           <ion-label>Scale</ion-label>
-          <ion-select multiple="false" interface="popover" formControlName="scaleType" (ionChange)="onSelectedScale($event.detail.value)">
+          <ion-select multiple="false" interface="popover" formControlName="scaleType"
+                      (ionChange)="onSelectedScale($event.detail.value)">
             <ng-container *ngFor="let scale of scaleTypesList">
               <ion-select-option *ngIf="!scale.divider" [value]="scale.key">
                 {{scale.name}}
@@ -44,7 +55,8 @@
 
         <ion-item>
           <ion-label>Segment of the fretboard</ion-label>
-          <ion-select multiple="false" interface="popover" formControlName="segment" (ionChange)="onSelectedSegment($event.detail.value)">
+          <ion-select multiple="false" interface="popover" formControlName="segment"
+                      (ionChange)="onSelectedSegment($event.detail.value)">
             <ion-select-option [value]="'all'">
               All
             </ion-select-option>
@@ -67,6 +79,7 @@
       [notes]="fretboardNotes"
       [showSelectedNoteNames]="true"
       [selectedNoteNames]="selectedNotes"
+      [rootNote]="rootNote"
       [selectedFrets]="[fretStart, fretEnd]"
       [showAll]="false"
   ></app-fretboard>

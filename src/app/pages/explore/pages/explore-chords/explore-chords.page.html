@@ -10,11 +10,21 @@
 <ion-content>
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Explore chords</ion-card-title>
+      <ion-card-title>
+        <div class="split-title">
+          <span> Explore chords </span>
+          <span>
+            <ion-icon class="ico" [class.rotate]="!(dropDownOpen$ | async)" (click)="toggleDropDown()" size="large"
+                      name="chevron-up-circle-outline">
+            </ion-icon>
+          </span>
+        </div>
+      </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content *ngIf="dropDownOpen$ | async">
       <p>You can explore all the chords in the standard tuning.</p>
+      <p class="warning" *ngIf="!isStandardTuning">Please note that the chords displayed here are in the standard tuning.</p>
 
       <hr/>
 
@@ -44,17 +54,17 @@
   <br/>
   <ng-container *ngFor="let chord of selectedChords; let i = index">
     <app-fretboard
-            *ngIf="i === showChordNb"
-            [invertedStrings]="preferences?.invertedStrings"
-            [invertedFrets]="preferences?.invertedFrets"
-            [notes]="fretboardNotes"
-            [showSelectedNotes]="true"
-            [selectedNotes]="getSelectedNotesFromChord(chord)"
-            [selectedFrets]="[chord.fretStart, chord.fretEnd]"
-            [showAll]="false"
-            [disabledStrings]="chord.disabledStrings"
-            [barre]="chord.barre"
-            [showOnlySelectedFrets]="true"
+        *ngIf="i === showChordNb"
+        [invertedStrings]="preferences?.invertedStrings"
+        [invertedFrets]="preferences?.invertedFrets"
+        [notes]="fretboardNotes"
+        [showSelectedNotes]="true"
+        [selectedNotes]="getSelectedNotesFromChord(chord)"
+        [selectedFrets]="[chord.fretStart, chord.fretEnd]"
+        [showAll]="false"
+        [disabledStrings]="chord.disabledStrings"
+        [barre]="chord.barre"
+        [showOnlySelectedFrets]="true"
     ></app-fretboard>
   </ng-container>
   <ng-container *ngIf="!selectedChords || !selectedChords.length">

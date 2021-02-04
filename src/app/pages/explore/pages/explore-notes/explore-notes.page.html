@@ -10,10 +10,18 @@
 <ion-content>
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Explore the fretboard!</ion-card-title>
+      <ion-card-title>
+        <div class="split-title">
+          <span> Explore the fretboard </span>
+          <span>
+            <ion-icon class="ico" [class.rotate]="!(dropDownOpen$ | async)" (click)="toggleDropDown()" size="large" name="chevron-up-circle-outline">
+            </ion-icon>
+          </span>
+        </div>
+      </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content *ngIf="dropDownOpen$ | async">
       <p>You can explore the fretboard, show or hide the notes as you wish.</p>
 
       <hr />

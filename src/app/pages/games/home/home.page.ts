@@ -38,7 +38,7 @@ export class HomePage {
     {
       path: 'identify-sound',
       img: 'assets/imgs/headphones.svg',
-      title: 'Identify by tone',
+      title: 'Identify notes by tone',
       subtitle: `Identify which chord is played by sound. Practice your musical ear`,
     },
   ];
