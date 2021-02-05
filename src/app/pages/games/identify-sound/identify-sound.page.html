@@ -79,7 +79,7 @@
                 *ngFor="let note of game.notesAvailable"
                 (click)="onNoteClicked(note, btn)">
         <span style="min-width: 2.4ch; display: inline-block; font-feature-settings: 'tnum'; text-transform: none;">
-          {{note | note}}
+          {{note | note:preferences?.useFlats}}
         </span>
     </ion-button>
   </div>

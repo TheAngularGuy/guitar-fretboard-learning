@@ -6,6 +6,7 @@ import { NgxsModule } from '@ngxs/store';
 import { SettingsPageRoutingModule } from './settings-routing.module';
 import { SettingsPage } from './settings.page';
 import { SettingsState } from './store/settings.state';
+import {GlobalModule} from '@shared-modules/modules/global/global.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { SettingsState } from './store/settings.state';
     ReactiveFormsModule,
     IonicModule,
     SettingsPageRoutingModule,
+    GlobalModule,
 
     NgxsModule.forFeature([SettingsState]),
   ],

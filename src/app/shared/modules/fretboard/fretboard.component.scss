@@ -227,6 +227,9 @@
     overflow-y: hidden;
     padding-bottom: 10ch;
 
+    transform-origin: top center;
+    transform: scale(.8);
+
     .fretboard {
       overflow-y: hidden;
       overflow-x: auto;
@@ -380,74 +383,74 @@
   }
 
   .width-1 {
-    max-height: calc(var(--tileWidth) - 5px);
+    max-height: calc(var(--tileWidth) - 5px - 7px);
   }
   .width-2 {
-    max-height: calc(var(--tileWidth) - 7px);
+    max-height: calc(var(--tileWidth) - 7px - 7px);
   }
   .width-3 {
-    max-height: calc(var(--tileWidth) - 10px);
+    max-height: calc(var(--tileWidth) - 10px - 7px);
   }
   .width-4 {
-    max-height: calc(var(--tileWidth) - 14px);
+    max-height: calc(var(--tileWidth) - 14px - 7px);
   }
   .width-5 {
-    max-height: calc(var(--tileWidth) - 19px);
+    max-height: calc(var(--tileWidth) - 20px - 7px);
   }
   .width-6 {
-    max-height: calc(var(--tileWidth) - 23px);
+    max-height: calc(var(--tileWidth) - 23px - 6px);
   }
   .width-7 {
-    max-height: calc(var(--tileWidth) - 27px);
+    max-height: calc(var(--tileWidth) - 27px - 6px);
   }
   .width-8 {
-    max-height: calc(var(--tileWidth) - 32px);
+    max-height: calc(var(--tileWidth) - 32px - 6px);
   }
   .width-9 {
-    max-height: calc(var(--tileWidth) - 38px);
+    max-height: calc(var(--tileWidth) - 38px - 6px);
   }
   .width-10 {
-    max-height: calc(var(--tileWidth) - 42px);
+    max-height: calc(var(--tileWidth) - 45px - 5px);
   }
   .width-11 {
-    max-height: calc(var(--tileWidth) - 49px);
+    max-height: calc(var(--tileWidth) - 49px - 5px);
   }
   .width-12 {
-    max-height: calc(var(--tileWidth) - 55px);
+    max-height: calc(var(--tileWidth) - 55px - 5px);
   }
   .width-13 {
-    max-height: calc(var(--tileWidth) - 57px);
+    max-height: calc(var(--tileWidth) - 57px - 5px);
   }
   .width-14 {
-    max-height: calc(var(--tileWidth) - 60px);
+    max-height: calc(var(--tileWidth) - 60px - 5px);
   }
   .width-15 {
-    max-height: calc(var(--tileWidth) - 62px);
+    max-height: calc(var(--tileWidth) - 62px - 5px);
   }
   .width-16 {
-    max-height: calc(var(--tileWidth) - 67px);
+    max-height: calc(var(--tileWidth) - 67px - 5px);
   }
   .width-17 {
-    max-height: calc(var(--tileWidth) - 69px);
+    max-height: calc(var(--tileWidth) - 69px - 5px);
   }
   .width-18 {
-    max-height: calc(var(--tileWidth) - 71px);
+    max-height: calc(var(--tileWidth) - 71px - 5px);
   }
   .width-19 {
-    max-height: calc(var(--tileWidth) - 75px);
+    max-height: calc(var(--tileWidth) - 75px - 5px);
   }
   .width-20 {
-    max-height: calc(var(--tileWidth) - 79px);
+    max-height: calc(var(--tileWidth) - 79px - 5px);
   }
   .width-21 {
-    max-height: calc(var(--tileWidth) - 85px);
+    max-height: calc(var(--tileWidth) - 85px - 5px);
   }
   .width-22 {
-    max-height: calc(var(--tileWidth) - 87px);
+    max-height: calc(var(--tileWidth) - 87px - 5px);
   }
 }
 
-@media screen and (min-width: 760px) {
+@media screen and (min-width: 761px) {
   // Desktop
   .fretboard-wrapper {
     margin: auto;

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Store} from '@ngxs/store';
 import {BehaviorSubject, Subject} from 'rxjs';
@@ -16,6 +16,7 @@ import {takeUntil, tap} from 'rxjs/operators';
   selector: 'app-explore-notes',
   templateUrl: './explore-notes.page.html',
   styleUrls: ['./explore-notes.page.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExploreNotesPage implements OnInit, OnDestroy {
   destroyed$ = new Subject();
@@ -34,6 +35,7 @@ export class ExploreNotesPage implements OnInit, OnDestroy {
     private readonly fb: FormBuilder,
     private readonly fretboardManipulationService: FretboardManipulationService,
     private readonly store: Store,
+    private readonly cd: ChangeDetectorRef,
   ) {
   }
 
@@ -56,6 +58,7 @@ export class ExploreNotesPage implements OnInit, OnDestroy {
       tap(pref => {
         this.preferences = pref;
         this.fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
+        this.cd.markForCheck();
       }),
       takeUntil(this.destroyed$),
     ).subscribe();

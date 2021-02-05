@@ -33,7 +33,7 @@
           <ion-select multiple="false" interface="popover" formControlName="rootNote"
                       (ionChange)="onSelectedNotes($event.detail.value)">
             <ion-select-option *ngFor="let note of chromaticScale" [value]="note">
-              {{note | note}}
+              {{note | note:preferences?.useFlats}}
             </ion-select-option>
           </ion-select>
         </ion-item>
@@ -72,10 +72,10 @@
     </ion-card-content>
   </ion-card>
 
-  <br/>
   <app-fretboard
       [invertedStrings]="preferences?.invertedStrings"
       [invertedFrets]="preferences?.invertedFrets"
+      [useFlats]="preferences?.useFlats"
       [notes]="fretboardNotes"
       [showSelectedNoteNames]="true"
       [selectedNoteNames]="selectedNotes"
@@ -85,3 +85,20 @@
   ></app-fretboard>
   <br/>
 </ion-content>
+
+<ion-footer>
+  <div class="foot">
+    <ion-button color="primary"
+                [disabled]="selectedSegmentIndex === 0"
+                (click)="onPrevSegment()"
+                >
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <ion-button color="primary"
+                [disabled]="selectedSegmentIndex === fretsSegments.length"
+                (click)="onNextSegment()"
+                >
+      <ion-icon name="chevron-forward-outline"></ion-icon>
+    </ion-button>
+  </div>
+</ion-footer>

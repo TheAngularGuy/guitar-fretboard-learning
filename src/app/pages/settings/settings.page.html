@@ -11,12 +11,12 @@
         <ion-label>Preferences</ion-label>
       </ion-list-header>
 
-      <ion-item>
+      <ion-item class="hide-on-desktop">
         <ion-label>Left Handed (inverting strings order)</ion-label>
         <ion-toggle formControlName="invertedStrings" color="tertiary"></ion-toggle>
       </ion-item>
       <ion-item class="hide-on-mobile">
-        <ion-label>Invert the frets order</ion-label>
+        <ion-label>Left Handed (invert the frets order)</ion-label>
         <ion-toggle formControlName="invertedFrets" color="tertiary"></ion-toggle>
       </ion-item>
       <ion-item>
@@ -29,18 +29,16 @@
       </ion-item>
       <ion-item>
         <ion-label>Tuning</ion-label>
-        <ion-select formControlName="tuning">
-          <ng-container *ngIf="customTunnings | async as cts">
+        <ion-select formControlName="tuning" *ngIf="!(this.hideTuning$ | async)">
+          <ng-container *ngIf="customTunnings$ | async as cts">
             <ion-select-option *ngFor="let customTuning of cts"
                                [value]="customTuning">
-              <span *ngIf="!isLeftHanded">{{customTuning}}</span>
-              <span *ngIf="isLeftHanded">{{customTuning.split('-').reverse().join('-')}}</span>
+              <span>{{customTuning | tuning:preferences?.useFlats:isLeftHanded}}</span>
             </ion-select-option>
           </ng-container>
 
           <ion-select-option *ngFor="let tuning of tunings" [value]="tuning">
-            <span *ngIf="!isLeftHanded">{{tuning}}</span>
-            <span *ngIf="isLeftHanded">{{tuning.split('-').reverse().join('-')}}</span>
+            <span>{{tuning}}</span>
           </ion-select-option>
         </ion-select>
       </ion-item>
@@ -52,6 +50,18 @@
       </ion-item>
     </ion-list>
   </form>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Privacy</ion-label>
+    </ion-list-header>
+
+    <ion-item button>
+      <ion-label>
+        Read more about our privacy policy
+      </ion-label>
+    </ion-item>
+  </ion-list>
 
   <ion-list>
     <ion-list-header>

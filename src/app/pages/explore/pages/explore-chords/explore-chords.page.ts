@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {Store} from '@ngxs/store';
 import {CHORD_TYPES} from 'src/app/constants/chord-types.constant';
 import {ALL_CHORDS_HASH} from 'src/app/constants/chords/all-chords-hash.constant';
@@ -17,6 +17,7 @@ import {takeUntil, tap} from 'rxjs/operators';
   selector: 'app-explore-chords',
   templateUrl: './explore-chords.page.html',
   styleUrls: ['./explore-chords.page.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExploreChordsPage implements OnInit, OnDestroy {
   destroyed$ = new Subject();
@@ -46,7 +47,11 @@ export class ExploreChordsPage implements OnInit, OnDestroy {
     return this.preferences.tuning.toLowerCase() === 'standard';
   }
 
-  constructor(private readonly store: Store, private readonly fb: FormBuilder) {
+  constructor(
+    private readonly store: Store,
+    private readonly fb: FormBuilder,
+    private readonly cd: ChangeDetectorRef
+  ) {
   }
 
   nextChord() {
@@ -86,13 +91,15 @@ export class ExploreChordsPage implements OnInit, OnDestroy {
 
   listenToPreferences() {
     this.store.select(PreferencesState.getState).pipe(
-      tap(pref => this.preferences = pref),
+      tap(pref => {
+        this.preferences = pref;
+        this.cd.markForCheck();
+      }),
       takeUntil(this.destroyed$),
     ).subscribe();
   }
 
   onSelectNote(n: string) {
-    console.log(n)
     this.selectedNote = n;
     this.onSelectType(this.selectedType || this.exploreState.selectedChord.type);
   }

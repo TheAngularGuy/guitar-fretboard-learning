@@ -3,10 +3,11 @@ import { NgModule } from '@angular/core';
 
 import { NotePipe } from './pipes/note.pipe';
 import { LonpPressDirective } from './directives/lonp-press.directive';
+import {TuningPipe} from '@shared-modules/modules/global/pipes/tuning.pipe';
 
 @NgModule({
-  declarations: [NotePipe, LonpPressDirective],
+  declarations: [NotePipe, TuningPipe, LonpPressDirective],
   imports: [CommonModule],
-  exports: [NotePipe, LonpPressDirective],
+  exports: [NotePipe, TuningPipe, LonpPressDirective],
 })
 export class GlobalModule {}

@@ -6,12 +6,11 @@ import { PreferencesState } from '../../../store/preferences/preferences.state';
   name: 'note',
 })
 export class NotePipe implements PipeTransform {
-  constructor(private readonly store: Store) {}
+  constructor() {}
 
-  transform(value: string, ...args: any[]): string {
+  transform(value: string, bool: boolean): string {
     if (value && value.includes('#')) {
-      const preferences = this.store && this.store.selectSnapshot(PreferencesState.getState);
-      if (preferences && preferences.useFlats) {
+      if (bool) {
         const code = value.charCodeAt(0) + 1;
         return String.fromCharCode(code === 72 ? 65 : code) + 'b'; // 71 ==> G
       }

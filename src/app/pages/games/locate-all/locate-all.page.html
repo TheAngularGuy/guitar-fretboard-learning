@@ -64,6 +64,7 @@
           *ngIf="game.isPlaying"
           [invertedStrings]="preferences?.invertedStrings"
           [invertedFrets]="preferences?.invertedFrets"
+          [useFlats]="preferences?.useFlats"
           [notes]="game.fretboardNotes"
           [showAll]="false"
           [selectedFrets]="game.fretsAvailable"
@@ -84,7 +85,7 @@
 
   <div class="playing">
     <div class="note" [@popAnimation]="game.noteToFind?.note?.name">
-      {{game.noteToFind?.note?.name | note}}
+      {{game.noteToFind?.note?.name | note:preferences?.useFlats}}
     </div>
   </div>
 

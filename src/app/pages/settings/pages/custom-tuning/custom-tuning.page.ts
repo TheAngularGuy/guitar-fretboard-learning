@@ -17,10 +17,10 @@ export class CustomTuningPage implements OnInit, OnDestroy {
   destroyed$ = new Subject();
   preferences: PreferencesStateModel;
   chromaticScale = CHROMATIC_SCALE;
-  customTuning = ['E', 'A', 'D', 'G', 'B', 'E'];
+  customTuning = ['C', 'C', 'C', 'C', 'C', 'C'];
 
   get isLeftHanded() {
-    return this.preferences.invertedStrings;
+    return this.preferences?.invertedStrings || this.preferences?.invertedFrets;
   }
 
   constructor(private store: Store, private navCtrl: NavController) {}

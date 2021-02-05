@@ -33,7 +33,7 @@
           <ion-label>Note</ion-label>
           <ion-select formControlName="note" interface="popover" (ionChange)="onSelectNote($event.detail.value)">
             <ion-select-option *ngFor="let note of chromaticScale" [value]="note">
-              {{note | note}}
+              {{note | note:preferences?.useFlats}}
             </ion-select-option>
           </ion-select>
         </ion-item>
@@ -51,12 +51,12 @@
     </ion-card-content>
   </ion-card>
 
-  <br/>
   <ng-container *ngFor="let chord of selectedChords; let i = index">
     <app-fretboard
         *ngIf="i === showChordNb"
         [invertedStrings]="preferences?.invertedStrings"
         [invertedFrets]="preferences?.invertedFrets"
+        [useFlats]="preferences?.useFlats"
         [notes]="fretboardNotes"
         [showSelectedNotes]="true"
         [selectedNotes]="getSelectedNotesFromChord(chord)"
@@ -75,7 +75,7 @@
 </ion-content>
 
 <ion-footer>
-  <div class="page">
+  <div class="foot">
     <ion-button color="primary"
                 *ngIf="showChordNb < selectedChords.length"
                 [disabled]="!isPrevChordAvailable"

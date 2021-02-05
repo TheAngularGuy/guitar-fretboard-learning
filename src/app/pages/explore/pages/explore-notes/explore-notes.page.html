@@ -31,7 +31,7 @@
           <ion-label>Notes</ion-label>
           <ion-select multiple="true" formControlName="selectedNotes" (ionChange)="onSelectedNotes($event.detail.value)">
             <ion-select-option *ngFor="let note of chromaticScale" [value]="note">
-              {{note | note}}
+              {{note | note:preferences?.useFlats}}
             </ion-select-option>
           </ion-select>
         </ion-item>
@@ -52,10 +52,10 @@
     </ion-card-content>
   </ion-card>
 
-  <br />
   <app-fretboard
     [invertedStrings]="preferences?.invertedStrings"
     [invertedFrets]="preferences?.invertedFrets"
+    [useFlats]="preferences?.useFlats"
     [notes]="fretboardNotes"
     [showSelectedNoteNames]="true"
     [selectedNoteNames]="exploreForm.get('selectedNotes').value"

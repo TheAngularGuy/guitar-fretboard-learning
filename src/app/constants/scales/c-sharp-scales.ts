@@ -18,7 +18,7 @@ export const C_SHARP_SCALES: ScaleGroup = {
     },
     Lydian: {
       notes: ['F', 'G', 'G#', 'A#', 'C', 'C#', 'D#'],
-      segments: ['3,6', '5,9', '8,11', '10,14', '12,16', '15,18', '17,21', '20,23']
+      segments: ['0,4', '3,6', '5,9', '8,11', '10,14', '12,16', '15,18', '17,21']
     },
     Mixolydian: {
       notes: ['F', 'F#', 'G#', 'A#', 'B', 'C#', 'D#'],
@@ -42,7 +42,7 @@ export const C_SHARP_SCALES: ScaleGroup = {
     },
     MajorPentatonic: {
       notes: ['F', 'F', 'G#', 'A#', 'C#', 'D#'],
-      segments: ['1,4', '3,6', '6,9', '8,11', '10,14', '13,16', '15,18', '18,21', '20,23']
+      segments: ['1,4', '3,6', '6,9', '8,11', '10,14', '13,16', '15,18', '18,21']
     },
     MinorPentatonic: {
       notes: ['F#', 'G#', 'B', 'C#', 'E'],

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FretboardManipulationService} from '@shared-modules/services/fretboard-manipulation/fretboard-manipulation.service';
 import {Store} from '@ngxs/store';
@@ -17,6 +17,7 @@ import {takeUntil, tap} from 'rxjs/operators';
   selector: 'app-explore-scales',
   templateUrl: './explore-scales.page.html',
   styleUrls: ['./explore-scales.page.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExploreScalesPage implements OnInit, OnDestroy {
   destroyed$ = new Subject();
@@ -40,10 +41,16 @@ export class ExploreScalesPage implements OnInit, OnDestroy {
     return this.preferences.tuning.toLowerCase() === 'standard';
   }
 
+  get selectedSegmentIndex() {
+    const selectedSegment = this.exploreForm.get('segment').value;
+    return ['all', ...this.fretsSegments].findIndex(el => el === selectedSegment);
+  }
+
   constructor(
     private readonly fb: FormBuilder,
     private readonly fretboardManipulationService: FretboardManipulationService,
     private readonly store: Store,
+    private readonly cd: ChangeDetectorRef,
   ) {
   }
 
@@ -71,6 +78,7 @@ export class ExploreScalesPage implements OnInit, OnDestroy {
         this.selectedNotes = scale.notes;
         this.fretsSegments = scale.segments;
         this.setFretStartAndEndFromSegment(selectedScale.segment);
+        this.cd.markForCheck();
       }),
       takeUntil(this.destroyed$),
     ).subscribe();
@@ -93,6 +101,7 @@ export class ExploreScalesPage implements OnInit, OnDestroy {
         } else {
           this.exploreForm.get('segment').enable();
         }
+        this.cd.markForCheck();
       }),
       takeUntil(this.destroyed$),
     ).subscribe();
@@ -165,4 +174,27 @@ export class ExploreScalesPage implements OnInit, OnDestroy {
     this.dropDownOpen$.next(!bool);
   }
 
+  onNextSegment() {
+    const allSegments = ['all', ...this.fretsSegments];
+    if (this.selectedSegmentIndex >= allSegments.length) {
+      return;
+    }
+    const selectedSeg = allSegments[this.selectedSegmentIndex + 1];
+    this.exploreForm.get('segment').patchValue(selectedSeg);
+    if (!this.dropDownOpen$.getValue()) {
+      this.onSelectedSegment(selectedSeg);
+    }
+  }
+
+  onPrevSegment() {
+    const allSegments = ['all', ...this.fretsSegments];
+    if (this.selectedSegmentIndex <= 0) {
+      return;
+    }
+    const selectedSeg = allSegments[this.selectedSegmentIndex - 1];
+    this.exploreForm.get('segment').patchValue(selectedSeg);
+    if (!this.dropDownOpen$.getValue()) {
+      this.onSelectedSegment(selectedSeg);
+    }
+  }
 }

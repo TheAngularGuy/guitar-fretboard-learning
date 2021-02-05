@@ -46,7 +46,7 @@ const redirections: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot([...routes, ...redirections], {
-    // relativeLinkResolution: 'legacy'
+    relativeLinkResolution: 'legacy'
 }),
   ],
   exports: [RouterModule],

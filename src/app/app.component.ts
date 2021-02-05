@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {AfterViewInit, Component, HostListener} from '@angular/core';
 import {SwUpdate} from '@angular/service-worker';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
@@ -7,24 +7,52 @@ import {Select, Store} from '@ngxs/store';
 import {GameState} from '@shared-modules/store/game/game.state';
 import {Observable} from 'rxjs';
 import {UserLogInAction, UserLogOutAction} from './shared/store/user/user.actions';
+import {PreferencesState} from '@shared-modules/store/preferences/preferences.state';
+import {
+  PreferencesSetInvertedFretsModeAction,
+  PreferencesSetInvertedStringsModeAction
+} from '@shared-modules/store/preferences/preferences.actions';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   @Select(GameState.isPlaying) isUserPlaying$: Observable<boolean>;
   morePages = [
-    { title: 'Settings', url: 'settings', svg: 'settings' },
-    { title: 'Tools', url: 'tools', svg: 'tools' },
-    { title: 'Games', url: 'games', svg: 'games' },
-    { title: 'Explore', url: 'explore', svg: 'explore' },
-    { title: 'Profile', url: 'profile', svg: 'user' },
+    {title: 'Settings', url: 'settings', svg: 'settings'},
+    {title: 'Tools', url: 'tools', svg: 'tools'},
+    {title: 'Games', url: 'games', svg: 'games'},
+    {title: 'Explore', url: 'explore', svg: 'explore'},
+    {title: 'Profile', url: 'profile', svg: 'user'},
   ];
   // icons set: https://www.flaticon.com/packs/seo-55
   // https://www.flaticon.com/packs/business-148
   // https://www.flaticon.com/packs/ecology-69
+
+  lastWidthRegistred: number;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    const preferences = this.store.selectSnapshot(PreferencesState.getState);
+    const currentWidth = window.innerWidth;
+    if (!this.lastWidthRegistred) {
+      return;
+    }
+    if (this.lastWidthRegistred <= 760 && currentWidth > 760) { // mobile to tablet
+      if (preferences.invertedStrings) {
+        this.store.dispatch(new PreferencesSetInvertedStringsModeAction({invertedStrings: false}));
+        this.store.dispatch(new PreferencesSetInvertedFretsModeAction({invertedFrets: true}));
+      }
+    } else if (this.lastWidthRegistred > 760 && currentWidth <= 760) { // tablet to mobile
+      if (preferences.invertedFrets) {
+        this.store.dispatch(new PreferencesSetInvertedFretsModeAction({invertedFrets: false}));
+        this.store.dispatch(new PreferencesSetInvertedStringsModeAction({invertedStrings: true}));
+      }
+    }
+    this.lastWidthRegistred = currentWidth;
+  }
 
   constructor(
     private readonly store: Store,
@@ -35,6 +63,10 @@ export class AppComponent {
     private readonly toastController: ToastController,
   ) {
     this.initializeApp();
+  }
+
+  ngAfterViewInit() {
+    this.lastWidthRegistred = window.innerWidth;
   }
 
   initializeApp() {
@@ -73,7 +105,8 @@ export class AppComponent {
             {
               text: 'Ignore',
               role: 'cancel',
-              handler: () => {},
+              handler: () => {
+              },
             },
           ],
         });

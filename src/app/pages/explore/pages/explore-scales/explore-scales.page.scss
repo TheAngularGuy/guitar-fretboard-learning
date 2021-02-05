@@ -4,7 +4,7 @@
       text-align: end;
     }
   }
-  @media screen and (min-width: 760px) {
+  @media screen and (min-width: 761px) {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 1rem;
@@ -44,3 +44,16 @@
   background: rgba(var(--ion-color-danger-rgb), 0.15);
   padding: 1rem;
 }
+
+.foot {
+  display: flex;
+  align-items: center;
+  padding: .5rem .5rem .5rem 0;
+  justify-content: center;
+
+  ion-button {
+    width: 100%;
+    margin: 0 0 0 0.5rem;
+  }
+}
+
