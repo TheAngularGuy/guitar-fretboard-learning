@@ -24,7 +24,7 @@ export class SoundService {
     if (!this.preferences.activateSound) {
       return;
     }
-    const audio = new Audio('assets/sounds/click.ogg');
+    const audio = new Audio('assets/sounds/click.mp3');
     audio.play();
   }
 
@@ -32,7 +32,7 @@ export class SoundService {
     if (!this.preferences.activateSound) {
       return;
     }
-    const audio = new Audio('assets/sounds/badstring.ogg');
+    const audio = new Audio('assets/sounds/badstring.mp3');
     audio.play();
   }
 
@@ -56,11 +56,11 @@ export class SoundService {
     if (!this.preferences.activateSound) {
       return;
     }
-    const audio = new Audio('assets/sounds/coins.ogg');
+    const audio = new Audio('assets/sounds/coins.mp3');
     audio.play();
   }
 
-  playNote(note: string) {
+  playNote(note: string, duration = 750) {
     const hash = {
       A: 440,
       B: 246.94,
@@ -76,8 +76,8 @@ export class SoundService {
       'G#': 415.30,
     };
     console.log(hash[note]);
+    const audioContext = new AudioContext();
     const frequency = hash[note];
-    const audioContext = new window.AudioContext();
     const oscillator = audioContext.createOscillator();
     oscillator.connect(audioContext.destination);
     oscillator.start();
@@ -85,6 +85,6 @@ export class SoundService {
 
     setTimeout(() => {
       oscillator.stop();
-    }, 750);
+    }, duration);
   }
 }

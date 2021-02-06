@@ -29,3 +29,8 @@ svg {
   color: var(--ion-text-color);
   font-size: .8rem;
 }
+
+
+.selected {
+  fill: rgba(114,191,71, 0.5) !important;
+}

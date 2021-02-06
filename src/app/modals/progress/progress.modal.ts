@@ -4,7 +4,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  Input,
+  Input, OnDestroy, OnInit,
   ViewChild,
 } from '@angular/core';
 import {IonSlides, ModalController} from '@ionic/angular';
@@ -14,6 +14,9 @@ import {UnlockedFrets, UnlockedNotes} from '@shared-modules/store/game/game.acti
 import {delayAnimation} from '../../animations/delay.animation';
 import {popAnimation} from '../../animations/pop.animation';
 import {LEVELS} from '@constants/levels';
+import {PreferencesState, PreferencesStateModel} from '@shared-modules/store/preferences/preferences.state';
+import {takeUntil, tap} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 
 @Component({
@@ -23,7 +26,7 @@ import {LEVELS} from '@constants/levels';
   animations: [popAnimation, delayAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProgressModal implements AfterViewInit {
+export class ProgressModal implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('timer') timer: ElementRef<HTMLDivElement>;
   @ViewChild('line') line: ElementRef<HTMLDivElement>;
   @Input() current: number;
@@ -37,6 +40,8 @@ export class ProgressModal implements AfterViewInit {
   };
   showNewLevel = false;
   interval: any;
+  preferences: PreferencesStateModel;
+  destroyed$ = new Subject();
 
   get isThereMultipleSlides() {
     return this.level?.unlockedNotes?.length && this.level?.unlockedFrets?.length;
@@ -50,8 +55,25 @@ export class ProgressModal implements AfterViewInit {
   ) {
   }
 
-  ngAfterViewInit(): void {
+  ngOnDestroy() {
+    this.destroyed$.next(true);
+  }
+
+  ngOnInit() {
+    this.listenToPreferences();
+  }
+
+  ngAfterViewInit() {
     this.updateProgress();
+  }
+
+  listenToPreferences() {
+    this.store.select(PreferencesState.getState).pipe(
+      tap(pref => {
+        this.preferences = pref;
+      }),
+      takeUntil(this.destroyed$),
+    ).subscribe();
   }
 
   startTimmer() {
@@ -91,6 +113,9 @@ export class ProgressModal implements AfterViewInit {
         } else {
           const percentPrev = (this.previous - level.min) * (100 / (level.max - level.min));
           const percentNow = (this.current - level.min) * (100 / (level.max - level.min));
+          if (percentNow > percentPrev) {
+            this.sound.playCoins();
+          }
           await this.animate(percentPrev, percentNow);
         }
 

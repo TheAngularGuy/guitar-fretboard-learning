@@ -29,7 +29,7 @@
               'hide-on-desktop': invertedStrings
             }"
           >
-            {{ fretnotes[0] | lowercase }}
+            {{ fretnotes[0] | note:notation:useFlats | lowercase }}
           </span>
           <span
               *ngIf="getNum(fret) == 0"
@@ -38,7 +38,7 @@
               'hide-on-desktop': !invertedStrings
             }"
           >
-            {{ fretnotes[5] | uppercase }}
+            {{ fretnotes[5] | note:notation:useFlats | uppercase }}
           </span>
           <span *ngIf="getNum(fret) > 0">{{ fret }}</span>
         </span>
@@ -73,7 +73,7 @@
             "
           ></span>
           <span
-              class="note-name"
+              class="note-name taba"
               #noteName
               [ngClass]="{
               'note-show-all': showAll,
@@ -82,7 +82,7 @@
               'root-note': rootNote === note
             }"
           >
-            {{ note | note:useFlats }}
+            {{ note | note:notation:useFlats }}
           </span>
         </button>
 

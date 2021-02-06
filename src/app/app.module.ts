@@ -26,18 +26,26 @@ import { AppComponent } from './app.component';
 import { PreferencesState } from './shared/store/preferences/preferences.state';
 import { UserState } from './shared/store/user/user.state';
 import { ProgressModal } from './modals/progress/progress.modal';
+import {GlobalModule} from '@shared-modules/modules/global/global.module';
+import { Device } from '@ionic-native/device/ngx';
+import {UtilsService} from '@shared-modules/services/utils/utils.service';
 
 @NgModule({
   declarations: [AppComponent, ProgressModal],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({
+      hideCaretOnScroll: true,
+      swipeBackEnabled: true,
+      animated: !UtilsService.isIOS(),
+    }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAnalyticsModule,
     AngularFireAuthModule,
     AppRoutingModule,
+    GlobalModule,
 
     NgxsModule.forRoot([
       UserState,
@@ -54,6 +62,7 @@ import { ProgressModal } from './modals/progress/progress.modal';
     ] : [],
   ],
   providers: [
+    Device,
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

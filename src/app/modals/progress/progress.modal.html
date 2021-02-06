@@ -47,7 +47,7 @@
             </p>
             <div class="notes">
               <ion-button color="success" *ngFor="let n of level?.unlockedNotes">
-                {{n}}
+                {{n | note:preferences?.notation:preferences?.useFlats}}
               </ion-button>
             </div>
           </div>

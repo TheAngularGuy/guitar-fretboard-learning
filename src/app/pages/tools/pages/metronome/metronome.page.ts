@@ -92,10 +92,7 @@ export class MetronomePage implements OnInit, OnDestroy {
       return;
     }
 
-    window.AudioContext = window.AudioContext ||
-      (window as any).webkitAudioContext ||
-      (window as any).mozAudioContext ||
-      (window as any).msAudioContext;
+
     const bpm = this.minMaxBpm(this.bpmForm?.get('bpm').value);
     const mesure = this.bpmForm?.get('mesure').value;
     const t = Math.round(60 / bpm * 1000) / mesure;
@@ -107,7 +104,7 @@ export class MetronomePage implements OnInit, OnDestroy {
     this.interval = setInterval(() => {
       const note = context.createOscillator();
       const hz = context.currentTime;
-      let beat = this.beat$.getValue();
+      const beat = this.beat$.getValue();
 
       note.connect(context.destination);
       if (beat === 0) {

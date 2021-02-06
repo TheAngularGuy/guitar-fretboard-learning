@@ -1,13 +1,14 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, Output } from '@angular/core';
-import { Subject } from 'rxjs';
-import { Barre } from 'src/app/models/chord.model';
+import {ChangeDetectionStrategy, Component, Input, OnInit, Output} from '@angular/core';
+import {Subject} from 'rxjs';
+import {Barre} from 'src/app/models/chord.model';
 
-import { Note } from '@models/note.model';
+import {Note} from '@models/note.model';
 
 @Component({
   selector: 'app-fretboard',
   templateUrl: './fretboard.component.html',
   styleUrls: ['./fretboard.component.scss'],
+  animations: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FretboardComponent implements OnInit {
@@ -27,13 +28,16 @@ export class FretboardComponent implements OnInit {
   @Input() notes: string[][];
   @Input() barre: Barre;
   @Input() useFlats: boolean;
+  @Input() notation: string;
   @Output() noteClick: Subject<Note> = new Subject();
 
-  constructor() {}
+  constructor() {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
-  onNoteClicked(noteObject: Note, noteElement: any): void {
+  onNoteClicked(noteObject: Note, noteElement: HTMLElement): void {
     if (this.disableClick) {
       return;
     }
@@ -41,10 +45,10 @@ export class FretboardComponent implements OnInit {
     if (this.showAll || (this.showSelectedNoteNames && this.isGoodNoteName(noteObject.name))) {
       return;
     }
-    noteElement.style.opacity = 1;
+    noteElement.classList.add('note-show');
 
     setTimeout(() => {
-      noteElement.style.opacity = 0;
+      noteElement.classList.remove('note-show');
     }, 1000);
   }
 

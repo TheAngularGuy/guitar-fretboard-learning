@@ -31,34 +31,34 @@
         <div class="tuning-machines-left">
           <select [(ngModel)]="customTuning[0]">
             <option *ngFor="let note of chromaticScale" [value]="note">
-              {{ note | note:preferences?.useFlats }}
+              {{ note | note:preferences?.notation:preferences?.useFlats }}
             </option>
           </select>
           <select [(ngModel)]="customTuning[1]">
             <option *ngFor="let note of chromaticScale" [value]="note">
-              {{ note | note:preferences?.useFlats }}
+              {{ note | note:preferences?.notation:preferences?.useFlats }}
             </option>
           </select>
           <select [(ngModel)]="customTuning[2]">
             <option *ngFor="let note of chromaticScale" [value]="note">
-              {{ note | note:preferences?.useFlats }}
+              {{ note | note:preferences?.notation:preferences?.useFlats }}
             </option>
           </select>
         </div>
         <div class="tuning-machines-right">
           <select [(ngModel)]="customTuning[3]">
             <option *ngFor="let note of chromaticScale" [value]="note">
-              {{ note | note:preferences?.useFlats }}
+              {{ note | note:preferences?.notation:preferences?.useFlats }}
             </option>
           </select>
           <select [(ngModel)]="customTuning[4]">
             <option *ngFor="let note of chromaticScale" [value]="note">
-              {{ note | note:preferences?.useFlats }}
+              {{ note | note:preferences?.notation:preferences?.useFlats }}
             </option>
           </select>
           <select [(ngModel)]="customTuning[5]">
             <option *ngFor="let note of chromaticScale" [value]="note">
-              {{ note | note:preferences?.useFlats }}
+              {{ note | note:preferences?.notation:preferences?.useFlats }}
             </option>
           </select>
         </div>

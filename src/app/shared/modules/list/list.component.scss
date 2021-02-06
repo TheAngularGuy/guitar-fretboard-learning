@@ -36,7 +36,7 @@
   flex-direction: column;
   position: relative;
 
-  button.btn {
+  .btn {
     all: unset;
     font-size: 120%;
     min-height: 150px;
@@ -58,7 +58,7 @@
 
     &.active {
       animation-name: skew;
-      animation-duration: 250ms;
+      animation-duration: 125ms;
       animation-timing-function: ease-out;
       animation-fill-mode: forwards;
     }

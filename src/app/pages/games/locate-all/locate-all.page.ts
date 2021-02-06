@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {IonContent, ToastController} from '@ionic/angular';
 import {Store} from '@ngxs/store';
 import {SoundService} from '@shared-modules/services/sound/sound.service';
@@ -19,6 +19,7 @@ import {Note} from 'src/app/models/note.model';
 import {FretboardManipulationService} from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
 import {UtilsService} from 'src/app/shared/services/utils/utils.service';
 import {PreferencesState, PreferencesStateModel} from 'src/app/shared/store/preferences/preferences.state';
+import {takeUntil, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-locate-all',
@@ -26,7 +27,7 @@ import {PreferencesState, PreferencesStateModel} from 'src/app/shared/store/pref
   styleUrls: ['./locate-all.page.scss'],
   animations: [popAnimation, slideAnimation],
 })
-export class LocateAllPage implements OnInit, OnDestroy {
+export class LocateAllPage implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('content') content: IonContent;
   destroyed$ = new Subject();
   preferences: PreferencesStateModel;
@@ -47,6 +48,7 @@ export class LocateAllPage implements OnInit, OnDestroy {
 
   constructor(
     private readonly store: Store,
+    private readonly cd: ChangeDetectorRef,
     public readonly utils: UtilsService,
     public readonly toastCtrl: ToastController,
     private readonly sound: SoundService,
@@ -62,12 +64,16 @@ export class LocateAllPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
-    const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
+    this.initGameMode(this.preferences);
+  }
+
+  initGameMode(preferences: PreferencesStateModel) {
+    const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(preferences);
     this.game.config.MAX_RANGE = 5;
 
     this.game.initGameMode(fretboardNotes, {
       onBeforeStart: () => {
-        this.store.dispatch(new GameStart({tuning: this.preferences.tuning}));
+        this.store.dispatch(new GameStart({tuning: preferences.tuning}));
         this.scoreHistoric = [];
       },
       onNotePicked: () => {
@@ -76,13 +82,28 @@ export class LocateAllPage implements OnInit, OnDestroy {
         this.seriesDisplay = new Array(this.seriesMaxRange).fill(undefined);
       },
       onEnd: () => {
-        this.store.dispatch(new GameStop({tuning: this.preferences.tuning}));
+        this.store.dispatch(new GameStop({tuning: preferences.tuning}));
         this.content.scrollToTop(250);
       },
       onComplete: () => {
-        this.store.dispatch(new GameComplete({tuning: this.preferences.tuning}));
+        this.store.dispatch(new GameComplete({tuning: preferences.tuning}));
       }
     });
+  }
+
+  ngAfterViewInit() {
+    this.listenToPreferences();
+  }
+
+  listenToPreferences() {
+    this.store.select(PreferencesState.getState).pipe(
+      tap(pref => {
+        this.preferences = pref;
+        this.initGameMode(this.preferences);
+        this.cd.markForCheck();
+      }),
+      takeUntil(this.destroyed$),
+    ).subscribe();
   }
 
   private numberOfNoteOccurrences(noteName: string, fretboard: string[][]): number {

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ModalController} from '@ionic/angular';
@@ -9,6 +9,7 @@ import {
   PreferencesSetFlatsModeAction,
   PreferencesSetInvertedFretsModeAction,
   PreferencesSetInvertedStringsModeAction,
+  PreferencesSetNotationAction,
   PreferencesSetSoundAction,
   PreferencesSetTunningAction,
 } from 'src/app/shared/store/preferences/preferences.actions';
@@ -27,7 +28,6 @@ export class SettingsPage implements OnInit, OnDestroy {
   hideTuning$ = new BehaviorSubject(false);
   settingsForm: FormGroup;
   tunings = [
-    'Standard',
     'A-E-A-E-A-C#',
     'B-F#-B-F#-B-D#',
     'C-C-G-C-E-G',
@@ -87,6 +87,7 @@ export class SettingsPage implements OnInit, OnDestroy {
       activateSound: [this.preferences.activateSound, [Validators.required]],
       useFlats: [this.preferences.useFlats, [Validators.required]],
       tuning: [this.preferences.tuning, [Validators.required]],
+      notation: [this.preferences.notation, [Validators.required]],
     });
     this.setFormListeners();
   }
@@ -129,6 +130,12 @@ export class SettingsPage implements OnInit, OnDestroy {
         if (formValue.useFlats !== preferences.useFlats) {
           this.store.dispatch(
             new PreferencesSetFlatsModeAction({useFlats: formValue.useFlats}),
+          );
+          this.refreshTuning();
+        }
+        if (formValue.notation !== preferences.notation) {
+          this.store.dispatch(
+            new PreferencesSetNotationAction({notation: formValue.notation}),
           );
           this.refreshTuning();
         }

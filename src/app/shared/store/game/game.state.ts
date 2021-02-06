@@ -12,6 +12,7 @@ import {ModalController} from '@ionic/angular';
 import {ProgressModal} from '../../../modals/progress/progress.modal';
 import {Injectable} from '@angular/core';
 import {LEVELS} from '@constants/levels';
+import {CHROMATIC_SCALE} from '@constants/chromatic-scale.constant';
 
 enum stateEnums {
   scoreByTunings = 'game_scoreByTunings',
@@ -91,11 +92,13 @@ export class GameState {
 
   @Selector()
   public static unlockedNotesSegment(state: GameStateModel) {
+    let selectedNotes = [];
     if (state.unlockedNotes.length < 9) {
-      return state.unlockedNotes;
+      selectedNotes = state.unlockedNotes;
     }
     const arr = UtilsService.shuffleArray(state.unlockedNotes);
-    return arr.slice(0, 8).sort();
+    selectedNotes = arr.slice(0, 8);
+    return [...CHROMATIC_SCALE].filter(n => selectedNotes.includes(n));
   }
 
   @Selector()
@@ -179,7 +182,7 @@ export class GameState {
         scoreByTunings,
         globalPoints: ctx.getState().globalPoints,
       }
-    })
+    });
   }
 
   @Action(GoodNoteFound)
@@ -200,6 +203,7 @@ export class GameState {
     // NOTE: apply current session to store
     const globalPoints = state.currentSession.globalPoints;
     const scoreByTunings = state.currentSession.scoreByTunings;
+
     this.openProgressModal({
       previous: state.globalPoints,
       current: state.currentSession.globalPoints,
@@ -215,7 +219,7 @@ export class GameState {
   // utils ----
   private goodOrBadNoteFound(ctx: StateContext<GameStateModel>, action: GoodNoteFound | BadNoteFound) {
     const state = ctx.getState();
-    const bad = action.constructor.name !== 'GoodNoteFound';
+    const bad = !action.isGood;
     const tuning = action.payload.tuning;
     const note = action.payload.note;
 

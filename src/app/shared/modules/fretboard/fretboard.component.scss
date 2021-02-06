@@ -83,12 +83,12 @@
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-          height: 30px;
-          width: 30px;
+          height: 40px;
+          width: 40px;
+          font-size: 1.6rem;
           border-radius: 50%;
           color: white;
-          font-weight: bold;
-          font-size: 1.3rem;
+          // font-weight: bold;
           background: rgba(var(--ion-color-success-rgb), 0.8);
           transition: opacity 250ms ease-out;
           z-index: 1;
@@ -104,6 +104,11 @@
 
         .note-show {
           opacity: 1 !important;
+
+          animation-name: pop-note;
+          animation-duration: 250ms;
+          animation-fill-mode: forwards;
+          animation-timing-function: cubic-bezier(0.54, 0.22, 0.77, 1.36);
         }
 
         .note-show-all {
@@ -218,6 +223,13 @@
   }
 }
 
+@media screen and (max-width: 815px) {
+  .fretboard-wrapper { // Mobile horizontal
+    transform-origin: top center;
+    transform: scale(.8);
+  }
+}
+
 @media screen and (max-width: 760px) {
   // Mobile
   .fretboard-wrapper {
@@ -226,9 +238,6 @@
     max-height: initial;
     overflow-y: hidden;
     padding-bottom: 10ch;
-
-    transform-origin: top center;
-    transform: scale(.8);
 
     .fretboard {
       overflow-y: hidden;
@@ -478,6 +487,12 @@
         }
 
         .note {
+          .note-name {
+            height: 32px;
+            width: 32px;
+            font-size: 1.2rem;
+          }
+
           .barre {
             height: calc(100% + 2px);
             width: 40px;
@@ -625,5 +640,19 @@
   100% {
     transform-origin: center;
     transform: scale(1);
+  }
+}
+@keyframes pop-note {
+  0% {
+    transform-origin: center;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  80% {
+    transform-origin: center;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+  100% {
+    transform-origin: center;
+    transform: translate(-50%, -50%) scale(1);
   }
 }

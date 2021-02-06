@@ -11,6 +11,11 @@
         <ion-label>Preferences</ion-label>
       </ion-list-header>
 
+      <ion-item>
+        <ion-label>Activate sound</ion-label>
+        <ion-toggle formControlName="activateSound" color="tertiary"></ion-toggle>
+      </ion-item>
+
       <ion-item class="hide-on-desktop">
         <ion-label>Left Handed (inverting strings order)</ion-label>
         <ion-toggle formControlName="invertedStrings" color="tertiary"></ion-toggle>
@@ -23,22 +28,43 @@
         <ion-label>Use flats instead of sharps</ion-label>
         <ion-toggle formControlName="useFlats" color="tertiary"></ion-toggle>
       </ion-item>
+
+
       <ion-item>
-        <ion-label>Activate sound</ion-label>
-        <ion-toggle formControlName="activateSound" color="tertiary"></ion-toggle>
+        <ion-label>Notation</ion-label>
+        <ion-select formControlName="notation">
+          <ion-select-option value="english">
+            <span> C,D,E,F,G,A,B </span>
+          </ion-select-option>
+          <ion-select-option value="german">
+            <span> C,D,E,F,G,A,H </span>
+          </ion-select-option>
+          <ion-select-option value="latin">
+            <span> do,ré,mi,fa,sol,la,si </span>
+          </ion-select-option>
+          <ion-select-option value="byzantine">
+            <span> Ni,Pa,Vu,Ga,Di,Ke,Zo </span>
+          </ion-select-option>
+          <ion-select-option value="japanese">
+            <span> ハ,ニ,ホ,ヘ,ト,イ,ロ </span>
+          </ion-select-option>
+        </ion-select>
       </ion-item>
+
       <ion-item>
         <ion-label>Tuning</ion-label>
         <ion-select formControlName="tuning" *ngIf="!(this.hideTuning$ | async)">
           <ng-container *ngIf="customTunnings$ | async as cts">
             <ion-select-option *ngFor="let customTuning of cts"
                                [value]="customTuning">
-              <span>{{customTuning | tuning:preferences?.useFlats:isLeftHanded}}</span>
+              <span>{{customTuning | tuning:preferences?.notation:preferences?.useFlats:isLeftHanded}}</span>
             </ion-select-option>
           </ng-container>
-
+          <ion-select-option value="Standard">
+            <span>Standard</span>
+          </ion-select-option>
           <ion-select-option *ngFor="let tuning of tunings" [value]="tuning">
-            <span>{{tuning}}</span>
+            <span>{{tuning | tuning:preferences?.notation:preferences?.useFlats:isLeftHanded}}</span>
           </ion-select-option>
         </ion-select>
       </ion-item>

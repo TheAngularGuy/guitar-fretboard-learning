@@ -69,6 +69,8 @@
       place-content: center;
       place-items: center;
       color: var(--ion-color-light-contrast);
+      word-break: keep-all;
+      word-wrap: normal;
       width: 65%;
     }
 

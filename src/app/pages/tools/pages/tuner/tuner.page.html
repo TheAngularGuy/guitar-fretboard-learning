@@ -9,33 +9,39 @@
 
 <ion-content>
 
-  <ng-container *ngIf="lastNote | async as note;">
+  <ng-container *ngIf="hasMicPermission$ | async; else askPermissionTemplate">
+    <ng-container *ngIf="lastNote$ | async as note;">
+      <ion-card>
+        <ion-card-content>
+          <div class="tuner">
+            <div class="chromatic">
+              <app-chromatic-wheel [note]="note"
+              ></app-chromatic-wheel>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <div class="canva">
+        <div class="grid"></div>
+        <div class="left">♭</div>
+        <div class="right">♯</div>
+        <div class="cents" [style.left]="'calc(' + (note.cents + 50) + '%'  + ' - 23px)'">
+          {{note.cents}}
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #askPermissionTemplate>
     <ion-card>
       <ion-card-content>
-        <div class="tuner">
-          <div class="chromatic">
-            <app-chromatic-wheel [note]="note"
-            ></app-chromatic-wheel>
-          </div>
-          <!--<span class="note">
-            {{note.name | note}}
-            <span class="octave">
-            {{note.octave}}
-            </span>
-          </span>-->
-        </div>
+        <p>
+          To use the tunner <b class="taba">Fretboard learning</b> need access to your microphone.
+        </p>
       </ion-card-content>
     </ion-card>
-
-    <div class="canva">
-      <div class="grid"></div>
-      <div class="left">♭</div>
-      <div class="right">♯</div>
-      <div class="cents" [style.left]="'calc(' + (note.cents + 50) + '%'  + ' - 23px)'">
-        {{note.cents}}
-      </div>
-    </div>
-  </ng-container>
+  </ng-template>
 
   <br>
 </ion-content>

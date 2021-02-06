@@ -1,5 +1,5 @@
 <div class="btn-list" [@listAnimation]="list.length">
-  <button class="btn" *ngFor="let item of list" (click)="onItemClicked(item, $event)">
+  <button class="btn" *ngFor="let item of list" (click)="onItemClicked(item, $event)" style="display: flex">
     <span class="btn-left">
       <span class="title">
         {{ item.title }}

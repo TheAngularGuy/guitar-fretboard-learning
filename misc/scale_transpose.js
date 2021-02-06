@@ -90,5 +90,5 @@ CHROMATIC_SCALE = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', '
 fs = require('fs');
 fs.writeFile('output.js', JSON.stringify(output), function (err) {
     if (err) return console.log(err);
-    console.log('Hello World > helloworld.txt');
+    console.log('new scales at > output.js');
 });

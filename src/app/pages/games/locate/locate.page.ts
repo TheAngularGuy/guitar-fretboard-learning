@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {IonContent} from '@ionic/angular';
 import {Store} from '@ngxs/store';
 import {SoundService} from '@shared-modules/services/sound/sound.service';
@@ -18,6 +18,7 @@ import {Note} from 'src/app/models/note.model';
 import {FretboardManipulationService} from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
 import {UtilsService} from 'src/app/shared/services/utils/utils.service';
 import {PreferencesState, PreferencesStateModel} from 'src/app/shared/store/preferences/preferences.state';
+import {takeUntil, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-locate',
@@ -42,6 +43,7 @@ export class LocatePage implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private readonly store: Store,
+    private readonly cd: ChangeDetectorRef,
     public readonly utils: UtilsService,
     private readonly sound: SoundService,
     private readonly fretboardManipulationService: FretboardManipulationService,
@@ -56,26 +58,43 @@ export class LocatePage implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
-    const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
-    this.game.config.MAX_RANGE = 1; // TODO remove this
+
+    this.initGameMode(this.preferences);
+  }
+
+  initGameMode(preferences: PreferencesStateModel) {
+    const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(preferences);
+    this.game.config.MAX_RANGE = 1
     this.game.initGameMode(
       fretboardNotes,
       {
         onBeforeStart: () => {
-          this.store.dispatch(new GameStart({tuning: this.preferences.tuning}));
+          this.store.dispatch(new GameStart({tuning: preferences.tuning}));
           this.scoreHistoric = [];
         },
         onEnd: () => {
-          this.store.dispatch(new GameStop({tuning: this.preferences.tuning}));
+          this.store.dispatch(new GameStop({tuning: preferences.tuning}));
           this.content.scrollToTop(250);
         },
         onComplete: () => {
-          this.store.dispatch(new GameComplete({tuning: this.preferences.tuning}));
+          this.store.dispatch(new GameComplete({tuning: preferences.tuning}));
         },
       });
   }
 
   ngAfterViewInit() {
+    this.listenToPreferences();
+  }
+
+  listenToPreferences() {
+    this.store.select(PreferencesState.getState).pipe(
+      tap(pref => {
+        this.preferences = pref;
+        this.initGameMode(this.preferences);
+        this.cd.markForCheck();
+      }),
+      takeUntil(this.destroyed$),
+    ).subscribe();
   }
 
   onNoteClicked(noteGuessed: Note) {

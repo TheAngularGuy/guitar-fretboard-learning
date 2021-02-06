@@ -9,6 +9,7 @@ import { ChromaticWheelComponent } from './chromatic-wheel/chromatic-wheel.compo
 import { TunerPageRoutingModule } from './tuner-routing.module';
 
 import { TunerPage } from './tuner.page';
+import {BtnModule} from '@shared-modules/modules/btn/btn.module';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { TunerPage } from './tuner.page';
     FormsModule,
     IonicModule,
     GlobalModule,
-    TunerPageRoutingModule
+    TunerPageRoutingModule,
+    BtnModule,
   ],
   declarations: [TunerPage, ChromaticWheelComponent]
 })

@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { IonButton, IonContent } from '@ionic/angular';
-import { Store } from '@ngxs/store';
-import { SoundService } from '@shared-modules/services/sound/sound.service';
+import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {IonButton, IonContent} from '@ionic/angular';
+import {Store} from '@ngxs/store';
+import {SoundService} from '@shared-modules/services/sound/sound.service';
 import {
   BadNoteFound,
   GameComplete,
@@ -9,16 +9,17 @@ import {
   GameStop,
   GoodNoteFound,
 } from '@shared-modules/store/game/game.actions';
-import { GameState } from '@shared-modules/store/game/game.state';
-import { Subject } from 'rxjs';
-import { popAnimation } from 'src/app/animations/pop.animation';
-import { slideAnimation } from 'src/app/animations/slide.animation';
-import { GameMode } from 'src/app/classes/game-mode.class';
-import { CHROMATIC_SCALE } from 'src/app/constants/chromatic-scale.constant';
-import { Note } from 'src/app/models/note.model';
-import { FretboardManipulationService } from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
-import { UtilsService } from 'src/app/shared/services/utils/utils.service';
-import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
+import {GameState} from '@shared-modules/store/game/game.state';
+import {Subject} from 'rxjs';
+import {popAnimation} from 'src/app/animations/pop.animation';
+import {slideAnimation} from 'src/app/animations/slide.animation';
+import {GameMode} from 'src/app/classes/game-mode.class';
+import {CHROMATIC_SCALE} from 'src/app/constants/chromatic-scale.constant';
+import {Note} from 'src/app/models/note.model';
+import {FretboardManipulationService} from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
+import {UtilsService} from 'src/app/shared/services/utils/utils.service';
+import {PreferencesState, PreferencesStateModel} from 'src/app/shared/store/preferences/preferences.state';
+import {takeUntil, tap} from 'rxjs/operators';
 
 const HEIGHT_OFFSET = 300; // topbar + footer height -- maybe improve this later with the actual height
 
@@ -28,7 +29,7 @@ const HEIGHT_OFFSET = 300; // topbar + footer height -- maybe improve this later
   styleUrls: ['./identify.page.scss'],
   animations: [popAnimation, slideAnimation],
 })
-export class IdentifyPage implements OnInit, OnDestroy {
+export class IdentifyPage implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('content') content: IonContent;
   destroyed$ = new Subject();
   preferences: PreferencesStateModel;
@@ -46,6 +47,7 @@ export class IdentifyPage implements OnInit, OnDestroy {
 
   constructor(
     private readonly store: Store,
+    private readonly cd: ChangeDetectorRef,
     public readonly utils: UtilsService,
     private readonly sound: SoundService,
     private readonly fretboardManipulationService: FretboardManipulationService,
@@ -53,31 +55,50 @@ export class IdentifyPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.store.dispatch(new GameStop({ tuning: this.preferences.tuning }));
+    this.store.dispatch(new GameStop({tuning: this.preferences.tuning}));
     this.destroyed$.next();
     this.destroyed$.complete();
   }
 
   ngOnInit() {
     this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
-    const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
+
+  }
+
+  initGameMode(preferences: PreferencesStateModel) {
+    const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(preferences);
 
     this.game.initGameMode(fretboardNotes, {
       onBeforeStart: () => {
-        this.store.dispatch(new GameStart({ tuning: this.preferences.tuning }));
+        this.store.dispatch(new GameStart({tuning: preferences.tuning}));
         this.scoreHistoric = [];
       },
       onEnd: () => {
-        this.store.dispatch(new GameStop({ tuning: this.preferences.tuning }));
+        this.store.dispatch(new GameStop({tuning: preferences.tuning}));
         this.content.scrollToTop(250);
       },
       onComplete: () => {
-        this.store.dispatch(new GameComplete({tuning: this.preferences.tuning}));
+        this.store.dispatch(new GameComplete({tuning: preferences.tuning}));
       },
       onNotePicked: () => {
         this.onNotePicked();
       },
     });
+  }
+
+  ngAfterViewInit() {
+    this.listenToPreferences();
+  }
+
+  listenToPreferences() {
+    this.store.select(PreferencesState.getState).pipe(
+      tap(pref => {
+        this.preferences = pref;
+        this.initGameMode(this.preferences);
+        this.cd.markForCheck();
+      }),
+      takeUntil(this.destroyed$),
+    ).subscribe();
   }
 
   onNotePicked() {

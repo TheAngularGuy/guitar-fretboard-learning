@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {GameMode} from '@classes/game-mode.class';
 import {IonButton, IonContent} from '@ionic/angular';
 import {Note} from '@models/note.model';
@@ -6,18 +6,13 @@ import {Store} from '@ngxs/store';
 import {FretboardManipulationService} from '@shared-modules/services/fretboard-manipulation/fretboard-manipulation.service';
 import {SoundService} from '@shared-modules/services/sound/sound.service';
 import {UtilsService} from '@shared-modules/services/utils/utils.service';
-import {
-  BadNoteFound,
-  GameComplete,
-  GameStart,
-  GameStop,
-  GoodNoteFound,
-} from '@shared-modules/store/game/game.actions';
+import {BadNoteFound, GameComplete, GameStart, GameStop, GoodNoteFound,} from '@shared-modules/store/game/game.actions';
 import {GameState} from '@shared-modules/store/game/game.state';
 import {PreferencesState, PreferencesStateModel} from '@shared-modules/store/preferences/preferences.state';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {popAnimation} from '../../../animations/pop.animation';
 import {slideAnimation} from '../../../animations/slide.animation';
+import {takeUntil, tap} from 'rxjs/operators';
 
 const HEIGHT_OFFSET = 300;
 
@@ -27,7 +22,7 @@ const HEIGHT_OFFSET = 300;
   styleUrls: ['./identify-sound.page.scss'],
   animations: [popAnimation, slideAnimation],
 })
-export class IdentifySoundPage implements OnInit, OnDestroy {
+export class IdentifySoundPage implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('content') content: IonContent;
   destroyed$ = new Subject();
   game: GameMode = new GameMode();
@@ -45,6 +40,7 @@ export class IdentifySoundPage implements OnInit, OnDestroy {
 
   constructor(
     private readonly store: Store,
+    private readonly cd: ChangeDetectorRef,
     public readonly utils: UtilsService,
     private readonly sound: SoundService,
     private readonly fretboardManipulationService: FretboardManipulationService,
@@ -59,24 +55,44 @@ export class IdentifySoundPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
-    const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
+
+    this.initGameMode(this.preferences);
+  }
+
+  ngAfterViewInit() {
+    this.listenToPreferences();
+  }
+
+  initGameMode(preferences: PreferencesStateModel) {
+    const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(preferences);
 
     this.game.initGameMode(fretboardNotes, {
       onBeforeStart: () => {
-        this.store.dispatch(new GameStart({tuning: this.preferences.tuning}));
+        this.store.dispatch(new GameStart({tuning: preferences.tuning}));
         this.scoreHistoric = [];
       },
       onEnd: () => {
-        this.store.dispatch(new GameStop({tuning: this.preferences.tuning}));
+        this.store.dispatch(new GameStop({tuning: preferences.tuning}));
         this.content.scrollToTop(250);
       },
       onComplete: () => {
-        this.store.dispatch(new GameComplete({tuning: this.preferences.tuning}));
+        this.store.dispatch(new GameComplete({tuning: preferences.tuning}));
       },
       onNotePicked: () => {
         this.onNotePicked();
       },
     });
+  }
+
+  listenToPreferences() {
+    this.store.select(PreferencesState.getState).pipe(
+      tap(pref => {
+        this.preferences = pref;
+        this.initGameMode(this.preferences);
+        this.cd.markForCheck();
+      }),
+      takeUntil(this.destroyed$),
+    ).subscribe();
   }
 
   start() {
@@ -91,8 +107,8 @@ export class IdentifySoundPage implements OnInit, OnDestroy {
     // scroll to the note
     console.log('playing', this.game.noteToFind.note);
     this.soundPlaying$.next(true);
-    setTimeout(() => this.soundPlaying$.next(false), 2000);
-    this.sound.playNote(this.game.noteToFind.note.name);
+    setTimeout(() => this.soundPlaying$.next(false), 825);
+    this.sound.playNote(this.game.noteToFind.note.name, 1125);
   }
 
   onNoteClicked(noteGuessed: string, btn: IonButton | any): boolean {

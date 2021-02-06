@@ -12,8 +12,8 @@ export class TuningPipe implements PipeTransform {
   constructor() {
   }
 
-  transform(value: string, useFlat: boolean, leftHanded): string {
-    let notes = value.split('-').map(note => this.notePipe.transform(note, useFlat));
+  transform(value: string, notation: string, useFlat: boolean, leftHanded): string {
+    let notes = value.split('-').map(note => this.notePipe.transform(note, notation, useFlat));
     if (leftHanded) {
       notes = notes.reverse();
     }

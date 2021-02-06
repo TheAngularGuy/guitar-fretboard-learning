@@ -65,6 +65,7 @@
           [invertedStrings]="preferences?.invertedStrings"
           [invertedFrets]="preferences?.invertedFrets"
           [useFlats]="preferences?.useFlats"
+          [notation]="preferences?.notation"
           [notes]="game.fretboardNotes"
           [showAll]="false"
           [selectedFrets]="game.fretsAvailable"
@@ -77,7 +78,7 @@
 <ion-footer *ngIf="game.isPlaying">
   <div class="playing">
     <div class="note" [@popAnimation]="game.noteToFind?.note?.name">
-      {{game.noteToFind?.note?.name | note:preferences?.useFlats}}
+      {{game.noteToFind?.note?.name | note:preferences?.notation:preferences?.useFlats}}
     </div>
   </div>
 

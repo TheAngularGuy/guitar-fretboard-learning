@@ -1,6 +1,5 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-import { CHROMATIC_SCALE } from '@constants/chromatic-scale.constant';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {BehaviorSubject, Subject} from 'rxjs';
 
 declare var Aubio: any;
 
@@ -8,41 +7,58 @@ declare var Aubio: any;
   selector: 'app-tuner',
   templateUrl: './tuner.page.html',
   styleUrls: ['./tuner.page.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TunerPage implements OnInit, AfterViewInit, OnDestroy {
-  tuner: Tuner;
-  lastNote: Subject<{
+  hasMicPermission$ = new BehaviorSubject(false);
+  lastNote$: Subject<{
     name: string, cents: number, octave: number,
     frequency: number, volume: number
   }>;
+  tuner: Tuner;
   timeout: any;
 
-  constructor() { }
+  constructor(private cd: ChangeDetectorRef) {
+  }
 
   ngOnInit() {
-    this.start();
-    this.lastNote = new Subject();
+    this.askMikePermission();
   }
 
   ngAfterViewInit() {
-    this.defaultNote();
   }
 
   ngOnDestroy() {
     this.tuner.stopRecord();
   }
 
+  askMikePermission() {
+    navigator.mediaDevices.getUserMedia({audio: true})
+      .then((stream) => {
+        this.hasMicPermission$.next(true);
+        this.start();
+        this.lastNote$ = new Subject();
+        setTimeout(() => this.defaultNote(), 125);
+      })
+      .catch((err) => {
+        this.hasMicPermission$.next(false);
+        console.log('No mic permission granted!', err);
+      });
+  }
+
   start() {
+    this.cd.markForCheck();
     this.tuner = new Tuner();
     this.tuner.onNoteDetected = (note) => {
       this.onNoteChanges(note);
+      this.cd.markForCheck();
     };
 
     this.tuner.init();
   }
 
   onNoteChanges(note) {
-    this.lastNote.next(note);
+    this.lastNote$.next(note);
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
       this.defaultNote();
@@ -50,7 +66,7 @@ export class TunerPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   defaultNote() {
-    this.lastNote.next({
+    this.lastNote$.next({
       name: '𝄞',
       cents: 0,
       octave: undefined,
@@ -108,7 +124,7 @@ class Tuner {
   startRecord() {
     const self = this;
     navigator.mediaDevices
-      .getUserMedia({ audio: true })
+      .getUserMedia({audio: true})
       .then((stream) => {
         this.stream = stream;
         const source = self.audioContext.createMediaStreamSource(stream);

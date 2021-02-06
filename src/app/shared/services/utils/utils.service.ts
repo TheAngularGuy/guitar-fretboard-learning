@@ -1,9 +1,11 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {Device} from '@ionic-native/device/ngx';
 
 @Injectable()
 export class UtilsService {
-  private _isIOS: boolean;
-  private _isPWA: boolean;
+
+  constructor(private device: Device) {
+  }
 
   /**
    * Get item from Local Storage
@@ -51,32 +53,42 @@ export class UtilsService {
   /**
    * Returns true if app runs on IOS
    */
-  isIOS(): boolean {
-    if (this._isIOS != null) {
-      return this._isIOS;
+  static isIOS(): boolean {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent);
+  }
+
+  isIphoneX() {
+    try {
+      const iphoneModel = (this.device || (window as any).device)?.model;
+      if (!iphoneModel) {
+        return UtilsService.isIOS();
+      }
+      const m = iphoneModel.match(/iPhone(\d+),?(\d+)?/);
+      const model = +m[1];
+
+      if (model >= 10) { // is iphone X
+        return true;
+      }
+    } catch (e) {
     }
-    this._isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    return this._isIOS;
+
+    return false;
   }
 
   /**
    * Returns true if app is a PWA
    */
   isPWA(): boolean {
-    if (this._isPWA != null) {
-      return this._isPWA;
-    }
-    this._isPWA =
-      window.matchMedia('(display-mode: standalone)').matches ||
+    return window.matchMedia('(display-mode: standalone)').matches ||
       (window.navigator as any).standalone ||
       document.referrer.includes('android-app://');
-    return this._isPWA;
+
   }
 
   /**
    * Returns true if app is a PWA on IOS
    */
   isIOSPWA(): boolean {
-    return this._isIOS && this._isPWA;
+    return this.isIphoneX() && this.isPWA();
   }
 }
