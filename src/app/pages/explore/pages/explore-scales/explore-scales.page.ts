@@ -184,6 +184,7 @@ export class ExploreScalesPage implements OnInit, OnDestroy {
     if (!this.dropDownOpen$.getValue()) {
       this.onSelectedSegment(selectedSeg);
     }
+    this.scrollToFretBoard();
   }
 
   onPrevSegment() {
@@ -195,6 +196,16 @@ export class ExploreScalesPage implements OnInit, OnDestroy {
     this.exploreForm.get('segment').patchValue(selectedSeg);
     if (!this.dropDownOpen$.getValue()) {
       this.onSelectedSegment(selectedSeg);
+    }
+    this.scrollToFretBoard();
+  }
+
+  scrollToFretBoard() {
+    if ((window as any).fretboard) {
+      (window as any).fretboard.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
     }
   }
 }

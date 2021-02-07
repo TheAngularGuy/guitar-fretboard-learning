@@ -9,6 +9,7 @@ import has = Reflect.has;
 })
 export class SoundService {
   preferences: PreferencesStateModel;
+  audioContext: AudioContext;
 
   constructor(private store: Store) {
     this.store.select<PreferencesStateModel>(PreferencesState.getState)
@@ -18,6 +19,7 @@ export class SoundService {
         }),
       )
       .subscribe();
+    this.audioContext = new AudioContext();
   }
 
   playClick() {
@@ -75,8 +77,7 @@ export class SoundService {
       'F#': 369.99,
       'G#': 415.30,
     };
-    console.log(hash[note]);
-    const audioContext = new AudioContext();
+    const audioContext = this.audioContext;
     const frequency = hash[note];
     const oscillator = audioContext.createOscillator();
     oscillator.connect(audioContext.destination);

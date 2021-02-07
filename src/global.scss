@@ -24,6 +24,10 @@
   url('assets/fonts/tabasco/fonts/Tabasco.svg#Tabasco') format('svg');
 }
 
+body {
+  touch-action: manipulation;
+}
+
 h1,
 h2,
 h3,

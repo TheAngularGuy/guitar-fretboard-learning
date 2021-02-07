@@ -123,3 +123,10 @@
   max-width: 308px;
   position: relative;
 }
+
+.warning {
+  border-radius: 3px;
+  overflow: hidden;
+  background: rgba(var(--ion-color-danger-rgb), 0.15);
+  padding: 1rem;
+}

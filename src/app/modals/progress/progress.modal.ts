@@ -17,6 +17,7 @@ import {LEVELS} from '@constants/levels';
 import {PreferencesState, PreferencesStateModel} from '@shared-modules/store/preferences/preferences.state';
 import {takeUntil, tap} from 'rxjs/operators';
 import {Subject} from 'rxjs';
+import {UtilsService} from '@shared-modules/services/utils/utils.service';
 
 
 @Component({
@@ -52,6 +53,7 @@ export class ProgressModal implements OnInit, AfterViewInit, OnDestroy {
     private modalCtrl: ModalController,
     private sound: SoundService,
     private changeDetection: ChangeDetectorRef,
+    public utilsService: UtilsService,
   ) {
   }
 

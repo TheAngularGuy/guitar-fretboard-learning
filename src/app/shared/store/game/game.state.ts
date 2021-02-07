@@ -21,23 +21,25 @@ enum stateEnums {
   globalPoints = 'game_globalPoints',
 }
 
-interface NoteScore extends Note {
+interface NotePlacementScore extends Note {
   occurance: number;
+}
+
+export interface NoteScoreByTuning {
+  name: string;
+  value: number;
+  good: number;
+  bad: number;
+  placements: NotePlacementScore[];
 }
 
 interface ScoreByTunings {
   tuning: string;
   score: {
     points: number;
-    notes: {
-      name: string;
-      value: number;
-      good: number;
-      bad: number;
-      placements: NoteScore[];
-    }[];
+    notes: NoteScoreByTuning[];
   };
-};
+}
 
 export interface GameStateModel {
   isPlaying: boolean;
@@ -48,7 +50,7 @@ export interface GameStateModel {
   currentSession: {
     globalPoints: number;
     scoreByTunings: ScoreByTunings[];
-  }
+  };
 }
 
 @Injectable()
@@ -56,7 +58,7 @@ export interface GameStateModel {
   name: 'game',
   defaults: {
     isPlaying: false,
-    globalPoints: UtilsService.getParsedItemFromLS(stateEnums.globalPoints) || 490, // TODO remove this
+    globalPoints: UtilsService.getParsedItemFromLS(stateEnums.globalPoints) || 0,
     unlockedFrets: UtilsService.getParsedItemFromLS(stateEnums.unlockedFrets) || LEVELS[0].unlockedFrets,
     unlockedNotes: UtilsService.getParsedItemFromLS(stateEnums.unlockedNotes) || LEVELS[0].unlockedNotes,
     scoreByTunings: UtilsService.getParsedItemFromLS(stateEnums.scoreByTunings) || [],

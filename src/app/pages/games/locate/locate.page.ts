@@ -64,7 +64,6 @@ export class LocatePage implements OnInit, AfterViewInit, OnDestroy {
 
   initGameMode(preferences: PreferencesStateModel) {
     const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(preferences);
-    this.game.config.MAX_RANGE = 1
     this.game.initGameMode(
       fretboardNotes,
       {

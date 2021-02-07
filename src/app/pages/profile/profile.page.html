@@ -1,9 +1,47 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>profile</ion-title>
+    <ion-title>Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ng-container *ngIf="userState$ | async as userState">
+  <ng-container *ngIf="preferencesState$ | async as prefState">
+    <ng-container *ngIf="gameState$ | async as gameState">
 
-</ion-content>
+      <ion-content>
+
+        <div class="page">
+
+          <ion-avatar>
+            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+          </ion-avatar>
+
+          <p class="score">
+            {{ getLevel(gameState).name }} &nbsp; — &nbsp; <b>{{gameState.globalPoints}}</b> &nbsp;
+            <img src="assets/imgs/guitar-pick.svg" alt="level coins loge" width="16"/>
+          </p>
+          <div *ngIf="getScoreByCurrentTuning(prefState, gameState) as scoreByTuning; else noDataForTuning">
+            <p>
+              Score for the current tuning: {{ scoreByTuning.score.points }} ({{ scoreByTuning.tuning }})
+            </p>
+            <p>
+              Most well known notes to the leasn known:
+              <br>
+              <span *ngFor="let note of sortByBestNote(scoreByTuning.score.notes)">
+                {{ note.name | note:prefState.notation:prefState.useFlats }}
+              </span>
+            </p>
+          </div>
+          <ng-template #noDataForTuning>
+            <p>
+              No data for the current tuning. Try any game mode in the games list.
+            </p>
+          </ng-template>
+
+
+        </div>
+      </ion-content>
+
+    </ng-container>
+  </ng-container>
+</ng-container>

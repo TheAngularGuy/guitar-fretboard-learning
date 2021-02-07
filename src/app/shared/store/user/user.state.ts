@@ -4,6 +4,7 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { auth } from 'firebase/app';
 import { tap } from 'rxjs/operators';
 import { UserLogInAction, UserLogOutAction } from './user.actions';
+import {environment} from '../../../../environments/environment';
 
 export interface UserStateModel {
   uid: string;
@@ -29,7 +30,7 @@ export class UserState {
   constructor(private readonly firebaseauth: AngularFireAuth) {
     this.firebaseauth.authState.pipe(
       tap(usr => {
-        console.log(usr);
+        console.log({usr});
       }),
     ).subscribe();
   }
@@ -54,6 +55,13 @@ export class UserState {
   @Action(UserLogOutAction)
   logout() {
     this.firebaseauth.signOut();
+  }
+
+  optOutOfAnalitics() {
+    const gaProperty = environment.firebaseConfig.measurementId;
+    const disableStr = 'ga-disable-' + gaProperty;
+    document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC;';
+    window[disableStr] = true;
   }
 
 }

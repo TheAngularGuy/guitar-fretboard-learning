@@ -12,6 +12,8 @@ import {
   PreferencesSetInvertedFretsModeAction,
   PreferencesSetInvertedStringsModeAction
 } from '@shared-modules/store/preferences/preferences.actions';
+import {Device} from '@ionic-native/device/ngx';
+import {environment} from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -61,12 +63,17 @@ export class AppComponent implements AfterViewInit {
     private readonly statusBar: StatusBar,
     private readonly swUpdate: SwUpdate,
     private readonly toastController: ToastController,
+    private readonly device: Device,
   ) {
     this.initializeApp();
   }
 
   ngAfterViewInit() {
     this.lastWidthRegistred = window.innerWidth;
+
+    if (!this.device?.model) { // Not an app
+      // TODO: show cookies msg "This site uses cookies from Google to deliver its services and to analyze traffic."
+    }
   }
 
   initializeApp() {

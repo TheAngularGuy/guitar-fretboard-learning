@@ -5,6 +5,6 @@ export const environment = {
   production: false,
   version: 'dev',
   enableNgxsLogger: false,
-  enableAnalyticsDebug: false,
+  enableAnalyticsDebug: true,
 };
 

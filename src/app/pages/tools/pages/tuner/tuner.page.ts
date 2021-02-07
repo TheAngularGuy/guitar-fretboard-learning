@@ -10,6 +10,7 @@ declare var Aubio: any;
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TunerPage implements OnInit, AfterViewInit, OnDestroy {
+  anErrorOccured$ = new BehaviorSubject(false);
   hasMicPermission$ = new BehaviorSubject(false);
   lastNote$: Subject<{
     name: string, cents: number, octave: number,
@@ -36,14 +37,31 @@ export class TunerPage implements OnInit, AfterViewInit, OnDestroy {
     navigator.mediaDevices.getUserMedia({audio: true})
       .then((stream) => {
         this.hasMicPermission$.next(true);
-        this.start();
-        this.lastNote$ = new Subject();
-        setTimeout(() => this.defaultNote(), 125);
+        this.init();
       })
       .catch((err) => {
         this.hasMicPermission$.next(false);
         console.log('No mic permission granted!', err);
       });
+  }
+
+  init() {
+    let retry = 0;
+    const interval = setInterval(() => {
+      if (typeof Aubio === 'undefined' || !Aubio) {
+        if (retry > 5) {
+          console.error('An error occured while initializing the tuner.');
+          this.anErrorOccured$.next(true);
+          clearInterval(interval);
+        }
+        retry += 1;
+      } else {
+        this.start();
+        this.lastNote$ = new Subject();
+        setTimeout(() => this.defaultNote(), 125);
+        clearInterval(interval);
+      }
+    }, 300);
   }
 
   start() {

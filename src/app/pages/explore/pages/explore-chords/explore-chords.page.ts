@@ -60,6 +60,7 @@ export class ExploreChordsPage implements OnInit, OnDestroy {
     } else {
       this.showChordNb = 0;
     }
+    this.scrollToFretBoard();
   }
 
   prevChord() {
@@ -68,6 +69,7 @@ export class ExploreChordsPage implements OnInit, OnDestroy {
     } else {
       this.showChordNb = this.selectedChords?.length - 1;
     }
+    this.scrollToFretBoard();
   }
 
   ngOnDestroy() {
@@ -135,5 +137,14 @@ export class ExploreChordsPage implements OnInit, OnDestroy {
   toggleDropDown() {
     const bool = this.dropDownOpen$.getValue();
     this.dropDownOpen$.next(!bool);
+  }
+
+  scrollToFretBoard() {
+    if ((window as any).fretboard) {
+      (window as any).fretboard.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
   }
 }

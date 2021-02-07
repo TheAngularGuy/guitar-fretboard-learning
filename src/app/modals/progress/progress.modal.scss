@@ -33,6 +33,10 @@
   }
 }
 
+.down {
+  top: 45px;
+}
+
 .timer {
   position: absolute;
   z-index: 9;
@@ -89,8 +93,8 @@
     justify-content: center;
 
     img {
-      height: 18px;
-      width: 18px;
+      height: 16px;
+      width: 16px;
     }
   }
 

@@ -1,7 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Device} from '@ionic-native/device/ngx';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UtilsService {
 
   constructor(private device: Device) {
@@ -82,7 +84,6 @@ export class UtilsService {
     return window.matchMedia('(display-mode: standalone)').matches ||
       (window.navigator as any).standalone ||
       document.referrer.includes('android-app://');
-
   }
 
   /**

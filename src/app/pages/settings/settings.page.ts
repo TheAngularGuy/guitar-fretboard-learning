@@ -164,4 +164,8 @@ export class SettingsPage implements OnInit, OnDestroy {
   goToAboutPage() {
     this.router.navigate(['settings', 'about']);
   }
+
+  goToPrivacyPage() {
+    this.router.navigate(['settings', 'privacy']);
+  }
 }
