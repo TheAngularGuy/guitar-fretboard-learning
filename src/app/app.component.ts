@@ -13,7 +13,6 @@ import {
   PreferencesSetInvertedStringsModeAction
 } from '@shared-modules/store/preferences/preferences.actions';
 import {Device} from '@ionic-native/device/ngx';
-import {environment} from '../environments/environment';
 
 @Component({
   selector: 'app-root',

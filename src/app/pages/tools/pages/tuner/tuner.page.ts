@@ -1,5 +1,5 @@
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {BehaviorSubject, Subject} from 'rxjs';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 declare var Aubio: any;
 
@@ -7,7 +7,7 @@ declare var Aubio: any;
   selector: 'app-tuner',
   templateUrl: './tuner.page.html',
   styleUrls: ['./tuner.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TunerPage implements OnInit, AfterViewInit, OnDestroy {
   anErrorOccured$ = new BehaviorSubject(false);
@@ -30,12 +30,16 @@ export class TunerPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    if (!this.tuner) {
+      return;
+    }
     this.tuner.stopRecord();
   }
 
   askMikePermission() {
-    navigator.mediaDevices.getUserMedia({audio: true})
+    navigator.mediaDevices.getUserMedia({ audio: true })
       .then((stream) => {
+        console.log({ stream });
         this.hasMicPermission$.next(true);
         this.init();
       })
@@ -142,7 +146,7 @@ class Tuner {
   startRecord() {
     const self = this;
     navigator.mediaDevices
-      .getUserMedia({audio: true})
+      .getUserMedia({ audio: true })
       .then((stream) => {
         this.stream = stream;
         const source = self.audioContext.createMediaStreamSource(stream);
