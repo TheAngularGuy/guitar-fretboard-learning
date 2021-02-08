@@ -107,6 +107,8 @@ export class ProfileDataPage implements OnInit, OnDestroy {
   }
 
   onLogOut() {
-    this.store.dispatch(new UserLogOutAction())
+    if (confirm('Do you want to log out?')) {
+      this.store.dispatch(new UserLogOutAction());
+    }
   }
 }
