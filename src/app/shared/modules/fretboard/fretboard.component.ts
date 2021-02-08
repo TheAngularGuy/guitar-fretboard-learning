@@ -26,6 +26,7 @@ export class FretboardComponent implements OnInit {
   @Input() invertedStrings: boolean;
   @Input() invertedFrets: boolean;
   @Input() notes: string[][];
+  @Input() bgColors: string[][];
   @Input() barre: Barre;
   @Input() useFlats: boolean;
   @Input() notation: string;

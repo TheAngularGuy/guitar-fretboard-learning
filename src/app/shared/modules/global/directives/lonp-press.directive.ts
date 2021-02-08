@@ -12,9 +12,6 @@ export class LonpPressDirective {
 
   @HostListener('mousedown', ['$event'])
   onMouseDown(event: MouseEvent) {
-    if (event.buttons !== 1) {
-      return;
-    }
     this.isPressing = true;
     this.pressing.emit(event);
     this.loop(event);

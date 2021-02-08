@@ -20,10 +20,10 @@
             </small>
           </span>
           <span>
-            <ion-icon (click)="subBpm()" size="large" name="remove-circle-outline">
+            <ion-icon appLonpPress (pressing)="subBpm()" size="large" name="remove-circle-outline">
             </ion-icon>
             &nbsp;
-            <ion-icon (click)="addBpm()" size="large" name="add-circle-outline">
+            <ion-icon appLonpPress (pressing)="addBpm()" size="large" name="add-circle-outline">
             </ion-icon>
           </span>
         </div>
@@ -36,8 +36,15 @@
     <ion-card-content>
       <form class="settings" [formGroup]="bpmForm">
         <ion-item>
+          <ion-range style="padding: 2ch 0 0 0" pin min="10" max="320" color="secondary" formControlName="bpm">
+            <ion-label slot="start">10</ion-label>
+            <ion-label slot="end">320</ion-label>
+          </ion-range>
+        </ion-item>
+
+        <ion-item>
           <ion-label>Beat</ion-label>
-          <ion-select multiple="false" interface="popover" formControlName="beats">
+          <ion-select multiple="false" interface="action-sheet" formControlName="beats">
             <ion-select-option *ngFor="let beat of beatsList" [value]="beat">
               {{beat}}
             </ion-select-option>
@@ -45,7 +52,7 @@
         </ion-item>
         <ion-item>
           <ion-label>Mesure</ion-label>
-          <ion-select multiple="false" interface="popover" formControlName="mesure">
+          <ion-select multiple="false" interface="action-sheet" formControlName="mesure">
             <ion-select-option [value]="0.25"> 1</ion-select-option>
             <ion-select-option [value]="0.5"> 2</ion-select-option>
             <ion-select-option [value]="1"> 4</ion-select-option>

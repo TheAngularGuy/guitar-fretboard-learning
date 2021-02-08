@@ -30,7 +30,7 @@
       <form class="settings" [formGroup]="exploreForm">
         <ion-item>
           <ion-label>Root note</ion-label>
-          <ion-select multiple="false" interface="popover" formControlName="rootNote"
+          <ion-select multiple="false" interface="action-sheet" formControlName="rootNote"
                       (ionChange)="onSelectedNotes($event.detail.value)">
             <ion-select-option *ngFor="let note of chromaticScale" [value]="note">
               {{note | note:preferences.notation:preferences?.useFlats}}
@@ -40,14 +40,14 @@
 
         <ion-item>
           <ion-label>Scale</ion-label>
-          <ion-select multiple="false" interface="popover" formControlName="scaleType"
+          <ion-select multiple="false" interface="action-sheet" formControlName="scaleType"
                       (ionChange)="onSelectedScale($event.detail.value)">
             <ng-container *ngFor="let scale of scaleTypesList">
               <ion-select-option *ngIf="!scale.divider" [value]="scale.key">
                 {{scale.name}}
               </ion-select-option>
               <ion-select-option [disabled]="true" *ngIf="scale.divider">
-                {{scale.name | uppercase}}
+                ------ {{scale.name | uppercase}} ------
               </ion-select-option>
             </ng-container>
           </ion-select>
@@ -55,7 +55,7 @@
 
         <ion-item>
           <ion-label>Segment of the fretboard</ion-label>
-          <ion-select multiple="false" interface="popover" formControlName="segment"
+          <ion-select multiple="false" interface="action-sheet" formControlName="segment"
                       (ionChange)="onSelectedSegment($event.detail.value)">
             <ion-select-option [value]="'all'">
               All

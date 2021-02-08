@@ -119,14 +119,14 @@ export class IdentifySoundPage implements OnInit, AfterViewInit, OnDestroy {
 
     if (noteGuessed === this.game.noteToFind.note.name) {
       // good answer
-      this.store.dispatch(new GoodNoteFound({note: simpleNote, tuning: this.preferences.tuning}));
+      this.store.dispatch(new GoodNoteFound({note: simpleNote, tuning: this.preferences.tuning, noPlacement: true}));
       this.sound.playGood();
       this.game.increaseScoreGood();
       btn.el.color = 'success';
       setTimeout(() => btn.el.color = 'light', this.game.config.ANIMATION_DELAY);
     } else {
       // bad answer
-      this.store.dispatch(new BadNoteFound({note: simpleNote, tuning: this.preferences.tuning}));
+      this.store.dispatch(new BadNoteFound({note: simpleNote, tuning: this.preferences.tuning, noPlacement: true}));
       this.sound.playError();
       this.game.increaseScoreBad();
       btn.el.color = 'danger';

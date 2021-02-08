@@ -22,14 +22,14 @@ export class GoodNoteFound {
   public static readonly type = '[GAME] GoodNoteFound';
   isGood = true;
 
-  constructor(public payload: { note: Note, tuning: string }) { }
+  constructor(public payload: { note: Note, tuning: string, noPlacement?: boolean }) { }
 }
 
 export class BadNoteFound {
   public static readonly type = '[GAME] BadNoteFound';
   isGood = false;
 
-  constructor(public payload: { note: Note, tuning: string }) { }
+  constructor(public payload: { note: Note, tuning: string, noPlacement?: boolean }) { }
 }
 
 export class UnlockedFrets {

@@ -1,0 +1,105 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ng-container *ngIf="userState$ | async as userState">
+  <ng-container *ngIf="preferencesState$ | async as prefState">
+    <ng-container *ngIf="gameState$ | async as gameState">
+
+      <ion-content>
+        <ng-container>
+          <div class="avatar">
+            <ion-avatar>
+              <img
+                  [src]="userState.photoURL || 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'">
+            </ion-avatar>
+          </div>
+          <p class="name">
+            {{ userState.displayName }}
+          </p>
+          <p class="score">
+            {{ getLevel(gameState).name }} &nbsp; — &nbsp; <b>{{gameState.globalPoints}}</b>
+            &nbsp;
+            <img src="assets/imgs/guitar-pick.svg" alt="level coins loge" width="16"/>
+          </p>
+        </ng-container>
+
+        <ion-card>
+          <ng-container *ngIf="getScoreByCurrentTuning(prefState, gameState) as scoreByTuning; else noDataForTuning">
+
+            <ion-card-header>
+              <ion-card-title>
+                {{ scoreByTuning.tuning }} tuning
+              </ion-card-title>
+              <ion-card-subtitle>
+                Total score for this tuning: {{ scoreByTuning.score.points }}
+                <img src="assets/imgs/guitar-pick.svg" alt="level coins loge" width="12"/>
+              </ion-card-subtitle>
+            </ion-card-header>
+
+            <ion-card-content>
+              <div class="group">
+                <p class="white">Most well known notes to the leasn known:</p>
+                <span class="muted">Click on a note to a detailed view</span>
+
+                <div class="group-container">
+                  <span class="note taba"
+                        *ngFor="let note of sortByBestNote(scoreByTuning.score.notes, gameState.unlockedNotes)"
+                        (click)="goToNoteDetail(note)">
+                    {{ note.name | note:prefState.notation:prefState.useFlats }}
+                  </span>
+                </div>
+              </div>
+
+              <ng-container *ngIf="getLockedNotes(gameState.unlockedNotes) as lockedNotes">
+                <div class="group" *ngIf="lockedNotes.length">
+                  <p class="white">Notes to unlock:</p>
+                  <div class="group-container">
+                  <span class="note taba gray" *ngFor="let noteToUnlock of lockedNotes">
+                    <span class="notif">
+                      <ion-icon name="lock-closed"></ion-icon>
+                      {{ noteToUnlock.level }}
+                    </span>
+                    {{ noteToUnlock.note | note:prefState.notation:prefState.useFlats }}
+                  </span>
+                  </div>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="getLockedFrets(gameState.unlockedFrets) as lockedFrets">
+                <div class="group" *ngIf="lockedFrets.length">
+                  <p class="white">Frets to unlock:</p>
+                  <div class="group-container">
+                  <span class="note taba gray" *ngFor="let fretToUnlock of lockedFrets">
+                    <span class="notif">
+                      <ion-icon name="lock-closed"></ion-icon>
+                      {{ fretToUnlock.level }}
+                    </span>
+                    {{ fretToUnlock.fret }}
+                  </span>
+                  </div>
+                </div>
+              </ng-container>
+            </ion-card-content>
+
+          </ng-container>
+          <ng-template #noDataForTuning>
+            <ion-card-content>
+              <p> No data for the current tuning. Try any game mode in the games list. </p>
+            </ion-card-content>
+          </ng-template>
+        </ion-card>
+
+        <div class="logout">
+          <ion-button fill="clear" color="fourth" (click)="onLogOut()">
+            Log out
+          </ion-button>
+        </div>
+
+      </ion-content>
+
+    </ng-container>
+  </ng-container>
+</ng-container>

@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { auth } from 'firebase/app';
-import { tap } from 'rxjs/operators';
-import { UserLogInAction, UserLogOutAction } from './user.actions';
+import {Injectable, NgZone} from '@angular/core';
+import {Action, Selector, State, StateContext} from '@ngxs/store';
+import {auth} from 'firebase/app';
+import {SetUserAction, UserLogInAction, UserLogOutAction} from './user.actions';
 import {environment} from '../../../../environments/environment';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {Router} from '@angular/router';
 
 export interface UserStateModel {
   uid: string;
@@ -27,12 +27,11 @@ export interface UserStateModel {
 })
 export class UserState {
 
-  constructor(private readonly firebaseauth: AngularFireAuth) {
-    this.firebaseauth.authState.pipe(
-      tap(usr => {
-        console.log({usr});
-      }),
-    ).subscribe();
+  constructor(
+    private readonly firebaseauth: AngularFireAuth,
+    private readonly ngZone: NgZone,
+    private readonly router: Router
+  ) {
   }
 
   @Selector()
@@ -53,8 +52,26 @@ export class UserState {
   }
 
   @Action(UserLogOutAction)
-  logout() {
-    this.firebaseauth.signOut();
+  logout(ctx: StateContext<UserStateModel>) {
+    this.firebaseauth.signOut().then(() => {
+      this.ngZone.run(() => {
+        ctx.patchState({
+          uid: undefined,
+          email: undefined,
+          displayName: undefined,
+          photoURL: undefined,
+          emailVerified: undefined,
+        });
+        this.router.navigate(['profile', 'login']);
+      });
+    });
+  }
+
+  @Action(SetUserAction)
+  setUserAction(ctx: StateContext<UserStateModel>, action: SetUserAction) {
+    ctx.patchState({
+      ...action.payload.user
+    });
   }
 
   optOutOfAnalitics() {

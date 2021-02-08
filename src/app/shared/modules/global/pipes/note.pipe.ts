@@ -11,6 +11,9 @@ export class NotePipe implements PipeTransform {
   }
 
   transform(value: string, notation: string, useFlats: boolean): string {
+    if (typeof value !== 'string') {
+      return '';
+    }
     return this.applyTransformation(value, notation, useFlats);
   }
 

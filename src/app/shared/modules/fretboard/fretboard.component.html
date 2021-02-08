@@ -45,6 +45,7 @@
 
         <button
             class="note string-{{ string }}"
+            [ngStyle]="{'background-color': (!!bgColors && !!bgColors[fret]) ? bgColors[fret][string] : null}"
             [ngClass]="{
             'note-highlighted': isNoteHighlighted(fret, string),
             'disabled-string': isStringDisabled(string),

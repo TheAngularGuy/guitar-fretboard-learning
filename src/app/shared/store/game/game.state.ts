@@ -21,8 +21,10 @@ enum stateEnums {
   globalPoints = 'game_globalPoints',
 }
 
-interface NotePlacementScore extends Note {
+export interface NotePlacementScore extends Note {
   occurance: number;
+  good: number;
+  bad: number;
 }
 
 export interface NoteScoreByTuning {
@@ -230,42 +232,49 @@ export class GameState {
     const scoreByTuning = scoreByTunings.find(t => t.tuning === tuning).score;
     const scoreNote = scoreByTuning.notes.find(sn => sn.name === note.name);
 
-    scoreByTuning.points += bad ? -10 : 10;
+    scoreByTuning.points += bad ? 0 : 10;
     globalPoints += bad ? 0 : 10;
-    if (!!scoreNote) {
-      scoreNote.value += bad ? -1 : 1;
-      scoreNote[bad ? 'bad' : 'good'] += 1;
-      scoreNote.name = note.name;
+    if (!action.payload.noPlacement && state.unlockedNotes.includes(action.payload.note.name)) {
+      if (!!scoreNote) {
+        scoreNote.value += bad ? -1 : 1;
+        scoreNote[bad ? 'bad' : 'good'] += 1;
+        scoreNote.name = note.name;
 
-      if (note.string != null && note.fret != null) {
-        const placement = scoreNote.placements.find(p => p.name === note.name
-          && p.fret === note.fret
-          && p.string === note.string);
+        if (note.string != null && note.fret != null) {
+          const placement = scoreNote.placements.find(p => p.name === note.name
+            && p.fret === note.fret
+            && p.string === note.string);
 
-        if (!!placement) {
-          placement.occurance += 1;
-        } else {
-          scoreNote.placements.push({
+          if (!!placement) {
+            placement.occurance += 1;
+            placement[bad ? 'bad' : 'good'] += 1;
+          } else {
+            scoreNote.placements.push({
+              occurance: 1,
+              good: bad ? 0 : 1,
+              bad: bad ? 1 : 0,
+              ...note,
+            });
+          }
+        }
+      } else {
+        const sn = {
+          name: note.name,
+          value: 1,
+          good: bad ? 0 : 1,
+          bad: bad ? 1 : 0,
+          placements: [],
+        };
+        if (note.string != null && note.fret != null) {
+          sn.placements.push({
+            good: bad ? 0 : 1,
+            bad: bad ? 1 : 0,
             occurance: 1,
             ...note,
           });
         }
+        scoreByTuning.notes.push(sn);
       }
-    } else {
-      const sn = {
-        name: note.name,
-        value: 1,
-        good: bad ? 0 : 1,
-        bad: bad ? 1 : 0,
-        placements: [],
-      };
-      if (note.string != null && note.fret != null) {
-        sn.placements.push({
-          occurance: 1,
-          ...note,
-        });
-      }
-      scoreByTuning.notes.push(sn);
     }
 
     ctx.patchState({

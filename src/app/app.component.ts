@@ -6,13 +6,15 @@ import {Platform, ToastController} from '@ionic/angular';
 import {Select, Store} from '@ngxs/store';
 import {GameState} from '@shared-modules/store/game/game.state';
 import {Observable} from 'rxjs';
-import {UserLogInAction, UserLogOutAction} from './shared/store/user/user.actions';
+import {SetUserAction} from './shared/store/user/user.actions';
 import {PreferencesState} from '@shared-modules/store/preferences/preferences.state';
 import {
   PreferencesSetInvertedFretsModeAction,
   PreferencesSetInvertedStringsModeAction
 } from '@shared-modules/store/preferences/preferences.actions';
 import {Device} from '@ionic-native/device/ngx';
+import {filter, tap} from 'rxjs/operators';
+import {AngularFireAuth} from '@angular/fire/auth';
 
 @Component({
   selector: 'app-root',
@@ -63,6 +65,7 @@ export class AppComponent implements AfterViewInit {
     private readonly swUpdate: SwUpdate,
     private readonly toastController: ToastController,
     private readonly device: Device,
+    private readonly firebaseauth: AngularFireAuth,
   ) {
     this.initializeApp();
   }
@@ -81,17 +84,26 @@ export class AppComponent implements AfterViewInit {
       this.statusBar.backgroundColorByHexString('#40413e');
       this.splashScreen.hide();
       this.checkSWVersion();
+      this.listenToLogIn();
     });
   }
 
-  login() {
-    this.store.dispatch(new UserLogInAction({
-      provider: 'facebook',
-    }));
-  }
-
-  logout() {
-    this.store.dispatch(new UserLogOutAction());
+  listenToLogIn() {
+    this.firebaseauth.authState.pipe(
+      filter(user => !!user && !!user.uid),
+      tap(usr => {
+        console.log({usr});
+        this.store.dispatch(new SetUserAction({
+          user: {
+            uid: usr.uid,
+            displayName: usr.displayName,
+            email: usr.email,
+            emailVerified: usr.emailVerified,
+            photoURL: usr.photoURL,
+          }
+        }));
+      }),
+    ).subscribe();
   }
 
   checkSWVersion() {

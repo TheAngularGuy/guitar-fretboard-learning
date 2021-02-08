@@ -39,6 +39,13 @@
       <ion-icon (click)="slides.slideNext()" *ngIf="isThereMultipleSlides"
                 name="chevron-forward-outline" size="large" class="right"></ion-icon>
 
+      <ng-container *ngIf="!(level?.unlockedNotes?.length || level?.unlockedFrets.length)">
+        <div class="unlocked-stuff">
+          <p>
+            Congratulation on your new level!
+          </p>
+        </div>
+      </ng-container>
       <ion-slides [pager]="!!isThereMultipleSlides" #slides>
         <ion-slide *ngIf="level?.unlockedNotes?.length">
           <div class="unlocked-stuff">

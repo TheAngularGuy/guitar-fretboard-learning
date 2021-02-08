@@ -4,11 +4,10 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ProfilePageRoutingModule } from './profile-routing.module';
+import { ProfileDataPageRoutingModule } from './profile-data-routing.module';
 
-import { ProfilePage } from './profile.page';
+import { ProfileDataPage } from './profile-data.page';
 import {GlobalModule} from '@shared-modules/modules/global/global.module';
-import {AuthGuardService} from '@pages/profile/guards/loged-in.guard';
 import {NgxsModule} from '@ngxs/store';
 
 @NgModule({
@@ -16,13 +15,11 @@ import {NgxsModule} from '@ngxs/store';
     CommonModule,
     FormsModule,
     IonicModule,
-    ProfilePageRoutingModule,
+    ProfileDataPageRoutingModule,
     GlobalModule,
-
 
     NgxsModule.forFeature(),
   ],
-  declarations: [ProfilePage],
-  providers: [AuthGuardService]
+  declarations: [ProfileDataPage]
 })
-export class ProfilePageModule {}
+export class ProfileDataPageModule {}

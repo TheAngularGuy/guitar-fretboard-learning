@@ -36,8 +36,8 @@ import {UtilsService} from '@shared-modules/services/utils/utils.service';
     BrowserModule,
     BrowserAnimationsModule,
     IonicModule.forRoot({
-      swipeBackEnabled: true,
-      animated: !UtilsService.isIOS(),
+      swipeBackEnabled: false,
+      // animated: !UtilsService.isIOS(),
     }),
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     AngularFireModule.initializeApp(environment.firebaseConfig),

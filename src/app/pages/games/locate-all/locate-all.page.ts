@@ -136,7 +136,7 @@ export class LocateAllPage implements OnInit, AfterViewInit, OnDestroy {
 
   private isLastClickTooCloseInTime() {
     const now = Date.now();
-    const bool = now - this.lastClickRegistered <= this.game.gameConfig.CLICK_INTERVAL;
+    const bool = now - this.lastClickRegistered <= 250;
     if (!bool) {
       this.lastClickRegistered = now;
     }
@@ -196,6 +196,8 @@ export class LocateAllPage implements OnInit, AfterViewInit, OnDestroy {
       this.store.dispatch(
         new BadNoteFound({note: noteGuessed, tuning: this.preferences.tuning}),
       );
+
+      this.nextSeries();
     }
   }
 

@@ -34,4 +34,16 @@ export const LEVELS = [{
   max: 8000,
   unlockedNotes: [],
   unlockedFrets: [18, 19, 20, 21, 22],
+}, {
+  name: 'Master',
+  min: 8000,
+  max: 21000,
+  unlockedNotes: [],
+  unlockedFrets: [],
+}, {
+  name: 'Grand Master',
+  min: 21000,
+  max: 9999999,
+  unlockedNotes: [],
+  unlockedFrets: [],
 }];

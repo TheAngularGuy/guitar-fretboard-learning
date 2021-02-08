@@ -1,5 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
+import {UtilsService} from '@shared-modules/services/utils/utils.service';
 
 declare var Aubio: any;
 
@@ -23,6 +24,7 @@ export class TunerPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+    // TODO: For ios => check if its ios 14.3 or upper otherwise display error
     this.askMikePermission();
   }
 
@@ -97,6 +99,9 @@ export class TunerPage implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+  isIOS() {
+    UtilsService.isIOS();
+  }
 }
 
 class Tuner {

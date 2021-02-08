@@ -31,7 +31,7 @@
       <form class="settings" [formGroup]="exploreForm">
         <ion-item>
           <ion-label>Note</ion-label>
-          <ion-select formControlName="note" interface="popover" (ionChange)="onSelectNote($event.detail.value)">
+          <ion-select formControlName="note" interface="action-sheet" (ionChange)="onSelectNote($event.detail.value)">
             <ion-select-option *ngFor="let note of chromaticScale" [value]="note">
               {{note | note:preferences?.notation:preferences?.useFlats}}
             </ion-select-option>
@@ -40,7 +40,7 @@
 
         <ion-item>
           <ion-label>Chord</ion-label>
-          <ion-select formControlName="type" interface="popover" (ionChange)="onSelectType($event.detail.value)">
+          <ion-select formControlName="type" interface="action-sheet" (ionChange)="onSelectType($event.detail.value)">
             <ion-select-option *ngFor="let type of chordTypes" [value]="type">
               {{type}}
             </ion-select-option>

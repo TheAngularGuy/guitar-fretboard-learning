@@ -39,6 +39,9 @@
         <p>
           To use the tunner <b class="taba">Fretboard learning</b> need access to your microphone.
         </p>
+        <p class="warning" *ngIf="isIOS()">
+          The tuner works only on IOS 14.3 or upper.
+        </p>
       </ion-card-content>
     </ion-card>
   </ng-template>
