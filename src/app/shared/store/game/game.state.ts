@@ -113,7 +113,7 @@ export class GameState {
     if (state.unlockedFrets.length < 5) {
       return [fretMin, fretMax];
     }
-    const n = UtilsService.getRandomInt(fretMin, fretMax - 4);
+    const n = UtilsService.getRandomInt(fretMin, fretMax - 3);
     return [n, n + 3];
   }
 

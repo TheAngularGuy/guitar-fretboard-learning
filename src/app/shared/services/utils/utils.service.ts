@@ -45,7 +45,7 @@ export class UtilsService {
    * Returns a random number between min (inclusive) and max (exclusive)
    */
   static getRandomInt(min: number, max: number): number {
-    return Math.floor(Math.random() * (max - min) + min);
+    return Math.round(Math.random() * (max - min) + min);
   }
 
   static clone<T>(ob: T): T {
