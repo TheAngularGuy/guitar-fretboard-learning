@@ -21,7 +21,7 @@ export class HomePage {
     {
       path: 'locate-all',
       img: 'assets/imgs/locate-all.svg',
-      title: 'Locate all locations',
+      title: 'Locate all positions',
       subtitle:
         'Locate all the instances of ' +
         'a note in the fretboard and click on them all',
