@@ -43,10 +43,10 @@ export class UserState {
   login(ctx: StateContext<UserStateModel>, action: UserLogInAction) {
     switch (action.payload.provider) {
       case 'facebook':
-        this.firebaseauth.signInWithPopup(new auth.FacebookAuthProvider());
+        this.firebaseauth.signInWithRedirect(new auth.FacebookAuthProvider());
         break;
       case 'google':
-        this.firebaseauth.signInWithPopup(new auth.GoogleAuthProvider());
+        this.firebaseauth.signInWithRedirect(new auth.GoogleAuthProvider());
         break;
     }
   }
