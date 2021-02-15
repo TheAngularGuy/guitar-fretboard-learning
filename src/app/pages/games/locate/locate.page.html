@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar *ngIf="!game.isPlaying">
     <ion-buttons slot="start">
-      <ion-back-button text="" defaultHref="games"></ion-back-button>
+      <ion-back-button text="Back" color="fourth" defaultHref="games"></ion-back-button>
     </ion-buttons>
     <ion-title>Locate</ion-title>
   </ion-toolbar>
@@ -42,7 +42,8 @@
           Press the start button to begin
         </ng-container>
         <ng-template #alreadyPlayedOneTime>
-          You figured out <b>{{ game.score.good }}</b> of the {{ scoreHistoric?.length }} notes for a speed of <b>{{ averageTime | number }}</b> seconds per note.
+          You figured out <b>{{ game.score.good }}</b> of the {{ scoreHistoric?.length }} notes for a speed of
+          <b>{{ averageTime | number }}</b> seconds per note.
         </ng-template>
       </p>
     </ion-card-content>
@@ -62,16 +63,16 @@
   </div>
 
   <app-fretboard
-          *ngIf="game.isPlaying"
-          [invertedStrings]="preferences?.invertedStrings"
-          [invertedFrets]="preferences?.invertedFrets"
-          [useFlats]="preferences?.useFlats"
-          [notation]="preferences?.notation"
-          [notes]="game.fretboardNotes"
-          [showAll]="false"
-          [selectedFrets]="game.fretsAvailable"
-          [selectedNoteNames]="game.noteToFind ? [game.noteToFind.note.name] : null"
-          (noteClick)="onNoteClicked($event)"
+      *ngIf="game.isPlaying"
+      [invertedStrings]="preferences?.invertedStrings"
+      [invertedFrets]="preferences?.invertedFrets"
+      [useFlats]="preferences?.useFlats"
+      [notation]="preferences?.notation"
+      [notes]="game.fretboardNotes"
+      [showAll]="false"
+      [selectedFrets]="game.fretsAvailable"
+      [selectedNoteNames]="game.noteToFind ? [game.noteToFind.note.name] : null"
+      (noteClick)="onNoteClicked($event)"
   ></app-fretboard>
   <br/>
 </ion-content>

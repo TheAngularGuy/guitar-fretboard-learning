@@ -9,6 +9,7 @@ import {LEVELS} from '@constants/levels';
 import {takeUntil, tap} from 'rxjs/operators';
 import {UtilsService} from '@shared-modules/services/utils/utils.service';
 import {UserLogOutAction} from '@shared-modules/store/user/user.actions';
+import {NavController} from '@ionic/angular';
 
 @Component({
   selector: 'app-profile-data',
@@ -27,7 +28,7 @@ export class ProfileDataPage implements OnInit, OnDestroy {
     return this.preferences?.invertedStrings || this.preferences?.invertedFrets;
   }
 
-  constructor(private store: Store, private router: Router) {
+  constructor(private store: Store, private navCtrl: NavController) {
   }
 
   ngOnDestroy() {
@@ -103,7 +104,7 @@ export class ProfileDataPage implements OnInit, OnDestroy {
   }
 
   goToNoteDetail(note: NoteScoreByTuning) {
-    this.router.navigate(['profile', 'note-detail', note.name]);
+    this.navCtrl.navigateForward(['profile', 'note-detail', note.name]);
   }
 
   onLogOut() {

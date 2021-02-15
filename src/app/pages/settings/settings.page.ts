@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {ModalController} from '@ionic/angular';
+import {ModalController, NavController} from '@ionic/angular';
 import {Select, Store} from '@ngxs/store';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {debounceTime, takeUntil, tap} from 'rxjs/operators';
@@ -64,7 +64,7 @@ export class SettingsPage implements OnInit, OnDestroy {
     private readonly fb: FormBuilder,
     private readonly modalController: ModalController,
     private readonly store: Store,
-    private readonly router: Router,
+    private readonly navCtrl: NavController,
     private readonly cd: ChangeDetectorRef,
   ) {
   }
@@ -158,14 +158,14 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   goToCustomSettingsPage() {
-    this.router.navigate(['settings', 'custom-tuning']);
+    this.navCtrl.navigateForward(['settings', 'custom-tuning']);
   }
 
   goToAboutPage() {
-    this.router.navigate(['settings', 'about']);
+    this.navCtrl.navigateForward(['settings', 'about']);
   }
 
   goToPrivacyPage() {
-    this.router.navigate(['settings', 'privacy']);
+    this.navCtrl.navigateForward(['settings', 'privacy']);
   }
 }

@@ -16,7 +16,11 @@ const routes: Routes = [
   {
     path: 'tuner',
     loadChildren: () => import('./pages/tuner/tuner.module').then( m => m.TunerPageModule)
+  },  {
+    path: 'circle-of-fifths',
+    loadChildren: () => import('./pages/circle-of-fifths/circle-of-fifths.module').then( m => m.CircleOfFifthsPageModule)
   },
+
 ];
 
 @NgModule({

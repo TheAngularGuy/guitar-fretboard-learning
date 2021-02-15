@@ -1,3 +1,12 @@
+.top {
+  position: fixed;
+  background-image: linear-gradient(to bottom, var(--ion-background-color), var(--ion-background-color) 80%, transparent 100%);
+  z-index: 1;
+}
+.placeholder {
+  min-height: 135px;
+}
+
 .title {
   text-align: center;
   font-family: 'Tabasco', sans-serif;

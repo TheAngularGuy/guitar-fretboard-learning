@@ -4,13 +4,16 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title class="title">
-        Fretboard learning
-      </ion-card-title>
-    </ion-card-header>
-  </ion-card>
+  <div class="top">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title class="title">
+          Fretboard learning
+        </ion-card-title>
+      </ion-card-header>
+    </ion-card>
+  </div>
+  <div class="placeholder"></div>
   <div class="page">
     <app-list [list]="gameModes" (itemClick)="goTo($event)"></app-list>
   </div>

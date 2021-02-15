@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import {NavController} from '@ionic/angular';
 
 @Component({
   selector: 'app-explore',
@@ -32,11 +33,14 @@ export class ExplorePage {
     },
   ];
 
-  constructor(private readonly router: Router, private readonly route: ActivatedRoute) {}
+  constructor(
+    private readonly navCtrl: NavController,
+    private readonly route: ActivatedRoute,
+    ) {}
 
   onItemClicked(gameMode: { path: string }) {
     if (gameMode && gameMode.path) {
-      this.router.navigate([gameMode.path], {
+      this.navCtrl.navigateForward([gameMode.path], {
         relativeTo: this.route,
       });
     }
