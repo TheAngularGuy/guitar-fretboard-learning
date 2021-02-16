@@ -24,7 +24,7 @@ export class ToolsPage {
     },
     {
       path: 'circle-of-fifths',
-      img: 'assets/imgs/tuner.svg',
+      img: 'assets/imgs/circle-of-fifth.svg',
       title: 'Circle of fifths',
       subtitle: 'An interactive and fun tool to explore music harmony',
     },

@@ -1,4 +1,6 @@
 .top {
+  left: 0;
+  right: 0;
   position: fixed;
   background-image: linear-gradient(to bottom, var(--ion-background-color), var(--ion-background-color) 80%, transparent 100%);
   z-index: 1;

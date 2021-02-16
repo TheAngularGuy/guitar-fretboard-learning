@@ -100,10 +100,21 @@ h5 {
 // ionic ajustements
 ion-tab-button {
   filter: grayscale(100%);
+  transition: flex 250ms ease-out, filter 500ms ease-out;
+
+  img {
+    transition: transform 250ms ease-out;
+    transform: scale(.8);
+  }
 }
 
 .tab-selected {
   filter: grayscale(0%);
+  flex: 1.35;
+
+  img {
+    transform: scale(1);
+  }
 }
 
 .modal-transparent {

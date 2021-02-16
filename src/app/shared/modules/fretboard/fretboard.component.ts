@@ -49,6 +49,10 @@ export class FretboardComponent implements OnInit {
     noteElement.classList.add('note-show');
 
     setTimeout(() => {
+      if (!!this.showSelectedNotes &&
+        this.selectedNotes.find(n => n.name === noteObject.name && n.fret === noteObject.fret && n.string === noteObject.string)) {
+        return;
+      }
       noteElement.classList.remove('note-show');
     }, 1000);
   }

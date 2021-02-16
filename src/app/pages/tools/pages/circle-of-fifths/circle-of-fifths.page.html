@@ -13,17 +13,21 @@
   <ion-card>
     <ion-card-header>
       <ion-card-title [@popAnimation]="selected.key">
-        {{ selected.key | note:preferences?.notation:preferences?.useFlats }} &nbsp; major
+        {{ selected.key | note:preferences?.notation:preferences?.useFlats }} &nbsp; MAJOR
       </ion-card-title>
+      <ion-card-subtitle> &nbsp;
+        {{ selected.sub | note:preferences?.notation:preferences?.useFlats }} &nbsp; minor
+      </ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
-      <ion-item>
-        <ion-label>
-          Relative key
-        </ion-label>
-        {{ selected.sub | note:preferences?.notation:preferences?.useFlats }} &nbsp; minor
-      </ion-item>
+      <div class="key-val">
+        <p class="val flex">
+          <span class="cell {{item.type}}" *ngFor="let item of selected.harmony; let index = index">
+            {{ index + 1 }}. {{ item.note | note:preferences?.notation:preferences?.useFlats }} {{ item.type | uppercase }}
+          </span>
+        </p>
+      </div>
     </ion-card-content>
   </ion-card>
 
@@ -646,13 +650,7 @@
 
   <br>
 
-  <div class="key-val">
-    <p class="val flex">
-          <span class="cell {{item.type}}" *ngFor="let item of selected.harmony; let index = index">
-            {{ index + 1 }}. {{ item.note | note:preferences?.notation:preferences?.useFlats }} {{ item.type | uppercase }}
-          </span>
-    </p>
-  </div>
+
 </ion-content>
 
 <ion-footer>

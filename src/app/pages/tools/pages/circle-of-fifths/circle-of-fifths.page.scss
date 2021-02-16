@@ -1,9 +1,12 @@
 .wheel-container {
   width: 80%;
+  max-width: 500px;
   margin: auto;
   margin-top: 1rem;
+  position: relative;
 
   .highlight {
+    width: 100%;
     position: absolute;
   }
 }
@@ -25,6 +28,7 @@
 .flex {
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
 }
 

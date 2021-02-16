@@ -10,7 +10,7 @@ import {
   GoodNoteFound,
 } from '@shared-modules/store/game/game.actions';
 import {GameState} from '@shared-modules/store/game/game.state';
-import {Subject} from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 import {popAnimation} from 'src/app/animations/pop.animation';
 import {slideAnimation} from 'src/app/animations/slide.animation';
 import {GameMode} from 'src/app/classes/game-mode.class';
@@ -37,6 +37,8 @@ export class LocateAllPage implements OnInit, AfterViewInit, OnDestroy {
   seriesMaxRange: number;
   seriesDisplay: boolean[];
   scoreHistoric: { timeTook: number; }[];
+
+  selectedNotes$ = new BehaviorSubject<Note[]>([]);
 
   get averageTime(): string | number {
     if (!this.scoreHistoric?.length) {
@@ -79,6 +81,7 @@ export class LocateAllPage implements OnInit, AfterViewInit, OnDestroy {
       onNotePicked: () => {
         this.seriesMaxRange = this.numberOfNoteOccurrences(this.game.noteToFind.note.name, this.game.fretboardNotes);
         this.series = [];
+        this.selectedNotes$.next([]);
         this.seriesDisplay = new Array(this.seriesMaxRange).fill(undefined);
       },
       onEnd: () => {
@@ -185,6 +188,7 @@ export class LocateAllPage implements OnInit, AfterViewInit, OnDestroy {
       this.store.dispatch(
         new GoodNoteFound({note: noteGuessed, tuning: this.preferences.tuning}),
       );
+      this.selectedNotes$.next([...this.selectedNotes$.getValue(), noteGuessed]);
     } else {
       // bad answer
       this.series.push({

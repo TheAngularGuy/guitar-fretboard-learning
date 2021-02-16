@@ -8,9 +8,10 @@
 
   <ion-toolbar *ngIf="game.isPlaying">
     <ion-buttons slot="start">
-      <ion-button (click)="game.togglePlay()">
-        <ion-icon slot="icon-only" name="stop">
+      <ion-button (click)="game.togglePlay()" color="fourth">
+        <ion-icon slot="start" name="stop">
         </ion-icon>
+        Stop
       </ion-button>
     </ion-buttons>
     <ion-title>
