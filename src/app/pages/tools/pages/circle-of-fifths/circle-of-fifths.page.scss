@@ -1,3 +1,10 @@
+.bpm-subtitle {
+  font-size: 1rem;
+  font-weight: normal;
+  font-style: italic;
+  color: var(--ion-text-color);
+}
+
 .wheel-container {
   width: 80%;
   max-width: 500px;
@@ -10,7 +17,6 @@
     position: absolute;
   }
 }
-
 
 .foot {
   display: flex;
@@ -35,7 +41,6 @@
 .key-val {
   color: white;
   margin-left: 1rem;
-  opacity: .8;
 
   .key {
     display: block;

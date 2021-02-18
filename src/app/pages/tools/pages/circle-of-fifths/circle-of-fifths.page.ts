@@ -4,6 +4,7 @@ import {popAnimation} from '../../../../animations/pop.animation';
 import {PreferencesState, PreferencesStateModel} from '@shared-modules/store/preferences/preferences.state';
 import {takeUntil, tap} from 'rxjs/operators';
 import {Store} from '@ngxs/store';
+import {fadeinAnimation} from '../../../../animations/fadein.animation';
 
 const WHEEL = [
   {
@@ -347,7 +348,7 @@ const WHEEL = [
   selector: 'app-circle-of-fifths',
   templateUrl: './circle-of-fifths.page.html',
   styleUrls: ['./circle-of-fifths.page.scss'],
-  animations: [popAnimation],
+  animations: [popAnimation, fadeinAnimation],
 })
 export class CircleOfFifthsPage implements OnInit, OnDestroy {
   selectedNote$ = new BehaviorSubject(WHEEL.filter(ob => ob.key === 'C')[0]);

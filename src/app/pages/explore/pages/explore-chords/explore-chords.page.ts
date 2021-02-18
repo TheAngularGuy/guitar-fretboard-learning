@@ -77,6 +77,11 @@ export class ExploreChordsPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    let s = 0;
+    Object.keys(ALL_CHORDS_HASH).forEach(key => {
+      s += ALL_CHORDS_HASH[key].length;
+    });
+    console.log(s);
     this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
     this.exploreState = this.store.selectSnapshot<ExploreStateModel>(ExploreState.getState);
     this.fretboardNotes = FRETBOARD_STANDARD;

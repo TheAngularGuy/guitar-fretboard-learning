@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { listAnimation } from 'src/app/animations/list.animation';
+import {AfterViewInit, ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {listAnimation} from 'src/app/animations/list.animation';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,8 @@ import { listAnimation } from 'src/app/animations/list.animation';
   animations: [listAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomePage {
+export class HomePage implements OnInit, AfterViewInit {
+  showShadow$ = new BehaviorSubject(false);
   gameModes = [
     {
       path: 'locate',
@@ -39,13 +41,25 @@ export class HomePage {
       path: 'identify-sound',
       img: 'assets/imgs/headphones.svg',
       title: 'Identify notes by tone',
-      subtitle: `Identify which chord is played by sound. Practice your musical ear`,
+      subtitle: `Identify which note is played by sound. Practice your musical ear`,
     },
   ];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+  }
 
-  goTo({ path }: any) {
+  ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+  }
+
+  goTo({path}: any) {
     this.router.navigateByUrl('games/' + path);
+  }
+
+  onScroll(event: any) {
+    const bool = event.detail.scrollTop >= 15;
+    this.showShadow$.next(bool);
   }
 }

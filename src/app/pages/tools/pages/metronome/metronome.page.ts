@@ -36,9 +36,9 @@ export class MetronomePage implements OnInit, OnDestroy {
   ngOnInit() {
     const metronommeConf = this.store.selectSnapshot(ToolsState.getMetronommeConfig);
     this.bpmForm = new FormGroup({
-      beats: new FormControl(metronommeConf.beats, [Validators.requiredTrue]),
-      mesure: new FormControl(metronommeConf.mesure, [Validators.requiredTrue]),
-      bpm: new FormControl(metronommeConf.bpm, [Validators.requiredTrue]),
+      beats: new FormControl(metronommeConf.beats, []),
+      mesure: new FormControl(metronommeConf.mesure, []),
+      bpm: new FormControl(metronommeConf.bpm, []),
     });
 
     this.bpmForm.valueChanges.pipe(

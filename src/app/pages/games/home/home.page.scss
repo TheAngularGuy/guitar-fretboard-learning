@@ -2,11 +2,19 @@
   left: 0;
   right: 0;
   position: fixed;
-  background-image: linear-gradient(to bottom, var(--ion-background-color), var(--ion-background-color) 80%, transparent 100%);
+  // background-image: linear-gradient(to bottom, var(--ion-background-color), var(--ion-background-color) 80%, transparent 100%);
+  background: var(--ion-background-color);
   z-index: 1;
 }
+.ios .top ion-card {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 .placeholder {
-  min-height: 135px;
+  min-height: 105px;
+}
+.shadow {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
 }
 
 .title {

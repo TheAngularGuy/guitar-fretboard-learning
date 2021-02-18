@@ -22,6 +22,7 @@
     border-radius: 100%;
     overflow: hidden;
     background-color: var(--ion-color-fourth);
+    transition: background-color 100ms 50ms ease-out;
 
     &.selected {
       background-color: var(--ion-color-primary);

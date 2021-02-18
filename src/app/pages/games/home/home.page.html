@@ -3,8 +3,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div class="top">
+<ion-content [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <div class="top" [class.shadow]="showShadow$ | async">
     <ion-card>
       <ion-card-header>
         <ion-card-title class="title">
