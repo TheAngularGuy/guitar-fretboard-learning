@@ -19,6 +19,7 @@ export class TunerPage implements OnInit, AfterViewInit, OnDestroy {
   }>;
   tuner: Tuner;
   timeout: any;
+  stream: MediaStream;
 
   constructor(private cd: ChangeDetectorRef) {
   }
@@ -36,12 +37,16 @@ export class TunerPage implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
     this.tuner.stopRecord();
+    this.stream.getTracks().forEach((track) => {
+      track.stop();
+    });
   }
 
   askMikePermission() {
     navigator.mediaDevices.getUserMedia({ audio: true })
       .then((stream) => {
         console.log({ stream });
+        this.stream = stream;
         this.hasMicPermission$.next(true);
         this.init();
       })

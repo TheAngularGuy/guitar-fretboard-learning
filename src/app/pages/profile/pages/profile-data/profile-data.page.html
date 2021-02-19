@@ -1,31 +1,22 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Profile</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ng-container *ngIf="userState$ | async as userState">
   <ng-container *ngIf="preferencesState$ | async as prefState">
     <ng-container *ngIf="gameState$ | async as gameState">
 
-      <ion-content>
-        <ng-container>
-          <div class="avatar">
-            <ion-avatar>
-              <img
-                  [src]="userState.photoURL || 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'">
-            </ion-avatar>
-          </div>
-          <p class="name">
-            {{ userState.displayName }}
-          </p>
-          <p class="score">
-            {{ getLevel(gameState).name }} &nbsp; — &nbsp; <b>{{gameState.globalPoints}}</b>
-            &nbsp;
-            <img src="assets/imgs/guitar-pick.svg" alt="level coins loge" width="16"/>
-          </p>
-        </ng-container>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>
 
+            <p class="score">
+              {{ getLevel(gameState).name }} &nbsp; — &nbsp; <b>{{gameState.globalPoints}}</b>
+              &nbsp;
+              <img src="assets/imgs/guitar-pick.svg" alt="level coins loge" width="16"/>
+            </p>
+
+          </ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
         <ion-card>
           <ng-container *ngIf="getScoreByCurrentTuning(prefState, gameState) as scoreByTuning; else noDataForTuning">
 
@@ -42,7 +33,7 @@
             <ion-card-content>
               <div class="group">
                 <p class="white">Most well known notes:</p>
-                <span class="muted">Click on a note to a detailed view</span>
+                <span class="muted">Click on a note to see a detailed view</span>
 
                 <div class="group-container">
                   <span class="note taba"
@@ -92,11 +83,11 @@
           </ng-template>
         </ion-card>
 
-        <div class="logout">
+        <!--<div class="logout">
           <ion-button fill="clear" color="fourth" (click)="onLogOut()">
             Log out
           </ion-button>
-        </div>
+        </div>-->
 
       </ion-content>
 

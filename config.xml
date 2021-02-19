@@ -47,7 +47,7 @@
     </platform>
     <platform name="ios">
         <config-file parent="NSMicrophoneUsageDescription" target="*-Info.plist">
-            <string>This app needs microphone access for the the tuner to work in the tools section.</string>
+            <string>This app needs microphone access for the the tuner to work properly.</string>
         </config-file>
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />

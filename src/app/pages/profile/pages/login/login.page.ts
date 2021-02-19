@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Store} from '@ngxs/store';
 import {UserLogInAction} from '@shared-modules/store/user/user.actions';
-import {BehaviorSubject, Subject} from 'rxjs';
+import {Subject} from 'rxjs';
 import {UserState} from '@shared-modules/store/user/user.state';
 import {filter, takeUntil, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';

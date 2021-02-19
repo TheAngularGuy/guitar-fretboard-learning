@@ -12,7 +12,7 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () => import('./pages/profile-data/profile-data.module').then(m => m.ProfileDataPageModule),
-        canActivate: [AuthGuardService]
+        // canActivate: [AuthGuardService]
       },
       {
         path: 'note-detail/:note',
