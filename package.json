@@ -34,6 +34,8 @@
     "@ionic-native/status-bar": "5.31.1",
     "@ionic/angular": "5.5.3",
     "@ngxs/store": "3.7.1",
+    "@types/chartjs": "0.0.31",
+    "chart.js": "^2.9.4",
     "cordova-ios": "6.2.0",
     "core-js": "3.6.4",
     "firebase": "7.13.2",

@@ -123,6 +123,26 @@
   }
 }
 
+.game-mode {
+  .game-mode-result {
+    .result {
+      &.n0 {
+        color: #fb5f5f;
+      } &.n1 {
+        color: #fc9654;
+      } &.n2 {
+        color: #f7af5a;
+      } &.n3 {
+        color: #cddf7e;
+      } &.n4 {
+        color: #a1d979;
+      } &.n5 {
+        color: #6bd17d;
+      }
+    }
+  }
+}
+
 @keyframes pop {
   0% {
     transform: scale(1);

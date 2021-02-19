@@ -89,7 +89,10 @@ export class LocateAllPage implements OnInit, AfterViewInit, OnDestroy {
         this.content.scrollToTop(250);
       },
       onComplete: () => {
-        this.store.dispatch(new GameComplete({tuning: preferences.tuning}));
+        this.store.dispatch(new GameComplete({
+          tuning: preferences.tuning,
+          score: {score: 100 / this.scoreHistoric.length * this.game.score.good, gameMode: 'locate-all', tuning: this.preferences.tuning}
+        }));
       }
     });
   }

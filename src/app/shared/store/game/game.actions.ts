@@ -1,4 +1,5 @@
 import { Note } from '@models/note.model';
+import {Progression} from '@shared-modules/store/game/game.state';
 
 export class GameStart {
   public static readonly type = '[GAME] GameStart';
@@ -15,7 +16,7 @@ export class GameStop {
 export class GameComplete {
   public static readonly type = '[GAME] GameComplete';
 
-  constructor(public payload: { tuning: string }) { }
+  constructor(public payload: { tuning: string; score: Progression }) { }
 }
 
 export class GoodNoteFound {

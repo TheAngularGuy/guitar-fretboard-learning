@@ -19,6 +19,7 @@ enum stateEnums {
   unlockedFrets = 'game_unlockedFrets',
   unlockedNotes = 'game_unlockedNotes',
   globalPoints = 'game_globalPoints',
+  historic = 'game_historic',
 }
 
 export interface NotePlacementScore extends Note {
@@ -33,6 +34,13 @@ export interface NoteScoreByTuning {
   good: number;
   bad: number;
   placements: NotePlacementScore[];
+}
+
+export interface Progression {
+  tuning: string;
+  date?: number;
+  score: number;
+  gameMode: string;
 }
 
 interface ScoreByTunings {
@@ -53,6 +61,8 @@ export interface GameStateModel {
     globalPoints: number;
     scoreByTunings: ScoreByTunings[];
   };
+
+  historic: Progression[];
 }
 
 @Injectable()
@@ -64,6 +74,7 @@ export interface GameStateModel {
     unlockedFrets: UtilsService.getParsedItemFromLS(stateEnums.unlockedFrets) || LEVELS[0].unlockedFrets,
     unlockedNotes: UtilsService.getParsedItemFromLS(stateEnums.unlockedNotes) || LEVELS[0].unlockedNotes,
     scoreByTunings: UtilsService.getParsedItemFromLS(stateEnums.scoreByTunings) || [],
+    historic: UtilsService.getParsedItemFromLS(stateEnums.historic) || [],
     currentSession: null,
   },
 })
@@ -199,8 +210,19 @@ export class GameState {
     this.goodOrBadNoteFound(ctx, action);
   }
 
+  private registerProgression(ctx: StateContext<GameStateModel>, prog: Progression) {
+    const historic = [...ctx.getState().historic].slice(0, 100);
+    historic.push(prog);
+    ctx.patchState({
+      historic,
+    });
+    UtilsService.setParsedItemToLS(stateEnums.historic, historic);
+  }
+
   @Action(GameComplete)
   private gameComplete(ctx: StateContext<GameStateModel>, action: GameComplete) {
+    this.registerProgression(ctx, action.payload.score);
+
     const state = ctx.getState();
     this.gameStop(ctx, new GameStop({tuning: action.payload.tuning}));
 
