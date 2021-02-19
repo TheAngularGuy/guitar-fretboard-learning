@@ -20,15 +20,15 @@ export class ExplorePage {
     {
       path: 'explore-chords',
       img: 'assets/imgs/chords.svg',
-      title: 'Explore chords',
+      title: 'Chords',
       subtitle: 'Explore and learn all the chords with all variations' +
         ' in the standard tuning',
     },
     {
       path: 'explore-scales',
       img: 'assets/imgs/scales.svg',
-      title: 'Explore scales',
-      subtitle: 'Explore and learn all the chords with all variations' +
+      title: 'Scales',
+      subtitle: 'Explore and learn all the scales in all the boxes over the fretboard' +
         ' in the standard tuning',
     },
   ];

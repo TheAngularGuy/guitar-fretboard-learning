@@ -26,10 +26,6 @@ export class ListComponent {
 
   onItemClicked(item: ListItem, event: MouseEvent) {
     this.sound.playClick();
-    (event.target as HTMLButtonElement).classList.add('active');
-    setTimeout(() => {
-      (event.target as HTMLButtonElement).classList.remove('active');
-      this.itemClick.next(item);
-    }, 150);
+    this.itemClick.next(item);
   }
 }

@@ -1,5 +1,6 @@
 import {AfterViewInit, ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import { NavController } from '@ionic/angular';
 import {listAnimation} from 'src/app/animations/list.animation';
 import {BehaviorSubject} from 'rxjs';
 
@@ -45,7 +46,7 @@ export class HomePage implements OnInit, AfterViewInit {
     },
   ];
 
-  constructor(private router: Router) {
+  constructor(private navCtrl: NavController) {
   }
 
   ngOnInit() {
@@ -55,7 +56,7 @@ export class HomePage implements OnInit, AfterViewInit {
   }
 
   goTo({path}: any) {
-    this.router.navigateByUrl('games/' + path);
+    this.navCtrl.navigateForward(['games', path]);
   }
 
   onScroll(event: any) {

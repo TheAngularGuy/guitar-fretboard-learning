@@ -31,18 +31,20 @@
             </ion-card-header>
 
             <ion-card-content>
-              <div class="group">
-                <p class="white">Most well known notes:</p>
-                <span class="muted">Click on a note to see a detailed view</span>
+              <ng-container *ngIf="sortByBestNote(scoreByTuning.score.notes, gameState.unlockedNotes) as notes">
+                <div class="group" *ngIf="notes && notes.length">
+                  <p class="white">Most well known notes:</p>
+                  <span class="muted">Click on a note to see a detailed view</span>
 
-                <div class="group-container">
+                  <div class="group-container">
                   <span class="note taba"
-                        *ngFor="let note of sortByBestNote(scoreByTuning.score.notes, gameState.unlockedNotes)"
+                        *ngFor="let note of notes"
                         (click)="goToNoteDetail(note)">
                     {{ note.name | note:prefState.notation:prefState.useFlats }}
                   </span>
+                  </div>
                 </div>
-              </div>
+              </ng-container>
 
               <ng-container *ngIf="getLockedNotes(gameState.unlockedNotes) as lockedNotes">
                 <div class="group" *ngIf="lockedNotes.length">

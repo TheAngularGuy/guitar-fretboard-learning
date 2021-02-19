@@ -78,8 +78,6 @@
 
 <ion-footer *ngIf="game.isPlaying">
   <ng-container *ngTemplateOutlet="playingControls"></ng-container>
-
-  <div *ngIf="utils.isIOSPWA()" style="height: 2ch;"></div>
 </ion-footer>
 
 <ng-template #playingControls>

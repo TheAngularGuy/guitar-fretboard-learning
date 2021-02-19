@@ -81,13 +81,13 @@
       [showSelectedNoteNames]="true"
       [selectedNoteNames]="selectedNotes"
       [rootNote]="rootNote"
-      [selectedFrets]="[fretStart, fretEnd]"
+      [selectedFrets]="isStandardTuning ? [fretStart, fretEnd] : [0, 22]"
       [showAll]="false"
   ></app-fretboard>
   <br/>
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="!!isStandardTuning">
   <div class="foot">
     <ion-button color="primary"
                 [disabled]="selectedSegmentIndex === 0"
