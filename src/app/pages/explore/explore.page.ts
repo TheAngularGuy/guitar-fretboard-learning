@@ -28,8 +28,7 @@ export class ExplorePage {
       path: 'explore-scales',
       img: 'assets/imgs/scales.svg',
       title: 'Scales',
-      subtitle: 'Explore and learn all the scales in all the boxes over the fretboard' +
-        ' in the standard tuning',
+      subtitle: 'Explore and learn all the scales in all the boxes over the fretboard',
     },
   ];
 

@@ -43,8 +43,11 @@
           Press the start button to begin
         </ng-container>
         <ng-template #alreadyPlayedOneTime>
-          You figured out <b>{{ game.score.good }}</b> of the {{ scoreHistoric?.length }} notes for a speed of
-          <b>{{ averageTime | number }}</b> seconds per note.
+          <span class="result n{{game.score.good}}">
+            <b>{{ game.score.good }}</b> out of {{ scoreHistoric?.length }}
+          </span>
+          <br>
+          <small><b>{{ averageTime | number }}</b> seconds per note.</small>
         </ng-template>
       </p>
     </ion-card-content>

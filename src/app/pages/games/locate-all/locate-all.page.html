@@ -33,7 +33,7 @@
   <ion-card *ngIf="!game.isPlaying">
     <ion-card-header>
       <ion-card-title>
-        Locate all locations of a note!
+        Locate all positions of a note!
       </ion-card-title>
     </ion-card-header>
 
@@ -43,7 +43,11 @@
           Press the start button to begin
         </ng-container>
         <ng-template #alreadyPlayedOneTime>
-          You figured out <b>{{ game.score.good }}</b> of the {{ scoreHistoric?.length }} note-groups for a speed of <b>{{ averageTime | number }}</b> seconds per note-group.
+          <span class="result n{{game.score.good}}">
+            <b>{{ game.score.good }}</b> out of {{ scoreHistoric?.length }}
+          </span>
+          <br>
+          <small><b>{{ averageTime | number }}</b> seconds per group of notes.</small>
         </ng-template>
       </p>
     </ion-card-content>

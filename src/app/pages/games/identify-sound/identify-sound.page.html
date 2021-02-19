@@ -32,7 +32,7 @@
 <ion-content #content>
   <ion-card *ngIf="!game.isPlaying">
     <ion-card-header>
-      <ion-card-title>Identify chord by sound!</ion-card-title>
+      <ion-card-title>Identify note by sound!</ion-card-title>
     </ion-card-header>
 
     <ion-card-content class="game-mode">
@@ -41,8 +41,11 @@
           Press the button to start playing
         </ng-container>
         <ng-container *ngIf="scoreHistoric && scoreHistoric.length">
-          Your score is <b>{{ game.score.good }}</b> out of {{ scoreHistoric?.length }}. And
-          your average time is: <b>{{ averageTime | number }}</b> seconds.
+          <span class="result n{{game.score.good}}">
+            <b>{{ game.score.good }}</b> out of {{ scoreHistoric?.length }}
+          </span>
+          <br>
+          <small><b>{{ averageTime | number }}</b> seconds per note.</small>
         </ng-container>
       </p>
     </ion-card-content>

@@ -78,6 +78,35 @@ h5 {
     font-size: 1.1rem;
     text-align: center;
     margin: 1.9rem 0 0;
+
+    .result {
+      font-size: 1.3rem;
+      color: var(--ion-color-success);
+
+      &.n0 {
+        color: #fb5f5f;
+      }&.n1 {
+        color: #fd7b57;
+      }&.n2 {
+        color: #fc9654;
+      }&.n3 {
+        color: #f7af5a;
+      }&.n4 {
+        color: #f7af5a;
+      }&.n5 {
+        color: #f1c668;
+      }&.n6 {
+        color: #cddf7e;
+      }&.n7 {
+        color: #b8dc7a;
+      }&.n8 {
+        color: #a1d979;
+      }&.n9 {
+        color: #88d57a;
+      }&.n10 {
+        color: #6bd17d;
+      }
+    }
   }
 }
 
