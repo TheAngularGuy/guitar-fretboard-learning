@@ -45,17 +45,17 @@
 
         <button
             class="note string-{{ string }}"
-            [ngStyle]="{'background-color': (!!bgColors && !!bgColors[fret]) ? bgColors[fret][string] : null}"
+
             [ngClass]="{
             'note-highlighted': isNoteHighlighted(fret, string),
             'disabled-string': isStringDisabled(string),
             'disabled-fret': !isSelectedFret(fret)
           }"
-            *ngFor="let note of fretnotes; let string = index"
+            *ngFor="let fretNote of fretnotes; let string = index"
             (click)="
             onNoteClicked(
               {
-                name: note,
+                name: fretNote,
                 fret: fret,
                 string: string
               },
@@ -63,6 +63,9 @@
             )
           "
         >
+          <span class="color" [ngStyle]="{'background-color': (!!bgColors && !!bgColors[fret]) ? bgColors[fret][string] : null}">
+          </span>
+          <span class="string"></span>
           <span
               class="barre"
               [ngClass]="{
@@ -78,12 +81,12 @@
               #noteName
               [ngClass]="{
               'note-show-all': showAll,
-              'note-false': !isGoodNote({ name: note, fret: fret, string: string }) && !isGoodNoteName(note),
-              'note-show': showNote({ name: note, fret: fret, string: string }),
-              'root-note': rootNote === note
+              'note-false': !isGoodNote({ name: fretNote, fret: fret, string: string }) && !isGoodNoteName(fretNote),
+              'note-show': showNote({ name: fretNote, fret: fret, string: string }),
+              'root-note': rootNote === fretNote
             }"
           >
-            {{ note | note:notation:useFlats }}
+            {{ fretNote | note:notation:useFlats }}
           </span>
         </button>
 

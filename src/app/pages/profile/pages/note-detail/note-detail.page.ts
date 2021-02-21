@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Select} from '@ngxs/store';
 import {UserState, UserStateModel} from '@shared-modules/store/user/user.state';
 import {Observable} from 'rxjs';
-import {GameState, GameStateModel, NotePlacementScore, NoteScoreByTuning} from '@shared-modules/store/game/game.state';
+import {GameState, GameStateModel, NotePlacementScore, NoteScoreByTuning, ScoreByTunings} from '@shared-modules/store/game/game.state';
 import {PreferencesState, PreferencesStateModel} from '@shared-modules/store/preferences/preferences.state';
 import {UtilsService} from '@shared-modules/services/utils/utils.service';
 import {FretboardManipulationService} from '@shared-modules/services/fretboard-manipulation/fretboard-manipulation.service';
@@ -26,7 +26,8 @@ export class NoteDetailPage implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedNoteName = this.route.snapshot.params?.note;
+    const noteName = this.route.snapshot.params?.note;
+    this.selectedNoteName = noteName === 'global' ? null : noteName;
   }
 
   getScoreByCurrentTuning(preferences: PreferencesStateModel, gameState: GameStateModel) {
@@ -34,10 +35,26 @@ export class NoteDetailPage implements OnInit {
   }
 
 
-  getNoteScore(notes: NoteScoreByTuning[]) {
-    return UtilsService.clone(notes).filter((n) => {
-      return n.name === this.selectedNoteName;
-    })[0];
+  getNoteScore(notes: NoteScoreByTuning[]): NoteScoreByTuning {
+    if (!!this.selectedNoteName) {
+      return UtilsService.clone(notes).filter((n) => {
+        return n.name === this.selectedNoteName;
+      })[0];
+    }
+    const output: NoteScoreByTuning = {
+      placements: [],
+      name: null,
+      bad: 0,
+      good: 0,
+      value: 0,
+    };
+    UtilsService.clone(notes).forEach(n => {
+      output.placements = [...output.placements, ...n.placements];
+      output.value += n.value;
+      output.good += n.good;
+      output.bad += n.bad;
+    });
+    return output;
   }
 
   getFretboardNotes(preferences: PreferencesStateModel) {

@@ -14,7 +14,8 @@ export class HistoricChartComponent implements OnInit, AfterViewInit, OnChanges 
   gradientFill: any;
 
   get slicedHistoric() {
-    return this.historic.slice(0, 15);
+    const length = this.historic.length;
+    return this.historic.slice(Math.max(0, length - 15), length);
   }
 
   constructor() {

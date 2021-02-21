@@ -44,6 +44,10 @@
       border-radius: 50%;
       margin: 0 1ch;
 
+      &:first-child {
+        margin-left: 0;
+      }
+
       &.gray {
         background: rgba(255, 235, 235, .18);
       }

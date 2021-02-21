@@ -19,14 +19,14 @@
       <ion-content>
         <ng-container *ngIf="getScoreByCurrentTuning(prefState, gameState) as scoreByTuning; else noDataForTuning">
 
-          <ion-card>
+          <ion-card  *ngIf="gameState.historic?.length">
             <ion-card-header>
               <ion-card-title>
-                Progression
+                Current streak
               </ion-card-title>
             </ion-card-header>
             <ion-card-content style="padding: 0 1ch 0 0">
-              <app-historic-chart *ngIf="gameState.historic?.length > 1" [historic]="gameState.historic">
+              <app-historic-chart [historic]="gameState.historic">
               </app-historic-chart>
             </ion-card-content>
           </ion-card>
@@ -44,9 +44,16 @@
 
             <ion-card-content>
               <ng-container *ngIf="sortByBestNote(scoreByTuning.score.notes, gameState.unlockedNotes) as notes">
+
+                <ion-item button style="width: calc(100% + 20px); transform: translateX(-20px)" (click)="goToNoteDetail(null)">
+                  <ion-icon name="stats-chart-outline" slot="end" color="success"></ion-icon>
+                  <ion-label>See the fretboard heat map</ion-label>
+                </ion-item>
+                <br>
+
                 <div class="group" *ngIf="notes && notes.length">
-                  <p class="white">Most well known notes:</p>
-                  <span class="muted">Click on a note to see a detailed view</span>
+                  <p class="white">Click to see a heat map per note:</p>
+                  <span class="muted">From the most well known notes to least</span>
 
                   <div class="group-container">
                   <span class="note taba"
@@ -57,7 +64,16 @@
                   </div>
                 </div>
               </ng-container>
+            </ion-card-content>
+          </ion-card>
 
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>
+                To unlock next
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
               <ng-container *ngIf="getLockedNotes(gameState.unlockedNotes) as lockedNotes">
                 <div class="group" *ngIf="lockedNotes.length">
                   <p class="white">Notes to unlock:</p>

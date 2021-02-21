@@ -43,7 +43,7 @@ export interface Progression {
   gameMode: string;
 }
 
-interface ScoreByTunings {
+export interface ScoreByTunings {
   tuning: string;
   score: {
     points: number;
@@ -211,7 +211,8 @@ export class GameState {
   }
 
   private registerProgression(ctx: StateContext<GameStateModel>, prog: Progression) {
-    const historic = [...ctx.getState().historic].slice(0, 100);
+    const length = ctx.getState().historic.length;
+    const historic = [...ctx.getState().historic].slice(Math.max(0, length - 100), length);
     historic.push(prog);
     ctx.patchState({
       historic,

@@ -5,26 +5,26 @@ import {ProfilePage} from './profile.page';
 import {AuthGuardService} from '@pages/profile/guards/loged-in.guard';
 
 const routes: Routes = [
-  {
+/*  {
     path: '',
     component: ProfilePage,
     children: [
-      {
-        path: '',
-        loadChildren: () => import('./pages/profile-data/profile-data.module').then(m => m.ProfileDataPageModule),
-        // canActivate: [AuthGuardService]
-      },
-      {
-        path: 'note-detail/:note',
-        loadChildren: () => import('./pages/note-detail/note-detail.module').then(m => m.NoteDetailPageModule)
-      },
-      {
-        path: 'login',
-        loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
-      },
-    ]
-  },
 
+    ]
+  },*/
+  {
+    path: '',
+    loadChildren: () => import('./pages/profile-data/profile-data.module').then(m => m.ProfileDataPageModule),
+    // canActivate: [AuthGuardService]
+  },
+  {
+    path: 'note-detail/:note',
+    loadChildren: () => import('./pages/note-detail/note-detail.module').then(m => m.NoteDetailPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
+  },
 ];
 
 @NgModule({

@@ -68,11 +68,24 @@
         box-shadow: none;
         margin: 0;
         padding: 0;
-        // string
-        background-image: linear-gradient(0deg, black, transparent);
-        background-size: 100% 3px;
-        background-repeat: no-repeat;
-        background-position-y: 50%;
+
+        .string {
+          // string
+          position: absolute;
+          top: 0; left: 0; right: 0; bottom: 0;
+          background-image: linear-gradient(0deg, black, transparent);
+          background-size: 100% 3px;
+          background-repeat: no-repeat;
+          background-position-y: 50%;
+        }
+
+        .color {
+          position: absolute;
+          top:0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+        }
 
         .note-name {
           opacity: 0;
@@ -117,7 +130,7 @@
         }
       }
 
-      .disabled-string {
+      .disabled-string .string {
         background-image: linear-gradient(0deg, #f04141, transparent);
 
         .note-name {
@@ -283,10 +296,19 @@
           box-shadow: none;
           margin: 0;
           padding: 0;
-          background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2));
-          background-size: 3px 100%;
-          background-repeat: no-repeat;
-          background-position-x: 50%;
+
+          .string {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2));
+            background-size: 3px 100%;
+            background-repeat: no-repeat;
+            background-position-x: 50%;
+          }
+
+          .color {
+            height: calc(100% - 3px);
+          }
 
           .barre {
             width: calc(100% + 2px);
@@ -307,26 +329,26 @@
           }
         }
 
-        .disabled-string {
+        .disabled-string .string {
           background-image: linear-gradient(90deg, #f04141, rgba(255, 0, 0, .4));
         }
 
-        .string-0 {
+        .string-0 .string {
           background-size: 2px 100%;
         }
-        .string-1 {
+        .string-1 .string {
           background-size: 2.5px 100%;
         }
-        .string-2 {
+        .string-2 .string {
           background-size: 3px 100%;
         }
-        .string-3 {
+        .string-3 .string {
           background-size: 4px 100%;
         }
-        .string-4 {
+        .string-4 .string {
           background-size: 4.5px 100%;
         }
-        .string-5 {
+        .string-5 .string {
           background-size: 5px 100%;
         }
       }
@@ -468,22 +490,22 @@
 
     .fretboard {
       .tile {
-        .string-0 {
+        .string-0 .string {
           background-size: 100% 2px;
         }
-        .string-1 {
+        .string-1 .string {
           background-size: 100% 2.5px;
         }
-        .string-2 {
+        .string-2 .string {
           background-size: 100% 3px;
         }
-        .string-3 {
+        .string-3 .string {
           background-size: 100% 4px;
         }
-        .string-4 {
+        .string-4 .string {
           background-size: 100% 5px;
         }
-        .string-5 {
+        .string-5 .string {
           background-size: 100% 5.5px;
         }
 
@@ -492,6 +514,10 @@
             height: 32px;
             width: 32px;
             font-size: 1.2rem;
+          }
+
+          .color {
+            width: calc(100% - 3px);
           }
 
           .barre {

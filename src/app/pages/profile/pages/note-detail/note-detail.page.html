@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="Back" color="fourth"  defaultHref="profile"></ion-back-button>
+      <ion-back-button text="Back" color="fourth" defaultHref="profile"></ion-back-button>
     </ion-buttons>
-    <ion-title> Note data</ion-title>
+    <ion-title> Heat map </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -17,17 +17,23 @@
 
             <ion-card>
               <ion-card-header>
-                <ion-card-title> {{ noteScore.name | note:prefState.notation:prefState.useFlats  }}
+                <ion-card-title *ngIf="noteScore.name; else globalHeatMap">
+                  {{ noteScore.name | note:prefState.notation:prefState.useFlats  }}
                 </ion-card-title>
+                <ng-template #globalHeatMap>
+                  <ion-card-title>
+                    All the unlocked frets
+                  </ion-card-title>
+                </ng-template>
                 <ion-card-subtitle> {{ scoreByTuning.tuning }} tuning</ion-card-subtitle>
               </ion-card-header>
 
               <ion-card-content>
                 <ion-list>
-                  <ion-item>
+                  <!--<ion-item>
                     <ion-label> Note score:</ion-label>
                     <span> {{ noteScore.value }} </span>
-                  </ion-item>
+                  </ion-item>-->
                   <ion-item>
                     <ion-label> Right:</ion-label>
                     <span> {{ noteScore.good }} </span>

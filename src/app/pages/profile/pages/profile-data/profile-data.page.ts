@@ -104,7 +104,7 @@ export class ProfileDataPage implements OnInit, OnDestroy {
   }
 
   goToNoteDetail(note: NoteScoreByTuning) {
-    this.navCtrl.navigateForward(['profile', 'note-detail', note.name]);
+    this.navCtrl.navigateForward(['profile', 'note-detail', note ? note.name : 'global']);
   }
 
   onLogOut() {
