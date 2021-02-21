@@ -25,7 +25,7 @@ export class ListComponent {
   constructor(private sound: SoundService) {}
 
   onItemClicked(item: ListItem, event: MouseEvent) {
-    this.sound.playClick();
+    // this.sound.playClick();
     this.itemClick.next(item);
   }
 }
