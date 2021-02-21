@@ -7,8 +7,8 @@ import {FRETBOARD_STANDARD} from 'src/app/constants/fretboard-notes.constant';
 import {Chord, ChordType} from 'src/app/models/chord.model';
 import {PreferencesState, PreferencesStateModel} from 'src/app/shared/store/preferences/preferences.state';
 
-import {ExploreSetSelectedChordAction} from '../../store/explore.actions';
-import {ExploreState, ExploreStateModel} from '../../store/explore.state';
+import {ExploreSetSelectedChordAction} from '@shared-modules/store/explore/explore.actions';
+import {ExploreState, ExploreStateModel} from '@shared-modules/store/explore/explore.state';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {takeUntil, tap} from 'rxjs/operators';
@@ -87,19 +87,33 @@ export class ExploreChordsPage implements OnInit, OnDestroy {
     this.fretboardNotes = FRETBOARD_STANDARD;
     this.allChordsHash = ALL_CHORDS_HASH;
 
-    this.exploreForm = this.fb.group({
-      note: [this.exploreState.selectedChord.noteName, [Validators.required]],
-      type: [this.exploreState.selectedChord.type, [Validators.required]],
-    });
-
-    this.onSelectNote(this.exploreState.selectedChord.noteName);
     this.listenToPreferences();
+    this.listenToChordsChange();
   }
 
   listenToPreferences() {
     this.store.select(PreferencesState.getState).pipe(
       tap(pref => {
         this.preferences = pref;
+        this.cd.markForCheck();
+      }),
+      takeUntil(this.destroyed$),
+    ).subscribe();
+  }
+
+  listenToChordsChange() {
+    this.store.select(ExploreState.getState).pipe(
+      tap(ecploreState => {
+        console.log({ecploreState});
+        this.exploreState = ecploreState;
+        this.selectedNote = ecploreState.selectedChord.noteName;
+        this.selectedType = ecploreState.selectedChord.type;
+
+        this.exploreForm = this.fb.group({
+          note: [this.exploreState.selectedChord.noteName, [Validators.required]],
+          type: [this.exploreState.selectedChord.type, [Validators.required]],
+        });
+        this.onUpdateChord();
         this.cd.markForCheck();
       }),
       takeUntil(this.destroyed$),

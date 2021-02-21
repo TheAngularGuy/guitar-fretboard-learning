@@ -7,8 +7,8 @@ import {FretboardManipulationService} from 'src/app/shared/services/fretboard-ma
 import {PreferencesState, PreferencesStateModel} from 'src/app/shared/store/preferences/preferences.state';
 
 import {CHROMATIC_SCALE} from '@constants/chromatic-scale.constant';
-import {ExploreSetFretEndAction, ExploreSetFretStartAction, ExploreSetSelectedNotesAction,} from '../../store/explore.actions';
-import {ExploreState, ExploreStateModel} from '../../store/explore.state';
+import {ExploreSetFretEndAction, ExploreSetFretStartAction, ExploreSetSelectedNotesAction,} from '@shared-modules/store/explore/explore.actions';
+import {ExploreState, ExploreStateModel} from '@shared-modules/store/explore/explore.state';
 import {MAX_FRETS} from '@constants/max-frets';
 import {takeUntil, tap} from 'rxjs/operators';
 

@@ -29,6 +29,7 @@ import {ProgressModal} from './modals/progress/progress.modal';
 import {GlobalModule} from '@shared-modules/modules/global/global.module';
 import {Device} from '@ionic-native/device/ngx';
 import {UtilsService} from '@shared-modules/services/utils/utils.service';
+import {ExploreState} from '@shared-modules/store/explore/explore.state';
 
 @NgModule({
   declarations: [AppComponent, ProgressModal],
@@ -49,6 +50,7 @@ import {UtilsService} from '@shared-modules/services/utils/utils.service';
       UserState,
       PreferencesState,
       GameState,
+      ExploreState,
     ], {
       developmentMode: !environment.production,
     }),

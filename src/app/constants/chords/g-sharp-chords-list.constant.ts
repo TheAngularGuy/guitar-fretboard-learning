@@ -97,6 +97,19 @@ export const G_SHARP_CHORDS: Chord[] = [
     disabledStrings: [5],
     barre: { fret: 11, stringEnd: 4, stringStart: 0 },
   },
+  // ----------------------------------
+  {
+    type: 'Diminished',
+    fretStart: 11,
+    fretEnd: 14,
+    notes: [
+      { fret: 11, string: 4 },
+      { fret: 12, string: 3 },
+      { fret: 13, string: 2 },
+      { fret: 12, string: 1 },
+    ],
+    disabledStrings: [0, 5],
+  },
   {
     type: '5',
     fretStart: 4,

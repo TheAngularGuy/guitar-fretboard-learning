@@ -5,6 +5,18 @@
   color: var(--ion-text-color);
 }
 
+p{
+  color: var(--ion-text-color);
+  opacity: 1;
+}
+
+small {
+  opacity: .5;
+  font-weight: normal;
+  font-size: .7rem;
+  font-style: normal;
+}
+
 .wheel-container {
   width: 80%;
   max-width: 500px;
@@ -57,12 +69,19 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-direction: column;
       padding: 10px;
       background: grey;
-      height: 35px;
-      width: 58px;
-      border-radius: 3px;
+      max-width: 49px;
+      min-width: 49px;
+      height: 49px;
+      border-radius: 50%;
       font-size: .7rem;
+
+      span {
+        word-break: keep-all;
+        white-space: nowrap;
+      }
 
       &.major {
         color: var(--ion-color-success-contrast);

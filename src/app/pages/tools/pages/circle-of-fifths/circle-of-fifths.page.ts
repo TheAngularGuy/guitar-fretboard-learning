@@ -2,9 +2,13 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {popAnimation} from '../../../../animations/pop.animation';
 import {PreferencesState, PreferencesStateModel} from '@shared-modules/store/preferences/preferences.state';
-import {takeUntil, tap} from 'rxjs/operators';
+import {first, takeUntil, tap} from 'rxjs/operators';
 import {Store} from '@ngxs/store';
 import {fadeinAnimation} from '../../../../animations/fadein.animation';
+import {ExploreSetSelectedChordAction} from '@shared-modules/store/explore/explore.actions';
+import {ChordType} from '@models/chord.model';
+import {NavController} from '@ionic/angular';
+import {noEnterAnimation} from '../../../../animations/no-enter.animation';
 
 const WHEEL = [
   {
@@ -348,16 +352,16 @@ const WHEEL = [
   selector: 'app-circle-of-fifths',
   templateUrl: './circle-of-fifths.page.html',
   styleUrls: ['./circle-of-fifths.page.scss'],
-  animations: [popAnimation, fadeinAnimation],
+  animations: [popAnimation, fadeinAnimation, noEnterAnimation],
 })
 export class CircleOfFifthsPage implements OnInit, OnDestroy {
   selectedNote$ = new BehaviorSubject(WHEEL.filter(ob => ob.key === 'C')[0]);
-  rotation$ = new BehaviorSubject(1);
+  rotation$ = new BehaviorSubject(0);
 
   destroyed$ = new Subject();
   preferences: PreferencesStateModel;
 
-  constructor(private store: Store) {
+  constructor(private store: Store, private navCtrl: NavController) {
   }
 
   ngOnDestroy() {
@@ -397,4 +401,30 @@ export class CircleOfFifthsPage implements OnInit, OnDestroy {
     this.rotation$.next(n);
   }
 
+  goToChordsPage(note: string, chordType: 'major' | 'minor' | 'dim') {
+    let type: ChordType;
+    if (chordType === 'dim') {
+      type = 'Diminished';
+    } else if (chordType === 'major') {
+      type = 'Major';
+    } else if (chordType === 'minor') {
+      type = 'Minor';
+    }
+    this.store.dispatch(
+      new ExploreSetSelectedChordAction({
+        noteName: note,
+        type,
+      }),
+    ).pipe(
+      first(),
+      tap(() => {
+        console.log(note, type);
+        this.navCtrl.navigateRoot(['explore', 'explore-chords']);
+      })
+    ).subscribe();
+  }
+
+  goInfoCircle() {
+    this.navCtrl.navigateForward(['tools', 'info-circle-of-fifths']);
+  }
 }

@@ -141,6 +141,19 @@ export const C_CHORDS: Chord[] = [
     disabledStrings: [4, 5],
   },
   // ----------------------------------
+  {
+    type: 'Diminished',
+    fretStart: 3,
+    fretEnd: 6,
+    notes: [
+      { fret: 3, string: 4 },
+      { fret: 4, string: 3 },
+      { fret: 5, string: 2 },
+      { fret: 4, string: 1 },
+    ],
+    disabledStrings: [0, 5],
+  },
+  // ----------------------------------
 
   {
     type: '5',

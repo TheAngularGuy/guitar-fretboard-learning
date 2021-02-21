@@ -24,11 +24,11 @@
         <ion-label>Left Handed (invert the frets order)</ion-label>
         <ion-toggle formControlName="invertedFrets" color="tertiary"></ion-toggle>
       </ion-item>
+
       <ion-item>
         <ion-label>Use flats instead of sharps</ion-label>
         <ion-toggle formControlName="useFlats" color="tertiary"></ion-toggle>
       </ion-item>
-
 
       <ion-item>
         <ion-label>Notation</ion-label>
@@ -50,9 +50,16 @@
           </ion-select-option>
         </ion-select>
       </ion-item>
+    </ion-list>
+
+
+    <ion-list>
+      <ion-list-header>
+        <ion-label>Tuning</ion-label>
+      </ion-list-header>
 
       <ion-item>
-        <ion-label>Tuning</ion-label>
+        <ion-label>Choose your tuning</ion-label>
         <ion-select formControlName="tuning" *ngIf="!(this.hideTuning$ | async)">
           <ng-container *ngIf="customTunnings$ | async as cts">
             <ion-select-option *ngFor="let customTuning of cts"

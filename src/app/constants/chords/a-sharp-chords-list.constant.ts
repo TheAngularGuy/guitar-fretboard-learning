@@ -143,6 +143,19 @@ export const A_SHARP_CHORDS: Chord[] = [
   },
   // ----------------------------------
   {
+    type: 'Diminished',
+    fretStart: 1,
+    fretEnd: 4,
+    notes: [
+      { fret: 1, string: 4 },
+      { fret: 2, string: 3 },
+      { fret: 3, string: 2 },
+      { fret: 2, string: 1 },
+    ],
+    disabledStrings: [0, 5],
+  },
+  // ----------------------------------
+  {
     type: '5',
     fretStart: 1,
     fretEnd: 4,

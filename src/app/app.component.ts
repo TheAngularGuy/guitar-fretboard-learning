@@ -15,6 +15,10 @@ import {
 import {Device} from '@ionic-native/device/ngx';
 import {filter, tap} from 'rxjs/operators';
 import {AngularFireAuth} from '@angular/fire/auth';
+import {InAppPurchase2, IAPProduct} from '@ionic-native/in-app-purchase-2/ngx';
+import {environment} from '../environments/environment';
+
+const PRODUCT_KEY = 'UNLOCK_ALL_FEATURES';
 
 @Component({
   selector: 'app-root',
@@ -35,6 +39,8 @@ export class AppComponent implements AfterViewInit {
   // https://www.flaticon.com/packs/ecology-69
 
   lastWidthRegistred: number;
+
+  products: IAPProduct[];
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -66,6 +72,7 @@ export class AppComponent implements AfterViewInit {
     private readonly toastController: ToastController,
     private readonly device: Device,
     private readonly firebaseauth: AngularFireAuth,
+    private readonly iap: InAppPurchase2,
   ) {
     this.initializeApp();
   }
@@ -84,8 +91,56 @@ export class AppComponent implements AfterViewInit {
       this.statusBar.backgroundColorByHexString('#40413e');
       this.splashScreen.hide();
       this.checkSWVersion();
-      this.listenToLogIn();
+      // this.listenToLogIn();
+
+      this.registerProducts();
+      this.listenProductsChanges();
+      this.iap.ready(() => {
+        this.products = this.iap.products;
+        console.log({products: this.products});
+      });
     });
+  }
+
+  registerProducts() {
+    if (!environment.production) {
+      this.iap.verbosity = this.iap.DEBUG;
+    }
+
+    this.iap.register({
+      id: PRODUCT_KEY,
+      type: this.iap.PAID_SUBSCRIPTION,
+    });
+    this.iap.refresh();
+  }
+
+  listenProductsChanges() {
+    this.iap.when('product')
+      .approved((p: IAPProduct) => {
+        if (p.id === PRODUCT_KEY) {
+          console.log('go pro <--------------------------');
+        }
+        return p.verify();
+      })
+      .verified((p: IAPProduct) => {
+        return p.finish();
+      });
+
+    this.iap.when(PRODUCT_KEY).owned((p: IAPProduct) => {
+      console.log('pro owned <--------------------------');
+    });
+  }
+
+  order(p: IAPProduct) {
+    this.iap.order(p).then(() => {
+      // Purshase in progress
+    }, err => {
+      console.error(err);
+    });
+  }
+
+  restore() {
+    this.iap.refresh();
   }
 
   listenToLogIn() {

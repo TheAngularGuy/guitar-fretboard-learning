@@ -111,6 +111,19 @@ export const G_CHORDS: Chord[] = [
     disabledStrings: [5],
     barre: { fret: 10, stringEnd: 4, stringStart: 0 },
   },
+  // ----------------------------------
+  {
+    type: 'Diminished',
+    fretStart: 10,
+    fretEnd: 13,
+    notes: [
+      { fret: 10, string: 4 },
+      { fret: 11, string: 3 },
+      { fret: 12, string: 2 },
+      { fret: 11, string: 1 },
+    ],
+    disabledStrings: [0, 5],
+  },
   {
     type: '5',
     fretStart: 3,

@@ -4,9 +4,9 @@ import {FretboardManipulationService} from '@shared-modules/services/fretboard-m
 import {Store} from '@ngxs/store';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {PreferencesState, PreferencesStateModel} from '@shared-modules/store/preferences/preferences.state';
-import {ExploreState, ExploreStateModel} from '@pages/explore/store/explore.state';
+import {ExploreState, ExploreStateModel} from '@shared-modules/store/explore/explore.state';
 import {CHROMATIC_SCALE} from '@constants/chromatic-scale.constant';
-import {ExploreSetSelectedScaleAction} from '@pages/explore/store/explore.actions';
+import {ExploreSetSelectedScaleAction} from '@shared-modules/store/explore/explore.actions';
 import {MAX_FRETS} from '@constants/max-frets';
 import {ALL_SCALES_TYPES_LIST} from '@constants/scales/all-scales-types';
 import {ALL_SCALES_HASH} from '@constants/scales/all-scales-hash';

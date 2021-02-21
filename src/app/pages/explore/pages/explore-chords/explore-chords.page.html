@@ -1,13 +1,13 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="Back" color="fourth"  defaultHref="explore"></ion-back-button>
+      <ion-back-button text="Explore" color="fourth"  defaultHref="explore"></ion-back-button>
     </ion-buttons>
     <ion-title>Explore chords</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="!!exploreForm">
   <ion-card>
     <ion-card-header>
       <ion-card-title>
@@ -23,7 +23,7 @@
     </ion-card-header>
 
     <ion-card-content *ngIf="dropDownOpen$ | async">
-      <p>You can explore all the chords in the standard tuning.</p>
+      <p>All the chords in the standard tuning.</p>
       <p class="warning" *ngIf="!isStandardTuning">Please note that the chords displayed here are in the standard tuning.</p>
 
       <hr/>

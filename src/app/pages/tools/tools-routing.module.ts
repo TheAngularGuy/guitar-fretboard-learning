@@ -20,6 +20,10 @@ const routes: Routes = [
     path: 'circle-of-fifths',
     loadChildren: () => import('./pages/circle-of-fifths/circle-of-fifths.module').then( m => m.CircleOfFifthsPageModule)
   },
+  {
+    path: 'info-circle-of-fifths',
+    loadChildren: () => import('./pages/info-circle-of-fifths/info-circle-of-fifths.module').then( m => m.InfoCircleOfFifthsPageModule)
+  },
 
 ];
 

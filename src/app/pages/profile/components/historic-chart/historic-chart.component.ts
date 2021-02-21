@@ -15,7 +15,7 @@ export class HistoricChartComponent implements OnInit, AfterViewInit, OnChanges 
 
   get slicedHistoric() {
     const length = this.historic.length;
-    return this.historic.slice(Math.max(0, length - 15), length);
+    return this.historic.slice(Math.max(0, length - 10), length);
   }
 
   constructor() {
