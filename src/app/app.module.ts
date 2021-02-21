@@ -30,6 +30,7 @@ import {GlobalModule} from '@shared-modules/modules/global/global.module';
 import {Device} from '@ionic-native/device/ngx';
 import {UtilsService} from '@shared-modules/services/utils/utils.service';
 import {ExploreState} from '@shared-modules/store/explore/explore.state';
+import {InAppPurchase2} from '@ionic-native/in-app-purchase-2/ngx';
 
 @NgModule({
   declarations: [AppComponent, ProgressModal],
@@ -64,6 +65,7 @@ import {ExploreState} from '@shared-modules/store/explore/explore.state';
     SplashScreen,
     ToastController,
     ModalController,
+    InAppPurchase2,
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
 
     // firebase
