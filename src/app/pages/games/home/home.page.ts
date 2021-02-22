@@ -36,7 +36,7 @@ export class HomePage implements OnInit, AfterViewInit {
       path: null,
       img: 'assets/imgs/icon-pro.png',
       title: 'Get Pro',
-      subtitle: `Get access to all game modes, unlock the fretboard heatmaps and more!`,
+      subtitle: `Get access to all game modes, unlock the fretboard heatmaps and more!`, // 'Get all game modes, customisations and stats'
       promo: true,
     },
     {
@@ -45,7 +45,7 @@ export class HomePage implements OnInit, AfterViewInit {
       title: 'Locate all positions',
       subtitle:
         'Locate all the instances of ' +
-        'a note in the fretboard and click on them all',
+        'a note in the fretboard and click on them',
     },
     {
       path: 'identify-sound',

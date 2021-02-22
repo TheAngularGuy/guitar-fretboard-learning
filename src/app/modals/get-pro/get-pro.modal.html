@@ -6,7 +6,7 @@
         Close
       </ion-button>
     </ion-buttons>
-    <ion-title>Let's talk</ion-title>
+    <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -22,7 +22,7 @@
 
 
       <ng-container *ngFor="let product of products">
-        <ion-button class="start" fill="block" *ngIf="product?.description" (click)="orderProMode(product)">
+        <ion-button class="start" fill="block" *ngIf="product?.id" (click)="orderProMode(product)">
           {{ product.description }} for {{ product.introPrice }}
         </ion-button>
       </ng-container>
