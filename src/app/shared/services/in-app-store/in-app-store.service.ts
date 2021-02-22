@@ -28,11 +28,11 @@ export class InAppStoreService {
     }
     this.registerProducts();
     this.listenProductsChanges();
+
     this.iap.ready(() => {
-      this.products = this.iap.products;
       this.initDone = true;
-      console.log({products: this.products});
     });
+    this.iap.refresh();
   }
 
   registerProducts() {
@@ -43,11 +43,18 @@ export class InAppStoreService {
     this.iap.register({
       id: InAppStoreService.PRODUCT_KEY,
       type: this.iap.PAID_SUBSCRIPTION,
+      alias: 'Unluck All Features ',
     });
-    this.iap.refresh();
   }
 
   listenProductsChanges() {
+    this.iap.when(InAppStoreService.PRODUCT_KEY).updated(() => {
+      this.products = [
+        this.iap.get(InAppStoreService.PRODUCT_KEY),
+      ];
+      console.log({products: this.products});
+    });
+
     this.iap.when('product')
       .approved((p: IAPProduct) => {
         if (p.id === InAppStoreService.PRODUCT_KEY) {
