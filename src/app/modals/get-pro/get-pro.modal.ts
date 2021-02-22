@@ -5,6 +5,7 @@ import {InAppStoreService} from '@shared-modules/services/in-app-store/in-app-st
 import {Store} from '@ngxs/store';
 import {IAPProduct} from '@ionic-native/in-app-purchase-2/ngx';
 import {ModalController} from '@ionic/angular';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-get-pro',
@@ -14,7 +15,7 @@ import {ModalController} from '@ionic/angular';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GetProModal implements OnInit {
-  products: IAPProduct[];
+  product$: Observable<IAPProduct>;
 
   constructor(
     private store: Store,
@@ -24,11 +25,18 @@ export class GetProModal implements OnInit {
   }
 
   ngOnInit() {
-    this.products = this.iapService.productsList;
+    this.product$ = this.iapService.productObservable$;
   }
 
   orderProMode(product: IAPProduct) {
     this.iapService.order(product);
+  }
+
+  restore() {
+    setTimeout(() => {
+      this.close();
+    }, 1000);
+    this.iapService.restore();
   }
 
   close() {

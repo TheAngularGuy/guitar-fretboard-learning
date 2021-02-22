@@ -3,10 +3,9 @@
     <ion-buttons slot="start">
       <ion-button color="fourth" (click)="close()">
         <ion-icon name="close" slot="start"></ion-icon>
-        Close
       </ion-button>
     </ion-buttons>
-    <ion-title></ion-title>
+    <ion-title> Get Pro</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,18 +13,45 @@
 
   <div class="page">
 
-    <ng-container *ngIf="!!products && products.length">
+    <ng-container *ngIf="product$ | async as product">
 
-      <h1>
-        Fretboard learning Pro
-      </h1>
+      <h1 class="taba">Fretboard Learning</h1>
+
+      <div class="card" *ngIf="product?.valid" (click)="orderProMode(product)">
+        <div class="title ">
+          {{ product.title }}
+        </div>
+
+        <div class="description">
+          {{ product.description }}
+        </div>
+
+        <div class="price">{{ product.price }} <small>per {{ product.billingPeriodUnit }}</small></div>
+      </div>
 
 
-      <ng-container *ngFor="let product of products">
-        <ion-button class="start" fill="block" *ngIf="product?.id" (click)="orderProMode(product)">
-          {{ product.description }} for {{ product.introPrice }}
-        </ion-button>
-      </ng-container>
+      <hr>
+      <br>
+      <br>
+      <br>
+      <br>
+
+      <div class="text">
+        Your payment will be charged to your iTunes account upon confirmation of your purchase
+        <br>
+        <br>
+        The subscription renews automatically, unless auto-renewal is turned off at least 24 hours before the end of
+        the current period
+        <br>
+        <br>
+        The account will be debited with the same amount for a renewal within 24 hours before the end of the current
+        period
+        <br>
+        <br>
+        toute partie non utilisée d'un essai gratuit éventuel expire avec l'achat d'un abonnement
+        <br>
+        <ion-button color="fourth" fill="clear" expand="block" (click)="restore()"> Restore purchase</ion-button>
+      </div>
 
 
     </ng-container>

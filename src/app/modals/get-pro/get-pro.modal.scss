@@ -1,0 +1,38 @@
+
+.card {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  width: 90%;
+  margin: auto;
+  margin-top: 4ch;
+  border-radius: 15px;
+  padding: 1rem;
+  background-image: linear-gradient(to right,
+          var(--ion-color-sixth) 0%,
+          var(--ion-color-sixth-tint) 100%);
+
+  .title {
+    padding: 0 0 2ch 0;
+    font-size: 1.5rem;
+  }
+
+  .price {
+    margin-top: 1ch;
+    text-align: end;
+  }
+}
+
+h1 {
+  font-size: 2rem;
+  text-align: center;
+
+  &:first-letter {
+    // color: var(--ion-color-primary);
+    font-size: 2.7rem;
+  }
+}
+
+.text {
+  text-align: start;
+  font-size: .75rem;
+  opacity: .7;
+}

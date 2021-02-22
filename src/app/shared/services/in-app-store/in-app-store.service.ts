@@ -3,17 +3,27 @@ import {IAPProduct, InAppPurchase2} from '@ionic-native/in-app-purchase-2/ngx';
 import {Store} from '@ngxs/store';
 import {environment} from '../../../../environments/environment';
 import {UserSetProModeAction} from '@shared-modules/store/user/user.actions';
+import {BehaviorSubject} from 'rxjs';
+
+const DEBUG_PRODUCT: IAPProduct = {
+  id: 'eee',
+  billingPeriodUnit: 'Month',
+  price: '$0.99',
+  description: 'Get all game modes, customisations and stats',
+  title: 'All Access Package',
+  valid: true,
+} as any;
 
 @Injectable({
   providedIn: 'root'
 })
 export class InAppStoreService {
   static PRODUCT_KEY = 'UNLOCK_ALL_FEATURES';
-  private products: IAPProduct[];
+  private product$ = new BehaviorSubject<IAPProduct>(null);
   private initDone: boolean;
 
-  get productsList() {
-    return this.products;
+  get productObservable$() {
+    return this.product$;
   }
 
   constructor(
@@ -49,10 +59,9 @@ export class InAppStoreService {
 
   listenProductsChanges() {
     this.iap.when(InAppStoreService.PRODUCT_KEY).updated(() => {
-      this.products = [
-        this.iap.get(InAppStoreService.PRODUCT_KEY),
-      ];
-      console.log({products: this.products});
+      const product = this.iap.get(InAppStoreService.PRODUCT_KEY);
+      console.log({product});
+      this.product$.next(product);
     });
 
     this.iap.when('product')
