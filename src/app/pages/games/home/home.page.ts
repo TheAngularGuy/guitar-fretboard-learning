@@ -1,8 +1,11 @@
 import {AfterViewInit, ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import { NavController } from '@ionic/angular';
+import {ModalController, NavController} from '@ionic/angular';
 import {listAnimation} from 'src/app/animations/list.animation';
 import {BehaviorSubject} from 'rxjs';
+import {InAppStoreService} from '@shared-modules/services/in-app-store/in-app-store.service';
+import {Store} from '@ngxs/store';
+import {OpenOrderModalAction} from '@shared-modules/store/user/user.actions';
 
 @Component({
   selector: 'app-home',
@@ -22,21 +25,27 @@ export class HomePage implements OnInit, AfterViewInit {
         'Locate the note on the fretboard and click on it',
     },
     {
-      path: 'locate-all',
-      img: 'assets/imgs/locate-all.svg',
-      title: 'Locate all positions',
-      subtitle:
-        'Locate all the instances of ' +
-        'a note in the fretboard and click on them all',
-    },
-
-    {
       path: 'identify',
       img: 'assets/imgs/identify.svg',
       title: 'Identify',
       subtitle:
         'Identify which note is highlighted ' +
         'on the fretboard',
+    },
+    {
+      path: null,
+      img: 'assets/imgs/icon-pro.png',
+      title: 'Get Pro',
+      subtitle: `Get access to all game modes, unlock the fretboard heatmaps and more!`,
+      promo: true,
+    },
+    {
+      path: 'locate-all',
+      img: 'assets/imgs/locate-all.svg',
+      title: 'Locate all positions',
+      subtitle:
+        'Locate all the instances of ' +
+        'a note in the fretboard and click on them all',
     },
     {
       path: 'identify-sound',
@@ -46,7 +55,7 @@ export class HomePage implements OnInit, AfterViewInit {
     },
   ];
 
-  constructor(private navCtrl: NavController) {
+  constructor(private navCtrl: NavController, private store: Store) {
   }
 
   ngOnInit() {
@@ -56,7 +65,15 @@ export class HomePage implements OnInit, AfterViewInit {
   }
 
   goTo({path}: any) {
+    if (!path) {
+      this.openOrderModal();
+      return;
+    }
     this.navCtrl.navigateForward(['games', path]);
+  }
+
+  openOrderModal() {
+    this.store.dispatch(new OpenOrderModalAction());
   }
 
   onScroll(event: any) {

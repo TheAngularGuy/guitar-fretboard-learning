@@ -31,9 +31,14 @@ import {Device} from '@ionic-native/device/ngx';
 import {UtilsService} from '@shared-modules/services/utils/utils.service';
 import {ExploreState} from '@shared-modules/store/explore/explore.state';
 import {InAppPurchase2} from '@ionic-native/in-app-purchase-2/ngx';
+import {GetProModal} from './modals/get-pro/get-pro.modal';
 
 @NgModule({
-  declarations: [AppComponent, ProgressModal],
+  declarations: [
+    AppComponent,
+    ProgressModal,
+    GetProModal
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

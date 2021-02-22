@@ -56,6 +56,15 @@
     justify-content: space-between;
     place-items: center;
 
+    &.promo {
+      background-image: linear-gradient(to right,
+              var(--ion-color-light) 0%,
+              var(--ion-color-light) 65%,
+              var(--ion-color-primary) 65%,
+              var(--ion-color-tertiary-shade) 100%
+      );
+    }
+
     &.active {
       animation-name: skew;
       animation-duration: 125ms;

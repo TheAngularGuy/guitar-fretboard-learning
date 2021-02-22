@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="fourth">
+        <ion-icon name="close" slot="start"></ion-icon>
+        Close
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Let's talk</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="page">
+
+    <ng-container *ngIf="!!products && products.length">
+
+      <h1>
+        Fretboard learning Pro
+      </h1>
+
+
+      <ion-button class="start" fill="block">
+        {{ products[0].description }} for {{ products[0].introPrice }}
+      </ion-button>
+
+
+    </ng-container>
+  </div>
+
+</ion-content>

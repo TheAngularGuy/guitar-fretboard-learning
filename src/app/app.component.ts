@@ -6,19 +6,14 @@ import {Platform, ToastController} from '@ionic/angular';
 import {Select, Store} from '@ngxs/store';
 import {GameState} from '@shared-modules/store/game/game.state';
 import {Observable} from 'rxjs';
-import {SetUserAction} from './shared/store/user/user.actions';
 import {PreferencesState} from '@shared-modules/store/preferences/preferences.state';
 import {
   PreferencesSetInvertedFretsModeAction,
   PreferencesSetInvertedStringsModeAction
 } from '@shared-modules/store/preferences/preferences.actions';
 import {Device} from '@ionic-native/device/ngx';
-import {filter, tap} from 'rxjs/operators';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {InAppPurchase2, IAPProduct} from '@ionic-native/in-app-purchase-2/ngx';
-import {environment} from '../environments/environment';
-
-const PRODUCT_KEY = 'UNLOCK_ALL_FEATURES';
+import {InAppStoreService} from '@shared-modules/services/in-app-store/in-app-store.service';
 
 @Component({
   selector: 'app-root',
@@ -39,8 +34,6 @@ export class AppComponent implements AfterViewInit {
   // https://www.flaticon.com/packs/ecology-69
 
   lastWidthRegistred: number;
-
-  products: IAPProduct[];
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -71,18 +64,14 @@ export class AppComponent implements AfterViewInit {
     private readonly swUpdate: SwUpdate,
     private readonly toastController: ToastController,
     private readonly device: Device,
+    private readonly iapService: InAppStoreService,
     private readonly firebaseauth: AngularFireAuth,
-    private readonly iap: InAppPurchase2,
   ) {
     this.initializeApp();
   }
 
   ngAfterViewInit() {
     this.lastWidthRegistred = window.innerWidth;
-
-    if (!this.device?.model) { // Not an app
-      // TODO: show cookies msg "This site uses cookies from Google to deliver its services and to analyze traffic."
-    }
   }
 
   initializeApp() {
@@ -93,72 +82,8 @@ export class AppComponent implements AfterViewInit {
       this.checkSWVersion();
       // this.listenToLogIn();
 
-      this.registerProducts();
-      this.listenProductsChanges();
-      this.iap.ready(() => {
-        this.products = this.iap.products;
-        console.log({products: this.products});
-      });
+      this.iapService.init();
     });
-  }
-
-  registerProducts() {
-    if (!environment.production) {
-      this.iap.verbosity = this.iap.DEBUG;
-    }
-
-    this.iap.register({
-      id: PRODUCT_KEY,
-      type: this.iap.PAID_SUBSCRIPTION,
-    });
-    this.iap.refresh();
-  }
-
-  listenProductsChanges() {
-    this.iap.when('product')
-      .approved((p: IAPProduct) => {
-        if (p.id === PRODUCT_KEY) {
-          console.log('go pro <--------------------------');
-        }
-        return p.verify();
-      })
-      .verified((p: IAPProduct) => {
-        return p.finish();
-      });
-
-    this.iap.when(PRODUCT_KEY).owned((p: IAPProduct) => {
-      console.log('pro owned <--------------------------');
-    });
-  }
-
-  order(p: IAPProduct) {
-    this.iap.order(p).then(() => {
-      // Purshase in progress
-    }, err => {
-      console.error(err);
-    });
-  }
-
-  restore() {
-    this.iap.refresh();
-  }
-
-  listenToLogIn() {
-    this.firebaseauth.authState.pipe(
-      filter(user => !!user && !!user.uid),
-      tap(usr => {
-        console.log({usr});
-        this.store.dispatch(new SetUserAction({
-          user: {
-            uid: usr.uid,
-            displayName: usr.displayName,
-            email: usr.email,
-            emailVerified: usr.emailVerified,
-            photoURL: usr.photoURL,
-          }
-        }));
-      }),
-    ).subscribe();
   }
 
   checkSWVersion() {
@@ -188,4 +113,22 @@ export class AppComponent implements AfterViewInit {
       });
     }
   }
+
+  /*listenToLogIn() {
+  this.firebaseauth.authState.pipe(
+    filter(user => !!user && !!user.uid),
+    tap(usr => {
+      console.log({usr});
+      this.store.dispatch(new SetUserAction({
+        user: {
+          uid: usr.uid,
+          displayName: usr.displayName,
+          email: usr.email,
+          emailVerified: usr.emailVerified,
+          photoURL: usr.photoURL,
+        }
+      }));
+    }),
+  ).subscribe();
+}*/
 }

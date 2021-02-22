@@ -16,12 +16,12 @@
 
 
   <ion-card @noEnterAnimation>
-    <ion-card-header [@popAnimation]="selected.key">
-      <ion-card-title>
+    <ion-card-header>
+      <ion-card-title [@popAnimation]="selected.key">
         {{ selected.key | note:preferences?.notation:preferences?.useFlats }} &nbsp; Major
         &nbsp; <small>(key)</small>
       </ion-card-title>
-      <div class="bpm-subtitle">
+      <div class="bpm-subtitle" [@popAnimation]="selected.key">
         {{ selected.sub | note:preferences?.notation:preferences?.useFlats }} &nbsp; Minor
         &nbsp; <small>(relative key)</small>
       </div>

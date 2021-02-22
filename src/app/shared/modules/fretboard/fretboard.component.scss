@@ -51,7 +51,7 @@
         position: absolute;
         top: 0.2rem;
         left: 0.2rem;
-        font-size: 0.8rem;
+        font-size: 1.1rem;
         z-index: 1;
       }
 
@@ -81,10 +81,11 @@
 
         .color {
           position: absolute;
-          top:0;
-          left: 0;
-          height: 100%;
-          width: 100%;
+          top: 5px;
+          left: 5px;
+          height: calc(100% - 10px);
+          width: calc(100% - 10px);
+          border-radius: 10px;
         }
 
         .note-name {
@@ -307,7 +308,7 @@
           }
 
           .color {
-            height: calc(100% - 3px);
+            height: calc(100% - 3px - 10px);
           }
 
           .barre {
@@ -517,7 +518,7 @@
           }
 
           .color {
-            width: calc(100% - 3px);
+            width: calc(100% - 3px - 10px);
           }
 
           .barre {

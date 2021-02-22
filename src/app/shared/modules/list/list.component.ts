@@ -9,6 +9,7 @@ interface ListItem {
   img?: string;
   path?: string;
   disabled?: boolean;
+  promo?: boolean;
 }
 
 @Component({

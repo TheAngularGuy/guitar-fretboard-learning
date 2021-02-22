@@ -17,3 +17,15 @@ export class UserLogOutAction {
 
   constructor() { }
 }
+
+export class UserSetProModeAction {
+  public static readonly type = '[User] User Set Pro Mode';
+
+  constructor(public payload: { pro: boolean }) { }
+}
+
+export class OpenOrderModalAction {
+  public static readonly type = '[User] Open Order Modal';
+
+  constructor() { }
+}
