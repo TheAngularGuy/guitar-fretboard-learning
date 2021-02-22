@@ -4,6 +4,7 @@ import {delayAnimation} from '../../animations/delay.animation';
 import {InAppStoreService} from '@shared-modules/services/in-app-store/in-app-store.service';
 import {Store} from '@ngxs/store';
 import {IAPProduct} from '@ionic-native/in-app-purchase-2/ngx';
+import {ModalController} from '@ionic/angular';
 
 @Component({
   selector: 'app-get-pro',
@@ -15,7 +16,11 @@ import {IAPProduct} from '@ionic-native/in-app-purchase-2/ngx';
 export class GetProModal implements OnInit {
   products: IAPProduct[];
 
-  constructor(private store: Store, private iapService: InAppStoreService) {
+  constructor(
+    private store: Store,
+    private iapService: InAppStoreService,
+    private modalCtrl: ModalController,
+  ) {
   }
 
   ngOnInit() {
@@ -24,6 +29,10 @@ export class GetProModal implements OnInit {
 
   orderProMode(product: IAPProduct) {
     this.iapService.order(product);
+  }
+
+  close() {
+    this.modalCtrl.dismiss();
   }
 
 }
