@@ -29,3 +29,9 @@ export class OpenOrderModalAction {
 
   constructor() { }
 }
+
+export class CloseOrderModalAction {
+  public static readonly type = '[User] Close Order Modal';
+
+  constructor() { }
+}

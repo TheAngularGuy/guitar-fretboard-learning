@@ -211,6 +211,7 @@ export class GameState {
   }
 
   private registerProgression(ctx: StateContext<GameStateModel>, prog: Progression) {
+    prog.date = Date.now();
     const length = ctx.getState().historic.length;
     const historic = [...ctx.getState().historic].slice(Math.max(0, length - 100), length);
     historic.push(prog);

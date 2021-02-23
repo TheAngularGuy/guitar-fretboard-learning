@@ -19,7 +19,7 @@ const DEBUG_PRODUCT: IAPProduct = {
 })
 export class InAppStoreService {
   static PRODUCT_KEY = 'UNLOCK_ALL_FEATURES';
-  private product$ = new BehaviorSubject<IAPProduct>(null);
+  private product$ = new BehaviorSubject<IAPProduct>(DEBUG_PRODUCT);
   private initDone: boolean;
 
   get productObservable$() {
@@ -76,7 +76,7 @@ export class InAppStoreService {
       });
 
     this.iap.when(InAppStoreService.PRODUCT_KEY).owned((p: IAPProduct) => {
-      console.log('pro owned <--------------------------');
+      console.log('pro owned <----------------------------------------');
       this.store.dispatch(new UserSetProModeAction({pro: true}));
     });
   }

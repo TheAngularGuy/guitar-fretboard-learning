@@ -8,7 +8,7 @@ import {Router} from '@angular/router';
 import {LEVELS} from '@constants/levels';
 import {takeUntil, tap} from 'rxjs/operators';
 import {UtilsService} from '@shared-modules/services/utils/utils.service';
-import {UserLogOutAction} from '@shared-modules/store/user/user.actions';
+import { OpenOrderModalAction, UserLogOutAction } from '@shared-modules/store/user/user.actions';
 import {NavController} from '@ionic/angular';
 
 @Component({
@@ -111,5 +111,9 @@ export class ProfileDataPage implements OnInit, OnDestroy {
     if (confirm('Do you want to log out?')) {
       this.store.dispatch(new UserLogOutAction());
     }
+  }
+
+  openOrderModal() {
+    this.store.dispatch(new OpenOrderModalAction());
   }
 }

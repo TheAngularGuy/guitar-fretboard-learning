@@ -29,6 +29,9 @@ export class MetronomePage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (!!this.interval) {
+      this.toggleMetronome();
+    }
     this.destroyed$.next();
     this.destroyed$.complete();
   }

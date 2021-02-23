@@ -1,12 +1,19 @@
-import {Injectable, NgZone} from '@angular/core';
-import {Action, Selector, State, StateContext} from '@ngxs/store';
-import {auth} from 'firebase/app';
-import {OpenOrderModalAction, SetUserAction, UserLogInAction, UserLogOutAction, UserSetProModeAction} from './user.actions';
-import {environment} from '../../../../environments/environment';
-import {AngularFireAuth} from '@angular/fire/auth';
-import {Router} from '@angular/router';
-import {ModalController} from '@ionic/angular';
-import {GetProModal} from '../../../modals/get-pro/get-pro.modal';
+import { Injectable, NgZone } from '@angular/core';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { auth } from 'firebase/app';
+import {
+  CloseOrderModalAction,
+  OpenOrderModalAction,
+  SetUserAction,
+  UserLogInAction,
+  UserLogOutAction,
+  UserSetProModeAction,
+} from './user.actions';
+import { environment } from '../../../../environments/environment';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { GetProModal } from '../../../modals/get-pro/get-pro.modal';
 
 export interface UserStateModel {
   uid: string;
@@ -32,6 +39,7 @@ export interface UserStateModel {
   },
 })
 export class UserState {
+  private modal: HTMLIonModalElement;
 
   constructor(
     private readonly firebaseauth: AngularFireAuth,
@@ -56,10 +64,17 @@ export class UserState {
       component: GetProModal,
       animated: true,
       swipeToClose: true,
-      componentProps: {
-      },
+      componentProps: {},
     });
+    this.modal = modal;
     return modal.present();
+  }
+
+  closeModal() {
+    if (!this.modal) {
+      return;
+    }
+    this.modal.dismiss();
   }
 
   @Action(OpenOrderModalAction)
@@ -67,8 +82,16 @@ export class UserState {
     this.openModal();
   }
 
+  @Action(CloseOrderModalAction)
+  closeOrderModalAction(ctx: StateContext<UserStateModel>, action: CloseOrderModalAction) {
+    this.closeModal();
+  }
+
   @Action(UserSetProModeAction)
   userSetProModeAction(ctx: StateContext<UserStateModel>, action: UserSetProModeAction) {
+    if (action.payload.pro) {
+      this.closeModal();
+    }
     ctx.patchState({
       pro: action.payload.pro,
     });
@@ -105,7 +128,7 @@ export class UserState {
   @Action(SetUserAction)
   setUserAction(ctx: StateContext<UserStateModel>, action: SetUserAction) {
     ctx.patchState({
-      ...action.payload.user
+      ...action.payload.user,
     });
   }
 

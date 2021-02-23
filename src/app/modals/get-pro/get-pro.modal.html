@@ -17,6 +17,7 @@
 
       <h1 class="taba">Fretboard Learning</h1>
 
+
       <div class="card" *ngIf="product?.valid" (click)="orderProMode(product)">
         <div class="title ">
           {{ product.title }}
@@ -29,6 +30,20 @@
         <div class="price">{{ product.price }} <small>per {{ product.billingPeriodUnit }}</small></div>
       </div>
 
+      <!--<ul>
+        <li>
+          Unlimited number of games
+        </li>
+        <li>
+          Fretboard heatmaps
+        </li>
+        <li>
+          Left handed mode
+        </li>
+        <li>
+          Custom tunings
+        </li>
+      </ul>-->
 
       <hr>
       <br>
@@ -50,7 +65,7 @@
         <br>
         toute partie non utilisée d'un essai gratuit éventuel expire avec l'achat d'un abonnement
         <br>
-        <ion-button color="fourth" fill="clear" expand="block" (click)="restore()"> Restore purchase</ion-button>
+        <ion-button color="fourth" fill="clear" (click)="restore()"> Restore purchase</ion-button>
       </div>
 
 

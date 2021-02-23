@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ModalController, NavController} from '@ionic/angular';
 import {Select, Store} from '@ngxs/store';
+import { OpenOrderModalAction } from '@shared-modules/store/user/user.actions';
+import { UserState, UserStateModel } from '@shared-modules/store/user/user.state';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {debounceTime, takeUntil, tap} from 'rxjs/operators';
 import {
@@ -23,6 +25,7 @@ import {SettingsState} from './store/settings.state';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsPage implements OnInit, OnDestroy {
+  @Select(UserState.getState) userState$: Observable<UserStateModel>;
   @Select(SettingsState.getCustomTunings) customTunnings$: Observable<string[]>;
   destroyed$ = new Subject();
   hideTuning$ = new BehaviorSubject(false);
@@ -167,5 +170,9 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   goToPrivacyPage() {
     this.navCtrl.navigateForward(['settings', 'privacy']);
+  }
+
+  openOrderModal() {
+    this.store.dispatch(new OpenOrderModalAction());
   }
 }
