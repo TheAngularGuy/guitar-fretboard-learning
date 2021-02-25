@@ -72,6 +72,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         this.isPro = isPro;
         if (!!isPro) {
           this.gameModes = [...GAME_MODES].filter(m => !m.promo);
+        } else {
+          this.gameModes = [...GAME_MODES];
         }
         this.cd.markForCheck();
       }),

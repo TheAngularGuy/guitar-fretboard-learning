@@ -114,7 +114,7 @@ export class IdentifySoundPage implements OnInit, AfterViewInit, OnDestroy {
     const frets = this.store.selectSnapshot(GameState.unlockedFretsSegment);
 
     this.game.initRound(notes, frets);
-    this.game.togglePlay();
+    requestAnimationFrame(() => this.game.togglePlay());
   }
 
   onNotePicked() {

@@ -1,9 +1,11 @@
-import {Injectable} from '@angular/core';
-import {IAPProduct, InAppPurchase2} from '@ionic-native/in-app-purchase-2/ngx';
-import {Store} from '@ngxs/store';
-import {environment} from '../../../../environments/environment';
-import {UserSetProModeAction} from '@shared-modules/store/user/user.actions';
-import {BehaviorSubject} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { IAPProduct, InAppPurchase2 } from '@ionic-native/in-app-purchase-2/ngx';
+import { Store } from '@ngxs/store';
+import { ReceiptValidatorService } from '@shared-modules/services/in-app-store/receipt-validator.service';
+import { catchError, first, tap } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
+import { UserSetProModeAction } from '@shared-modules/store/user/user.actions';
+import { BehaviorSubject } from 'rxjs';
 
 const DEBUG_PRODUCT: IAPProduct = {
   id: 'eee',
@@ -15,7 +17,7 @@ const DEBUG_PRODUCT: IAPProduct = {
 } as any;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class InAppStoreService {
   static PRODUCT_KEY = 'UNLOCK_ALL_FEATURES';
@@ -29,6 +31,7 @@ export class InAppStoreService {
   constructor(
     private readonly store: Store,
     private readonly iap: InAppPurchase2,
+    private readonly receiptValidator: ReceiptValidatorService,
   ) {
   }
 
@@ -42,12 +45,12 @@ export class InAppStoreService {
     this.iap.ready(() => {
       this.initDone = true;
     });
-    this.iap.refresh();
+    this.restore();
   }
 
   registerProducts() {
     if (!environment.production) {
-      this.iap.verbosity = this.iap.DEBUG;
+      // this.iap.verbosity = this.iap.DEBUG;
     }
 
     this.iap.register({
@@ -60,25 +63,57 @@ export class InAppStoreService {
   listenProductsChanges() {
     this.iap.when(InAppStoreService.PRODUCT_KEY).updated(() => {
       const product = this.iap.get(InAppStoreService.PRODUCT_KEY);
-      console.log({product});
       this.product$.next(product);
+
+      if (product.owned && product.valid) {
+        // console.log({ product });
+
+        this.store.dispatch(new UserSetProModeAction({ pro: true }));
+      } else {
+        this.store.dispatch(new UserSetProModeAction({ pro: false }));
+      }
     });
 
-    this.iap.when('product')
+    this.iap.when(InAppStoreService.PRODUCT_KEY)
       .approved((p: IAPProduct) => {
-        if (p.id === InAppStoreService.PRODUCT_KEY) {
-          console.log('go pro <--------------------------');
-        }
-        return p.verify();
-      })
+          if (p.id === InAppStoreService.PRODUCT_KEY) {
+
+            this.iap.validator = (product, callback) => {
+              console.log({ productToVerify: product });
+
+              if (typeof product === 'object' && product !== null) {
+                this.receiptValidator.verifyReceipt(product.transaction?.appStoreReceipt, product.id).pipe(
+                  first(),
+                  tap(valid => {
+                    if (valid) {
+                      callback(true, { productToVerify: product });
+                    } else {
+                      console.log('PURCHASE_EXPIRED <--------------------------');
+                      callback(false, {
+                        code: this.iap.PURCHASE_EXPIRED,
+                        error: { message: 'PURCHASE_EXPIRED' },
+                      });
+                    }
+                  }),
+                ).subscribe();
+
+              } else {
+                console.log('CONNECTION_FAILED <--------------------------');
+                callback(false, {
+                  code: this.iap.CONNECTION_FAILED,
+                  error: { message: 'CONNECTION_FAILED' },
+                });
+              }
+            };
+
+            p.verify();
+          }
+        },
+      )
       .verified((p: IAPProduct) => {
+        console.log('VERIFIED <--------------------------');
         return p.finish();
       });
-
-    this.iap.when(InAppStoreService.PRODUCT_KEY).owned((p: IAPProduct) => {
-      console.log('pro owned <----------------------------------------');
-      this.store.dispatch(new UserSetProModeAction({pro: true}));
-    });
   }
 
   order(p: IAPProduct) {

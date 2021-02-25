@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { SoundService } from '@shared-modules/services/sound/sound.service';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {takeUntil, tap} from 'rxjs/operators';
 import {Store} from '@ngxs/store';
@@ -25,7 +26,7 @@ export class MetronomePage implements OnInit, OnDestroy {
     return new Array(this.bpmForm?.get('beats')?.value).fill(null);
   }
 
-  constructor(private readonly store: Store) {
+  constructor(private readonly store: Store, private readonly soundService: SoundService) {
   }
 
   ngOnDestroy(): void {
@@ -88,6 +89,8 @@ export class MetronomePage implements OnInit, OnDestroy {
   }
 
   toggleMetronome() {
+    this.soundService.playClick(true);
+
     if (!!this.interval) {
       clearInterval(this.interval);
       this.interval = null;
