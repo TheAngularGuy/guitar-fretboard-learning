@@ -127,6 +127,12 @@ export class InAppStoreService {
         console.log('EXPIRED <--------------------------');
         location.reload(true);
       })
+      .cancelled((p: IAPProduct) => {
+        console.log('CANCELLED <--------------------------');
+        if (this.loading) {
+          this.loading.dismiss();
+        }
+      })
       .verified((p: IAPProduct) => {
         console.log('VERIFIED <--------------------------');
         return p.finish();
