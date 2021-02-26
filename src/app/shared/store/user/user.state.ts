@@ -23,7 +23,7 @@ export interface UserStateModel {
   defaults: {
     user: undefined,
 
-    pro: false,
+    pro: !false,
   },
 })
 export class UserState {

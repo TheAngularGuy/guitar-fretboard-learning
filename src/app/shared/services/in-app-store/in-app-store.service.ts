@@ -123,6 +123,10 @@ export class InAppStoreService {
           }
         },
       )
+      .expired((p: IAPProduct) => {
+        console.log('EXPIRED <--------------------------');
+        location.reload(true);
+      })
       .verified((p: IAPProduct) => {
         console.log('VERIFIED <--------------------------');
         return p.finish();
@@ -134,7 +138,7 @@ export class InAppStoreService {
       // Purshase in progress
       this.loadingController.create({
         message: 'Please wait...',
-        duration: 30000,
+        duration: 55555,
       }).then(l => {
         this.loading = l;
         this.loading.present();
