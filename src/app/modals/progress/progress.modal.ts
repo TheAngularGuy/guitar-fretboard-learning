@@ -164,7 +164,7 @@ export class ProgressModal implements OnInit, AfterViewInit, OnDestroy {
     clearInterval(this.interval);
     if (this.modalCtrl) {
       this.modalCtrl.dismiss();
-      this.sound.playClick();
+      // this.sound.playClick();
     }
   }
 

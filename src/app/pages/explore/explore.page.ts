@@ -1,6 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {NavController} from '@ionic/angular';
+import { Select, Store } from '@ngxs/store';
+import { OpenOrderModalAction } from '@shared-modules/store/user/user.actions';
+import { UserState, UserStateModel } from '@shared-modules/store/user/user.state';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-explore',
@@ -9,6 +13,7 @@ import {NavController} from '@ionic/angular';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExplorePage {
+  @Select(UserState.getState) userState$: Observable<UserStateModel>;
   gameModes = [
     {
       path: 'explore-notes',
@@ -35,6 +40,7 @@ export class ExplorePage {
   constructor(
     private readonly navCtrl: NavController,
     private readonly route: ActivatedRoute,
+    private readonly store: Store,
     ) {}
 
   onItemClicked(gameMode: { path: string }) {
@@ -43,5 +49,9 @@ export class ExplorePage {
         relativeTo: this.route,
       });
     }
+  }
+
+  openOrderModal() {
+    this.store.dispatch(new OpenOrderModalAction());
   }
 }

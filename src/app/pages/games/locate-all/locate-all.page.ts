@@ -1,5 +1,5 @@
 import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {IonContent, ToastController} from '@ionic/angular';
+import { AlertController, IonContent, ToastController } from '@ionic/angular';
 import {Store} from '@ngxs/store';
 import {SoundService} from '@shared-modules/services/sound/sound.service';
 import {
@@ -10,6 +10,8 @@ import {
   GoodNoteFound,
 } from '@shared-modules/store/game/game.actions';
 import {GameState} from '@shared-modules/store/game/game.state';
+import { OpenOrderModalAction } from '@shared-modules/store/user/user.actions';
+import { UserState } from '@shared-modules/store/user/user.state';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {popAnimation} from 'src/app/animations/pop.animation';
 import {slideAnimation} from 'src/app/animations/slide.animation';
@@ -49,6 +51,7 @@ export class LocateAllPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   constructor(
+    private readonly alertCtrl: AlertController,
     private readonly store: Store,
     private readonly cd: ChangeDetectorRef,
     public readonly utils: UtilsService,
@@ -225,10 +228,53 @@ export class LocateAllPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   start() {
+    if (!this.isGameAvailable) {
+      this.presentAlert();
+      return;
+    }
     const notes = this.store.selectSnapshot(GameState.unlockedNotesSegment);
     const frets = this.store.selectSnapshot(GameState.unlockedFretsSegment);
 
     this.game.initRound(notes, frets);
     this.game.togglePlay();
+  }
+
+  async presentAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Uh oh',
+      message: `You've reached the maximum number games for this week.`,
+      buttons: [
+        {
+          text: 'Close',
+          role: 'cancel',
+        }, {
+          text: 'Get Pro',
+          handler: () => {
+            this.store.dispatch(new OpenOrderModalAction());
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  get isGameAvailable() {
+    const isPro = this.store.selectSnapshot(UserState.getIsProModeUnlocked);
+    if (isPro) {
+      return true;
+    }
+    let sum = 0;
+    const date = new Date();
+    const diff = date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1);
+    const t1 = new Date(date.setDate(diff)).getTime();
+    const historic = this.store.selectSnapshot(GameState.getState).historic;
+    historic.forEach(h => {
+      if (h.date >= t1) {
+        sum++;
+      }
+    });
+    console.log({ sum });
+    return sum < 10;
   }
 }

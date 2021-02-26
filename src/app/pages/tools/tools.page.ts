@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {NavController} from '@ionic/angular';
+import { Select, Store } from '@ngxs/store';
 import {UtilsService} from '@shared-modules/services/utils/utils.service';
+import { OpenOrderModalAction } from '@shared-modules/store/user/user.actions';
+import { UserState, UserStateModel } from '@shared-modules/store/user/user.state';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tools',
@@ -9,6 +13,7 @@ import {UtilsService} from '@shared-modules/services/utils/utils.service';
   styleUrls: ['./tools.page.scss'],
 })
 export class ToolsPage {
+  @Select(UserState.getState) userState$: Observable<UserStateModel>;
   gameModes = [
     {
       path: 'metronome',
@@ -39,6 +44,7 @@ export class ToolsPage {
   constructor(
     private readonly navCtrl: NavController,
     private readonly route: ActivatedRoute,
+    private readonly store: Store,
   ) {}
 
   onItemClicked(gameMode: { path: string }) {
@@ -47,5 +53,9 @@ export class ToolsPage {
         relativeTo: this.route,
       });
     }
+  }
+
+  openOrderModal() {
+    this.store.dispatch(new OpenOrderModalAction());
   }
 }

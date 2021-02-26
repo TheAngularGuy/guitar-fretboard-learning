@@ -21,6 +21,7 @@
   font-family: 'Tabasco', sans-serif;
   font-size: 1.8rem;
   letter-spacing: 3px;
+  position: relative;
 
   color: transparent;
   background: linear-gradient(to left top,
@@ -34,6 +35,16 @@
   &:first-letter {
     // color: var(--ion-color-primary);
     font-size: 2.7rem;
+  }
+
+  .pro {
+    position: absolute;
+    top: -3px; right: -3px;
+    z-index: 1;
+    color: var(--ion-color-fourth);
+    font-size: .8rem;
+    padding: 3px 3px 3px 5px;
+    border-radius: 5px;
   }
 }
 

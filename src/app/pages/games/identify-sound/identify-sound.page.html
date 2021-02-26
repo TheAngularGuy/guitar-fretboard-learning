@@ -37,16 +37,16 @@
 
     <ion-card-content class="game-mode">
       <p class="game-mode-result">
-        <ng-container *ngIf="!scoreHistoric || !scoreHistoric.length">
-          Press the button to start playing
+        <ng-container *ngIf="scoreHistoric?.length !== game.gameConfig.MAX_RANGE; else alreadyPlayedOneTime">
+          Press the start button to begin
         </ng-container>
-        <ng-container *ngIf="scoreHistoric && scoreHistoric.length">
+        <ng-template #alreadyPlayedOneTime>
           <span class="result n{{game.score.good}}">
             <b>{{ game.score.good }}</b> out of {{ scoreHistoric?.length }}
           </span>
           <br>
           <small><b>{{ averageTime | number }}</b> seconds per note.</small>
-        </ng-container>
+        </ng-template>
       </p>
     </ion-card-content>
   </ion-card>

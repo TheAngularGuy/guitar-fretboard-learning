@@ -22,8 +22,8 @@ export class SoundService {
     this.audioContext = new AudioContext();
   }
 
-  playClick() {
-    if (!this.preferences.activateSound) {
+  playClick(force?: boolean) {
+    if (!this.preferences.activateSound && !force) {
       return;
     }
     const audio = new Audio('assets/sounds/click.mp3');

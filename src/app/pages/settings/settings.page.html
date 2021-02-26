@@ -1,113 +1,120 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Settings</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ng-container *ngIf="userState$ | async as userState">
 
-<ion-content>
-  <form [formGroup]="settingsForm">
-    <ion-list>
-      <ion-list-header>
-        <ion-label>Preferences</ion-label>
-      </ion-list-header>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Settings</ion-title>
+      <ion-buttons slot="end">
+        <ion-button color="fourth" (click)="openOrderModal()" *ngIf="!userState.pro">
+          Get pro
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
-      <ion-item>
-        <ion-label>Activate sound</ion-label>
-        <ion-toggle formControlName="activateSound" color="tertiary"></ion-toggle>
-      </ion-item>
+  <ion-content>
+    <form [formGroup]="settingsForm">
+      <ion-list>
+        <ion-list-header>
+          <ion-label>Preferences</ion-label>
+        </ion-list-header>
 
-      <ion-item class="hide-on-desktop">
-        <ion-label>Left Handed (inverting strings order)</ion-label>
-        <ion-toggle formControlName="invertedStrings" color="tertiary"></ion-toggle>
-      </ion-item>
-      <ion-item class="hide-on-mobile">
-        <ion-label>Left Handed (invert the frets order)</ion-label>
-        <ion-toggle formControlName="invertedFrets" color="tertiary"></ion-toggle>
-      </ion-item>
+        <ion-item>
+          <ion-label>Activate sound</ion-label>
+          <ion-toggle formControlName="activateSound" color="tertiary"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>Use flats instead of sharps</ion-label>
+          <ion-toggle formControlName="useFlats" color="tertiary"></ion-toggle>
+        </ion-item>
 
-      <ion-item>
-        <ion-label>Use flats instead of sharps</ion-label>
-        <ion-toggle formControlName="useFlats" color="tertiary"></ion-toggle>
-      </ion-item>
+        <ion-item class="hide-on-desktop" [disabled]="!userState.pro">
+          <ion-label>Left Handed (inverting strings order)</ion-label>
+          <ion-toggle formControlName="invertedStrings" color="tertiary"></ion-toggle>
+        </ion-item>
+        <ion-item class="hide-on-mobile" [disabled]="!userState.pro">
+          <ion-label>Left Handed (invert the frets order)</ion-label>
+          <ion-toggle formControlName="invertedFrets" color="tertiary"></ion-toggle>
+        </ion-item>
 
-      <ion-item>
-        <ion-label>Notation</ion-label>
-        <ion-select formControlName="notation">
-          <ion-select-option value="english">
-            <span> C,D,E,F,G,A,B </span>
-          </ion-select-option>
-          <ion-select-option value="german">
-            <span> C,D,E,F,G,A,H </span>
-          </ion-select-option>
-          <ion-select-option value="latin">
-            <span> do,ré,mi,fa,sol,la,si </span>
-          </ion-select-option>
-          <ion-select-option value="byzantine">
-            <span> Ni,Pa,Vu,Ga,Di,Ke,Zo </span>
-          </ion-select-option>
-          <ion-select-option value="japanese">
-            <span> ハ,ニ,ホ,ヘ,ト,イ,ロ </span>
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-list>
-
-
-    <ion-list>
-      <ion-list-header>
-        <ion-label>Tuning</ion-label>
-      </ion-list-header>
-
-      <ion-item>
-        <ion-label>Choose your tuning</ion-label>
-        <ion-select formControlName="tuning" *ngIf="!(this.hideTuning$ | async)">
-          <ng-container *ngIf="customTunnings$ | async as cts">
-            <ion-select-option *ngFor="let customTuning of cts"
-                               [value]="customTuning">
-              <span>{{customTuning | tuning:preferences?.notation:preferences?.useFlats:isLeftHanded}}</span>
+        <ion-item [disabled]="!userState.pro">
+          <ion-label>Notation</ion-label>
+          <ion-select formControlName="notation">
+            <ion-select-option value="english">
+              <span> C,D,E,F,G,A,B </span>
             </ion-select-option>
-          </ng-container>
-          <ion-select-option value="Standard">
-            <span>Standard</span>
-          </ion-select-option>
-          <ion-select-option *ngFor="let tuning of tunings" [value]="tuning">
-            <span>{{tuning | tuning:preferences?.notation:preferences?.useFlats:isLeftHanded}}</span>
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item button (click)="goToCustomSettingsPage()">
+            <ion-select-option value="german">
+              <span> C,D,E,F,G,A,H </span>
+            </ion-select-option>
+            <ion-select-option value="latin">
+              <span> do,ré,mi,fa,sol,la,si </span>
+            </ion-select-option>
+            <ion-select-option value="byzantine">
+              <span> Ni,Pa,Vu,Ga,Di,Ke,Zo </span>
+            </ion-select-option>
+            <ion-select-option value="japanese">
+              <span> ハ,ニ,ホ,ヘ,ト,イ,ロ </span>
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+
+
+      <ion-list>
+        <ion-list-header>
+          <ion-label>Tuning</ion-label>
+        </ion-list-header>
+
+        <ion-item [disabled]="!userState.pro">
+          <ion-label>Choose your tuning</ion-label>
+          <ion-select formControlName="tuning" *ngIf="!(this.hideTuning$ | async)">
+            <ng-container *ngIf="customTunnings$ | async as cts">
+              <ion-select-option *ngFor="let customTuning of cts"
+                                 [value]="customTuning">
+                <span>{{customTuning | tuning:preferences?.notation:preferences?.useFlats:isLeftHanded}}</span>
+              </ion-select-option>
+            </ng-container>
+            <ion-select-option value="Standard">
+              <span>Standard</span>
+            </ion-select-option>
+            <ion-select-option *ngFor="let tuning of tunings" [value]="tuning">
+              <span>{{tuning | tuning:preferences?.notation:preferences?.useFlats:isLeftHanded}}</span>
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item button [disabled]="!userState.pro" (click)="goToCustomSettingsPage()">
+          <ion-label>
+            Didn't find the tuning you were looking for?
+            Click here to add your own custom tunings
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </form>
+
+    <ion-list>
+      <ion-list-header>
+        <ion-label>Privacy</ion-label>
+      </ion-list-header>
+
+      <ion-item button (click)="goToPrivacyPage()">
         <ion-label>
-          Didn't find the tuning you were looking for?
-          Click here to add your own custom tunings
+          Read more about our privacy policy
         </ion-label>
       </ion-item>
     </ion-list>
-  </form>
 
-  <ion-list>
-    <ion-list-header>
-      <ion-label>Privacy</ion-label>
-    </ion-list-header>
+    <ion-list>
+      <ion-list-header>
+        <ion-label>About</ion-label>
+      </ion-list-header>
 
-    <ion-item button (click)="goToPrivacyPage()">
-      <ion-label>
-        Read more about our privacy policy
-      </ion-label>
-    </ion-item>
-  </ion-list>
+      <ion-item button (click)="goToAboutPage()">
+        <ion-label>
+          See more
+        </ion-label>
+      </ion-item>
+    </ion-list>
 
-  <ion-list>
-    <ion-list-header>
-      <ion-label>About</ion-label>
-    </ion-list-header>
-
-    <ion-item button (click)="goToAboutPage()">
-      <ion-label>
-        See more
-      </ion-label>
-    </ion-item>
-  </ion-list>
-
-  <br/>
-  <br/>
-</ion-content>
+    <br/>
+    <br/>
+  </ion-content>
+</ng-container>

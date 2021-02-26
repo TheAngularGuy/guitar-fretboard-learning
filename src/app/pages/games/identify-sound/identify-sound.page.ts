@@ -1,6 +1,6 @@
 import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {GameMode} from '@classes/game-mode.class';
-import {IonButton, IonContent} from '@ionic/angular';
+import { AlertController, IonButton, IonContent } from '@ionic/angular';
 import {Note} from '@models/note.model';
 import {Store} from '@ngxs/store';
 import {FretboardManipulationService} from '@shared-modules/services/fretboard-manipulation/fretboard-manipulation.service';
@@ -9,6 +9,8 @@ import {UtilsService} from '@shared-modules/services/utils/utils.service';
 import {BadNoteFound, GameComplete, GameStart, GameStop, GoodNoteFound,} from '@shared-modules/store/game/game.actions';
 import {GameState} from '@shared-modules/store/game/game.state';
 import {PreferencesState, PreferencesStateModel} from '@shared-modules/store/preferences/preferences.state';
+import { OpenOrderModalAction } from '@shared-modules/store/user/user.actions';
+import { UserState } from '@shared-modules/store/user/user.state';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {popAnimation} from '../../../animations/pop.animation';
 import {slideAnimation} from '../../../animations/slide.animation';
@@ -39,6 +41,7 @@ export class IdentifySoundPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   constructor(
+    private readonly alertCtrl: AlertController,
     private readonly store: Store,
     private readonly cd: ChangeDetectorRef,
     public readonly utils: UtilsService,
@@ -103,11 +106,15 @@ export class IdentifySoundPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   start() {
+    if (!this.isGameAvailable) {
+      this.presentAlert();
+      return;
+    }
     const notes = this.store.selectSnapshot(GameState.unlockedNotesSegment);
     const frets = this.store.selectSnapshot(GameState.unlockedFretsSegment);
 
     this.game.initRound(notes, frets);
-    this.game.togglePlay();
+    requestAnimationFrame(() => this.game.togglePlay());
   }
 
   onNotePicked() {
@@ -155,4 +162,42 @@ export class IdentifySoundPage implements OnInit, AfterViewInit, OnDestroy {
     return bool;
   }
 
+  async presentAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Uh oh',
+      message: `You've reached the maximum number games for this week.`,
+      buttons: [
+        {
+          text: 'Close',
+          role: 'cancel',
+        }, {
+          text: 'Get Pro',
+          handler: () => {
+            this.store.dispatch(new OpenOrderModalAction());
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  get isGameAvailable() {
+    const isPro = this.store.selectSnapshot(UserState.getIsProModeUnlocked);
+    if (isPro) {
+      return true;
+    }
+    let sum = 0;
+    const date = new Date();
+    const diff = date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1);
+    const t1 = new Date(date.setDate(diff)).getTime();
+    const historic = this.store.selectSnapshot(GameState.getState).historic;
+    historic.forEach(h => {
+      if (h.date >= t1) {
+        sum++;
+      }
+    });
+    console.log({ sum });
+    return sum < 10;
+  }
 }
