@@ -12,7 +12,7 @@ export class AuthGuardService implements CanActivate {
   canActivate(): boolean {
     const state = this.store.selectSnapshot(UserState.getState);
     console.log({state});
-    if (!state.uid) {
+    if (!state.user) {
       this.router.navigate(['profile', 'login']);
       return false;
     }

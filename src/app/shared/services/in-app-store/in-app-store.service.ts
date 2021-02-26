@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IAPProduct, InAppPurchase2 } from '@ionic-native/in-app-purchase-2/ngx';
+import { LoadingController } from '@ionic/angular';
 import { Store } from '@ngxs/store';
 import { ReceiptValidatorService } from '@shared-modules/services/in-app-store/receipt-validator.service';
 import { catchError, first, tap } from 'rxjs/operators';
@@ -24,6 +25,8 @@ export class InAppStoreService {
   private product$ = new BehaviorSubject<IAPProduct>(DEBUG_PRODUCT);
   private initDone: boolean;
 
+  loading: HTMLIonLoadingElement;
+
   get productObservable$() {
     return this.product$;
   }
@@ -31,6 +34,7 @@ export class InAppStoreService {
   constructor(
     private readonly store: Store,
     private readonly iap: InAppPurchase2,
+    private readonly loadingController: LoadingController,
     private readonly receiptValidator: ReceiptValidatorService,
   ) {
   }
@@ -67,9 +71,10 @@ export class InAppStoreService {
 
       if (product.owned && product.valid) {
         // console.log({ product });
-
+        console.log('GO_PRO <--------------------------');
         this.store.dispatch(new UserSetProModeAction({ pro: true }));
       } else {
+        console.log('GO_FREE <--------------------------');
         this.store.dispatch(new UserSetProModeAction({ pro: false }));
       }
     });
@@ -85,6 +90,10 @@ export class InAppStoreService {
                 this.receiptValidator.verifyReceipt(product.transaction?.appStoreReceipt, product.id).pipe(
                   first(),
                   tap(valid => {
+                    if (this.loading) {
+                      this.loading.dismiss();
+                    }
+
                     if (valid) {
                       callback(true, { productToVerify: product });
                     } else {
@@ -98,6 +107,10 @@ export class InAppStoreService {
                 ).subscribe();
 
               } else {
+                if (this.loading) {
+                  this.loading.dismiss();
+                }
+
                 console.log('CONNECTION_FAILED <--------------------------');
                 callback(false, {
                   code: this.iap.CONNECTION_FAILED,
@@ -119,6 +132,13 @@ export class InAppStoreService {
   order(p: IAPProduct) {
     this.iap.order(p).then(() => {
       // Purshase in progress
+      this.loadingController.create({
+        message: 'Please wait...',
+        duration: 30000,
+      }).then(l => {
+        this.loading = l;
+        this.loading.present();
+      });
     }, err => {
       console.error(err);
     });

@@ -23,7 +23,7 @@ export class LoginPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.store.select(UserState.getState).pipe(
-      filter(user => !!user.uid),
+      filter(user => !!user.user),
       tap(user => {
         this.router.navigate(['profile']);
       }),

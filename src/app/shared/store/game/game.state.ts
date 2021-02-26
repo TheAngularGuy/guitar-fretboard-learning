@@ -1,3 +1,4 @@
+import { InAppReview } from '@ionic-native/in-app-review/ngx';
 import {Note} from '@models/note.model';
 import {Action, Selector, State, StateContext} from '@ngxs/store';
 import {UtilsService} from '@shared-modules/services/utils/utils.service';
@@ -82,6 +83,7 @@ export class GameState {
 
   constructor(
     private readonly modalCtrl: ModalController,
+    private readonly inAppReview: InAppReview,
   ) {
   }
 
@@ -235,6 +237,7 @@ export class GameState {
     this.openProgressModal({
       previous: state.globalPoints,
       current: state.currentSession.globalPoints,
+      historic: state.historic
     });
     ctx.patchState({
       scoreByTunings,
@@ -309,7 +312,7 @@ export class GameState {
     });
   }
 
-  private async openProgressModal(lastCompletedGame: { previous: number, current: number }) {
+  private async openProgressModal(lastCompletedGame: { previous: number, current: number; historic: Progression[] }) {
     const modal = await this.modalCtrl.create({
       component: ProgressModal,
       animated: true,
@@ -319,6 +322,11 @@ export class GameState {
         current: lastCompletedGame.current,
         previous: lastCompletedGame.previous,
       },
+    });
+    modal.onDidDismiss().then(() => {
+      if (lastCompletedGame.historic.length % 9 === 0) {
+        this.inAppReview.requestReview().then(res => console.log({ reviewed: res }));
+      }
     });
     return modal.present();
   }

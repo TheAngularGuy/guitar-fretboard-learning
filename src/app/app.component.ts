@@ -1,19 +1,18 @@
-import {AfterViewInit, Component, HostListener} from '@angular/core';
-import {SwUpdate} from '@angular/service-worker';
-import {SplashScreen} from '@ionic-native/splash-screen/ngx';
-import {StatusBar} from '@ionic-native/status-bar/ngx';
-import {Platform, ToastController} from '@ionic/angular';
-import {Select, Store} from '@ngxs/store';
-import {GameState} from '@shared-modules/store/game/game.state';
-import {Observable} from 'rxjs';
-import {PreferencesState} from '@shared-modules/store/preferences/preferences.state';
+import { AfterViewInit, Component, HostListener } from '@angular/core';
+import { SwUpdate } from '@angular/service-worker';
+import { Device } from '@ionic-native/device/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Platform, ToastController } from '@ionic/angular';
+import { Select, Store } from '@ngxs/store';
+import { InAppStoreService } from '@shared-modules/services/in-app-store/in-app-store.service';
+import { GameState } from '@shared-modules/store/game/game.state';
 import {
   PreferencesSetInvertedFretsModeAction,
-  PreferencesSetInvertedStringsModeAction
+  PreferencesSetInvertedStringsModeAction,
 } from '@shared-modules/store/preferences/preferences.actions';
-import {Device} from '@ionic-native/device/ngx';
-import {AngularFireAuth} from '@angular/fire/auth';
-import {InAppStoreService} from '@shared-modules/services/in-app-store/in-app-store.service';
+import { PreferencesState } from '@shared-modules/store/preferences/preferences.state';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -23,11 +22,11 @@ import {InAppStoreService} from '@shared-modules/services/in-app-store/in-app-st
 export class AppComponent implements AfterViewInit {
   @Select(GameState.isPlaying) isUserPlaying$: Observable<boolean>;
   morePages = [
-    {title: 'Settings', url: 'settings', svg: 'settings'},
-    {title: 'Tools', url: 'tools', svg: 'tools'},
-    {title: 'Games', url: 'games', svg: 'games'},
-    {title: 'Explore', url: 'explore', svg: 'explore'},
-    {title: 'Profile', url: 'profile', svg: 'user'},
+    { title: 'Settings', url: 'settings', svg: 'settings' },
+    { title: 'Tools', url: 'tools', svg: 'tools' },
+    { title: 'Games', url: 'games', svg: 'games' },
+    { title: 'Explore', url: 'explore', svg: 'explore' },
+    { title: 'Profile', url: 'profile', svg: 'user' },
   ];
   // icons set: https://www.flaticon.com/packs/seo-55
   // https://www.flaticon.com/packs/business-148
@@ -44,13 +43,13 @@ export class AppComponent implements AfterViewInit {
     }
     if (this.lastWidthRegistred <= 760 && currentWidth > 760) { // mobile to tablet
       if (preferences.invertedStrings) {
-        this.store.dispatch(new PreferencesSetInvertedStringsModeAction({invertedStrings: false}));
-        this.store.dispatch(new PreferencesSetInvertedFretsModeAction({invertedFrets: true}));
+        this.store.dispatch(new PreferencesSetInvertedStringsModeAction({ invertedStrings: false }));
+        this.store.dispatch(new PreferencesSetInvertedFretsModeAction({ invertedFrets: true }));
       }
     } else if (this.lastWidthRegistred > 760 && currentWidth <= 760) { // tablet to mobile
       if (preferences.invertedFrets) {
-        this.store.dispatch(new PreferencesSetInvertedFretsModeAction({invertedFrets: false}));
-        this.store.dispatch(new PreferencesSetInvertedStringsModeAction({invertedStrings: true}));
+        this.store.dispatch(new PreferencesSetInvertedFretsModeAction({ invertedFrets: false }));
+        this.store.dispatch(new PreferencesSetInvertedStringsModeAction({ invertedStrings: true }));
       }
     }
     this.lastWidthRegistred = currentWidth;
@@ -65,7 +64,6 @@ export class AppComponent implements AfterViewInit {
     private readonly toastController: ToastController,
     private readonly device: Device,
     private readonly iapService: InAppStoreService,
-    private readonly firebaseauth: AngularFireAuth,
   ) {
     this.initializeApp();
   }
@@ -80,7 +78,6 @@ export class AppComponent implements AfterViewInit {
       this.statusBar.backgroundColorByHexString('#40413e');
       this.splashScreen.hide();
       this.checkSWVersion();
-      // this.listenToLogIn();
 
       this.iapService.init();
     });
@@ -114,21 +111,4 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-  /*listenToLogIn() {
-  this.firebaseauth.authState.pipe(
-    filter(user => !!user && !!user.uid),
-    tap(usr => {
-      console.log({usr});
-      this.store.dispatch(new SetUserAction({
-        user: {
-          uid: usr.uid,
-          displayName: usr.displayName,
-          email: usr.email,
-          emailVerified: usr.emailVerified,
-          photoURL: usr.photoURL,
-        }
-      }));
-    }),
-  ).subscribe();
-}*/
 }
