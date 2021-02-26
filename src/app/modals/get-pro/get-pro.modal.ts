@@ -26,6 +26,7 @@ export class GetProModal implements OnInit {
 
   ngOnInit() {
     this.product$ = this.iapService.productObservable$;
+    this.iapService.restore();
   }
 
   orderProMode(product: IAPProduct) {
