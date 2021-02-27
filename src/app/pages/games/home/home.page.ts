@@ -46,6 +46,15 @@ const GAME_MODES = [
   },
 ];
 
+const PRACTICE_MODES = [
+  {
+    path: 'practice',
+    img: 'assets/imgs/board.svg',
+    title: 'Practice an area',
+    subtitle: `Choose the notes you want to practice and the area of the fretboard you want to focus on`,
+  },
+];
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -57,6 +66,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   destroyed$ = new Subject();
   showShadow$ = new BehaviorSubject(false);
   gameModes = GAME_MODES;
+  practiceModes = PRACTICE_MODES;
   isPro: boolean;
 
   constructor(private navCtrl: NavController, private store: Store, private cd: ChangeDetectorRef) {

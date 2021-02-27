@@ -5,15 +5,14 @@ import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-profile',
-  templateUrl: './profile.page.html',
-  styleUrls: ['./profile.page.scss'],
+  template: `<ion-router-outlet></ion-router-outlet>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfilePage implements OnInit, OnDestroy {
   destroyed$ = new Subject();
 
 
-  constructor(private store: Store, private router: Router) {
+  constructor() {
   }
 
   ngOnDestroy() {

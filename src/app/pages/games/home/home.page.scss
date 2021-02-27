@@ -5,13 +5,16 @@
   background: var(--ion-background-color);
   z-index: 1;
 }
+
 .ios .top ion-card {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
 .placeholder {
   min-height: 105px;
 }
+
 .shadow {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
 }
@@ -39,7 +42,8 @@
 
   .pro {
     position: absolute;
-    top: -3px; right: -3px;
+    top: -3px;
+    right: -3px;
     z-index: 1;
     color: var(--ion-color-fourth);
     font-size: .8rem;
@@ -69,4 +73,13 @@
 
 .page {
   padding-top: 0;
+}
+
+.practice {
+  margin-top: -1rem;
+
+  h1 {
+    text-align: start;
+    padding: 0 calc(1rem + 3px);
+  }
 }

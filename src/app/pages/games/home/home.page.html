@@ -4,19 +4,30 @@
 </ion-header>
 
 <ion-content [scrollEvents]="true" (ionScroll)="onScroll($event)">
-  <div class="top" [class.shadow]="showShadow$ | async">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title class="title">
-          Fretboard learning
-          <span class="pro" *ngIf="isPro">Pro</span>
-        </ion-card-title>
-      </ion-card-header>
-    </ion-card>
-  </div>
-  <div class="placeholder"></div>
+  <ng-container>
+    <div class="top" [class.shadow]="showShadow$ | async">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title class="title">
+            Fretboard learning
+            <span class="pro" *ngIf="isPro">Pro</span>
+          </ion-card-title>
+        </ion-card-header>
+      </ion-card>
+    </div>
+    <div class="placeholder"></div>
+  </ng-container>
 
   <div class="page">
     <app-list [list]="gameModes" (itemClick)="goTo($event)"></app-list>
   </div>
+
+  <div class="practice">
+    <div class="page">
+      <h1>Practice</h1>
+
+      <app-list [list]="practiceModes" (itemClick)="goTo($event)"></app-list>
+    </div>
+  </div>
+
 </ion-content>

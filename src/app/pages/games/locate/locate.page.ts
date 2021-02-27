@@ -1,17 +1,11 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import { AlertController, IonContent } from '@ionic/angular';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AlertController, IonContent} from '@ionic/angular';
 import {Store} from '@ngxs/store';
 import {SoundService} from '@shared-modules/services/sound/sound.service';
-import {
-  BadNoteFound,
-  GameComplete,
-  GameStart,
-  GameStop,
-  GoodNoteFound,
-} from '@shared-modules/store/game/game.actions';
+import {BadNoteFound, GameComplete, GameStart, GameStop, GoodNoteFound,} from '@shared-modules/store/game/game.actions';
 import {GameState} from '@shared-modules/store/game/game.state';
-import { OpenOrderModalAction } from '@shared-modules/store/user/user.actions';
-import { UserState } from '@shared-modules/store/user/user.state';
+import {OpenOrderModalAction} from '@shared-modules/store/user/user.actions';
+import {UserState} from '@shared-modules/store/user/user.state';
 import {Subject} from 'rxjs';
 import {popAnimation} from 'src/app/animations/pop.animation';
 import {slideAnimation} from 'src/app/animations/slide.animation';
