@@ -27,6 +27,11 @@
           <ion-toggle formControlName="useFlats" color="tertiary"></ion-toggle>
         </ion-item>
 
+
+        <ion-list-header *ngIf="!userState.pro">
+          <ion-label>In the pro version</ion-label>
+        </ion-list-header>
+
         <ion-item class="hide-on-desktop" [disabled]="!userState.pro">
           <ion-label>Left Handed (inverting strings order)</ion-label>
           <ion-toggle formControlName="invertedStrings" color="tertiary"></ion-toggle>
@@ -56,14 +61,8 @@
             </ion-select-option>
           </ion-select>
         </ion-item>
-      </ion-list>
 
-
-      <ion-list>
-        <ion-list-header>
-          <ion-label>Tuning</ion-label>
-        </ion-list-header>
-
+        <br>
         <ion-item [disabled]="!userState.pro">
           <ion-label>Choose your tuning</ion-label>
           <ion-select formControlName="tuning" *ngIf="!(this.hideTuning$ | async)">
@@ -87,17 +86,24 @@
             Click here to add your own custom tunings
           </ion-label>
         </ion-item>
+
       </ion-list>
     </form>
 
     <ion-list>
       <ion-list-header>
-        <ion-label>Privacy</ion-label>
+        <ion-label>Privacy & Terms of Use</ion-label>
       </ion-list-header>
 
       <ion-item button (click)="goToPrivacyPage()">
         <ion-label>
-          Read more about our privacy policy
+          Privacy Policy
+        </ion-label>
+      </ion-item>
+
+      <ion-item button (click)="goToTerms()">
+        <ion-label>
+          Terms of Use
         </ion-label>
       </ion-item>
     </ion-list>
@@ -107,9 +113,27 @@
         <ion-label>About</ion-label>
       </ion-list-header>
 
+      <ion-item button (click)="goToTwitterFL()">
+        <ion-label>
+          Follow us on twitter
+        </ion-label>
+        <ion-icon name="logo-twitter" slot="end"></ion-icon>
+      </ion-item>
+      <ion-item button (click)="goToRatePage()" *ngIf="utils.isIOS">
+        <ion-label>
+          Rate the app
+        </ion-label>
+        <ion-icon name="logo-apple-appstore" slot="end"></ion-icon>
+      </ion-item>
+      <ion-item button (click)="goToRatePage()" *ngIf="utils.isAndroid">
+        <ion-label>
+          Rate the app
+        </ion-label>
+        <ion-icon name="logo-google-playstore" slot="end"></ion-icon>
+      </ion-item>
       <ion-item button (click)="goToAboutPage()">
         <ion-label>
-          See more
+          See more about Fretboard Learning
         </ion-label>
       </ion-item>
     </ion-list>

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { UtilsService } from '@shared-modules/services/utils/utils.service';
 
 import { environment } from '../../../../../environments/environment';
 
@@ -16,19 +17,14 @@ export class AboutPage implements OnInit {
   ngOnInit() {}
 
   goLinkedIn() {
-    this.openLink('https://www.linkedin.com/in/mustapha-aouas-7918a214b/');
+    UtilsService.openLink('https://www.linkedin.com/in/mustapha-aouas-7918a214b/');
   }
 
   goGithub() {
-    this.openLink('https://github.com/TheAngularGuy/guitar-fretboard-learning');
+    UtilsService.openLink('https://github.com/TheAngularGuy/guitar-fretboard-learning');
   }
 
   goTwitter() {
-    this.openLink('https://twitter.com/TheAngularGuy');
-  }
-
-  openLink(url: string) {
-    const win = window.open(url, '_blank');
-    win.focus();
+    UtilsService.openLink('https://twitter.com/TheAngularGuy');
   }
 }

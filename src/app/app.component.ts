@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Platform, ToastController } from '@ionic/angular';
 import { Select, Store } from '@ngxs/store';
 import { InAppStoreService } from '@shared-modules/services/in-app-store/in-app-store.service';
+import { AnalyticsService } from '@shared-modules/services/mixpanel/analytics.service';
 import { GameState } from '@shared-modules/store/game/game.state';
 import {
   PreferencesSetInvertedFretsModeAction,
@@ -64,6 +65,7 @@ export class AppComponent implements AfterViewInit {
     private readonly toastController: ToastController,
     private readonly device: Device,
     private readonly iapService: InAppStoreService,
+    private readonly analyticsService: AnalyticsService,
   ) {
     this.initializeApp();
   }
@@ -79,6 +81,7 @@ export class AppComponent implements AfterViewInit {
       this.splashScreen.hide();
       this.checkSWVersion();
 
+      this.analyticsService.init();
       this.iapService.init();
     });
   }
@@ -111,4 +114,7 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
+  tabsChanged(e: { tab: string }) {
+    this.analyticsService.setCurrentScreen(e.tab);
+  }
 }

@@ -105,7 +105,7 @@ export class TunerPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   isIOS() {
-    UtilsService.isIOS();
+    // TODO
   }
 }
 

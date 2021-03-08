@@ -24,6 +24,7 @@ import { GetProModal } from './modals/get-pro/get-pro.modal';
 import { ProgressModal } from './modals/progress/progress.modal';
 import { PreferencesState } from './shared/store/preferences/preferences.state';
 import { UserState } from './shared/store/user/user.state';
+import { AnalyticsFirebase } from '@ionic-native/analytics-firebase/ngx';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { UserState } from './shared/store/user/user.state';
     LoadingController,
     InAppPurchase2,
     InAppReview,
+    AnalyticsFirebase,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent],

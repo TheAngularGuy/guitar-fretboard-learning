@@ -45,6 +45,33 @@
         This is a practice mode. You will not gain points.
       </p>
 
+      <form class="settings" [formGroup]="exploreForm">
+        <ion-item>
+          <ion-label>Notes</ion-label>
+          <ion-select multiple="true" formControlName="selectedNotes"
+                      (ionChange)="onSelectedNotes($event.detail.value)">
+            <ion-select-option *ngFor="let note of notes" [value]="note">
+              {{note | note:preferences?.notation:preferences?.useFlats}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>From fret number</ion-label>
+          <ion-select multiple="false" interface="popover" formControlName="fretStart"
+                      (ionChange)="onSelectedFretStart($event.detail.value)">
+            <ion-select-option *ngFor="let f of frets" [value]="f"> {{f}} </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>To fret number</ion-label>
+          <ion-select multiple="false" interface="popover" formControlName="fretEnd"
+                      (ionChange)="onSelectedFretEnd($event.detail.value)">
+            <ion-select-option *ngFor="let f of frets" [value]="f"> {{f}} </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </form>
+
       <p class="game-mode-result">
         <ng-container *ngIf="scoreHistoric?.length !== game.gameConfig.MAX_RANGE; else alreadyPlayedOneTime">
           Press the start button to begin

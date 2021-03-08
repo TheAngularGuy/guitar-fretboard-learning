@@ -1,25 +1,24 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CHORD_TYPES } from '@constants/chord-types.constant';
+import { ALL_CHORDS_HASH } from '@constants/chords/all-chords-hash.constant';
+import { CHROMATIC_SCALE } from '@constants/chromatic-scale.constant';
+import { FRETBOARD_STANDARD } from '@constants/fretboard-notes.constant';
+import { Chord, ChordType } from '@models/chord.model';
 import { Store } from '@ngxs/store';
-import { CHORD_TYPES } from 'src/app/constants/chord-types.constant';
-import { ALL_CHORDS_HASH } from 'src/app/constants/chords/all-chords-hash.constant';
-import { CHROMATIC_SCALE } from 'src/app/constants/chromatic-scale.constant';
-import { FRETBOARD_STANDARD } from 'src/app/constants/fretboard-notes.constant';
-import { Chord, ChordType } from 'src/app/models/chord.model';
-import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
-
 import { ExploreSetSelectedChordAction } from '@shared-modules/store/explore/explore.actions';
 import { ExploreState, ExploreStateModel } from '@shared-modules/store/explore/explore.state';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PreferencesState, PreferencesStateModel } from '@shared-modules/store/preferences/preferences.state';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-explore-chords',
-  templateUrl: './explore-chords.page.html',
-  styleUrls: ['./explore-chords.page.scss'],
+  selector: 'app-chord-circle-of-fifths',
+  templateUrl: './chord-circle-of-fifths.page.html',
+  styleUrls: ['./chord-circle-of-fifths.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExploreChordsPage implements OnInit, OnDestroy {
+export class ChordCircleOfFifthsPage implements OnInit, OnDestroy {
   destroyed$ = new Subject();
   dropDownOpen$ = new BehaviorSubject(true);
   fretboardNotes: string[][];

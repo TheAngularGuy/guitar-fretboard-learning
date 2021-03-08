@@ -1,6 +1,7 @@
 import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { AlertController, IonContent, ToastController } from '@ionic/angular';
 import {Store} from '@ngxs/store';
+import { AnalyticsService } from '@shared-modules/services/mixpanel/analytics.service';
 import {SoundService} from '@shared-modules/services/sound/sound.service';
 import {
   BadNoteFound,
@@ -58,6 +59,7 @@ export class LocateAllPage implements OnInit, AfterViewInit, OnDestroy {
     public readonly toastCtrl: ToastController,
     private readonly sound: SoundService,
     private readonly fretboardManipulationService: FretboardManipulationService,
+    private readonly analyticsService: AnalyticsService,
   ) {
   }
 
@@ -230,8 +232,10 @@ export class LocateAllPage implements OnInit, AfterViewInit, OnDestroy {
   start() {
     if (!this.isGameAvailable) {
       this.presentAlert();
+      this.analyticsService.logEvent('game', 'blocked_locateAll');
       return;
     }
+    this.analyticsService.logEvent('game', 'start_locateAll');
     const notes = this.store.selectSnapshot(GameState.unlockedNotesSegment);
     const frets = this.store.selectSnapshot(GameState.unlockedFretsSegment);
 

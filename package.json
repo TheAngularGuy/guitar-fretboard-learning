@@ -22,8 +22,9 @@
     "@angular/platform-browser-dynamic": "11.1.2",
     "@angular/router": "11.1.2",
     "@angular/service-worker": "11.1.2",
+    "@ionic-native/analytics-firebase": "^5.31.1",
     "@ionic-native/core": "5.31.1",
-    "@ionic-native/device": "5.31.1",
+    "@ionic-native/device": "^5.31.1",
     "@ionic-native/in-app-purchase-2": "^5.31.1",
     "@ionic-native/in-app-review": "^5.31.1",
     "@ionic-native/splash-screen": "5.31.1",
@@ -31,6 +32,7 @@
     "@ionic/angular": "5.5.3",
     "@ngxs/store": "3.7.1",
     "chart.js": "^2.9.4",
+    "cordova-android": "9.0.0",
     "cordova-ios": "6.2.0",
     "core-js": "3.6.4",
     "rxjs": "6.5.4",
@@ -57,6 +59,9 @@
     "cc.fovea.cordova.purchase": "^10.5.3",
     "codelyzer": "5.1.2",
     "com.omarben.inappreview": "0.0.6",
+    "cordova-annotated-plugin-android": "^1.0.4",
+    "cordova-play-services-version-adapter": "^1.1.0",
+    "cordova-plugin-analytics": "^2.0.0",
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
     "cordova-plugin-ionic-webview": "^4.2.1",
@@ -82,10 +87,12 @@
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-ionic-keyboard": {},
       "cc.fovea.cordova.purchase": {},
-      "com.omarben.inappreview": {}
+      "com.omarben.inappreview": {},
+      "cordova-plugin-analytics": {}
     },
     "platforms": [
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }

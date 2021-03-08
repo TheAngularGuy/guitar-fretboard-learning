@@ -57,3 +57,24 @@
   max-width: 950px;
   margin: auto;
 }
+
+.settings {
+  ion-item {
+    ion-input {
+      text-align: end;
+    }
+  }
+  @media screen and (min-width: 761px) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
+
+    ion-item {
+      width: 100%;
+
+      ion-input {
+        text-align: end;
+      }
+    }
+  }
+}

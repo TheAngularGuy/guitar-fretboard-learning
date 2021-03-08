@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {NavController} from '@ionic/angular';
 import { Select, Store } from '@ngxs/store';
+import { AnalyticsService } from '@shared-modules/services/mixpanel/analytics.service';
 import { OpenOrderModalAction } from '@shared-modules/store/user/user.actions';
 import { UserState, UserStateModel } from '@shared-modules/store/user/user.state';
 import { Observable } from 'rxjs';
@@ -41,6 +42,7 @@ export class ExplorePage {
     private readonly navCtrl: NavController,
     private readonly route: ActivatedRoute,
     private readonly store: Store,
+    private readonly analyticsService: AnalyticsService,
     ) {}
 
   onItemClicked(gameMode: { path: string }) {
@@ -48,6 +50,8 @@ export class ExplorePage {
       this.navCtrl.navigateForward([gameMode.path], {
         relativeTo: this.route,
       });
+
+      this.analyticsService.setCurrentScreen(gameMode.path);
     }
   }
 

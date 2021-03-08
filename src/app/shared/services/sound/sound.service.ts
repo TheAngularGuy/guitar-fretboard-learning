@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { PreferencesState, PreferencesStateModel } from '@shared-modules/store/preferences/preferences.state';
 import { tap } from 'rxjs/operators';
-import has = Reflect.has;
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +9,14 @@ import has = Reflect.has;
 export class SoundService {
   preferences: PreferencesStateModel;
   audioContext: AudioContext;
+
+  audioFiles = {
+    click: new Audio('assets/sounds/click.mp3'),
+    error: new Audio('assets/sounds/badstring.mp3'),
+    good: new Audio('assets/sounds/good.mp3'),
+    success: new Audio('assets/sounds/success.mp3'),
+    coins: new Audio('assets/sounds/coins.mp3'),
+  };
 
   constructor(private store: Store) {
     this.store.select<PreferencesStateModel>(PreferencesState.getState)
@@ -26,7 +33,7 @@ export class SoundService {
     if (!this.preferences.activateSound && !force) {
       return;
     }
-    const audio = new Audio('assets/sounds/click.mp3');
+    const audio = this.audioFiles.click;
     audio.play();
   }
 
@@ -34,7 +41,7 @@ export class SoundService {
     if (!this.preferences.activateSound) {
       return;
     }
-    const audio = new Audio('assets/sounds/badstring.mp3');
+    const audio = this.audioFiles.error;
     audio.play();
   }
 
@@ -42,7 +49,7 @@ export class SoundService {
     if (!this.preferences.activateSound) {
       return;
     }
-    const audio = new Audio('assets/sounds/good.mp3');
+    const audio = this.audioFiles.good;
     audio.play();
   }
 
@@ -50,7 +57,7 @@ export class SoundService {
     if (!this.preferences.activateSound) {
       return;
     }
-    const audio = new Audio('assets/sounds/success.mp3');
+    const audio = this.audioFiles.success;
     audio.play();
   }
 
@@ -58,7 +65,7 @@ export class SoundService {
     if (!this.preferences.activateSound) {
       return;
     }
-    const audio = new Audio('assets/sounds/coins.mp3');
+    const audio = this.audioFiles.coins;
     audio.play();
   }
 

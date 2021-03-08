@@ -3,6 +3,8 @@ import { IAPProduct, InAppPurchase2 } from '@ionic-native/in-app-purchase-2/ngx'
 import { LoadingController } from '@ionic/angular';
 import { Store } from '@ngxs/store';
 import { ReceiptValidatorService } from '@shared-modules/services/in-app-store/receipt-validator.service';
+import { AnalyticsService } from '@shared-modules/services/mixpanel/analytics.service';
+import { UtilsService } from '@shared-modules/services/utils/utils.service';
 import { catchError, first, tap } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { UserSetProModeAction } from '@shared-modules/store/user/user.actions';
@@ -21,7 +23,7 @@ const DEBUG_PRODUCT: IAPProduct = {
   providedIn: 'root',
 })
 export class InAppStoreService {
-  static PRODUCT_KEY = 'UNLOCK_ALL_FEATURES';
+  static PRODUCT_KEY = 'ALL_ACCESS_PACKAGE';
   private product$ = new BehaviorSubject<IAPProduct>(DEBUG_PRODUCT);
   private initDone: boolean;
 
@@ -36,11 +38,17 @@ export class InAppStoreService {
     private readonly iap: InAppPurchase2,
     private readonly loadingController: LoadingController,
     private readonly receiptValidator: ReceiptValidatorService,
+    private readonly analyticsService: AnalyticsService,
+    private readonly utils: UtilsService,
   ) {
   }
 
   init() {
     if (this.initDone) {
+      return;
+    }
+    if (!this.utils.isIOS && !this.utils.isAndroid) {
+      console.log('iap not initialised. No app detected.');
       return;
     }
     this.registerProducts();
@@ -140,6 +148,7 @@ export class InAppStoreService {
   }
 
   order(p: IAPProduct) {
+    this.analyticsService.logEvent('action', 'orderInit');
     this.iap.order(p).then(() => {
       // Purshase in progress
       this.loadingController.create({

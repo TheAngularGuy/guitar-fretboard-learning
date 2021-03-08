@@ -48,7 +48,7 @@
   </ion-split-pane>-->
   <ion-router-outlet id="main-content"></ion-router-outlet>
 
-  <ion-tabs>
+  <ion-tabs (ionTabsDidChange)="tabsChanged($event)">
     <ion-tab-bar style="height: 65px"
                  translucent="false"
                  slot="bottom"

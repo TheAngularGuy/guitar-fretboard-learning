@@ -18,7 +18,6 @@ import { ExploreChordsPage } from './explore-chords.page';
     FretboardModule,
     GlobalModule,
     ExploreChordsPageRoutingModule,
-    GlobalModule,
 
     NgxsModule.forFeature(),
   ],

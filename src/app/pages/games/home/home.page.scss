@@ -4,6 +4,8 @@
   position: fixed;
   background: var(--ion-background-color);
   z-index: 1;
+  transform: translateY(-3px);
+  padding: 3px;
 }
 
 .ios .top ion-card {
@@ -20,9 +22,10 @@
 }
 
 .title {
+  margin: auto;
   text-align: center;
   font-family: 'Tabasco', sans-serif;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   letter-spacing: 3px;
   position: relative;
 
@@ -43,7 +46,7 @@
   .pro {
     position: absolute;
     top: -3px;
-    right: -3px;
+    right: 3ch;
     z-index: 1;
     color: var(--ion-color-fourth);
     font-size: .8rem;

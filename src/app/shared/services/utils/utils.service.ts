@@ -1,12 +1,13 @@
-import {Injectable} from '@angular/core';
-import {Device} from '@ionic-native/device/ngx';
+import { Injectable } from '@angular/core';
+import { Device } from '@ionic-native/device/ngx';
+import { Platform } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UtilsService {
 
-  constructor(private device: Device) {
+  constructor(private device: Device, private platform: Platform) {
   }
 
   /**
@@ -52,44 +53,20 @@ export class UtilsService {
     return JSON.parse(JSON.stringify(ob));
   }
 
+  static openLink(url: string) {
+    const win = window.open(url, '_blank');
+    win.focus();
+  }
+
   /**
    * Returns true if app runs on IOS
    */
-  static isIOS(): boolean {
-    return /iPad|iPhone|iPod/.test(navigator.userAgent);
+  get isIOS(): boolean {
+    return this.platform.is('ios');
   }
 
-  isIphoneX() {
-    try {
-      const iphoneModel = (this.device || (window as any).device)?.model;
-      if (!iphoneModel) {
-        return UtilsService.isIOS();
-      }
-      const m = iphoneModel.match(/iPhone(\d+),?(\d+)?/);
-      const model = +m[1];
-
-      if (model >= 10) { // is iphone X
-        return true;
-      }
-    } catch (e) {
-    }
-
-    return false;
+  get isAndroid(): boolean {
+    return this.platform.is('android');
   }
 
-  /**
-   * Returns true if app is a PWA
-   */
-  isPWA(): boolean {
-    return window.matchMedia('(display-mode: standalone)').matches ||
-      (window.navigator as any).standalone ||
-      document.referrer.includes('android-app://');
-  }
-
-  /**
-   * Returns true if app is a PWA on IOS
-   */
-  isIOSPWA(): boolean {
-    return this.isIphoneX() && this.isPWA();
-  }
 }

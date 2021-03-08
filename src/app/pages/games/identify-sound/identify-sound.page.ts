@@ -4,6 +4,7 @@ import { AlertController, IonButton, IonContent } from '@ionic/angular';
 import {Note} from '@models/note.model';
 import {Store} from '@ngxs/store';
 import {FretboardManipulationService} from '@shared-modules/services/fretboard-manipulation/fretboard-manipulation.service';
+import { AnalyticsService } from '@shared-modules/services/mixpanel/analytics.service';
 import {SoundService} from '@shared-modules/services/sound/sound.service';
 import {UtilsService} from '@shared-modules/services/utils/utils.service';
 import {BadNoteFound, GameComplete, GameStart, GameStop, GoodNoteFound,} from '@shared-modules/store/game/game.actions';
@@ -47,6 +48,7 @@ export class IdentifySoundPage implements OnInit, AfterViewInit, OnDestroy {
     public readonly utils: UtilsService,
     private readonly sound: SoundService,
     private readonly fretboardManipulationService: FretboardManipulationService,
+    private readonly analyticsService: AnalyticsService,
   ) {
   }
 
@@ -108,8 +110,10 @@ export class IdentifySoundPage implements OnInit, AfterViewInit, OnDestroy {
   start() {
     if (!this.isGameAvailable) {
       this.presentAlert();
+      this.analyticsService.logEvent('game', 'blocked_identifyBySound');
       return;
     }
+    this.analyticsService.logEvent('game', 'start_identifyBySound');
     const notes = this.store.selectSnapshot(GameState.unlockedNotesSegment);
     const frets = this.store.selectSnapshot(GameState.unlockedFretsSegment);
 

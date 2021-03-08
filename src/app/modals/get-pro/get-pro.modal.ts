@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import { AnalyticsService } from '@shared-modules/services/mixpanel/analytics.service';
 import {popAnimation} from '../../animations/pop.animation';
 import {delayAnimation} from '../../animations/delay.animation';
 import {InAppStoreService} from '@shared-modules/services/in-app-store/in-app-store.service';
@@ -18,17 +19,20 @@ export class GetProModal implements OnInit {
   product$: Observable<IAPProduct>;
 
   constructor(
-    private store: Store,
-    private iapService: InAppStoreService,
-    private modalCtrl: ModalController,
+    private readonly store: Store,
+    private readonly iapService: InAppStoreService,
+    private readonly modalCtrl: ModalController,
+    private readonly analyticsService: AnalyticsService,
   ) {
   }
 
   ngOnInit() {
     this.product$ = this.iapService.productObservable$;
+    this.analyticsService.logEvent('modal', 'order');
   }
 
   orderProMode(product: IAPProduct) {
+    this.analyticsService.logEvent('action', 'orderPrompt');
     this.iapService.order(product);
   }
 

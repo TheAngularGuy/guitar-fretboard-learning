@@ -1,15 +1,15 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
-import {Select, Store} from '@ngxs/store';
-import {UserState, UserStateModel} from '@shared-modules/store/user/user.state';
-import {Observable, Subject} from 'rxjs';
-import {GameState, GameStateModel, NoteScoreByTuning} from '@shared-modules/store/game/game.state';
-import {PreferencesState, PreferencesStateModel} from '@shared-modules/store/preferences/preferences.state';
-import {Router} from '@angular/router';
-import {LEVELS} from '@constants/levels';
-import {takeUntil, tap} from 'rxjs/operators';
-import {UtilsService} from '@shared-modules/services/utils/utils.service';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { LEVELS } from '@constants/levels';
+import { NavController } from '@ionic/angular';
+import { Select, Store } from '@ngxs/store';
+import { AnalyticsService } from '@shared-modules/services/mixpanel/analytics.service';
+import { UtilsService } from '@shared-modules/services/utils/utils.service';
+import { GameState, GameStateModel, NoteScoreByTuning } from '@shared-modules/store/game/game.state';
+import { PreferencesState, PreferencesStateModel } from '@shared-modules/store/preferences/preferences.state';
 import { OpenOrderModalAction, UserLogOutAction } from '@shared-modules/store/user/user.actions';
-import {NavController} from '@ionic/angular';
+import { UserState, UserStateModel } from '@shared-modules/store/user/user.state';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile-data',
@@ -24,11 +24,11 @@ export class ProfileDataPage implements OnInit, OnDestroy {
   destroyed$ = new Subject();
   preferences: PreferencesStateModel;
 
-  get isLeftHanded() {
-    return this.preferences?.invertedStrings || this.preferences?.invertedFrets;
-  }
-
-  constructor(private store: Store, private navCtrl: NavController) {
+  constructor(
+    private store: Store,
+    private navCtrl: NavController,
+    private readonly analyticsService: AnalyticsService,
+  ) {
   }
 
   ngOnDestroy() {
@@ -80,7 +80,7 @@ export class ProfileDataPage implements OnInit, OnDestroy {
         if (!unlockedNotes.includes(n)) {
           output.push({
             note: n,
-            level: level.name
+            level: level.name,
           });
         }
       });
@@ -95,7 +95,7 @@ export class ProfileDataPage implements OnInit, OnDestroy {
         if (!unlockedFrets.includes(f)) {
           output.push({
             fret: f,
-            level: level.name
+            level: level.name,
           });
         }
       });
@@ -104,6 +104,7 @@ export class ProfileDataPage implements OnInit, OnDestroy {
   }
 
   goToNoteDetail(note: NoteScoreByTuning) {
+    this.analyticsService.logEvent('heatmap', note ? 'note' : 'all_notes');
     this.navCtrl.navigateForward(['profile', 'note-detail', note ? note.name : 'global']);
   }
 
@@ -113,7 +114,10 @@ export class ProfileDataPage implements OnInit, OnDestroy {
     }
   }
 
-  openOrderModal() {
+  openOrderModal(locked = false) {
+    if (locked) {
+      this.analyticsService.logEvent('heatmap', 'locked');
+    }
     this.store.dispatch(new OpenOrderModalAction());
   }
 }

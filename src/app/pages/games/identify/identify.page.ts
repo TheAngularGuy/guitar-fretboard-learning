@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AlertController, IonButton, IonContent } from '@ionic/angular';
 import { Store } from '@ngxs/store';
+import { AnalyticsService } from '@shared-modules/services/mixpanel/analytics.service';
 import { SoundService } from '@shared-modules/services/sound/sound.service';
 import { BadNoteFound, GameComplete, GameStart, GameStop, GoodNoteFound } from '@shared-modules/store/game/game.actions';
 import { GameState } from '@shared-modules/store/game/game.state';
@@ -46,6 +47,7 @@ export class IdentifyPage implements OnInit, AfterViewInit, OnDestroy {
     public readonly utils: UtilsService,
     private readonly sound: SoundService,
     private readonly fretboardManipulationService: FretboardManipulationService,
+    private readonly analyticsService: AnalyticsService,
   ) {
   }
 
@@ -162,8 +164,10 @@ export class IdentifyPage implements OnInit, AfterViewInit, OnDestroy {
   start() {
     if (!this.isGameAvailable) {
       this.presentAlert();
+      this.analyticsService.logEvent('game', 'blocked_identify');
       return;
     }
+    this.analyticsService.logEvent('game', 'start_identify');
     const notes = this.store.selectSnapshot(GameState.unlockedNotesSegment);
     const frets = this.store.selectSnapshot(GameState.unlockedFretsSegment);
 

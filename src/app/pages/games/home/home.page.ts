@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Store } from '@ngxs/store';
+import { AnalyticsService } from '@shared-modules/services/mixpanel/analytics.service';
 import { OpenOrderModalAction } from '@shared-modules/store/user/user.actions';
 import { UserState } from '@shared-modules/store/user/user.state';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -69,7 +70,12 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   practiceModes = PRACTICE_MODES;
   isPro: boolean;
 
-  constructor(private navCtrl: NavController, private store: Store, private cd: ChangeDetectorRef) {
+  constructor(
+    private readonly navCtrl: NavController,
+    private readonly store: Store,
+    private readonly cd: ChangeDetectorRef,
+    private readonly analyticsService: AnalyticsService,
+  ) {
   }
 
   ngOnDestroy() {
@@ -100,6 +106,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
     this.navCtrl.navigateForward(['games', path]);
+    this.analyticsService.setCurrentScreen(path);
   }
 
   openOrderModal() {

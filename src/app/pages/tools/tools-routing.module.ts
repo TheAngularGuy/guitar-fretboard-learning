@@ -24,6 +24,10 @@ const routes: Routes = [
     path: 'info-circle-of-fifths',
     loadChildren: () => import('./pages/info-circle-of-fifths/info-circle-of-fifths.module').then( m => m.InfoCircleOfFifthsPageModule)
   },
+  {
+    path: 'chord-circle-of-fifths',
+    loadChildren: () => import('./pages/chord-circle-of-fifths/chord-circle-of-fifths.module').then( m => m.ChordCircleOfFifthsPageModule)
+  },
 
 ];
 

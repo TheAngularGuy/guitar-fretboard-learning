@@ -1,14 +1,15 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {BehaviorSubject, Subject} from 'rxjs';
-import {popAnimation} from '../../../../animations/pop.animation';
-import {PreferencesState, PreferencesStateModel} from '@shared-modules/store/preferences/preferences.state';
-import {first, takeUntil, tap} from 'rxjs/operators';
-import {Store} from '@ngxs/store';
-import {fadeinAnimation} from '../../../../animations/fadein.animation';
-import {ExploreSetSelectedChordAction} from '@shared-modules/store/explore/explore.actions';
-import {ChordType} from '@models/chord.model';
-import {NavController} from '@ionic/angular';
-import {noEnterAnimation} from '../../../../animations/no-enter.animation';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AnalyticsService } from '@shared-modules/services/mixpanel/analytics.service';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { popAnimation } from '../../../../animations/pop.animation';
+import { PreferencesState, PreferencesStateModel } from '@shared-modules/store/preferences/preferences.state';
+import { first, takeUntil, tap } from 'rxjs/operators';
+import { Store } from '@ngxs/store';
+import { fadeinAnimation } from '../../../../animations/fadein.animation';
+import { ExploreSetSelectedChordAction } from '@shared-modules/store/explore/explore.actions';
+import { ChordType } from '@models/chord.model';
+import { NavController } from '@ionic/angular';
+import { noEnterAnimation } from '../../../../animations/no-enter.animation';
 
 const WHEEL = [
   {
@@ -17,27 +18,27 @@ const WHEEL = [
     harmony: [
       {
         note: 'C',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'D',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'E',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'F',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'G',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'A',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'B',
-        type: 'dim'
+        type: 'dim',
       },
-    ]
+    ],
   },
   {
     key: 'G',
@@ -45,54 +46,54 @@ const WHEEL = [
     harmony: [
       {
         note: 'G',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'A',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'B',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'C',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'D',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'E',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'F#',
-        type: 'dim'
+        type: 'dim',
       },
-    ]
+    ],
   }, {
     key: 'D',
     sub: 'B',
     harmony: [
       {
         note: 'D',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'E',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'F#',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'G',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'A',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'B',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'C#',
-        type: 'dim'
+        type: 'dim',
       },
-    ]
+    ],
   },
   {
     key: 'A',
@@ -100,27 +101,27 @@ const WHEEL = [
     harmony: [
       {
         note: 'A',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'B',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'C#',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'D',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'E',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'F#',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'G#',
-        type: 'dim'
+        type: 'dim',
       },
-    ]
+    ],
   },
   {
     key: 'E',
@@ -128,27 +129,27 @@ const WHEEL = [
     harmony: [
       {
         note: 'E',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'F#',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'G#',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'A',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'B',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'C#',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'D#',
-        type: 'dim'
+        type: 'dim',
       },
-    ]
+    ],
   },
   {
     key: 'B',
@@ -156,27 +157,27 @@ const WHEEL = [
     harmony: [
       {
         note: 'B',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'C#',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'D#',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'E',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'F#',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'G#',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'A#',
-        type: 'dim'
+        type: 'dim',
       },
-    ]
+    ],
   },
   {
     key: 'F#',
@@ -184,27 +185,27 @@ const WHEEL = [
     harmony: [
       {
         note: 'F#',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'G#',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'A#',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'B',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'C#',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'D#',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'F',
-        type: 'dim'
+        type: 'dim',
       },
-    ]
+    ],
   },
   {
     key: 'C#',
@@ -212,27 +213,27 @@ const WHEEL = [
     harmony: [
       {
         note: 'C#',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'D#',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'F',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'G#',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'C#',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'A#',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'C',
-        type: 'dim'
+        type: 'dim',
       },
-    ]
+    ],
   },
   {
     key: 'G#',
@@ -240,27 +241,27 @@ const WHEEL = [
     harmony: [
       {
         note: 'G#',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'A#',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'C',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'C#',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'D#',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'F',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'G',
-        type: 'dim'
+        type: 'dim',
       },
-    ]
+    ],
   },
   {
     key: 'D#',
@@ -268,27 +269,27 @@ const WHEEL = [
     harmony: [
       {
         note: 'D#',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'F',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'G',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'G#',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'A#',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'C',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'D',
-        type: 'dim'
+        type: 'dim',
       },
-    ]
+    ],
   },
   {
     key: 'A#',
@@ -296,27 +297,27 @@ const WHEEL = [
     harmony: [
       {
         note: 'A#',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'C',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'D',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'D#',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'F',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'G',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'A',
-        type: 'dim'
+        type: 'dim',
       },
-    ]
+    ],
   },
   {
     key: 'F',
@@ -324,27 +325,27 @@ const WHEEL = [
     harmony: [
       {
         note: 'F',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'G',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'A',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'A#',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'C',
-        type: 'major'
+        type: 'major',
       }, {
         note: 'D',
-        type: 'minor'
+        type: 'minor',
       }, {
         note: 'E',
-        type: 'dim'
+        type: 'dim',
       },
-    ]
+    ],
   },
 ];
 
@@ -361,7 +362,11 @@ export class CircleOfFifthsPage implements OnInit, OnDestroy {
   destroyed$ = new Subject();
   preferences: PreferencesStateModel;
 
-  constructor(private store: Store, private navCtrl: NavController) {
+  constructor(
+    private readonly store: Store,
+    private readonly navCtrl: NavController,
+    private readonly analyticsService: AnalyticsService,
+  ) {
   }
 
   ngOnDestroy() {
@@ -419,12 +424,14 @@ export class CircleOfFifthsPage implements OnInit, OnDestroy {
       first(),
       tap(() => {
         console.log(note, type);
-        this.navCtrl.navigateRoot(['explore', 'explore-chords']);
-      })
+        this.navCtrl.navigateForward(['tools', 'chord-circle-of-fifths']);
+        this.analyticsService.logEvent('circle-of-fifths', 'chordClick');
+      }),
     ).subscribe();
   }
 
   goInfoCircle() {
     this.navCtrl.navigateForward(['tools', 'info-circle-of-fifths']);
+    this.analyticsService.setCurrentScreen('tools_info-circle-of-fifths');
   }
 }

@@ -1,12 +1,13 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {ModalController, NavController} from '@ionic/angular';
-import {Select, Store} from '@ngxs/store';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ModalController, NavController } from '@ionic/angular';
+import { Select, Store } from '@ngxs/store';
+import { AnalyticsService } from '@shared-modules/services/mixpanel/analytics.service';
+import { UtilsService } from '@shared-modules/services/utils/utils.service';
 import { OpenOrderModalAction } from '@shared-modules/store/user/user.actions';
 import { UserState, UserStateModel } from '@shared-modules/store/user/user.state';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
-import {debounceTime, takeUntil, tap} from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { debounceTime, takeUntil, tap } from 'rxjs/operators';
 import {
   PreferencesSetFlatsModeAction,
   PreferencesSetInvertedFretsModeAction,
@@ -15,8 +16,8 @@ import {
   PreferencesSetSoundAction,
   PreferencesSetTunningAction,
 } from 'src/app/shared/store/preferences/preferences.actions';
-import {PreferencesState, PreferencesStateModel} from 'src/app/shared/store/preferences/preferences.state';
-import {SettingsState} from './store/settings.state';
+import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
+import { SettingsState } from './store/settings.state';
 
 @Component({
   selector: 'app-settings',
@@ -69,6 +70,8 @@ export class SettingsPage implements OnInit, OnDestroy {
     private readonly store: Store,
     private readonly navCtrl: NavController,
     private readonly cd: ChangeDetectorRef,
+    private readonly analyticsService: AnalyticsService,
+    public readonly utils: UtilsService,
   ) {
   }
 
@@ -132,24 +135,24 @@ export class SettingsPage implements OnInit, OnDestroy {
         }
         if (formValue.useFlats !== preferences.useFlats) {
           this.store.dispatch(
-            new PreferencesSetFlatsModeAction({useFlats: formValue.useFlats}),
+            new PreferencesSetFlatsModeAction({ useFlats: formValue.useFlats }),
           );
           this.refreshTuning();
         }
         if (formValue.notation !== preferences.notation) {
           this.store.dispatch(
-            new PreferencesSetNotationAction({notation: formValue.notation}),
+            new PreferencesSetNotationAction({ notation: formValue.notation }),
           );
           this.refreshTuning();
         }
         if (formValue.activateSound !== preferences.activateSound) {
           this.store.dispatch(
-            new PreferencesSetSoundAction({activateSound: formValue.activateSound}),
+            new PreferencesSetSoundAction({ activateSound: formValue.activateSound }),
           );
         }
         if (formValue.tuning !== preferences.tuning) {
           this.store.dispatch(
-            new PreferencesSetTunningAction({tuning: formValue.tuning}),
+            new PreferencesSetTunningAction({ tuning: formValue.tuning }),
           );
         }
       });
@@ -162,17 +165,36 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   goToCustomSettingsPage() {
     this.navCtrl.navigateForward(['settings', 'custom-tuning']);
+    this.analyticsService.setCurrentScreen('settings_custom-tuning');
   }
 
   goToAboutPage() {
     this.navCtrl.navigateForward(['settings', 'about']);
+    this.analyticsService.setCurrentScreen('settings_about');
   }
 
   goToPrivacyPage() {
     this.navCtrl.navigateForward(['settings', 'privacy']);
+    this.analyticsService.setCurrentScreen('settings_privacy');
   }
 
   openOrderModal() {
     this.store.dispatch(new OpenOrderModalAction());
+  }
+
+  goToTerms() {
+    this.navCtrl.navigateForward(['settings', 'terms-of-use']);
+    this.analyticsService.setCurrentScreen('settings_terms-of-use');
+  }
+
+  goToRatePage() {
+    const appId = 1554316449;
+    window.location.href = 'itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews' +
+      '?id=' + appId + '&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software';
+    this.analyticsService.logEvent('settings', 'rateApp');
+  }
+
+  goToTwitterFL() {
+    UtilsService.openLink('https://twitter.com/LearnFretboard');
   }
 }

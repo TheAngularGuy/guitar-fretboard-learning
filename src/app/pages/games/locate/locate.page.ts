@@ -1,20 +1,21 @@
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {AlertController, IonContent} from '@ionic/angular';
-import {Store} from '@ngxs/store';
-import {SoundService} from '@shared-modules/services/sound/sound.service';
-import {BadNoteFound, GameComplete, GameStart, GameStop, GoodNoteFound,} from '@shared-modules/store/game/game.actions';
-import {GameState} from '@shared-modules/store/game/game.state';
-import {OpenOrderModalAction} from '@shared-modules/store/user/user.actions';
-import {UserState} from '@shared-modules/store/user/user.state';
-import {Subject} from 'rxjs';
-import {popAnimation} from 'src/app/animations/pop.animation';
-import {slideAnimation} from 'src/app/animations/slide.animation';
-import {GameMode} from 'src/app/classes/game-mode.class';
-import {Note} from 'src/app/models/note.model';
-import {FretboardManipulationService} from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
-import {UtilsService} from 'src/app/shared/services/utils/utils.service';
-import {PreferencesState, PreferencesStateModel} from 'src/app/shared/store/preferences/preferences.state';
-import {takeUntil, tap} from 'rxjs/operators';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AlertController, IonContent } from '@ionic/angular';
+import { Store } from '@ngxs/store';
+import { AnalyticsService } from '@shared-modules/services/mixpanel/analytics.service';
+import { SoundService } from '@shared-modules/services/sound/sound.service';
+import { BadNoteFound, GameComplete, GameStart, GameStop, GoodNoteFound } from '@shared-modules/store/game/game.actions';
+import { GameState } from '@shared-modules/store/game/game.state';
+import { OpenOrderModalAction } from '@shared-modules/store/user/user.actions';
+import { UserState } from '@shared-modules/store/user/user.state';
+import { Subject } from 'rxjs';
+import { popAnimation } from 'src/app/animations/pop.animation';
+import { slideAnimation } from 'src/app/animations/slide.animation';
+import { GameMode } from 'src/app/classes/game-mode.class';
+import { Note } from 'src/app/models/note.model';
+import { FretboardManipulationService } from 'src/app/shared/services/fretboard-manipulation/fretboard-manipulation.service';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
+import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
+import { takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-locate',
@@ -44,11 +45,12 @@ export class LocatePage implements OnInit, AfterViewInit, OnDestroy {
     public readonly utils: UtilsService,
     private readonly sound: SoundService,
     private readonly fretboardManipulationService: FretboardManipulationService,
+    private readonly analyticsService: AnalyticsService,
   ) {
   }
 
   ngOnDestroy() {
-    this.store.dispatch(new GameStop({tuning: this.preferences.tuning}));
+    this.store.dispatch(new GameStop({ tuning: this.preferences.tuning }));
     this.destroyed$.next();
     this.destroyed$.complete();
   }
@@ -65,17 +67,17 @@ export class LocatePage implements OnInit, AfterViewInit, OnDestroy {
       fretboardNotes,
       {
         onBeforeStart: () => {
-          this.store.dispatch(new GameStart({tuning: preferences.tuning}));
+          this.store.dispatch(new GameStart({ tuning: preferences.tuning }));
           this.scoreHistoric = [];
         },
         onEnd: () => {
-          this.store.dispatch(new GameStop({tuning: preferences.tuning}));
+          this.store.dispatch(new GameStop({ tuning: preferences.tuning }));
           this.content.scrollToTop(250);
         },
         onComplete: () => {
           this.store.dispatch(new GameComplete({
             tuning: preferences.tuning,
-            score: {score: 100 / this.scoreHistoric.length * this.game.score.good, gameMode: 'locate', tuning: this.preferences.tuning}
+            score: { score: 100 / this.scoreHistoric.length * this.game.score.good, gameMode: 'locate', tuning: this.preferences.tuning },
           }));
         },
       });
@@ -106,14 +108,14 @@ export class LocatePage implements OnInit, AfterViewInit, OnDestroy {
       this.game.increaseScoreGood();
       this.sound.playGood();
       this.store.dispatch(
-        new GoodNoteFound({note: noteGuessed, tuning: this.preferences.tuning}),
+        new GoodNoteFound({ note: noteGuessed, tuning: this.preferences.tuning }),
       );
     } else {
       // bad answer
       this.game.increaseScoreBad();
       this.sound.playError();
       this.store.dispatch(
-        new BadNoteFound({note: noteGuessed, tuning: this.preferences.tuning}),
+        new BadNoteFound({ note: noteGuessed, tuning: this.preferences.tuning }),
       );
     }
     this.scoreHistoric.push({
@@ -135,8 +137,10 @@ export class LocatePage implements OnInit, AfterViewInit, OnDestroy {
   start() {
     if (!this.isGameAvailable) {
       this.presentAlert();
+      this.analyticsService.logEvent('game', 'blocked_locate');
       return;
     }
+    this.analyticsService.logEvent('game', 'start_locate');
     const notes = this.store.selectSnapshot(GameState.unlockedNotesSegment);
     const frets = this.store.selectSnapshot(GameState.unlockedFretsSegment);
 
@@ -156,9 +160,9 @@ export class LocatePage implements OnInit, AfterViewInit, OnDestroy {
           text: 'Get Pro',
           handler: () => {
             this.store.dispatch(new OpenOrderModalAction());
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
 
     await alert.present();
