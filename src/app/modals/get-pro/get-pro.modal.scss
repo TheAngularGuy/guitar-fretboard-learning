@@ -1,6 +1,6 @@
 
 .card {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28);
   width: 90%;
   margin: auto;
   margin-top: 4ch;
@@ -21,13 +21,27 @@
   }
 }
 
-h1 {
-  font-size: 2rem;
-  text-align: center;
+.title {
+  display: flex;
 
-  &:first-letter {
-    // color: var(--ion-color-primary);
-    font-size: 2.7rem;
+  h1 {
+    display: inline-block;
+    margin: auto;
+    font-size: 2rem;
+    text-align: center;
+    position: relative;
+
+    span {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: .7rem;
+    }
+
+    &:first-letter {
+      // color: var(--ion-color-primary);
+      font-size: 2.7rem;
+    }
   }
 }
 
@@ -35,4 +49,15 @@ h1 {
   text-align: start;
   font-size: .75rem;
   opacity: .7;
+}
+
+ul {
+  text-align: start;
+  margin: 0;
+  padding: 1ch 0 0 1ch;
+  list-style: none;
+
+  li {
+    margin-top: 1.5ch;
+  }
 }

@@ -159,6 +159,7 @@ export class ExploreChordsPage implements OnInit, OnDestroy {
   }
 
   scrollToFretBoard() {
+    return;
     if ((window as any).fretboard) {
       (window as any).fretboard.scrollIntoView({
         behavior: 'smooth',

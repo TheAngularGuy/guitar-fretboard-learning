@@ -51,7 +51,7 @@ https://apps.apple.com/us/app/fretboard-learning/id1554316449
 
 ## Connect with me
 
-If you have any feedback or suggestions the [DMs are open 😁](https://twitter.com/TheAngularGuy)
+If you have any feedback or suggestions the [DMs are open @theAngularGuy 😁](https://twitter.com/TheAngularGuy)
 
 ## Contributions
 

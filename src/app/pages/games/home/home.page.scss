@@ -28,6 +28,7 @@
   font-size: 1.6rem;
   letter-spacing: 3px;
   position: relative;
+  display: inline-block;
 
   color: transparent;
   background: linear-gradient(to left top,
@@ -46,7 +47,7 @@
   .pro {
     position: absolute;
     top: -3px;
-    right: 3ch;
+    right: 0;
     z-index: 1;
     color: var(--ion-color-fourth);
     font-size: .8rem;
