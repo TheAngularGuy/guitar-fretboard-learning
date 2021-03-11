@@ -11,19 +11,19 @@ export class FretboardManipulationService {
 
   constructor() {  }
 
-  getFretboardNotes(preferences: { tuning: string; invertedStrings: boolean }): string[][] {
+  static getFretboardNotes(preferences: { tuning: string; invertedStrings: boolean }): string[][] {
     let output: string[][];
 
     if (preferences.tuning.toLowerCase().includes('standard')) {
       output = FRETBOARD_STANDARD;
     } else {
-      output = this.customTuningFretboardFactory(preferences.tuning);
+      output = FretboardManipulationService.customTuningFretboardFactory(preferences.tuning);
     }
 
     return output;
   }
 
-  private customTuningFretboardFactory(tuning: string): string[][] {
+  static customTuningFretboardFactory(tuning: string): string[][] {
     const output = [];
     const nut = tuning
       .toUpperCase()
@@ -36,13 +36,13 @@ export class FretboardManipulationService {
     output.push(nut);
 
     for (let i = 1; i <= MAX_FRETS; i++) {
-      const fret = output[i - 1].map(n => this.getNextNote(n));
+      const fret = output[i - 1].map(n => FretboardManipulationService.getNextNote(n));
       output.push(fret);
     }
     return output;
   }
 
-  private getNextNote(noteName: string): string {
+  static getNextNote(noteName: string): string {
     const scale = [...CHROMATIC_SCALE].sort();
     if (!scale.includes(noteName)) {
       throw { error: 'error parsing tunings noteName' };

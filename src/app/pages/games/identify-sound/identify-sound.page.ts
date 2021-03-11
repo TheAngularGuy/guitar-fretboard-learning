@@ -47,7 +47,6 @@ export class IdentifySoundPage implements OnInit, AfterViewInit, OnDestroy {
     private readonly cd: ChangeDetectorRef,
     public readonly utils: UtilsService,
     private readonly sound: SoundService,
-    private readonly fretboardManipulationService: FretboardManipulationService,
     private readonly analyticsService: AnalyticsService,
   ) {
   }
@@ -69,7 +68,7 @@ export class IdentifySoundPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   initGameMode(preferences: PreferencesStateModel) {
-    const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(preferences);
+    const fretboardNotes = FretboardManipulationService.getFretboardNotes(preferences);
 
     this.game.initGameMode(fretboardNotes, {
       onBeforeStart: () => {

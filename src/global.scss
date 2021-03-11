@@ -85,25 +85,45 @@ h5 {
 
       &.n0 {
         color: #fb5f5f;
-      }&.n1 {
+      }
+
+      &.n1 {
         color: #fd7b57;
-      }&.n2 {
+      }
+
+      &.n2 {
         color: #fc9654;
-      }&.n3 {
+      }
+
+      &.n3 {
         color: #f7af5a;
-      }&.n4 {
+      }
+
+      &.n4 {
         color: #f7af5a;
-      }&.n5 {
+      }
+
+      &.n5 {
         color: #f1c668;
-      }&.n6 {
+      }
+
+      &.n6 {
         color: #cddf7e;
-      }&.n7 {
+      }
+
+      &.n7 {
         color: #b8dc7a;
-      }&.n8 {
+      }
+
+      &.n8 {
         color: #a1d979;
-      }&.n9 {
+      }
+
+      &.n9 {
         color: #88d57a;
-      }&.n10 {
+      }
+
+      &.n10 {
         color: #6bd17d;
       }
     }
@@ -148,6 +168,18 @@ ion-tab-button {
 .modal-transparent {
   .modal-wrapper {
     background: transparent;
+  }
+}
+
+.fullscreen-modal {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+
+  .modal-wrapper {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
   }
 }
 

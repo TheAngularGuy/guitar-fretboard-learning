@@ -58,7 +58,6 @@ export class LocateAllPage implements OnInit, AfterViewInit, OnDestroy {
     public readonly utils: UtilsService,
     public readonly toastCtrl: ToastController,
     private readonly sound: SoundService,
-    private readonly fretboardManipulationService: FretboardManipulationService,
     private readonly analyticsService: AnalyticsService,
   ) {
   }
@@ -75,7 +74,7 @@ export class LocateAllPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   initGameMode(preferences: PreferencesStateModel) {
-    const fretboardNotes = this.fretboardManipulationService.getFretboardNotes(preferences);
+    const fretboardNotes = FretboardManipulationService.getFretboardNotes(preferences);
     this.game.config.MAX_RANGE = 5;
 
     this.game.initGameMode(fretboardNotes, {

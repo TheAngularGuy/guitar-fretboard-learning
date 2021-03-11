@@ -33,7 +33,6 @@ export class ExploreNotesPage implements OnInit, OnDestroy {
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly fretboardManipulationService: FretboardManipulationService,
     private readonly store: Store,
     private readonly cd: ChangeDetectorRef,
   ) {
@@ -46,7 +45,7 @@ export class ExploreNotesPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.exploreState = this.store.selectSnapshot<ExploreStateModel>(ExploreState.getState);
     this.preferences = this.store.selectSnapshot<PreferencesStateModel>(PreferencesState.getState);
-    this.fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
+    this.fretboardNotes = FretboardManipulationService.getFretboardNotes(this.preferences);
     this.chromaticScale = CHROMATIC_SCALE;
     this.cagedScale = CAGED_SCALE;
     this.setForm();
@@ -57,7 +56,7 @@ export class ExploreNotesPage implements OnInit, OnDestroy {
     this.store.select(PreferencesState.getState).pipe(
       tap(pref => {
         this.preferences = pref;
-        this.fretboardNotes = this.fretboardManipulationService.getFretboardNotes(this.preferences);
+        this.fretboardNotes = FretboardManipulationService.getFretboardNotes(this.preferences);
         this.cd.markForCheck();
       }),
       takeUntil(this.destroyed$),

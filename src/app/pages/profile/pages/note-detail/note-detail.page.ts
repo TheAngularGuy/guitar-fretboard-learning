@@ -21,7 +21,6 @@ export class NoteDetailPage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private readonly fretboardManipulationService: FretboardManipulationService,
   ) {
   }
 
@@ -58,7 +57,7 @@ export class NoteDetailPage implements OnInit {
   }
 
   getFretboardNotes(preferences: PreferencesStateModel) {
-    return this.fretboardManipulationService.getFretboardNotes(preferences);
+    return FretboardManipulationService.getFretboardNotes(preferences);
   }
 
   getFretboardColors(preferences: PreferencesStateModel, placements: NotePlacementScore[], fretStart: number, fretEnd: number) {

@@ -31,7 +31,7 @@ export interface UserStateModel {
     user: undefined,
     pro: false,
 
-    hasSeenTutorial: false //UtilsService.getParsedItemFromLS(stateEnums.tutorial1seen) || false,
+    hasSeenTutorial: UtilsService.getParsedItemFromLS(stateEnums.tutorial1seen) || false,
   },
 })
 export class UserState {
@@ -54,9 +54,10 @@ export class UserState {
     return state.pro;
   }
 
-  async openModal(component) {
+  async openModal(component, fullscreen = false) {
     const modal = await this.modalCtrl.create({
       component,
+      cssClass: fullscreen ? 'fullscreen-modal' : '',
       animated: true,
       swipeToClose: true,
       componentProps: {},
@@ -74,7 +75,7 @@ export class UserState {
 
   @Action(OpenTutorialModalAction)
   openTutorialModalAction(ctx: StateContext<UserStateModel>, action: OpenTutorialModalAction) {
-    this.openModal(TutorialModal);
+    this.openModal(TutorialModal, true);
     ctx.patchState({
       hasSeenTutorial: true,
     });
