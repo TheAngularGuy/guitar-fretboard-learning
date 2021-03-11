@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouteReuseStrategy } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { AnalyticsFirebase } from '@ionic-native/analytics-firebase/ngx';
 import { Device } from '@ionic-native/device/ngx';
 import { InAppPurchase2 } from '@ionic-native/in-app-purchase-2/ngx';
 import { InAppReview } from '@ionic-native/in-app-review/ngx';
@@ -13,6 +14,7 @@ import { IonicModule, IonicRouteStrategy, LoadingController, ModalController, To
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsModule } from '@ngxs/store';
+import { FretboardModule } from '@shared-modules/modules/fretboard/fretboard.module';
 import { GlobalModule } from '@shared-modules/modules/global/global.module';
 import { ExploreState } from '@shared-modules/store/explore/explore.state';
 import { GameState } from '@shared-modules/store/game/game.state';
@@ -22,15 +24,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GetProModal } from './modals/get-pro/get-pro.modal';
 import { ProgressModal } from './modals/progress/progress.modal';
+import { TutorialModal } from './modals/tutorial/tutorial.modal';
 import { PreferencesState } from './shared/store/preferences/preferences.state';
 import { UserState } from './shared/store/user/user.state';
-import { AnalyticsFirebase } from '@ionic-native/analytics-firebase/ngx';
+
+const MODALS = [
+  ProgressModal,
+  GetProModal,
+  TutorialModal,
+];
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProgressModal,
-    GetProModal,
+
+    ...MODALS,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +51,7 @@ import { AnalyticsFirebase } from '@ionic-native/analytics-firebase/ngx';
     AppRoutingModule,
     GlobalModule,
     HttpClientModule,
+    FretboardModule,
 
     NgxsModule.forRoot([
       UserState,

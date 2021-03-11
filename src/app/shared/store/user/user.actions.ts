@@ -24,6 +24,12 @@ export class UserSetProModeAction {
   constructor(public payload: { pro: boolean }) { }
 }
 
+export class OpenTutorialModalAction {
+  public static readonly type = '[User] Open Tutorial Modal';
+
+  constructor() { }
+}
+
 export class OpenOrderModalAction {
   public static readonly type = '[User] Open Order Modal';
 

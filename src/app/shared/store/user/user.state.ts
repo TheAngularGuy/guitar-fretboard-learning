@@ -2,8 +2,14 @@ import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { UtilsService } from '@shared-modules/services/utils/utils.service';
 import { GetProModal } from '../../../modals/get-pro/get-pro.modal';
-import { CloseOrderModalAction, OpenOrderModalAction, UserSetProModeAction } from './user.actions';
+import { TutorialModal } from '../../../modals/tutorial/tutorial.modal';
+import { CloseOrderModalAction, OpenOrderModalAction, OpenTutorialModalAction, UserSetProModeAction } from './user.actions';
+
+enum stateEnums {
+  tutorial1seen = 'user_hasSeenTutorial',
+}
 
 export interface UserStateModel {
   user: {
@@ -13,8 +19,9 @@ export interface UserStateModel {
     photoURL: string;
     emailVerified: boolean;
   };
-
   pro: boolean;
+
+  hasSeenTutorial: boolean;
 }
 
 @Injectable()
@@ -22,8 +29,9 @@ export interface UserStateModel {
   name: 'user',
   defaults: {
     user: undefined,
-
     pro: false,
+
+    hasSeenTutorial: false //UtilsService.getParsedItemFromLS(stateEnums.tutorial1seen) || false,
   },
 })
 export class UserState {
@@ -46,9 +54,9 @@ export class UserState {
     return state.pro;
   }
 
-  async openModal() {
+  async openModal(component) {
     const modal = await this.modalCtrl.create({
-      component: GetProModal,
+      component,
       animated: true,
       swipeToClose: true,
       componentProps: {},
@@ -64,9 +72,18 @@ export class UserState {
     this.modal.dismiss();
   }
 
+  @Action(OpenTutorialModalAction)
+  openTutorialModalAction(ctx: StateContext<UserStateModel>, action: OpenTutorialModalAction) {
+    this.openModal(TutorialModal);
+    ctx.patchState({
+      hasSeenTutorial: true,
+    });
+    UtilsService.setParsedItemToLS(stateEnums.tutorial1seen, true);
+  }
+
   @Action(OpenOrderModalAction)
   openOrderModalAction(ctx: StateContext<UserStateModel>, action: OpenOrderModalAction) {
-    this.openModal();
+    this.openModal(GetProModal);
   }
 
   @Action(CloseOrderModalAction)

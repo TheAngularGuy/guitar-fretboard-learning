@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, O
 import { NavController } from '@ionic/angular';
 import { Store } from '@ngxs/store';
 import { AnalyticsService } from '@shared-modules/services/mixpanel/analytics.service';
-import { OpenOrderModalAction } from '@shared-modules/store/user/user.actions';
+import { OpenOrderModalAction, OpenTutorialModalAction } from '@shared-modules/store/user/user.actions';
 import { UserState } from '@shared-modules/store/user/user.state';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
@@ -83,6 +83,20 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.listenToProMode();
+    this.checkTutorial();
+  }
+
+  checkTutorial() {
+    const haseSeenTutorial = this.store.selectSnapshot(UserState.getState).hasSeenTutorial;
+    if (!haseSeenTutorial) {
+      setTimeout(() => {
+        this.store.dispatch(new OpenTutorialModalAction());
+      }, 500);
+    }
+  }
+
+  listenToProMode() {
     this.store.select(UserState.getIsProModeUnlocked).pipe(
       tap(isPro => {
         this.isPro = isPro;

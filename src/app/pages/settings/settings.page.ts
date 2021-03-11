@@ -4,7 +4,7 @@ import { ModalController, NavController } from '@ionic/angular';
 import { Select, Store } from '@ngxs/store';
 import { AnalyticsService } from '@shared-modules/services/mixpanel/analytics.service';
 import { UtilsService } from '@shared-modules/services/utils/utils.service';
-import { OpenOrderModalAction } from '@shared-modules/store/user/user.actions';
+import { OpenOrderModalAction, OpenTutorialModalAction } from '@shared-modules/store/user/user.actions';
 import { UserState, UserStateModel } from '@shared-modules/store/user/user.state';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { debounceTime, takeUntil, tap } from 'rxjs/operators';
@@ -196,5 +196,9 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   goToTwitterFL() {
     UtilsService.openLink('https://twitter.com/LearnFretboard');
+  }
+
+  goToTutorial() {
+    this.store.dispatch(new OpenTutorialModalAction());
   }
 }
