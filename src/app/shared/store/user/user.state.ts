@@ -5,7 +5,13 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { UtilsService } from '@shared-modules/services/utils/utils.service';
 import { GetProModal } from '../../../modals/get-pro/get-pro.modal';
 import { TutorialModal } from '../../../modals/tutorial/tutorial.modal';
-import { CloseOrderModalAction, OpenOrderModalAction, OpenTutorialModalAction, UserSetProModeAction } from './user.actions';
+import {
+  CloseOrderModalAction,
+  OpenOrderModalAction,
+  OpenTutorialModalAction,
+  UserSetForeverAccess,
+  UserSetProModeAction,
+} from './user.actions';
 
 enum stateEnums {
   tutorial1seen = 'user_hasSeenTutorial',
@@ -20,7 +26,7 @@ export interface UserStateModel {
     emailVerified: boolean;
   };
   pro: boolean;
-
+  hasForeverAccess: boolean;
   hasSeenTutorial: boolean;
 }
 
@@ -30,7 +36,7 @@ export interface UserStateModel {
   defaults: {
     user: undefined,
     pro: false,
-
+    hasForeverAccess: false,
     hasSeenTutorial: UtilsService.getParsedItemFromLS(stateEnums.tutorial1seen) || false,
   },
 })
@@ -98,7 +104,18 @@ export class UserState {
       this.closeModal();
     }
     ctx.patchState({
-      pro: action.payload.pro,
+      pro: action.payload.pro || ctx.getState().hasForeverAccess,
+    });
+  }
+
+  @Action(UserSetForeverAccess)
+  userSetForeverAccess(ctx: StateContext<UserStateModel>, action: UserSetForeverAccess) {
+    if (action.payload.access) {
+      this.closeModal();
+    }
+    ctx.patchState({
+      pro: action.payload.access,
+      hasForeverAccess: action.payload.access,
     });
   }
 

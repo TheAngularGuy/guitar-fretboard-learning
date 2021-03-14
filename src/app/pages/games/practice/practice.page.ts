@@ -14,6 +14,7 @@ import { GameState } from '@shared-modules/store/game/game.state';
 import { PreferencesState, PreferencesStateModel } from '@shared-modules/store/preferences/preferences.state';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
+import { noEnterAnimation } from '../../../animations/no-enter.animation';
 import { popAnimation } from '../../../animations/pop.animation';
 import { slideAnimation } from '../../../animations/slide.animation';
 
@@ -23,7 +24,7 @@ const ALL_FRETS = new Array(MAX_FRETS + 1).fill(null).map((item, i) => i);
   selector: 'app-practice',
   templateUrl: './practice.page.html',
   styleUrls: ['./practice.page.scss'],
-  animations: [popAnimation, slideAnimation],
+  animations: [popAnimation, slideAnimation, noEnterAnimation],
 })
 export class PracticePage implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('content') content: IonContent;

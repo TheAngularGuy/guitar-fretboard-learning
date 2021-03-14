@@ -13,75 +13,107 @@
 
 <ion-content>
 
-  <ng-container *ngIf="product$ | async as product">
-    <div class="page">
+  <ng-container *ngIf="productMonthly$ | async as productMonthly">
+    <ng-container *ngIf="productForever$ | async as productForever">
+      <ng-container *ngIf="choix$ | async as choix">
+        <div class="page">
 
 
-      <div class="title">
-        <h1 class="taba">
-          Fretboard Learning
-          <span>pro</span>
-        </h1>
-      </div>
+          <div class="title">
+            <h1 class="taba">
+              Fretboard Learning
+              <span>pro</span>
+            </h1>
+          </div>
 
-      <ul>
-        <li>
-          <ion-icon name="bag-check" color="success"></ion-icon> &nbsp; Play an <b>unlimited number of games</b> without
-          worrying about
-          the
-          weekly limit
-        </li>
-        <li>
-          <ion-icon name="bag-check" color="success"></ion-icon> &nbsp; Follow your progression using
-          the <b>fretboard heatmap</b> and find the areas of progression
-        </li>
-        <li>
-          <ion-icon name="bag-check" color="success"></ion-icon> &nbsp; Unlock all customizations and settings: <b>Custom
-          tunings, left handed mode and alternative Notations </b>
-        </li>
-        <li>
-          <ion-icon name="heart" color="danger"></ion-icon> &nbsp;
-          Support an independent creator
-        </li>
-      </ul>
+          <div class="choix">
+            <span [class.selected]="choix === 'monthly'"
+                  (click)="choix$.next('monthly')">Monthly</span>
+            <span [class.selected]="choix === 'forever'"
+                  (click)="choix$.next('forever')">One-time payment</span>
+          </div>
+
+          <ul>
+            <li>
+              <ion-icon name="bag-check" color="success"></ion-icon> &nbsp; Play an <b>unlimited number of games</b>
+              without
+              worrying about
+              the
+              weekly limit
+            </li>
+            <li>
+              <ion-icon name="bag-check" color="success"></ion-icon> &nbsp; Follow your progression using
+              the <b>fretboard heatmap</b> and find the areas of progression
+            </li>
+            <li>
+              <ion-icon name="bag-check" color="success"></ion-icon> &nbsp; Unlock all customizations and settings: <b>Custom
+              tunings, left handed mode </b> and <b>alternative Notations </b>
+            </li>
+            <li>
+              <ion-icon name="heart" color="danger"></ion-icon> &nbsp;
+              Support an independent creator
+            </li>
+          </ul>
 
 
-      <div class="card" *ngIf="product?.valid" (click)="orderProMode(product)">
-        <div class="title ">
-          {{ product.title }}
+          <ng-container *ngIf="choix === 'monthly'">
+            <div class="card" *ngIf="productMonthly?.valid" (click)="orderProMode(productMonthly)"
+                 [@fadeinAnimation]="choix">
+              <div class="title ">
+                {{ productMonthly.title }}
+              </div>
+
+              <div class="description">
+                {{ productMonthly.description }}
+              </div>
+
+              <div class="price">{{ productMonthly.price }} <small>per {{ productMonthly.billingPeriodUnit }}</small>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="choix === 'forever'">
+            <div class="card forever" (click)="orderProMode(productForever)"
+                 [@fadeinAnimation]="choix">
+              <div class="title ">
+                {{ productForever.title }}
+              </div>
+
+              <div class="description">
+                {{ productForever.description }}
+              </div>
+
+              <div class="price">{{ productForever.price }} <small>per life-time</small>
+              </div>
+            </div>
+          </ng-container>
+
+          <hr>
+          <br>
+          <br>
+          <br>
+
+          <div class="text">
+            Your payment will be charged to your iTunes account upon confirmation of your purchase.
+            <br>
+            The subscription renews automatically, unless auto-renewal is turned off at least 24 hours before the end of
+            the current period.
+            <br>
+            The account will be debited with the same amount for a renewal within 24 hours before the end of the current
+            period.
+            <br>
+            Any unused portion of a possible free trial expires with the purchase of a subscription. Read more in the
+            Terms
+            of Use available under settings > Privacy & Terms of Use > Terms of Use.
+            <br>
+            <br>
+            <a (click)="restore()">Restore purchase</a>
+            <br>
+            <br>
+          </div>
         </div>
 
-        <div class="description">
-          {{ product.description }}
-        </div>
-
-        <div class="price">{{ product.price }} <small>per {{ product.billingPeriodUnit }}</small></div>
-      </div>
-
-      <hr>
-      <br>
-      <br>
-      <br>
-
-      <div class="text">
-        Your payment will be charged to your iTunes account upon confirmation of your purchase.
-        <br>
-        The subscription renews automatically, unless auto-renewal is turned off at least 24 hours before the end of
-        the current period.
-        <br>
-        The account will be debited with the same amount for a renewal within 24 hours before the end of the current
-        period.
-        <br>
-        Any unused portion of a possible free trial expires with the purchase of a subscription. Read more in the Terms
-        of Use available under settings > Privacy & Terms of Use > Terms of Use.
-        <br>
-        <br>
-        <a (click)="restore()">Restore purchase</a>
-        <br>
-        <br>
-      </div>
-    </div>
-
+      </ng-container>
+    </ng-container>
   </ng-container>
 
 </ion-content>

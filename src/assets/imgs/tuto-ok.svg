@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg x="0pt" y="0pt" width="500pt" height="500pt" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g id="1">
+    <title>Layer 1</title>
+    <clipPath id="3">
+      <use xlink:href="#2"/>
+      <path id="2" d="M0,0 C0,0,512,0,512,0 C512,0,512,512,512,512 C512,512,0,512,0,512 C0,512,0,0,0,0 z"/>
+    </clipPath>
+    <g id="4" style="clip-path:url(#3);">
+      <title>ClipGroup</title>
+      <g id="5">
+        <title>Group</title>
+        <defs>
+          <title>Shape 2</title>
+          <g id="6">
+            <defs>
+              <path id="7" d="M257.6,323.9 C256.667,323.9,255.733,323.9,254.8,323.9 C247.5,323.9,241.5,329.9,241.5,337.2 C241.5,369.033,241.5,400.867,241.5,432.7 C241.5,440,247.5,446,254.8,446 C255.733,446,256.667,446,257.6,446 C264.9,446,270.9,440,270.9,432.7 C270.9,400.867,270.9,369.033,270.9,337.2 C270.9,329.9,265,323.9,257.6,323.9 z"/>
+            </defs>
+            <use xlink:href="#7" style="fill:#c7975e;fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+          </g>
+        </defs>
+        <use xlink:href="#6"/>
+        <defs>
+          <title>Shape 3</title>
+          <g id="8">
+            <defs>
+              <path id="9" d="M282.3,330 C281.5,330.467,280.7,330.933,279.9,331.4 C273.5,335.1,271.4,343.2,275,349.6 C294.5,383.367,314,417.133,333.5,450.9 C337.2,457.3,345.3,459.4,351.7,455.8 C352.5,455.333,353.3,454.867,354.1,454.4 C360.5,450.7,362.6,442.6,359,436.2 C339.5,402.433,320,368.667,300.5,334.9 C296.7,328.5,288.6,326.3,282.3,330 z"/>
+            </defs>
+            <use xlink:href="#9" style="fill:#c7975e;fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+          </g>
+        </defs>
+        <use xlink:href="#8"/>
+        <defs>
+          <title>Shape 4</title>
+          <g id="10">
+            <defs>
+              <path id="11" d="M232.6,331.4 C231.8,330.933,231,330.467,230.2,330 C223.8,326.3,215.7,328.5,212,334.9 C192.5,368.667,173,402.433,153.5,436.2 C149.8,442.6,152,450.7,158.4,454.4 C159.2,454.867,160,455.333,160.8,455.8 C167.2,459.5,175.3,457.3,179,450.9 C198.5,417.133,218,383.367,237.5,349.6 C241.1,343.2,239,335,232.6,331.4 z"/>
+            </defs>
+            <use xlink:href="#11" style="fill:#c7975e;fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+          </g>
+        </defs>
+        <use xlink:href="#10"/>
+        <linearGradient x1="66.0562" y1="-0.0437922" x2="445.962" y2="379.863" gradientUnits="userSpaceOnUse" id="14">
+          <stop style="stop-color:#595959;stop-opacity:1;"/>
+          <stop offset="1" style="stop-color:#31322f;stop-opacity:1;"/>
+        </linearGradient>
+        <defs>
+          <title>Shape 5</title>
+          <g id="12">
+            <defs>
+              <path id="13" d="M463.3,347.9 C463.3,347.9,48.7,347.9,48.7,347.9 C29.2,347.9,13.5,332.1,13.5,312.7 C13.5,312.7,13.5,67.1,13.5,67.1 C13.5,47.6,29.3,31.9,48.7,31.9 C186.9,31.9,325.1,31.9,463.3,31.9 C482.8,31.9,498.5,47.7,498.5,67.1 C498.5,148.967,498.5,230.833,498.5,312.7 C498.6,332.1,482.8,347.9,463.3,347.9 z"/>
+            </defs>
+            <use xlink:href="#13" style="fill:url(#14);fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+          </g>
+        </defs>
+        <use xlink:href="#12"/>
+      </g>
+      <g id="15">
+        <title>Group</title>
+        <g id="16">
+          <title>Group</title>
+          <g id="17">
+            <title>Group</title>
+            <g id="18">
+              <title>Group</title>
+              <g id="19">
+                <title>Group</title>
+                <linearGradient x1="273.692" y1="358.827" x2="232.14" y2="192.472" gradientUnits="userSpaceOnUse" id="22">
+                  <stop style="stop-color:#c7975e;stop-opacity:1;"/>
+                  <stop offset="1" style="stop-color:#faebd7;stop-opacity:1;"/>
+                </linearGradient>
+                <defs>
+                  <title>Shape 6</title>
+                  <g id="20">
+                    <defs>
+                      <path id="21" d="M174,272.9 C134.2,228.7,152.7,197.9,160.6,189.7 C168.4,181.5,178,174.5,191.1,173 C204.3,171.5,205.8,171.7,213.1,166.6 C220.4,161.5,234.9,125.9,261.9,128.3 C288.9,130.7,312.4,155.1,319.4,176.6 C326.4,198.2,309.8,218.5,299.6,223.4 C289.5,228.4,277.3,238.3,276.6,250.3 C275.9,262.3,273.9,277.6,255.6,291.1 C237.4,304.5,211.9,300.8,192.7,288 C192.7,288,179.5,279.1,174,272.9 z"/>
+                    </defs>
+                    <use xlink:href="#21" style="fill:url(#22);fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+                  </g>
+                </defs>
+                <use xlink:href="#20"/>
+              </g>
+            </g>
+          </g>
+          <g id="23">
+            <title>Group</title>
+            <g id="24">
+              <title>Group</title>
+              <g id="25">
+                <title>Group</title>
+                <defs>
+                  <title>Shape 7</title>
+                  <g id="26">
+                    <defs>
+                      <path id="27" d="M234.7,256.3 C232.9,258.1,229.9,258.1,228.1,256.3 C216.2,244.5,204.3,232.7,192.4,220.9 C190.6,219.1,190.6,216.1,192.4,214.3 C193.433,213.267,194.467,212.233,195.5,211.2 C197.3,209.4,200.3,209.4,202.1,211.2 C214,223,225.9,234.8,237.8,246.6 C239.6,248.4,239.6,251.4,237.8,253.2 C237.8,253.2,234.7,256.3,234.7,256.3 z"/>
+                    </defs>
+                    <use xlink:href="#27" style="fill:#aa7a43;fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+                  </g>
+                </defs>
+                <use xlink:href="#26"/>
+              </g>
+            </g>
+          </g>
+          <g id="28">
+            <title>Group</title>
+            <g id="29">
+              <title>Group</title>
+              <g id="30">
+                <title>Group</title>
+                <defs>
+                  <title>Shape 8</title>
+                  <g id="31">
+                    <defs>
+                      <path id="32" d="M333.1,85.9 C343.033,95.4333,352.967,104.967,362.9,114.5"/>
+                    </defs>
+                    <use xlink:href="#32" style="fill:none;opacity:0.92;stroke:#e3c65e;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:7;"/>
+                  </g>
+                </defs>
+                <use xlink:href="#31"/>
+              </g>
+            </g>
+          </g>
+          <g id="33">
+            <title>Group</title>
+            <g id="34">
+              <title>Group</title>
+              <g id="35">
+                <title>Group</title>
+                <defs>
+                  <title>Shape 9</title>
+                  <g id="36">
+                    <defs>
+                      <path id="37" d="M339.2,75.9 C350.333,86.8333,361.467,97.7667,372.6,108.7"/>
+                    </defs>
+                    <use xlink:href="#37" style="fill:none;opacity:0.92;stroke:#e3c65e;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:7;"/>
+                  </g>
+                </defs>
+                <use xlink:href="#36"/>
+              </g>
+            </g>
+          </g>
+          <g id="38">
+            <title>Group</title>
+            <g id="39">
+              <title>Group</title>
+              <g id="40">
+                <title>Group</title>
+                <defs>
+                  <title>Shape 10</title>
+                  <g id="41">
+                    <defs>
+                      <path id="42" d="M346,66.4 C358.233,78.3,370.467,90.2,382.7,102.1"/>
+                    </defs>
+                    <use xlink:href="#42" style="fill:none;opacity:0.92;stroke:#e3c65e;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:7;"/>
+                  </g>
+                </defs>
+                <use xlink:href="#41"/>
+              </g>
+            </g>
+          </g>
+          <g id="43">
+            <title>Group</title>
+            <g id="44">
+              <title>Group</title>
+              <g id="45">
+                <title>Group</title>
+                <defs>
+                  <title>Shape 11</title>
+                  <g id="46">
+                    <defs>
+                      <path id="47" d="M335.4,96.9 C335.4,96.9,352.9,66.7,357.2,64.8 C361.6,62.9,364.2,63.4,367.4,64.6 C370.6,65.8,371.6,66.8,375.2,65.2 C378.8,63.6,381.2,64.6,382.8,66 C384.3,67.3,385.2,71.5,383.8,74.2 C382.3,76.9,383.2,79.3,383.8,81.6 C384.4,83.8,385.8,86.3,383.6,92.2 C380,97.5,352.5,113.1,352.5,113.1 C352.5,113.1,335.4,96.9,335.4,96.9 z"/>
+                    </defs>
+                    <use xlink:href="#47" style="fill:#aa7a43;fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+                  </g>
+                </defs>
+                <use xlink:href="#46"/>
+              </g>
+            </g>
+          </g>
+          <g id="48">
+            <title>Group</title>
+            <g id="49">
+              <title>Group</title>
+              <g id="50">
+                <title>Group</title>
+                <defs>
+                  <title>Shape 12</title>
+                  <g id="51">
+                    <defs>
+                      <path id="52" d="M335.8,96.2 C341.467,101.8,347.133,107.4,352.8,113 C352.8,113,245.6,221.2,245.6,221.2 C239.933,215.6,234.267,210,228.6,204.4 C228.6,204.4,335.8,96.2,335.8,96.2 z"/>
+                    </defs>
+                    <use xlink:href="#52" style="fill:#c18b4c;fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+                  </g>
+                </defs>
+                <use xlink:href="#51"/>
+              </g>
+            </g>
+          </g>
+          <g id="53">
+            <title>Group</title>
+            <g id="54">
+              <title>Group</title>
+              <g id="55">
+                <title>Group</title>
+                <defs>
+                  <title>Shape 13</title>
+                  <g id="56">
+                    <defs>
+                      <path id="57" d="M302.4,163.8 C296.767,158.233,291.133,152.667,285.5,147.1 C289.667,142.9,293.833,138.7,298,134.5 C303.633,140.067,309.267,145.633,314.9,151.2 C314.9,151.2,302.4,163.8,302.4,163.8 z"/>
+                    </defs>
+                    <use xlink:href="#57" style="fill:#aa7942;fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+                  </g>
+                </defs>
+                <use xlink:href="#56"/>
+              </g>
+            </g>
+          </g>
+          <g id="58">
+            <title>Group</title>
+            <g id="59">
+              <title>Group</title>
+              <g id="60">
+                <title>Group</title>
+                <defs>
+                  <title>Shape 14</title>
+                  <g id="61">
+                    <defs>
+                      <path id="62" d="M271.9,194.7 C271.9,194.7,255,178,255,178 C259.167,173.8,263.333,169.6,267.5,165.4 C273.133,170.967,278.767,176.533,284.4,182.1 C284.4,182.1,271.9,194.7,271.9,194.7 z"/>
+                    </defs>
+                    <use xlink:href="#62" style="fill:#aa7942;fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+                  </g>
+                </defs>
+                <use xlink:href="#61"/>
+              </g>
+            </g>
+          </g>
+          <g id="63">
+            <title>Group</title>
+            <g id="64">
+              <title>Group</title>
+              <g id="65">
+                <title>Group</title>
+                <defs>
+                  <title>Shape 15</title>
+                  <g id="66">
+                    <defs>
+                      <path id="67" d="M332.3,133.7 C332.3,133.7,315.4,117,315.4,117 C319.567,112.8,323.733,108.6,327.9,104.4 C333.533,109.967,339.167,115.533,344.8,121.1 C344.8,121.1,332.3,133.7,332.3,133.7 z"/>
+                    </defs>
+                    <use xlink:href="#67" style="fill:#aa7942;fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+                  </g>
+                </defs>
+                <use xlink:href="#66"/>
+              </g>
+            </g>
+          </g>
+          <g id="68">
+            <title>Group</title>
+            <g id="69">
+              <title>Group</title>
+              <g id="70">
+                <title>Group</title>
+                <defs>
+                  <title>Shape 16</title>
+                  <g id="71">
+                    <defs>
+                      <path id="72" d="M247.9,176.7 C261.4,176.7,272.3,187.6,272.3,201.1 C272.3,214.6,261.4,225.5,247.9,225.5 C234.4,225.5,223.5,214.6,223.5,201.1 C223.4,187.6,234.4,176.7,247.9,176.7 z"/>
+                    </defs>
+                    <use xlink:href="#72" style="fill:#c18b4c;fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+                  </g>
+                </defs>
+                <use xlink:href="#71"/>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+    <clipPath id="74">
+      <use xlink:href="#73"/>
+      <path id="73" d="M0,0 C0,0,512,0,512,0 C512,0,512,512,512,512 C512,512,0,512,0,512 C0,512,0,0,0,0 z"/>
+    </clipPath>
+    <g id="75" style="clip-path:url(#74);"/>
+    <defs>
+      <title>Path</title>
+      <g id="76">
+        <defs>
+          <path id="77" d="M333.672,227.642 C356.35,227.642,374.735,246.026,374.735,268.705 C374.735,291.384,356.35,309.769,333.672,309.769 C310.993,309.769,292.608,291.384,292.608,268.705 C292.608,246.026,310.993,227.642,333.672,227.642 z"/>
+        </defs>
+        <use xlink:href="#77" style="fill:#72bf47;fill-opacity:1;fill-rule:evenodd;opacity:1;stroke:none;"/>
+      </g>
+    </defs>
+    <use xlink:href="#76"/>
+    <defs>
+      <title>Path</title>
+      <g id="78">
+        <defs>
+          <path id="79" d="M310.53,271.705 C310.53,271.705,324.029,288.409,324.029,288.409"/>
+        </defs>
+        <use xlink:href="#79" style="fill:none;opacity:1;stroke:#ffffff;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:10;"/>
+      </g>
+    </defs>
+    <use xlink:href="#78"/>
+    <defs>
+      <title>Path</title>
+      <g id="80">
+        <defs>
+          <path id="81" d="M319.029,285.409 C319.029,285.409,360.72,256,360.72,256"/>
+        </defs>
+        <use xlink:href="#81" style="fill:none;opacity:1;stroke:#ffffff;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-width:10;"/>
+      </g>
+    </defs>
+    <use xlink:href="#80"/>
+  </g>
+</svg>

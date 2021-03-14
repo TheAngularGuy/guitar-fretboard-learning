@@ -18,6 +18,12 @@ export class UserLogOutAction {
   constructor() { }
 }
 
+export class UserSetForeverAccess {
+  public static readonly type = '[User] User Set Pro Mode forever';
+
+  constructor(public payload: { access: boolean }) { }
+}
+
 export class UserSetProModeAction {
   public static readonly type = '[User] User Set Pro Mode';
 

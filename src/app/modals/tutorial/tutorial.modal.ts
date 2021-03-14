@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Select } from '@ngxs/store';
 import { FretboardManipulationService } from '@shared-modules/services/fretboard-manipulation/fretboard-manipulation.service';
@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
   templateUrl: './tutorial.modal.html',
   styleUrls: ['./tutorial.modal.scss'],
 })
-export class TutorialModal implements OnInit {
+export class TutorialModal implements OnInit, OnDestroy {
   @Select(GameState.getState) gameState$: Observable<GameStateModel>;
   @Select(PreferencesState.getState) preferencesState$: Observable<PreferencesStateModel>;
 
@@ -20,6 +20,8 @@ export class TutorialModal implements OnInit {
   ) { }
 
   ngOnInit() {}
+
+  ngOnDestroy() {}
 
   getFretboardNotes(pref: PreferencesStateModel) {
     return FretboardManipulationService.getFretboardNotes(pref);

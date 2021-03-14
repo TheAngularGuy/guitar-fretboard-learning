@@ -52,7 +52,7 @@ const PRACTICE_MODES = [
     path: 'practice',
     img: 'assets/imgs/board.svg',
     title: 'Practice an area',
-    subtitle: `Choose the notes you want to practice and the area of the fretboard you want to focus on`,
+    subtitle: `Choose the notes you want to practice with and the area of the fretboard you want to focus on`,
   },
 ];
 

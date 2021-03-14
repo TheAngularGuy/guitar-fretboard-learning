@@ -16,12 +16,13 @@ import { FretboardManipulationService } from 'src/app/shared/services/fretboard-
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { PreferencesState, PreferencesStateModel } from 'src/app/shared/store/preferences/preferences.state';
 import { takeUntil, tap } from 'rxjs/operators';
+import { noEnterAnimation } from '../../../animations/no-enter.animation';
 
 @Component({
   selector: 'app-locate',
   templateUrl: './locate.page.html',
   styleUrls: ['./locate.page.scss'],
-  animations: [popAnimation, slideAnimation],
+  animations: [popAnimation, slideAnimation, noEnterAnimation],
 })
 export class LocatePage implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('content') content: IonContent;

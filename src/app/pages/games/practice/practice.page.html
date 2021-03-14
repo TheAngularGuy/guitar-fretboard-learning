@@ -116,7 +116,7 @@
 </ion-content>
 
 <ion-footer *ngIf="game.isPlaying">
-  <div class="playing">
+  <div class="playing" @noEnterAnimation>
     <div class="note" [@popAnimation]="game.noteToFind?.note?.name">
       {{game.noteToFind?.note?.name | note:preferences?.notation:preferences?.useFlats}}
     </div>

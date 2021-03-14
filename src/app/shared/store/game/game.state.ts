@@ -324,7 +324,7 @@ export class GameState {
       },
     });
     modal.onDidDismiss().then(() => {
-      if (lastCompletedGame.historic.length % 9 === 0) {
+      if (lastCompletedGame.historic.length % 6 === 0) {
         this.inAppReview.requestReview().then(res => console.log({ reviewed: res }));
       }
     });
