@@ -4,6 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { Store } from '@ngxs/store';
 import { InAppStoreService } from '@shared-modules/services/in-app-store/in-app-store.service';
 import { AnalyticsService } from '@shared-modules/services/mixpanel/analytics.service';
+import { UtilsService } from '@shared-modules/services/utils/utils.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { delayAnimation } from '../../animations/delay.animation';
 import { fadeinAnimation } from '../../animations/fadein.animation';
@@ -26,7 +27,12 @@ export class GetProModal implements OnInit {
     private readonly iapService: InAppStoreService,
     private readonly modalCtrl: ModalController,
     private readonly analyticsService: AnalyticsService,
+    private readonly utils: UtilsService,
   ) {
+  }
+
+  get isIOS() {
+    return this.utils.isIOS;
   }
 
   ngOnInit() {
@@ -51,4 +57,7 @@ export class GetProModal implements OnInit {
     this.modalCtrl.dismiss();
   }
 
+  onChoiceChange(detail) {
+    this.choix$.next(detail.value);
+  }
 }

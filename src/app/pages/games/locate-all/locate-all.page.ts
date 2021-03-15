@@ -34,8 +34,12 @@ export class LocateAllPage implements OnInit, AfterViewInit, OnDestroy {
   seriesMaxRange: number;
   seriesDisplay: boolean[];
   scoreHistoric: { timeTook: number; }[];
-
+  mode$ = new BehaviorSubject<number>(0);
   selectedNotes$ = new BehaviorSubject<Note[]>([]);
+
+  get isIOS() {
+    return this.utils.isIOS;
+  }
 
   get averageTime(): string | number {
     if (!this.scoreHistoric?.length) {
@@ -49,8 +53,8 @@ export class LocateAllPage implements OnInit, AfterViewInit, OnDestroy {
     private readonly alertCtrl: AlertController,
     private readonly store: Store,
     private readonly cd: ChangeDetectorRef,
-    public readonly utils: UtilsService,
-    public readonly toastCtrl: ToastController,
+    private readonly utils: UtilsService,
+    private readonly toastCtrl: ToastController,
     private readonly sound: SoundService,
     private readonly analyticsService: AnalyticsService,
   ) {
@@ -225,12 +229,16 @@ export class LocateAllPage implements OnInit, AfterViewInit, OnDestroy {
   start() {
     if (!this.isGameAvailable) {
       this.presentAlert();
+      this.cd.markForCheck();
       this.analyticsService.logEvent('game', 'blocked_locateAll');
       return;
     }
     this.analyticsService.logEvent('game', 'start_locateAll');
     const notes = this.store.selectSnapshot(GameState.unlockedNotesSegment);
-    const frets = this.store.selectSnapshot(GameState.unlockedFretsSegment);
+    let frets = this.store.selectSnapshot(GameState.unlockedFretsSegment);
+    if (!!this.mode$.getValue()) {
+      frets = [0, this.mode$.getValue()];
+    }
 
     this.game.initRound(notes, frets);
     this.game.togglePlay();
@@ -239,7 +247,7 @@ export class LocateAllPage implements OnInit, AfterViewInit, OnDestroy {
   async presentAlert() {
     const alert = await this.alertCtrl.create({
       header: 'Uh oh',
-      message: `You've reached the maximum number games for this week.`,
+      message: `You've reached the maximum number games for this week. You can use the practice game mode or get the pro version.`,
       buttons: [
         {
           text: 'Close',
@@ -262,9 +270,9 @@ export class LocateAllPage implements OnInit, AfterViewInit, OnDestroy {
       return true;
     }
     let sum = 0;
-    const date = new Date();
-    const diff = date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1);
-    const t1 = new Date(date.setDate(diff)).getTime();
+    const date = Date.now();
+    const diff = date - (24 * 60 * 60 * 1000 * 6);
+    const t1 = new Date(diff).getTime();
     const historic = this.store.selectSnapshot(GameState.getState).historic;
     historic.forEach(h => {
       if (h.date >= t1) {
@@ -273,5 +281,14 @@ export class LocateAllPage implements OnInit, AfterViewInit, OnDestroy {
     });
     console.log({ sum });
     return sum < 10;
+  }
+
+  onModeChange(detail) {
+    this.mode$.next(+detail.value);
+  }
+
+  isOptionAvailable(nb: number) {
+    const fretsAvailable = this.store.selectSnapshot(GameState.getState).unlockedFrets;
+    return Math.max(...fretsAvailable) >= +nb;
   }
 }

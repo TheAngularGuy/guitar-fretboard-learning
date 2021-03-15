@@ -14,7 +14,7 @@ export const LEVELS = [{
   name: 'Level 3',
   min: 1000,
   max: 2000,
-  unlockedNotes: [],
+  unlockedNotes: ['F#', 'A#'],
   unlockedFrets: [6, 7, 8],
 }, {
   name: 'Level 4',
@@ -26,7 +26,7 @@ export const LEVELS = [{
   name: 'Level 5',
   min: 3500,
   max: 5500,
-  unlockedNotes: ['F#', 'A#'],
+  unlockedNotes: [],
   unlockedFrets: [13, 14, 15, 16, 17],
 }, {
   name: 'Level 6',
@@ -43,7 +43,13 @@ export const LEVELS = [{
 }, {
   name: 'Grand Master',
   min: 21000,
-  max: 9999999,
+  max: 100000000,
+  unlockedNotes: [],
+  unlockedFrets: [],
+}, {
+  name: 'Hero',
+  min: 100000000,
+  max: 900000000,
   unlockedNotes: [],
   unlockedFrets: [],
 }];

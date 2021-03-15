@@ -1,10 +1,28 @@
 <ion-header>
-  <ion-toolbar *ngIf="!game.isPlaying">
-    <ion-buttons slot="start">
-      <ion-back-button text="Games" color="fourth"  defaultHref="games"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Locate all locations</ion-title>
-  </ion-toolbar>
+  <ng-container *ngIf="!game.isPlaying">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button text="Games" color="fourth" defaultHref="games"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Locate all positions</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+      <ion-segment [style]="isIOS ? 'width: 95%; margin-bottom: 1ch' : null"
+                   [color]="isIOS ? null : 'fourth'"
+                   [value]="mode$ | async"
+                   (ionChange)="onModeChange($event.detail)">
+        <ion-segment-button [value]="0">
+          <ion-label>Random area</ion-label>
+        </ion-segment-button>
+        <ion-segment-button [value]="12" [disabled]="!isOptionAvailable(12)">
+          <ion-label>12 frets</ion-label>
+        </ion-segment-button>
+        <ion-segment-button [value]="22" [disabled]="!isOptionAvailable(22)">
+          <ion-label>22 frets</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </ng-container>
 
   <ion-toolbar *ngIf="game.isPlaying">
     <ion-buttons slot="start">
@@ -32,8 +50,11 @@
 <ion-content #content>
   <ion-card *ngIf="!game.isPlaying">
     <ion-card-header>
-      <ion-card-title>
-        Locate all positions of a note!
+      <ion-card-title *ngIf="!(mode$ | async)">
+        Locate all positions of a note in an area!
+      </ion-card-title>
+      <ion-card-title *ngIf="mode$ | async as nbFretsToPlayWith">
+        Locate all positions of a note in {{nbFretsToPlayWith}} frets!
       </ion-card-title>
     </ion-card-header>
 

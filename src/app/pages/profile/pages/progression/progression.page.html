@@ -1,0 +1,55 @@
+<ng-container *ngIf="gameState$ | async as gameState">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button text="Profile" color="fourth" defaultHref="profile"></ion-back-button>
+      </ion-buttons>
+      <ion-title> Progression</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+
+    <div class="levels-wrapper">
+      <ng-container *ngFor="let level of levels">
+        <div class="level">
+          <div class="left">
+            <div class="line">
+              <div class="fill"
+                   style="min-height:{{getPercent(gameState.globalPoints, level.min, level.max)}}%">
+              </div>
+            </div>
+            <div class="dot">
+              <ion-icon name="ellipse" size="large" color="secondary"
+                        *ngIf="gameState.globalPoints < level.min"></ion-icon>
+              <ion-icon name="checkmark-circle" size="large" color="success"
+                        *ngIf="gameState.globalPoints >= level.min"></ion-icon>
+            </div>
+          </div>
+          <div class="right">
+            <h3>
+              {{level.name}}
+            </h3>
+            <ng-container *ngIf="level.unlockedNotes.length > 0">
+              <span>Notes:</span>
+              <p class="flex">
+                <span class="note taba"
+                      [class.gray]="gameState.globalPoints < level.min"
+                      *ngFor="let note of level.unlockedNotes">{{note}}</span>
+              </p>
+            </ng-container>
+            <span>Frets:</span>
+            <p class="flex">
+              <span class="note taba"
+                    [class.gray]="gameState.globalPoints < level.min"
+                    *ngFor="let fret of level.unlockedFrets">{{fret}}</span>
+            </p>
+            <br>
+            <br>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+  </ion-content>
+</ng-container>

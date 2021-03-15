@@ -1,21 +1,34 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button color="fourth" (click)="close()">
-        <ion-icon name="close" slot="start"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>
-      Get pro
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ng-container *ngIf="choix$ | async as choix">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button color="fourth" (click)="close()">
+          <ion-icon name="close" slot="start"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>
+        Get pro
+      </ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+      <ion-segment [style]="isIOS ? 'width: 95%; margin-bottom: 1ch' : null"
+                   [color]="isIOS ? null : 'success'"
+                   [value]="choix"
+                   (ionChange)="onChoiceChange($event.detail)">
+        <ion-segment-button value="monthly">
+          <ion-label>Monthly</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="forever">
+          <ion-label>One-time payment</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content>
+  <ion-content>
 
-  <ng-container *ngIf="productMonthly$ | async as productMonthly">
-    <ng-container *ngIf="productForever$ | async as productForever">
-      <ng-container *ngIf="choix$ | async as choix">
+    <ng-container *ngIf="productMonthly$ | async as productMonthly">
+      <ng-container *ngIf="productForever$ | async as productForever">
         <div class="page">
 
 
@@ -24,13 +37,6 @@
               Fretboard Learning
               <span>pro</span>
             </h1>
-          </div>
-
-          <div class="choix">
-            <span [class.selected]="choix === 'monthly'"
-                  (click)="choix$.next('monthly')">Monthly</span>
-            <span [class.selected]="choix === 'forever'"
-                  (click)="choix$.next('forever')">One-time payment</span>
           </div>
 
           <ul>
@@ -114,6 +120,6 @@
 
       </ng-container>
     </ng-container>
-  </ng-container>
 
-</ion-content>
+  </ion-content>
+</ng-container>

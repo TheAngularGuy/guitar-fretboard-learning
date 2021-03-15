@@ -52,7 +52,8 @@
 
                 <ion-item button style="width: calc(100% + 20px); transform: translateX(-20px)"
                           (click)="userState.pro ? goToNoteDetail(null) : openOrderModal(true)">
-                  <ion-icon name="stats-chart-outline" slot="end" color="success"></ion-icon>
+                  <ion-icon name="stats-chart" slot="end" color="secondary"></ion-icon>
+                  <ion-icon name="arrow-forward-outline" slot="end" *ngIf="!isIOS"></ion-icon>
                   <ion-label>See the fretboard heat map</ion-label>
                 </ion-item>
                 <br>
@@ -62,11 +63,11 @@
                   <span class="muted">From the most well known notes to least</span>
 
                   <div class="group-container">
-                    <span class="note taba"
-                          *ngFor="let note of notes"
-                          (click)="userState.pro ? goToNoteDetail(note) : openOrderModal(true)">
-                      {{ note.name | note:prefState.notation:prefState.useFlats }}
-                    </span>
+                  <span class="note taba"
+                        *ngFor="let note of notes"
+                        (click)="userState.pro ? goToNoteDetail(note) : openOrderModal(true)">
+                    {{ note.name | note:prefState.notation:prefState.useFlats }}
+                  </span>
                   </div>
                 </div>
               </ng-container>
@@ -80,6 +81,14 @@
               </ion-card-title>
             </ion-card-header>
             <ion-card-content>
+              <ion-item button style="width: calc(100% + 20px); transform: translateX(-20px)"
+                        (click)="goToProgression()">
+                <ion-icon name="checkmark-circle" slot="end" color="secondary"></ion-icon>
+                <ion-icon name="arrow-forward-outline" slot="end" *ngIf="!isIOS"></ion-icon>
+                <ion-label>Track your level progression</ion-label>
+              </ion-item>
+              <br>
+
               <ng-container *ngIf="getLockedNotes(gameState.unlockedNotes) as lockedNotes">
                 <div class="group" *ngIf="lockedNotes.length">
                   <p class="white">Notes to unlock:</p>

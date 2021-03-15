@@ -177,7 +177,7 @@ export class IdentifyPage implements OnInit, AfterViewInit, OnDestroy {
   async presentAlert() {
     const alert = await this.alertCtrl.create({
       header: 'Uh oh',
-      message: `You've reached the maximum number games for this week.`,
+      message: `You've reached the maximum number games for this week. You can use the practice game mode or get the pro version.`,
       buttons: [
         {
           text: 'Close',
@@ -200,9 +200,9 @@ export class IdentifyPage implements OnInit, AfterViewInit, OnDestroy {
       return true;
     }
     let sum = 0;
-    const date = new Date();
-    const diff = date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1);
-    const t1 = new Date(date.setDate(diff)).getTime();
+    const date = Date.now();
+    const diff = date - (24 * 60 * 60 * 1000 * 6);
+    const t1 = new Date(diff).getTime();
     const historic = this.store.selectSnapshot(GameState.getState).historic;
     historic.forEach(h => {
       if (h.date >= t1) {

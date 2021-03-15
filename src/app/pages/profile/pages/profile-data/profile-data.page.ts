@@ -24,9 +24,14 @@ export class ProfileDataPage implements OnInit, OnDestroy {
   destroyed$ = new Subject();
   preferences: PreferencesStateModel;
 
+  get isIOS() {
+    return this.utils.isIOS;
+  }
+
   constructor(
-    private store: Store,
-    private navCtrl: NavController,
+    private readonly store: Store,
+    private readonly navCtrl: NavController,
+    private readonly utils: UtilsService,
     private readonly analyticsService: AnalyticsService,
   ) {
   }
@@ -119,5 +124,9 @@ export class ProfileDataPage implements OnInit, OnDestroy {
       this.analyticsService.logEvent('heatmap', 'locked');
     }
     this.store.dispatch(new OpenOrderModalAction());
+  }
+
+  goToProgression() {
+    this.navCtrl.navigateForward(['profile', 'progression']);
   }
 }

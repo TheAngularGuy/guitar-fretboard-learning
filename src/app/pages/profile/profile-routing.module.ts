@@ -25,6 +25,10 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
+  {
+    path: 'progression',
+    loadChildren: () => import('./pages/progression/progression.module').then( m => m.ProgressionPageModule)
+  },
 ];
 
 @NgModule({
