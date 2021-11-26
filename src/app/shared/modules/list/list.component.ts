@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { listAnimation } from 'src/app/animations/list.animation';
+import { SoundService } from '../../services/sound/sound.service';
 
 interface ListItem {
   title: string;
@@ -8,6 +9,7 @@ interface ListItem {
   img?: string;
   path?: string;
   disabled?: boolean;
+  promo?: boolean;
 }
 
 @Component({
@@ -21,9 +23,10 @@ export class ListComponent {
   @Input() list: ListItem[];
   @Output() itemClick = new Subject<ListItem>();
 
-  constructor() {}
+  constructor(private sound: SoundService) {}
 
-  onItemClicked(e: ListItem) {
-    this.itemClick.next(e);
+  onItemClicked(item: ListItem, event: MouseEvent) {
+    // this.sound.playClick();
+    this.itemClick.next(item);
   }
 }

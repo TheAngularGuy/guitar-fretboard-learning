@@ -1,48 +1,88 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, HostListener } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
+import { Device } from '@ionic-native/device/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Platform, ToastController } from '@ionic/angular';
-
-import { AnalyticsService } from './shared/services/analytics/analytics.service';
+import { Select, Store } from '@ngxs/store';
+import { InAppStoreService } from '@shared-modules/services/in-app-store/in-app-store.service';
+import { AnalyticsService } from '@shared-modules/services/mixpanel/analytics.service';
+import { GameState } from '@shared-modules/store/game/game.state';
+import {
+  PreferencesSetInvertedFretsModeAction,
+  PreferencesSetInvertedStringsModeAction,
+} from '@shared-modules/store/preferences/preferences.actions';
+import { PreferencesState } from '@shared-modules/store/preferences/preferences.state';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
-  appPages = [
-    // { title: 'Home', url: '/home', img: 'assets/imgs/home.svg' },
-    { title: 'Locate', url: '/locate-games', img: 'assets/imgs/locate.svg' },
-    { title: 'Identify', url: '/identify-games', img: 'assets/imgs/identified.svg' },
-    { title: 'Explore', url: '/explore-games', img: 'assets/imgs/explore.svg' },
-  ];
+export class AppComponent implements AfterViewInit {
+  @Select(GameState.isPlaying) isUserPlaying$: Observable<boolean>;
   morePages = [
-    { title: 'Preferences', url: '/settings' },
-    { title: 'About', url: '/about' },
+    { title: 'Settings', url: 'settings', svg: 'settings' },
+    { title: 'Tools', url: 'tools', svg: 'tools' },
+    { title: 'Games', url: 'games', svg: 'games' },
+    { title: 'Explore', url: 'explore', svg: 'explore' },
+    { title: 'Profile', url: 'profile', svg: 'user' },
   ];
   // icons set: https://www.flaticon.com/packs/seo-55
   // https://www.flaticon.com/packs/business-148
   // https://www.flaticon.com/packs/ecology-69
 
+  lastWidthRegistred: number;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    const preferences = this.store.selectSnapshot(PreferencesState.getState);
+    const currentWidth = window.innerWidth;
+    if (!this.lastWidthRegistred) {
+      return;
+    }
+    if (this.lastWidthRegistred <= 760 && currentWidth > 760) { // mobile to tablet
+      if (preferences.invertedStrings) {
+        this.store.dispatch(new PreferencesSetInvertedStringsModeAction({ invertedStrings: false }));
+        this.store.dispatch(new PreferencesSetInvertedFretsModeAction({ invertedFrets: true }));
+      }
+    } else if (this.lastWidthRegistred > 760 && currentWidth <= 760) { // tablet to mobile
+      if (preferences.invertedFrets) {
+        this.store.dispatch(new PreferencesSetInvertedFretsModeAction({ invertedFrets: false }));
+        this.store.dispatch(new PreferencesSetInvertedStringsModeAction({ invertedStrings: true }));
+      }
+    }
+    this.lastWidthRegistred = currentWidth;
+  }
+
   constructor(
+    private readonly store: Store,
     private readonly platform: Platform,
     private readonly splashScreen: SplashScreen,
     private readonly statusBar: StatusBar,
     private readonly swUpdate: SwUpdate,
-    private readonly analyticsService: AnalyticsService,
     private readonly toastController: ToastController,
+    private readonly device: Device,
+    private readonly iapService: InAppStoreService,
+    private readonly analyticsService: AnalyticsService,
   ) {
     this.initializeApp();
   }
 
+  ngAfterViewInit() {
+    this.lastWidthRegistred = window.innerWidth;
+  }
+
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
+      this.statusBar.styleBlackOpaque();
+      this.statusBar.backgroundColorByHexString('#40413e');
       this.splashScreen.hide();
       this.checkSWVersion();
+
       this.analyticsService.init();
+      this.iapService.init();
     });
   }
 
@@ -64,12 +104,17 @@ export class AppComponent {
             {
               text: 'Ignore',
               role: 'cancel',
-              handler: () => {},
+              handler: () => {
+              },
             },
           ],
         });
         toast.present();
       });
     }
+  }
+
+  tabsChanged(e: { tab: string }) {
+    this.analyticsService.setCurrentScreen(e.tab);
   }
 }

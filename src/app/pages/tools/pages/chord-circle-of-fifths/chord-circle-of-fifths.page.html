@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Circle" color="fourth" defaultHref="tools/circle-of-fifths"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Chord</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="!!exploreForm">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <div class="split-title">
+          <span>
+            <span> {{ exploreForm.get('note').value | note:preferences?.notation:preferences?.useFlats }} </span>
+            <span> {{ exploreForm.get('type').value }} </span>
+          </span>
+        </div>
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content *ngIf="dropDownOpen$ | async">
+      <p>All the chords in the standard tuning.</p>
+      <p class="warning" *ngIf="!isStandardTuning">Please note that the chords displayed here are in the standard
+        tuning.</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ng-container *ngFor="let chord of selectedChords; let i = index">
+    <app-fretboard
+            *ngIf="i === showChordNb"
+            [invertedStrings]="preferences?.invertedStrings"
+            [invertedFrets]="preferences?.invertedFrets"
+            [useFlats]="preferences?.useFlats"
+            [notation]="preferences?.notation"
+            [notes]="fretboardNotes"
+            [showSelectedNotes]="true"
+            [selectedNotes]="getSelectedNotesFromChord(chord)"
+            [selectedFrets]="[chord.fretStart, chord.fretEnd]"
+            [showAll]="false"
+            [disabledStrings]="chord.disabledStrings"
+            [barre]="chord.barre"
+            [disableClick]="true"
+            [showOnlySelectedFrets]="true"
+    ></app-fretboard>
+  </ng-container>
+  <ng-container *ngIf="!selectedChords || !selectedChords.length">
+    <p class="text-muted">
+      No available chords for the moment.
+    </p>
+  </ng-container>
+</ion-content>
+
+<ion-footer>
+  <div class="foot">
+    <ion-button color="primary"
+                *ngIf="showChordNb < selectedChords.length"
+                [disabled]="!isPrevChordAvailable"
+                (click)="prevChord()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <ion-button color="primary"
+                *ngIf="showChordNb < selectedChords.length"
+                [disabled]="!isNextChordAvailable"
+                (click)="nextChord()">
+      <ion-icon name="chevron-forward-outline"></ion-icon>
+    </ion-button>
+  </div>
+</ion-footer>

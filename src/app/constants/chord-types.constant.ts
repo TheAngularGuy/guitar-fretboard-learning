@@ -1,4 +1,4 @@
-import { ChordType } from '../models/chord.model';
+import { ChordType } from '@models/chord.model';
 
 
 export const CHORD_TYPES: ChordType[] = [
@@ -14,4 +14,5 @@ export const CHORD_TYPES: ChordType[] = [
   'add9',
   '7#9',
   '9',
+  'Diminished',
 ];

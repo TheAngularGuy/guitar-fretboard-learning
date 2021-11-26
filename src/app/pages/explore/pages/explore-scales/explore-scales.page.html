@@ -1,0 +1,107 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Explore" color="fourth"  defaultHref="explore"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Explore scales</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <div class="split-title">
+          <span> Explore scales </span>
+          <span>
+            <ion-icon class="ico" [class.rotate]="!(dropDownOpen$ | async)" (click)="toggleDropDown()" size="large" name="chevron-up-circle-outline">
+            </ion-icon>
+          </span>
+        </div>
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content *ngIf="dropDownOpen$ | async">
+      <p>Select the scale you want on any key.</p>
+      <p class="warning" *ngIf="!isStandardTuning">You can select the different segments only when using the standard tuning.</p>
+
+      <hr/>
+
+      <form class="settings" [formGroup]="exploreForm">
+        <ion-item>
+          <ion-label>Root note</ion-label>
+          <ion-select multiple="false" interface="popover" formControlName="rootNote"
+                      (ionChange)="onSelectedNotes($event.detail.value)">
+            <ion-select-option *ngFor="let note of chromaticScale" [value]="note">
+              {{note | note:preferences.notation:preferences?.useFlats}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Scale</ion-label>
+          <ion-select multiple="false" interface="popover" formControlName="scaleType"
+                      (ionChange)="onSelectedScale($event.detail.value)">
+            <ng-container *ngFor="let scale of scaleTypesList">
+              <ion-select-option *ngIf="!scale.divider" [value]="scale.key">
+                {{scale.name}}
+              </ion-select-option>
+              <ion-select-option [disabled]="true" *ngIf="scale.divider">
+                ------ {{scale.name | uppercase}} ------
+              </ion-select-option>
+            </ng-container>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Segment of the fretboard</ion-label>
+          <ion-select multiple="false" interface="popover" formControlName="segment"
+                      (ionChange)="onSelectedSegment($event.detail.value)">
+            <ion-select-option [value]="'all'">
+              All
+            </ion-select-option>
+            <ng-container *ngFor="let segment of fretsSegments">
+              <ion-select-option [value]="segment">
+                {{segment.split(',')[0]}} - {{segment.split(',')[1]}}
+              </ion-select-option>
+            </ng-container>
+          </ion-select>
+        </ion-item>
+
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <app-fretboard
+      [invertedStrings]="preferences?.invertedStrings"
+      [invertedFrets]="preferences?.invertedFrets"
+      [useFlats]="preferences?.useFlats"
+      [notation]="preferences?.notation"
+      [notes]="fretboardNotes"
+      [showSelectedNoteNames]="true"
+      [selectedNoteNames]="selectedNotes"
+      [rootNote]="rootNote"
+      [showOnlySelectedFrets]="false"
+      [selectedFrets]="isStandardTuning ? [fretStart, fretEnd] : [0, 22]"
+      [disableClick]="true"
+      [showAll]="false"
+  ></app-fretboard>
+  <br/>
+</ion-content>
+
+<ion-footer *ngIf="!!isStandardTuning">
+  <div class="foot">
+    <ion-button color="primary"
+                [disabled]="selectedSegmentIndex === 0"
+                (click)="onPrevSegment()"
+                >
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <ion-button color="primary"
+                [disabled]="selectedSegmentIndex === fretsSegments.length"
+                (click)="onNextSegment()"
+                >
+      <ion-icon name="chevron-forward-outline"></ion-icon>
+    </ion-button>
+  </div>
+</ion-footer>

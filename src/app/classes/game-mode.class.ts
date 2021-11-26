@@ -1,121 +1,101 @@
-import { FormGroup } from '@angular/forms';
-
-import { GAMES_CONFIG } from '../constants/games-config.constant';
-import { Note } from '../models/note.model';
-import { UtilsService } from '../shared/services/utils/utils.service';
+import {GAMES_CONFIG} from '@constants/games-config.constant';
+import {Note} from '@models/note.model';
+import {UtilsService} from '../shared/services/utils/utils.service';
+import {GameComplete, GameStop} from '@shared-modules/store/game/game.actions';
 
 export interface GameModeEvents {
   onBeforeStart?: () => void;
   onStart?: () => void;
   onBeforeEnd?: () => void;
   onEnd?: () => void;
+  onComplete?: () => void;
   onNotePicked?: () => void;
   onError?: (msg: string) => void;
 }
 
 export class GameMode {
-  config = { ...GAMES_CONFIG }; // cuz the values are past by reference
-  play: boolean;
-  showSettings: boolean;
-  showAll: boolean; // show all notes of the fretboard
+  config = {...GAMES_CONFIG}; // cuz the values are past by reference
+  isPlaying: boolean;
   noteToFind: { note: Note; time: number }; // time: time of appearance
-  score: { good: number; bad: number };
-  fretboardNotes: string[][];
-  form: FormGroup; // must contain [selectedNotes, fretStart, fretEnd] properties
+  score: { good: number; bad: number; total: number; };
+
   private initialized: boolean;
   private callbacks: GameModeEvents;
   private notesAppearances: { [key: string]: number } = {};
+  private _fretboardNotes: string[][];
 
-  // getters
-  getForm = () => this.form;
-  getFretboardNotes = () => this.fretboardNotes;
-  getNoteToFind = () => this.noteToFind;
-  getGameConfig = () => this.config;
-  getScoreGood = () => this.score && this.score.good;
-  getScoreBad = () => this.score && this.score.bad;
-  getShowSettings = () => this.showSettings;
-  getShowAllNotes = () => this.showAll;
-  isGamePlaying = () => this.play;
+  notesAvailable: string[];
+  fretsAvailable: [number, number];
 
   // setters
-  setShowSettings = (v: boolean) => (this.showSettings = v);
-  setShowAllNotes = (v: boolean) => (this.showAll = v);
-
-  constructor() {}
-
-  initGameMode(fretboardNotes: string[][], form: FormGroup, callbacks: GameModeEvents) {
-    if (!!fretboardNotes && !!form) {
-      if (
-        !form.value ||
-        !form.value.selectedNotes ||
-        form.value.fretStart == null ||
-        form.value.fretEnd == null
-      ) {
-        throw 'form must contain [selectedNotes, fretStart, fretEnd] properties.';
-      }
-      this.fretboardNotes = fretboardNotes;
-      this.form = form;
-      this.callbacks = callbacks;
-      this.initialized = true;
-    }
+  set fretboardNotes(notes: string[][]) {
+    this._fretboardNotes = notes;
   }
 
-  toggleShowAll(): boolean {
-    return (this.showAll = !this.showAll);
+  // getters
+  get fretboardNotes() {
+    return this._fretboardNotes;
   }
 
-  toggleShowSettings() {
-    return (this.showSettings = !this.showSettings);
+  get gameConfig() {
+    return this.config;
+  }
+
+  get scoreGood() {
+    return this.score && this.score.good;
+  };
+
+  get scoreBad() {
+    return this.score && this.score.bad;
+  };
+
+  constructor() {
+  }
+
+  initGameMode(fretboardNotes: string[][], callbacks: GameModeEvents) {
+    this.fretboardNotes = fretboardNotes;
+    this.callbacks = callbacks;
+    this.initialized = true;
+  }
+
+  initRound(notes: string[], frets: [number, number]) {
+    this.notesAvailable = notes;
+    this.fretsAvailable = frets;
   }
 
   increaseScoreGood() {
+    if (this.score.good + this.score.bad >= this.config.MAX_RANGE) {
+      return;
+    }
     this.score.good += 1;
   }
 
   increaseScoreBad() {
+    if (this.score.good + this.score.bad >= this.config.MAX_RANGE) {
+      return;
+    }
     this.score.bad += 1;
   }
 
   togglePlay(): boolean {
-    if (!this.initialized || !this.fretboardNotes || !this.form) {
-      throw 'fretboardNotes && form must be set from children';
-    }
-    if (this.form.invalid || this.form.value.fretStart >= this.form.value.fretEnd) {
-      const message =
-        this.form.value.fretStart >= this.form.value.fretEnd
-          ? 'Please set the ending fret to be greater than the starting fret.'
-          : 'Invalid form, please select at least two notes and two frets (between 0 and 17).';
-      if (this.callbacks && this.callbacks.onError) {
-        this.callbacks.onError(message);
-      }
-      return;
-    }
-    for (const n of this.form.value.selectedNotes) {
-      if (!this.checkIfNoteIsInTheFretInterval(n, this.form)) {
-        const message =
-          'The notes you selected are not all present in the interval of frets. ' +
-          `For example ${n} is not present. Please change the settings.`;
-        if (this.callbacks && this.callbacks.onError) {
-          this.callbacks.onError(message);
-        }
-        return;
-      }
-    }
-    if (!this.play) {
+    if (!this.isPlaying) {
       this.startRound();
     } else {
       this.endRound();
     }
-    return this.play;
+    return this.isPlaying;
   }
 
   startRound() {
-    this.showAll = false;
-    this.showSettings = false;
-    this.play = true;
+    if (!this.initialized || !this.fretboardNotes || !this.notesAvailable || !this.fretsAvailable) {
+      throw 'fretboardNotes, etc... must be set from page';
+    }
+
+    this.isPlaying = true;
     this.score = {
       good: 0,
       bad: 0,
+      total: this.gameConfig.MAX_RANGE,
     };
     this.setNotesAppearance();
 
@@ -132,50 +112,61 @@ export class GameMode {
     if (this.callbacks && this.callbacks.onBeforeEnd) {
       this.callbacks.onBeforeEnd();
     }
-    this.play = false;
+
+    this.isPlaying = false;
     setTimeout(() => {
       // we need a timeout so if the user is wrong on the last guess
       // the note stay in red a little so he knows he was wrong.
-      this.showAll = false;
       this.noteToFind = null;
+      this.notesAvailable = null;
+      this.fretsAvailable = null;
     }, this.config.ANIMATION_DELAY);
-    if (this.callbacks && this.callbacks.onEnd) {
-      setTimeout(() => {
-        this.callbacks.onEnd();
-      }, this.config.ANIMATION_TIME);
-    }
-  }
 
-  checkIfNoteIsInTheFretInterval(noteName: string, form: FormGroup): boolean {
-    const allSelectedNotes = [
-      ...this.fretboardNotes
-        .slice(form.value.fretStart, form.value.fretEnd + 1)
-        .join()
-        .split(','),
-    ];
-    return allSelectedNotes.includes(noteName);
+    setTimeout(() => {
+      if (this.callbacks && this.callbacks.onEnd) {
+        this.callbacks.onEnd();
+      }
+
+      if (!!this.score && this.score.bad + this.score.good === this.config.MAX_RANGE) {
+        if (this.callbacks && this.callbacks.onComplete) {
+          this.callbacks.onComplete();
+        }
+      }
+    }, this.config.ANIMATION_TIME);
   }
 
   pickRandomNote(loop = 0) {
-    const selectedNotes = this.form.value.selectedNotes;
+    if (!this.isPlaying) {
+      return;
+    }
+    if (this.score.total === this.score.good + this.score.bad) {
+      this.togglePlay();
+      return;
+    }
+
+    const selectedNotes = this.notesAvailable;
     const randomString = UtilsService.getRandomInt(0, 6);
-    const randomFret = UtilsService.getRandomInt(this.form.value.fretStart, this.form.value.fretEnd + 1);
+    const randomFret = UtilsService.getRandomInt(this.fretsAvailable[0], this.fretsAvailable[1]);
     const note = this.fretboardNotes[randomFret][randomString];
 
     if (
       !note ||
       !selectedNotes.includes(note) ||
-      this.compareWithNoteToFind(note) ||
-      this.isNotesAppearanceTooHight(note)
+      this.isSameAsNoteToFindName(note) ||
+      this.isNoteNameAppearanceTooHigh(note)
     ) {
-      return this.pickRandomNote(loop + 1);
+      if (loop > 100) {
+        console.error('Error picking random note!');
+        console.log(note, UtilsService.clone(this.notesAppearances));
+      } else {
+        return this.pickRandomNote(loop + 1);
+      }
     }
-    this.showAll = false;
     this.notesAppearances[note] = this.notesAppearances[note] ? this.notesAppearances[note] + 1 : 1;
     this.noteToFind = {
       time: Date.now(),
       note: {
-        noteName: note,
+        name: note,
         fret: randomFret,
         string: randomString,
       },
@@ -186,17 +177,17 @@ export class GameMode {
     }
   }
 
-  private compareWithNoteToFind(noteName: string) {
-    return this.noteToFind && this.noteToFind.note && noteName === this.noteToFind.note.noteName;
+  private isSameAsNoteToFindName(noteName: string) {
+    return this.noteToFind && this.noteToFind.note && noteName === this.noteToFind.note.name;
   }
 
   private setNotesAppearance() {
-    for (const n of this.form.value.selectedNotes) {
+    for (const n of this.notesAvailable) {
       this.notesAppearances[n] = 0;
     }
   }
 
-  private isNotesAppearanceTooHight(noteName: string) {
+  private isNoteNameAppearanceTooHigh(noteName: string) {
     if (!this.notesAppearances) {
       return false;
     }
@@ -213,5 +204,15 @@ export class GameMode {
       return this.notesAppearances[noteName] > maxAppearance;
     }
     return this.notesAppearances[noteName] >= maxAppearance;
+  }
+
+  private checkIfNoteIsInTheFretInterval(noteName: string, fretStart: number, fretEnd: number): boolean {
+    const allSelectedNotes = [
+      ...this.fretboardNotes
+        .slice(fretStart, fretEnd + 1)
+        .join()
+        .split(','),
+    ];
+    return allSelectedNotes.includes(noteName);
   }
 }

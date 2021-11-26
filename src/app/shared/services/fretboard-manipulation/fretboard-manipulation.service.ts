@@ -1,20 +1,29 @@
+import { Injectable } from '@angular/core';
+import { Store } from '@ngxs/store';
+import { PreferencesState, PreferencesStateModel } from '@shared-modules/store/preferences/preferences.state';
+import { tap } from 'rxjs/operators';
 import { CHROMATIC_SCALE } from 'src/app/constants/chromatic-scale.constant';
 import { FRETBOARD_STANDARD } from 'src/app/constants/fretboard-notes.constant';
+import {MAX_FRETS} from '@constants/max-frets';
 
+@Injectable()
 export class FretboardManipulationService {
-  getFretboardNotes(preferences: { tuning: string; invertedStrings: boolean }): string[][] {
+
+  constructor() {  }
+
+  static getFretboardNotes(preferences: { tuning: string; invertedStrings: boolean }): string[][] {
     let output: string[][];
 
     if (preferences.tuning.toLowerCase().includes('standard')) {
       output = FRETBOARD_STANDARD;
     } else {
-      output = this.customTuningFretboardFactory(preferences.tuning);
+      output = FretboardManipulationService.customTuningFretboardFactory(preferences.tuning);
     }
 
     return output;
   }
 
-  private customTuningFretboardFactory(tuning: string): string[][] {
+  static customTuningFretboardFactory(tuning: string): string[][] {
     const output = [];
     const nut = tuning
       .toUpperCase()
@@ -26,14 +35,14 @@ export class FretboardManipulationService {
     }
     output.push(nut);
 
-    for (let i = 1; i <= 17; i++) {
-      const fret = output[i - 1].map(n => this.getNextNote(n));
+    for (let i = 1; i <= MAX_FRETS; i++) {
+      const fret = output[i - 1].map(n => FretboardManipulationService.getNextNote(n));
       output.push(fret);
     }
     return output;
   }
 
-  private getNextNote(noteName: string): string {
+  static getNextNote(noteName: string): string {
     const scale = [...CHROMATIC_SCALE].sort();
     if (!scale.includes(noteName)) {
       throw { error: 'error parsing tunings noteName' };

@@ -1,6 +1,13 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "@shared-modules/*": ["src/app/shared/*"],
+      "@constants/*": ["src/app/constants/*"],
+      "@models/*": ["src/app/models/*"],
+      "@classes/*": ["src/app/classes/*"],
+      "@pages/*": ["src/app/pages/*"]
+    },
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
@@ -17,7 +24,7 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

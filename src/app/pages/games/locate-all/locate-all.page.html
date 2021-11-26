@@ -1,0 +1,122 @@
+<ion-header>
+  <ng-container *ngIf="!game.isPlaying">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button text="Games" color="fourth" defaultHref="games"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Locate all positions</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+      <ion-segment [style]="isIOS ? 'width: 95%; margin-bottom: 1ch' : null"
+                   [color]="isIOS ? null : 'fourth'"
+                   [value]="mode$ | async"
+                   (ionChange)="onModeChange($event.detail)">
+        <ion-segment-button [value]="0">
+          <ion-label>Random area</ion-label>
+        </ion-segment-button>
+        <ion-segment-button [value]="12" [disabled]="!isOptionAvailable(12)">
+          <ion-label>12 frets</ion-label>
+        </ion-segment-button>
+        <ion-segment-button [value]="22" [disabled]="!isOptionAvailable(22)">
+          <ion-label>22 frets</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </ng-container>
+
+  <ion-toolbar *ngIf="game.isPlaying">
+    <ion-buttons slot="start">
+      <ion-button (click)="game.togglePlay()" color="fourth">
+        <ion-icon slot="start" name="stop">
+        </ion-icon>
+        Stop
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="score">
+      <span class="good">
+        <b [@popAnimation]="game.score.good">{{game.score.good}}</b>
+      </span>
+        <span class="all">
+        <b>{{game.score.bad + game.score.good}} </b> /
+          {{game.config.MAX_RANGE}}
+      </span>
+      </div>
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #content>
+  <ion-card *ngIf="!game.isPlaying">
+    <ion-card-header>
+      <ion-card-title *ngIf="!(mode$ | async)">
+        Locate all positions of a note in an area!
+      </ion-card-title>
+      <ion-card-title *ngIf="mode$ | async as nbFretsToPlayWith">
+        Locate all positions of a note in {{nbFretsToPlayWith}} frets!
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content class="game-mode">
+      <p class="game-mode-result">
+        <ng-container *ngIf="scoreHistoric?.length !== game.gameConfig.MAX_RANGE; else alreadyPlayedOneTime">
+          Press the start button to begin
+        </ng-container>
+        <ng-template #alreadyPlayedOneTime>
+          <span class="result n{{game.score.good}}">
+            <b>{{ game.score.good }}</b> out of {{ scoreHistoric?.length }}
+          </span>
+          <br>
+          <small><b>{{ averageTime | number }}</b> seconds per group of notes.</small>
+        </ng-template>
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <br/>
+
+  <div class="start">
+    <app-btn color="secondary"
+             style="color: black !important;"
+             pulsate
+             *ngIf="!game.isPlaying"
+             [disabled]="!!game.noteToFind"
+             (clicked)="start()">
+      START
+    </app-btn>
+  </div>
+
+  <app-fretboard
+          *ngIf="game.isPlaying"
+          [invertedStrings]="preferences?.invertedStrings"
+          [invertedFrets]="preferences?.invertedFrets"
+          [useFlats]="preferences?.useFlats"
+          [notation]="preferences?.notation"
+          [notes]="game.fretboardNotes"
+          [showAll]="false"
+          [showSelectedNotes]="true"
+          [selectedNotes]="selectedNotes$ | async"
+          [selectedFrets]="game.fretsAvailable"
+          [selectedNoteNames]="game.noteToFind ? [game.noteToFind.note.name] : null"
+          (noteClick)="onNoteClicked($event)"
+  ></app-fretboard>
+  <br/>
+</ion-content>
+
+<ion-footer *ngIf="game.isPlaying">
+  <div class="series">
+    <div class="series-dot"
+         [ngClass]="{'series-dot-success': dot === true, 'series-dot-fail': dot === false}"
+         *ngFor="let dot of seriesDisplay">
+      <div class="series-dot-circle"></div>
+    </div>
+  </div>
+
+  <div class="playing" @noEnterAnimation>
+    <div class="note" [@popAnimation]="game.noteToFind?.note?.name">
+      {{game.noteToFind?.note?.name | note:preferences?.notation:preferences?.useFlats}}
+    </div>
+  </div>
+</ion-footer>
+

@@ -7,14 +7,22 @@ import { IonicModule } from '@ionic/angular';
 import { ProfilePageRoutingModule } from './profile-routing.module';
 
 import { ProfilePage } from './profile.page';
+import {GlobalModule} from '@shared-modules/modules/global/global.module';
+import {AuthGuardService} from '@pages/profile/guards/loged-in.guard';
+import {NgxsModule} from '@ngxs/store';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ProfilePageRoutingModule
+    ProfilePageRoutingModule,
+    GlobalModule,
+
+
+    NgxsModule.forFeature(),
   ],
-  declarations: [ProfilePage]
+  declarations: [ProfilePage],
+  providers: [AuthGuardService]
 })
 export class ProfilePageModule {}

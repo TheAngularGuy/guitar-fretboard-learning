@@ -26,7 +26,7 @@ export const listAnimation = trigger('listAnimation', [
       [
         style({
           opacity: 0,
-          transform: 'translatex(+5%)',
+          transform: 'translatey(+5%)',
         }),
         stagger(75, [
           group([
@@ -34,7 +34,7 @@ export const listAnimation = trigger('listAnimation', [
               '250ms',
               style({
                 opacity: '*',
-                transform: 'translatex(0%)',
+                transform: 'translatey(0%)',
               }),
             ),
           ]),

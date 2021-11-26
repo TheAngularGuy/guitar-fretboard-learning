@@ -1,5 +1,7 @@
 {
   "name": "fretboard-learning",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Tools" color="fourth"  defaultHref="tools"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Tuner</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ng-container *ngIf="hasMicPermission$ | async; else askPermissionTemplate">
+    <ng-container *ngIf="lastNote$ | async as note;">
+      <ion-card>
+        <ion-card-content>
+          <div class="tuner">
+            <div class="chromatic">
+              <app-chromatic-wheel [note]="note"
+              ></app-chromatic-wheel>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <div class="canva">
+        <div class="grid"></div>
+        <div class="left">♭</div>
+        <div class="right">♯</div>
+        <div class="cents" [style.left]="'calc(' + (note.cents + 50) + '%'  + ' - 23px)'">
+          {{note.cents}}
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #askPermissionTemplate>
+    <ion-card>
+      <ion-card-content>
+        <p>
+          To use the tunner <b class="taba">Fretboard learning</b> need access to your microphone.
+        </p>
+        <p class="warning" *ngIf="isIOS()">
+          The tuner works only on IOS 14.3 or upper.
+        </p>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
+
+  <ion-card *ngIf="anErrorOccured$ | async">
+    <ion-card-header>
+      <ion-card-title>
+        Oups :(
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p class="warning">
+        An error occured while initializing the tuner. Please contact us.
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <br>
+</ion-content>

@@ -141,6 +141,20 @@ export const D_CHORDS: Chord[] = [
     barre: { fret: 10, stringEnd: 5, stringStart: 0 },
   },
 
+  // ----------------------------------
+  {
+    type: 'Diminished',
+    fretStart: 5,
+    fretEnd: 8,
+    notes: [
+      { fret: 5, string: 4 },
+      { fret: 6, string: 3 },
+      { fret: 7, string: 2 },
+      { fret: 6, string: 1 },
+    ],
+    disabledStrings: [0, 5],
+  },
+
   {
     type: '5',
     fretStart: 0,

@@ -1,0 +1,94 @@
+<div class="timer">
+  <div class="line" #timer></div>
+</div>
+
+<button class="close" (click)="close()">
+  <ion-icon name="chevron-down-outline" size="large"></ion-icon>
+</button>
+
+<div class="wrapper" (click)="clearTimmer()">
+
+  <div class="illu">
+    <img src="assets/imgs/progress.svg"
+         alt="progress illustration">
+  </div>
+
+  <div class="placeholder"></div>
+
+  <p class="score">
+    {{ level?.name }} &nbsp; — &nbsp; <b>{{current}}</b> &nbsp; <img src="assets/imgs/guitar-pick.svg"
+                                                                     alt="level coins loge"/>
+  </p>
+
+  <div class="progress">
+    <div class="line" #line></div>
+  </div>
+  <p class="min-max">
+    <span>{{level?.min}}</span>
+    <span>{{level?.max}}</span>
+  </p>
+
+  <ng-container *ngIf="showNewLevel">
+    <div class="new-level" @popAnimation>
+      {{level?.name}}
+    </div>
+    <hr>
+    <div class="slides" @delayAnimation>
+      <ion-icon (click)="slides.slidePrev()" *ngIf="isThereMultipleSlides"
+                name="chevron-back-outline" size="large" class="left"></ion-icon>
+      <ion-icon (click)="slides.slideNext()" *ngIf="isThereMultipleSlides"
+                name="chevron-forward-outline" size="large" class="right"></ion-icon>
+
+      <ng-container *ngIf="!(level?.unlockedNotes?.length || level?.unlockedFrets.length)">
+        <div class="unlocked-stuff">
+          <p>
+            Congratulation on your new level!
+          </p>
+        </div>
+      </ng-container>
+      <ion-slides [pager]="!!isThereMultipleSlides" #slides>
+        <ion-slide *ngIf="level?.unlockedNotes?.length">
+          <div class="unlocked-stuff">
+            <p>
+              Congratulation, you've unlocked new notes!
+            </p>
+            <div class="notes">
+              <ion-button color="success" *ngFor="let n of level?.unlockedNotes">
+                {{n | note:preferences?.notation:preferences?.useFlats}}
+              </ion-button>
+            </div>
+          </div>
+        </ion-slide>
+        <ion-slide *ngIf="level?.unlockedFrets?.length">
+          <div class="unlocked-stuff">
+            <p>
+              <span *ngIf="!level?.unlockedNotes?.length">Congratulation</span>
+              <span *ngIf="!!level?.unlockedNotes?.length">Also</span>
+              , you've unlocked new frets!
+            </p>
+            <div class="notes">
+              <ion-button color="success" *ngFor="let f of level?.unlockedFrets">
+                {{f}}
+              </ion-button>
+            </div>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+  </ng-container>
+
+  <p class="encouragement" *ngIf="!showNewLevel && level">
+    <span *ngIf="level.max - current > 0; else wellDoneTemplate">
+      <span *ngIf="(current - level.min) > level.max / 1.75">Only</span> {{ level.max - current }}
+      <img src="assets/imgs/guitar-pick.svg" alt="level coins loge"/>
+      until the next level. <br> Keep going!
+    </span>
+    <ng-template #wellDoneTemplate>
+      Well done, you are progressing
+    </ng-template>
+  </p>
+
+  <!--<ion-button class="ok" color="success" expand="block" (click)="close()">
+    OK
+  </ion-button>-->
+</div>

@@ -3,13 +3,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { NgxsModule } from '@ngxs/store';
-
-import {
-  CustomTuningModalModule,
-} from './modals/custom-tuning-modal/custom-tuning-modal.module';
 import { SettingsPageRoutingModule } from './settings-routing.module';
 import { SettingsPage } from './settings.page';
 import { SettingsState } from './store/settings.state';
+import {GlobalModule} from '@shared-modules/modules/global/global.module';
 
 @NgModule({
   imports: [
@@ -18,12 +15,12 @@ import { SettingsState } from './store/settings.state';
     ReactiveFormsModule,
     IonicModule,
     SettingsPageRoutingModule,
-
-    CustomTuningModalModule,
+    GlobalModule,
 
     NgxsModule.forFeature([SettingsState]),
   ],
   declarations: [SettingsPage],
   providers: [ModalController],
 })
-export class SettingsPageModule {}
+export class SettingsPageModule {
+}

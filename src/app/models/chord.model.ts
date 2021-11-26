@@ -19,6 +19,7 @@ export interface Chord {
 export type ChordType =
   | 'Major'
   | 'Minor'
+  | 'Diminished'
   | '5'
   | '7'
   | 'maj7'

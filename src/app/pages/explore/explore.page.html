@@ -1,0 +1,19 @@
+<ng-container *ngIf="userState$ | async as userState">
+
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Explore</ion-title>
+      <ion-buttons slot="end">
+        <ion-button color="fourth" (click)="openOrderModal()" *ngIf="!userState.pro">
+          Get pro
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <div class="page">
+      <app-list [list]="gameModes" (itemClick)="onItemClicked($event)"></app-list>
+    </div>
+  </ion-content>
+</ng-container>

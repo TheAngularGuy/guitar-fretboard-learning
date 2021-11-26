@@ -1,0 +1,101 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="fourth" (click)="close()">
+        <ion-icon name="close" slot="start"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Quick tour
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ng-container *ngIf="preferencesState$ | async as preferencesState">
+  <ng-container *ngIf="gameState$ | async as gameState">
+
+    <ion-content [fullscreen]="true">
+      <ion-slides [pager]="true">
+        <ion-slide>
+          <div class="slide slide1">
+            <img src="assets/imgs/icon.png"/>
+            <h1 class="taba">
+              Welcome to
+              <br>
+              Fretboard Learning
+            </h1>
+            <p>
+              <span class="taba">Fretboard Learning</span> is a true guitar companion. You can practice and learn the
+              notes of your guitar in your favorite tuning, learn any scale of any key and any chord over the fretboard
+              at any time.
+              <br>
+              <br>
+              This app is developed and maintained by a guitar player just like you. So, all suggestions you might have
+              to improve it are welcome.
+              <br>
+              <br>
+            </p>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <div class="slide slide2">
+
+            <h1 class="taba">How it works?</h1>
+            <p>
+              You'll be starting with few notes and frets to play with in the begining.
+              <br>
+              To unlock the rest of the notes and
+              frets you have to
+              play any of the game modes available to gain points.
+            </p>
+            <p class="label">
+              Right now you can play with the following notes:
+            </p>
+            <div class="group-container">
+                    <span class="note taba" *ngFor="let note of gameState.unlockedNotes">
+                      {{ note | note:preferencesState.notation:preferencesState.useFlats }}
+                    </span>
+            </div>
+            <p class="label">
+              And the following frets:
+            </p>
+            <app-fretboard [notes]="getFretboardNotes(preferencesState)"
+                           [selectedFrets]="getSelectedFrets(gameState)"
+                           [showAll]="false"
+                           [disableClick]="true"
+                           [invertedStrings]="preferencesState?.invertedStrings"
+                           [invertedFrets]="preferencesState?.invertedFrets"
+                           [useFlats]="preferencesState?.useFlats"
+                           [notation]="preferencesState?.notation"
+            ></app-fretboard>
+
+            <br>
+            <br>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <div class="slide slide3">
+            <img src="assets/imgs/tuto-ok.svg"/>
+            <h1 class="taba">
+              Ready to Play?
+            </h1>
+            <p>
+              Play games, practice or explore the fretboard notes, chords and scales. It's up to you to use
+              <span class="tab">Fretboard Learning</span> in the
+              way you like to get the most out of it.
+            </p>
+            <ion-button fill="clear" (click)="close()">
+              Continue
+              <ion-icon slot="end" name="arrow-forward"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-slide>
+
+      </ion-slides>
+
+    </ion-content>
+
+  </ng-container>
+</ng-container>

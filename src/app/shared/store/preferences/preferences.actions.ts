@@ -22,3 +22,8 @@ export class PreferencesSetTunningAction {
   public static readonly type = '[Preferences] set tunning';
   constructor(public payload: { tuning: string }) {}
 }
+
+export class PreferencesSetNotationAction {
+  public static readonly type = '[Preferences] set notation';
+  constructor(public payload: { notation: 'english' | 'german' | 'latin' | 'byzantine' | 'japanese' }) {}
+}

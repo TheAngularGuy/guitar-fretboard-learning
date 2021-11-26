@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Settings" color="fourth"  defaultHref="settings"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Let's talk</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="page">
+    <h1>Hey there!</h1>
+    <div>
+      <p>
+        You like <span class="taba">Fretboard learning</span> or you have a great idea to improve it?
+        Give us your feedback by clicking on one of the
+        social media below:
+      </p>
+    </div>
+  </div>
+
+  <ion-list>
+    <ion-item button (click)="goTwitter()">
+      <ion-label> Twitter </ion-label>
+      <ion-icon name="logo-twitter" slot="end"></ion-icon>
+    </ion-item>
+    <ion-item button (click)="goLinkedIn()">
+      <ion-label> LinkedIn </ion-label>
+      <ion-icon name="logo-linkedin" slot="end"></ion-icon>
+    </ion-item>
+  </ion-list>
+
+  <!--<br /><br />
+  <p class="text-muted">
+    <br />
+    App version: {{appVersion}}
+  </p>-->
+</ion-content>

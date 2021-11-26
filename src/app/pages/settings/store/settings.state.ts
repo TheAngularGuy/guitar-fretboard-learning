@@ -2,6 +2,7 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
 import { SettingsAddCustomTuningAction } from './settings.actions';
+import { Injectable } from '@angular/core';
 
 enum stateEnums {
   customTunings = 'settings_customTunings',
@@ -11,6 +12,7 @@ export interface SettingsStateModel {
   customTunings: string[];
 }
 
+@Injectable()
 @State<SettingsStateModel>({
   name: 'settings',
   defaults: {
@@ -21,6 +23,11 @@ export class SettingsState {
   @Selector()
   public static getState(state: SettingsStateModel) {
     return state;
+  }
+
+  @Selector()
+  public static getCustomTunings(state: SettingsStateModel) {
+    return state?.customTunings;
   }
 
   @Action(SettingsAddCustomTuningAction)

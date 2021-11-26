@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Profile" color="fourth" defaultHref="profile"></ion-back-button>
+    </ion-buttons>
+    <ion-title> Heat map </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ng-container *ngIf="userState$ | async as userState">
+  <ng-container *ngIf="preferencesState$ | async as prefState">
+    <ng-container *ngIf="gameState$ | async as gameState">
+
+      <ion-content>
+        <ng-container *ngIf="getScoreByCurrentTuning(prefState, gameState) as scoreByTuning">
+          <ng-container *ngIf="getNoteScore(scoreByTuning.score.notes) as noteScore">
+
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title *ngIf="noteScore.name; else globalHeatMap">
+                  {{ noteScore.name | note:prefState.notation:prefState.useFlats  }}
+                </ion-card-title>
+                <ng-template #globalHeatMap>
+                  <ion-card-title>
+                    All the unlocked frets
+                  </ion-card-title>
+                </ng-template>
+                <ion-card-subtitle> {{ scoreByTuning.tuning }} tuning</ion-card-subtitle>
+              </ion-card-header>
+
+              <ion-card-content>
+                <ion-list>
+                  <!--<ion-item>
+                    <ion-label> Note score:</ion-label>
+                    <span> {{ noteScore.value }} </span>
+                  </ion-item>-->
+                  <ion-item>
+                    <ion-label> Right:</ion-label>
+                    <span> {{ noteScore.good }} </span>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label> Wrong:</ion-label>
+                    <span> {{ noteScore.bad }} </span>
+                  </ion-item>
+
+                </ion-list>
+              </ion-card-content>
+
+            </ion-card>
+
+            <app-fretboard
+                [notes]="getFretboardNotes(prefState)"
+                [bgColors]="getFretboardColors(prefState, noteScore.placements, gameState.unlockedFrets[0], gameState.unlockedFrets[gameState.unlockedFrets.length-1])"
+                [invertedStrings]="prefState?.invertedStrings"
+                [invertedFrets]="prefState?.invertedFrets"
+                [useFlats]="prefState?.useFlats"
+                [notation]="prefState?.notation"
+                [disableClick]="true"
+                [showAll]="false"
+                [selectedFrets]="[gameState.unlockedFrets[0], gameState.unlockedFrets[gameState.unlockedFrets.length-1]]"
+            >
+            </app-fretboard>
+
+            <!--<p *ngFor="let placement of noteScore.placements">{{ placement | json }}</p>-->
+
+          </ng-container>
+        </ng-container>
+
+      </ion-content>
+    </ng-container>
+  </ng-container>
+</ng-container>

@@ -1,20 +1,22 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, Output } from '@angular/core';
-import { Subject } from 'rxjs';
-import { Barre } from 'src/app/models/chord.model';
+import {ChangeDetectionStrategy, Component, Input, OnInit, Output} from '@angular/core';
+import {Subject} from 'rxjs';
+import {Barre} from 'src/app/models/chord.model';
 
-import { Note } from '../../../models/note.model';
+import {Note} from '@models/note.model';
 
 @Component({
   selector: 'app-fretboard',
   templateUrl: './fretboard.component.html',
   styleUrls: ['./fretboard.component.scss'],
+  animations: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FretboardComponent implements OnInit {
   @Input() disabledStrings: number[];
   @Input() selectedFrets: [number, number];
-  @Input() showOnlySelectedFrets: boolean;
+  @Input() showOnlySelectedFrets = true;
   @Input() selectedNoteNames: string[];
+  @Input() rootNote: string;
   @Input() showSelectedNoteNames: boolean;
   @Input() selectedNotes: Note[];
   @Input() showSelectedNotes: boolean;
@@ -24,25 +26,34 @@ export class FretboardComponent implements OnInit {
   @Input() invertedStrings: boolean;
   @Input() invertedFrets: boolean;
   @Input() notes: string[][];
+  @Input() bgColors: string[][];
   @Input() barre: Barre;
+  @Input() useFlats: boolean;
+  @Input() notation: string;
   @Output() noteClick: Subject<Note> = new Subject();
 
-  constructor() {}
+  constructor() {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
-  onNoteClicked(noteObject: Note, noteElement: any): void {
+  onNoteClicked(noteObject: Note, noteElement: HTMLElement): void {
     if (this.disableClick) {
       return;
     }
     this.noteClick.next(noteObject);
-    if (this.showAll || (this.showSelectedNoteNames && this.isGoodNoteName(noteObject.noteName))) {
+    if (this.showAll || (this.showSelectedNoteNames && this.isGoodNoteName(noteObject.name))) {
       return;
     }
-    noteElement.style.opacity = 1;
+    noteElement.classList.add('note-show');
 
     setTimeout(() => {
-      noteElement.style.opacity = 0;
+      if (!!this.showSelectedNotes &&
+        this.selectedNotes.find(n => n.name === noteObject.name && n.fret === noteObject.fret && n.string === noteObject.string)) {
+        return;
+      }
+      noteElement.classList.remove('note-show');
     }, 1000);
   }
 
@@ -64,7 +75,7 @@ export class FretboardComponent implements OnInit {
 
   showNote(n: Note) {
     return (
-      (this.showSelectedNoteNames && this.isGoodNoteName(n.noteName)) ||
+      (this.showSelectedNoteNames && this.isGoodNoteName(n.name)) ||
       (this.showSelectedNotes && this.isGoodNote(n))
     );
   }

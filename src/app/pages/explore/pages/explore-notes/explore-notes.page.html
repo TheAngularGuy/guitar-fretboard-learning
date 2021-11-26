@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Explore" color="fourth"  defaultHref="explore"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Fretboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <div class="split-title">
+          <span> Explore the fretboard </span>
+          <span>
+            <ion-icon class="ico" [class.rotate]="!(dropDownOpen$ | async)" (click)="toggleDropDown()" size="large" name="chevron-up-circle-outline">
+            </ion-icon>
+          </span>
+        </div>
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content *ngIf="dropDownOpen$ | async">
+      <p>You can explore the fretboard, show or hide the notes as you wish.</p>
+
+      <hr />
+
+      <form class="settings" [formGroup]="exploreForm">
+        <ion-item>
+          <ion-label>Notes</ion-label>
+          <ion-select multiple="true" formControlName="selectedNotes" (ionChange)="onSelectedNotes($event.detail.value)">
+            <ion-select-option *ngFor="let note of chromaticScale" [value]="note">
+              {{note | note:preferences?.notation:preferences?.useFlats}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>From fret number</ion-label>
+          <ion-select multiple="false" interface="popover" formControlName="fretStart" (ionChange)="onSelectedFretStart($event.detail.value)">
+            <ion-select-option *ngFor="let f of frets" [value]="f"> {{f}} </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>To fret number</ion-label>
+          <ion-select multiple="false" interface="popover" formControlName="fretEnd" (ionChange)="onSelectedFretEnd($event.detail.value)">
+            <ion-select-option *ngFor="let f of frets" [value]="f"> {{f}} </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <app-fretboard
+    [invertedStrings]="preferences?.invertedStrings"
+    [invertedFrets]="preferences?.invertedFrets"
+    [useFlats]="preferences?.useFlats"
+    [notation]="preferences?.notation"
+    [notes]="fretboardNotes"
+    [showSelectedNoteNames]="true"
+    [selectedNoteNames]="exploreForm.get('selectedNotes').value"
+    [selectedFrets]="[exploreForm?.value.fretStart, exploreForm?.value.fretEnd]"
+    [showAll]="false"
+  ></app-fretboard>
+  <br />
+</ion-content>

@@ -1,0 +1,60 @@
+.settings {
+  ion-item {
+    ion-input {
+      text-align: end;
+    }
+  }
+  @media screen and (min-width: 761px) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
+
+    ion-item {
+      width: 100%;
+
+      ion-input {
+        text-align: end;
+      }
+    }
+  }
+}
+
+.split-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .ico {
+    transition: transform 250ms ease-in-out;
+
+    &.rotate {
+      transform-origin: center;
+      transform: rotate(-180deg);
+    }
+  }
+}
+
+.small {
+  transform: scale(.7);
+}
+
+.warning {
+  border-radius: 3px;
+  overflow: hidden;
+  background: rgba(var(--ion-color-danger-rgb), 0.15);
+  padding: 1rem;
+}
+
+.foot {
+  background: #31322F;
+  display: flex;
+  align-items: center;
+  padding: .5rem .5rem .5rem 0;
+  justify-content: center;
+
+  ion-button {
+    width: 100%;
+    margin: 0 0 0 0.5rem;
+  }
+}
+

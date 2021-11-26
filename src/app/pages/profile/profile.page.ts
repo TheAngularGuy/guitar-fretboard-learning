@@ -1,13 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
+import {Store} from '@ngxs/store';
+import {Subject} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-profile',
-  templateUrl: './profile.page.html',
-  styleUrls: ['./profile.page.scss'],
+  template: `<ion-router-outlet></ion-router-outlet>`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage implements OnInit, OnDestroy {
+  destroyed$ = new Subject();
 
-  constructor() { }
+
+  constructor() {
+  }
+
+  ngOnDestroy() {
+    this.destroyed$.next(true);
+  }
 
   ngOnInit() {
   }

@@ -1,6 +1,14 @@
+import { Injectable } from '@angular/core';
+import { Device } from '@ionic-native/device/ngx';
+import { Platform } from '@ionic/angular';
+
+@Injectable({
+  providedIn: 'root',
+})
 export class UtilsService {
-  private _isIOS: boolean;
-  private _isPWA: boolean;
+
+  constructor(private device: Device, private platform: Platform) {
+  }
 
   /**
    * Get item from Local Storage
@@ -16,6 +24,15 @@ export class UtilsService {
     localStorage.setItem(key, JSON.stringify(val));
   }
 
+  static shuffleArray(arr: any[]) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
   /**
    * Vibrate using the web api
    */
@@ -29,38 +46,27 @@ export class UtilsService {
    * Returns a random number between min (inclusive) and max (exclusive)
    */
   static getRandomInt(min: number, max: number): number {
-    return Math.floor(Math.random() * (max - min) + min);
+    return Math.round(Math.random() * (max - min) + min);
+  }
+
+  static clone<T>(ob: T): T {
+    return JSON.parse(JSON.stringify(ob));
+  }
+
+  static openLink(url: string) {
+    const win = window.open(url, '_blank');
+    win.focus();
   }
 
   /**
    * Returns true if app runs on IOS
    */
-  isIOS(): boolean {
-    if (this._isIOS != null) {
-      return this._isIOS;
-    }
-    this._isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    return this._isIOS;
+  get isIOS(): boolean {
+    return this.platform.is('ios');
   }
 
-  /**
-   * Returns true if app is a PWA
-   */
-  isPWA(): boolean {
-    if (this._isPWA != null) {
-      return this._isPWA;
-    }
-    this._isPWA =
-      window.matchMedia('(display-mode: standalone)').matches ||
-      (window.navigator as any).standalone ||
-      document.referrer.includes('android-app://');
-    return this._isPWA;
+  get isAndroid(): boolean {
+    return this.platform.is('android');
   }
 
-  /**
-   * Returns true if app is a PWA on IOS
-   */
-  isIOSPWA(): boolean {
-    return this._isIOS && this._isPWA;
-  }
 }

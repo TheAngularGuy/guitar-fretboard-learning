@@ -1,41 +1,41 @@
-<ion-app>
-  <ion-split-pane contentId="main-content" [disabled]="true">
+<ion-app class="no-overflow">
+  <!--<ion-split-pane contentId="main-content" [disabled]="true">
     <ion-menu contentId="main-content" type="overlay" [swipeGesture]="false">
       <ion-content [scrollY]="false" [scrollX]="false">
         <div class="header">
-          <img src="assets/imgs/acoustic-guitar.svg" alt="guitar logo" height="100" />
-          &nbsp;
-          <p>
-            fretboard <br />
-            learning
-          </p>
+          <div>
+
+            <img src="assets/imgs/acoustic-guitar.svg" alt="guitar logo" height="100"/>
+            <p>
+              fretboard <br/>
+              learning
+            </p>
+          </div>
+          <ion-button (click)="login()">Login</ion-button>
+          <ion-button (click)="logout()">Logout</ion-button>
         </div>
 
         <ion-list>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item
-              ion-button
-              [routerDirection]="'root'"
-              [routerLink]="[p.url]"
-              [detail]="false"
-              lines="none"
+            <ion-item [routerDirection]="'root'"
+                      [routerLink]="[p.url]"
+                      [detail]="false"
+                      lines="none"
             >
-              <img [src]="p.img" height="40" style="margin-right: 3ch;" />
+              <img [src]="p.img" height="40" style="margin-right: 3ch;"/>
               <ion-label style="font-size: 1.3rem; min-height: 4ch; line-height: 4ch;">
                 {{ p.title }}
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
 
-          <br />
-          <br />
+          <br/>
+          <br/>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of morePages">
-            <ion-item
-              ion-button
-              [detail]="false"
-              [routerDirection]="'root'"
-              [routerLink]="[p.url]"
-              lines="none"
+            <ion-item [detail]="false"
+                      [routerDirection]="'root'"
+                      [routerLink]="[p.url]"
+                      lines="none"
             >
               <ion-label>
                 {{ p.title }}
@@ -45,6 +45,20 @@
         </ion-list>
       </ion-content>
     </ion-menu>
-    <ion-router-outlet id="main-content"></ion-router-outlet>
-  </ion-split-pane>
+  </ion-split-pane>-->
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+
+  <ion-tabs (ionTabsDidChange)="tabsChanged($event)">
+    <ion-tab-bar style="height: 65px"
+                 translucent="false"
+                 slot="bottom"
+                 [class.hide]="(isUserPlaying$ | async)">
+      <ion-tab-button *ngFor="let p of morePages" [tab]="p.url">
+        <img src="../assets/imgs/{{p.svg}}.svg" alt="games icon" height="34">
+        <ion-label>{{p.title}}</ion-label>
+        <!--<ion-badge>6</ion-badge>-->
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-app>
+

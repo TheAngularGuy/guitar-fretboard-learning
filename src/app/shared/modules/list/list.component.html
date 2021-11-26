@@ -1,20 +1,14 @@
-<ng-container>
-  <div class="page-list" [@listAnimation]="list.length">
-    <button
-      class="page-list-item"
-      [ngClass]="{ 'page-list-item-disabled': item.disabled }"
-      *ngFor="let item of list"
-      (click)="onItemClicked(item)"
-    >
-      <div class="page-list-item-inside">
-        <div class="page-list-item-image">
-          <img [src]="item.img" [alt]="item.title" />
-        </div>
-        <div class="page-list-item-title">
-          {{ item.title }}
-        </div>
-        <div class="page-list-item-subtitle" [innerHTML]="item.subtitle"></div>
-      </div>
-    </button>
-  </div>
-</ng-container>
+<div class="btn-list" [@listAnimation]="list.length">
+  <button class="btn" *ngFor="let item of list" (click)="onItemClicked(item, $event)" [class.promo]="item.promo" style="display: flex">
+    <span class="btn-left">
+      <span class="title">
+        {{ item.title }}
+      </span>
+      <span class="subtitle" [innerHTML]="item.subtitle">
+      </span>
+    </span>
+    <span class="btn-right">
+      <img [src]="item.img" height="80" [alt]="item.title"/>
+    </span>
+  </button>
+</div>
