@@ -1,0 +1,132 @@
+
+.tuner {
+  width: 100%;
+  display: flex;
+  place-items: center;
+  place-content: center;
+
+  .note {
+    font-variant: tabular-nums;
+    position: relative;
+    display: inline-block;
+    font-size: 4rem;
+    color: var(--ion-text-color);
+  }
+
+  .octave {
+    position: absolute;
+    bottom: 1ch;
+    right: 0;
+    color: var(--ion-text-color);
+    font-size: .8rem;
+  }
+}
+
+.canva {
+  width: 90%;
+  max-width: 950px;
+  margin: 2rem auto 0;
+  border-radius: 10px;
+  position: relative;
+  height: 130px;
+  overflow: hidden;
+  background-image: linear-gradient(to right,
+    var(--ion-color-light) 0%,
+    var(--ion-color-light) 49%,
+    var(--ion-color-primary) 49%,
+    var(--ion-color-primary) 51%,
+    var(--ion-color-light) 51%,
+    var(--ion-color-light) 100%
+  );
+
+  .left {
+    position: absolute;
+    top: 1ch;
+    left: 1ch;
+    font-size: 2rem;
+  }
+
+  .right {
+    position: absolute;
+    top: 1ch;
+    right: 1ch;
+    font-size: 2rem;
+  }
+
+  .cents {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    place-items: center;
+    height: 46px;
+    width: 46px;
+    border-radius: 50%;
+    background-color: var(--ion-color-secondary);
+    color: var(--ion-color-secondary-contrast);
+    top: calc(50% - 20px);
+    transform: translateY(-50%);
+    transition: left 1s ease-out;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translate(-50%, 100%);
+      height: 40px;
+      width: 20px;
+      background-color: var(--ion-color-secondary);
+      clip-path: polygon(50% 100%, 0 0, 100% 0);
+    }
+  }
+
+  .grid {
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    height: 200%;
+    opacity: 0.18;
+    background-size: 10px 50px;
+    background-image: linear-gradient(
+        90deg,
+        transparent 0%,
+        transparent 95%,
+        var(--ion-text-color) 95%,
+        var(--ion-text-color) 100%
+    );
+    /*
+    , linear-gradient(
+                    transparent 0%,
+                    transparent 95%,
+                    var(--ion-text-color) 95%,
+                    var(--ion-text-color) 100%
+    ),
+    animation-name: glisse;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;*/
+  }
+}
+
+@keyframes glisse {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50px);
+  }
+}
+
+.chromatic {
+  margin: auto;
+  width: 80%;
+  max-width: 308px;
+  position: relative;
+}
+
+.warning {
+  border-radius: 3px;
+  overflow: hidden;
+  background: rgba(var(--ion-color-danger-rgb), 0.15);
+  padding: 1rem;
+}

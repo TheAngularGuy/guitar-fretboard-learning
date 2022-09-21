@@ -1,0 +1,7 @@
+{
+  "name": "Fretboard-learning",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

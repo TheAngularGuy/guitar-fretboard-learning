@@ -1,0 +1,14 @@
+<div [@listAnimation]="list.length" class="btn-list">
+  <button (click)="onItemClicked(item, $event)" *ngFor="let item of list" [class.promo]="item.promo" class="btn">
+    <span class="btn-left">
+      <span class="title">
+        {{ item.title }}
+      </span>
+      <span [innerHTML]="item.subtitle" class="subtitle">
+      </span>
+    </span>
+    <span class="btn-right">
+      <img [alt]="item.title" [src]="item.img" height="80"/>
+    </span>
+  </button>
+</div>

@@ -1,0 +1,36 @@
+.header {
+  background: var(--ion-color-secondary);
+  color: var(--ion-color-secondary-contrast);
+  box-shadow: 0px -4px 16px 0px #020202;
+  position: relative;
+  text-align: center;
+  z-index: 1;
+
+  & > div {
+    height: 220px;
+    overflow: hidden;
+    border-radius: 0 0 0 0;
+
+    margin-bottom: 1rem;
+
+    display: flex;
+    place-content: center;
+    place-items: center;
+
+    font-family: 'Avenir', sans-serif;
+    font-size: 200%;
+    text-transform: capitalize;
+  }
+}
+
+.hide {
+  display: none;
+}
+
+.no-overflow {
+  overflow: hidden
+}
+
+ion-tab-bar {
+  height: 65px;
+}

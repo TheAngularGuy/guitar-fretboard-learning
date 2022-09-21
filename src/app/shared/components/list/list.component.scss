@@ -1,0 +1,133 @@
+
+.btn-list {
+  padding-bottom: 5ch;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  position: relative;
+
+  ion-button {
+    font-size: 120%;
+    height: 100%;
+    width: calc(100% - 1.3rem);
+    margin: 1rem auto;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+
+    transition: box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border-radius: 15px;
+    overflow: hidden;
+
+    div {
+      padding: 1rem 0;
+
+      img {
+        display: inline-block;
+        overflow: hidden;
+        border-radius: 1rem;
+      }
+    }
+  }
+}
+
+.btn-list {
+  padding-bottom: 5ch;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  position: relative;
+
+  .btn {
+    all: unset;
+    font-size: 120%;
+    min-height: 150px;
+    width: calc(100% - 2rem);
+    margin: 1rem auto;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    background-image: linear-gradient(to right,
+      var(--ion-color-light) 0%,
+      var(--ion-color-light) 65%,
+      var(--ion-color-secondary) 65%,
+      var(--ion-color-secondary) 100%
+    );
+    display: flex !important;
+    justify-content: space-between;
+    place-items: center;
+
+    &.promo {
+      background-image: linear-gradient(to right,
+        var(--ion-color-light) 0%,
+        var(--ion-color-light) 65%,
+        var(--ion-color-primary) 65%,
+        var(--ion-color-warning-tint) 100%
+      );
+    }
+
+    &.active {
+      animation-name: skew;
+      animation-duration: 125ms;
+      animation-timing-function: ease-out;
+      animation-fill-mode: forwards;
+    }
+
+    &:focus:not(:hover) {
+      filter: brightness(92%);
+    }
+
+    @keyframes skew {
+      from {
+        transform: skew(0deg);
+      }
+      50% {
+        transform: skew(5deg);
+      }
+      to {
+        transform: skew(0deg);
+      }
+    }
+
+    & > span {
+      display: inline-block;
+      min-height: 150px;
+      pointer-events: none;
+
+      &.btn-left {
+        display: flex;
+        justify-items: start;
+        flex-direction: column;
+        width: 65%;
+        color: var(--ion-color-light-contrast);
+        padding: 1ch 2ch;
+
+        .title {
+          text-align: start;
+          font-size: 1.5rem;
+          margin-bottom: 1rem;
+          display: inline-block;
+        }
+
+        .subtitle {
+          text-align: start;
+          font-size: .9rem;
+        }
+      }
+
+      &.btn-right {
+        display: flex;
+        place-content: center;
+        place-items: center;
+        width: 35%;
+        color: var(--ion-color-secondary-contrast);
+
+
+        img {
+          display: inline-block;
+          overflow: hidden;
+          border-radius: 1rem;
+        }
+      }
+    }
+  }
+}

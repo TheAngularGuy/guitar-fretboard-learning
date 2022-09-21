@@ -1,0 +1,21 @@
+.title {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-top: 2ch;
+  margin-bottom: 4ch;
+
+  color: transparent;
+  background: linear-gradient(to left top,
+    var(--ion-color-tertiary),
+    var(--ion-color-secondary) 60%,
+    var(--ion-color-secondary) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.info {
+  // text-align: center;
+  max-width: 900px;
+  margin: auto;
+}

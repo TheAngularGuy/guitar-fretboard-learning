@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Tabasco';
+    src: url('fonts/Tabasco.eot');
+    src: url('fonts/Tabasco.eot') format('embedded-opentype'),
+         url('fonts/Tabasco.woff2') format('woff2'),
+         url('fonts/Tabasco.woff') format('woff'),
+         url('fonts/Tabasco.ttf') format('truetype'),
+         url('fonts/Tabasco.svg#Tabasco') format('svg');
+}

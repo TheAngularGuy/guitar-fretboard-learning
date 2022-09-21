@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar *ngIf="!game.isPlaying">
+    <ion-buttons slot="start">
+      <ion-back-button text="Games" color="fourth"  defaultHref="games"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Identify by sound</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar *ngIf="game.isPlaying">
+    <ion-buttons slot="start">
+      <ion-button (click)="game.togglePlay()" color="fourth">
+        <ion-icon slot="start" name="stop">
+        </ion-icon>
+        Stop
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="score">
+      <span class="good">
+        <b [@popAnimation]="game.score.good">{{game.score.good}}</b>
+      </span>
+        <span class="all">
+        <b>{{game.score.bad + game.score.good}} </b> /
+          {{game.config.MAX_RANGE}}
+      </span>
+      </div>
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #content>
+  <ion-card *ngIf="!game.isPlaying">
+    <ion-card-header>
+      <ion-card-title>Identify note by sound!</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content class="game-mode">
+      <p class="game-mode-result">
+        <ng-container *ngIf="scoreHistoric?.length !== game.gameConfig.MAX_RANGE; else alreadyPlayedOneTime">
+          Press the start button to begin
+        </ng-container>
+        <ng-template #alreadyPlayedOneTime>
+          <span class="result n{{game.score.good}}">
+            <b>{{ game.score.good }}</b> out of {{ scoreHistoric?.length }}
+          </span>
+          <br>
+          <small><b>{{ averageTime | number }}</b> seconds per note.</small>
+        </ng-template>
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <br/>
+
+  <div class="start">
+    <app-btn color="secondary"
+             style="color: black !important;"
+             pulsate
+             *ngIf="!game.isPlaying"
+             [disabled]="!!game.noteToFind"
+             (clicked)="start()">
+      START
+    </app-btn>
+  </div>
+
+  <div class="amp" [class.playing]="soundPlaying$ | async" *ngIf="game.isPlaying">
+    <div class="back-img"></div>
+    <div class="image" (click)="onNotePicked()">
+      <img src="../../../../assets/imgs/amp.svg" alt="amp illustration">
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer *ngIf="game.isPlaying">
+  <ng-container *ngTemplateOutlet="playingControls"></ng-container>
+</ion-footer>
+
+<ng-template #playingControls>
+  <div class="notes">
+    <ion-button #btn
+                color="light"
+                *ngFor="let note of game.notesAvailable"
+                (click)="onNoteClicked(note, btn)">
+        <span style="min-width: 2.4ch; display: inline-block; font-feature-settings: 'tnum'; text-transform: none;">
+          {{note | note:preferences?.notation:preferences?.useFlats}}
+        </span>
+    </ion-button>
+  </div>
+</ng-template>

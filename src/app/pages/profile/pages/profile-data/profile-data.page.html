@@ -1,0 +1,144 @@
+<ng-container *ngIf="userState$ | async as userState">
+  <ng-container *ngIf="preferencesState$ | async as prefState">
+    <ng-container *ngIf="gameState$ | async as gameState">
+
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>
+
+            <p class="score">
+              {{ getLevel(gameState).name }} &nbsp; — &nbsp; <b>{{gameState.globalPoints}}</b>
+              &nbsp;
+              <img alt="level coins loge" src="assets/imgs/guitar-pick.svg" width="16"/>
+            </p>
+
+          </ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="openOrderModal()" *ngIf="!userState.pro" color="fourth">
+              Get pro
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ng-container *ngIf="getScoreByCurrentTuning(prefState, gameState) as scoreByTuning; else noDataForTuning">
+
+          <ion-card *ngIf="gameState.historic?.length">
+            <ion-card-header>
+              <ion-card-title>
+                Current streak
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content style="padding: 0 1ch 0 0">
+              <app-historic-chart [historic]="gameState.historic">
+              </app-historic-chart>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>
+                {{ scoreByTuning.tuning }} tuning
+              </ion-card-title>
+              <ion-card-subtitle>
+                Total score for this tuning: {{ scoreByTuning.score.points }}
+                <img alt="level coins loge" src="assets/imgs/guitar-pick.svg" width="12"/>
+              </ion-card-subtitle>
+            </ion-card-header>
+
+            <ion-card-content>
+              <ng-container *ngIf="sortByBestNote(scoreByTuning.score.notes, gameState.unlockedNotes) as notes">
+
+                <ion-item (click)="userState.pro ? goToNoteDetail(null) : openOrderModal(true)" button
+                          style="width: calc(100% + 20px); transform: translateX(-20px)">
+                  <ion-icon color="secondary" name="stats-chart" slot="end"></ion-icon>
+                  <ion-icon *ngIf="!isIOS" name="arrow-forward-outline" slot="end"></ion-icon>
+                  <ion-label>See the fretboard heat map</ion-label>
+                </ion-item>
+                <br>
+
+                <div *ngIf="notes && notes.length" class="group">
+                  <p class="white">Click to see a heat map per note:</p>
+                  <span class="muted">From the most well known notes to least</span>
+
+                  <div class="group-container">
+                  <span (click)="userState.pro ? goToNoteDetail(note) : openOrderModal(true)"
+                        *ngFor="let note of notes"
+                        class="note taba">
+                    {{ note.name | note:prefState.notation:prefState.useFlats }}
+                  </span>
+                  </div>
+                </div>
+              </ng-container>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>
+                To unlock next
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-item (click)="goToProgression()" button
+                        style="width: calc(100% + 20px); transform: translateX(-20px)">
+                <ion-icon color="secondary" name="checkmark-circle" slot="end"></ion-icon>
+                <ion-icon *ngIf="!isIOS" name="arrow-forward-outline" slot="end"></ion-icon>
+                <ion-label>Track your level progression</ion-label>
+              </ion-item>
+              <br>
+
+              <ng-container *ngIf="getLockedNotes(gameState.unlockedNotes) as lockedNotes">
+                <div *ngIf="lockedNotes.length" class="group">
+                  <p class="white">Notes to unlock:</p>
+                  <div class="group-container">
+                  <span *ngFor="let noteToUnlock of lockedNotes" class="note taba gray">
+                    <span class="notif">
+                      <ion-icon name="lock-closed"></ion-icon>
+                      {{ noteToUnlock.level }}
+                    </span>
+                    {{ noteToUnlock.note | note:prefState.notation:prefState.useFlats }}
+                  </span>
+                  </div>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="getLockedFrets(gameState.unlockedFrets) as lockedFrets">
+                <div *ngIf="lockedFrets.length" class="group">
+                  <p class="white">Frets to unlock:</p>
+                  <div class="group-container">
+                  <span *ngFor="let fretToUnlock of lockedFrets" class="note taba gray">
+                    <span class="notif">
+                      <ion-icon name="lock-closed"></ion-icon>
+                      {{ fretToUnlock.level }}
+                    </span>
+                    {{ fretToUnlock.fret }}
+                  </span>
+                  </div>
+                </div>
+              </ng-container>
+            </ion-card-content>
+          </ion-card>
+
+        </ng-container>
+        <ng-template #noDataForTuning>
+          <ion-card>
+            <ion-card-content>
+              <p> No data for the current tuning. Try any game mode in the games list. </p>
+            </ion-card-content>
+          </ion-card>
+        </ng-template>
+
+
+        <!--<div class="logout">
+          <ion-button fill="clear" color="fourth" (click)="onLogOut()">
+            Log out
+          </ion-button>
+        </div>-->
+
+      </ion-content>
+
+    </ng-container>
+  </ng-container>
+</ng-container>

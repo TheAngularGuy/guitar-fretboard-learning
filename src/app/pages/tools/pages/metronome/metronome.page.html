@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="fourth" defaultHref="tools" text="Tools"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Metronome</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <div class="bpm-title">
+          <span>
+            {{bpmForm?.get('bpm')?.value}} bpm
+            <small>
+              ({{bpmForm?.get('beats')?.value}}/{{bpmForm?.get('mesure')?.value * 4}})
+            </small>
+          </span>
+          <span>
+            <ion-icon (pressing)="subBpm()" appLonpPress name="remove-circle-outline" size="large">
+            </ion-icon>
+            &nbsp;
+            <ion-icon (pressing)="addBpm()" appLonpPress name="add-circle-outline" size="large">
+            </ion-icon>
+          </span>
+        </div>
+        <div class="bpm-subtitle">
+          {{ (bpmForm?.get('bpm')?.value) | tempoName }}
+        </div>
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="bpmForm" class="settings">
+        <ion-item>
+          <ion-range color="secondary" formControlName="bpm" max="320" min="10" pin
+                     style="padding-left: 0; padding-right: 0">
+            <ion-label slot="start">10</ion-label>
+            <ion-label slot="end">320</ion-label>
+          </ion-range>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Beat</ion-label>
+          <ion-select formControlName="beats" interface="popover" multiple="false">
+            <ion-select-option *ngFor="let beat of beatsList" [value]="beat">
+              {{beat}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>Mesure</ion-label>
+          <ion-select formControlName="mesure" interface="popover" multiple="false">
+            <ion-select-option [value]="0.25"> 1</ion-select-option>
+            <ion-select-option [value]="0.5"> 2</ion-select-option>
+            <ion-select-option [value]="1"> 4</ion-select-option>
+            <ion-select-option [value]="2"> 8</ion-select-option>
+            <ion-select-option [value]="4"> 16</ion-select-option>
+            <ion-select-option [value]="8"> 32</ion-select-option>
+            <!--<ion-select-option [value]="6"> 32</ion-select-option>-->
+          </ion-select>
+        </ion-item>
+      </form>
+
+    </ion-card-content>
+  </ion-card>
+
+  <div class="max-width">
+    <div class="btn">
+      <button (click)="tap()">
+        <span>Tap</span>
+      </button>
+      <button (click)="toggleMetronome()">
+        <ion-icon *ngIf="!interval" name="play" size="large"></ion-icon>
+        <ion-icon *ngIf="interval" name="stop" size="large"></ion-icon>
+      </button>
+    </div>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <div class="max-width">
+    <div class="dots">
+      <div *ngFor="let d of dots; let i = index"
+           [class.selected]="(beat$ | async) === i"
+           class="dot"></div>
+    </div>
+  </div>
+</ion-footer>

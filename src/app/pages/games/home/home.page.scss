@@ -1,0 +1,89 @@
+.top {
+  left: 0;
+  right: 0;
+  position: fixed;
+  background: var(--ion-background-color);
+  z-index: 1;
+  transform: translateY(-3px);
+  padding: 3px;
+}
+
+.ios .top ion-card {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.placeholder {
+  min-height: 105px;
+}
+
+.shadow {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+}
+
+.title {
+  margin: auto;
+  text-align: center;
+  font-family: 'Tabasco', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 3px;
+  position: relative;
+  display: inline-block;
+
+  color: transparent;
+  background: linear-gradient(to left top,
+          var(--ion-color-tertiary),
+          var(--ion-color-secondary) 60%,
+          var(--ion-color-secondary) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  &:first-letter {
+    // color: var(--ion-color-primary);
+    font-size: 2.7rem;
+  }
+
+  .pro {
+    position: absolute;
+    top: -3px;
+    right: 0;
+    z-index: 1;
+    color: var(--ion-color-fourth);
+    font-size: .8rem;
+    padding: 3px 3px 3px 5px;
+    border-radius: 5px;
+  }
+}
+
+@media screen and (min-width: 761px) {
+  .page {
+    max-width: 950px;
+    margin: auto;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .page {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.head {
+  opacity: 0;
+  margin-bottom: -45px;
+}
+
+.page {
+  padding-top: 0;
+}
+
+.practice {
+  margin-top: -1rem;
+
+  h1 {
+    text-align: start;
+    padding: 0 calc(1rem + 3px);
+  }
+}

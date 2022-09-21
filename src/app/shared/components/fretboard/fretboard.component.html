@@ -1,0 +1,98 @@
+<div class="fretboard-wrapper">
+  <div
+    [ngClass]="{
+      'fretboard-inverted-frets': invertedFrets,
+      'fretboard-inverted-strings': invertedStrings
+    }"
+    class="fretboard"
+    id="fretboard"
+  >
+    <ng-container *ngFor="let fretnotes of notes; let fret = index">
+      <div
+        *ngIf="isSelectedFret(fret) || !showOnlySelectedFrets"
+        [id]="'idFretNb' + fret"
+        [ngClass]="{
+          'tile-hide': !isSelectedFret(fret),
+          'no-click': disableClick,
+          'tile-nut': fret === 0,
+          'tile-one-dot': [3, 5, 7, 9, 15, 17, 19, 21].includes(fret)
+        }"
+        class="tile width-{{ fret }}"
+      >
+        <div *ngIf="fret === 12" class="tile-two-dot"></div>
+
+        <span class="tile-number">
+          <span
+            *ngIf="fret === 0"
+            [ngClass]="{
+              'hide-on-mobile': !invertedStrings,
+              'hide-on-desktop': invertedStrings
+            }"
+          >
+            {{ fretnotes[0] | note:notation:useFlats | lowercase }}
+          </span>
+          <span
+            *ngIf="fret === 0"
+            [ngClass]="{
+              'hide-on-mobile': invertedStrings,
+              'hide-on-desktop': !invertedStrings
+            }"
+          >
+            {{ fretnotes[5] | note:notation:useFlats | uppercase }}
+          </span>
+          <span *ngIf="fret > 0">{{ fret }}</span>
+        </span>
+
+        <button
+          (click)="
+            onNoteClicked(
+              {
+                name: fretNote,
+                fret: fret,
+                string: string
+              },
+              noteName
+            )
+          "
+
+          *ngFor="let fretNote of fretnotes; let string = index"
+          [ngClass]="{
+            'note-highlighted': isNoteHighlighted(fret, string),
+            'disabled-string': isStringDisabled(string),
+            'disabled-fret': !isSelectedFret(fret)
+          }"
+          class="note string-{{ string }}"
+        >
+          <span [ngStyle]="{'background-color': (!!bgColors && !!bgColors[fret]) ? bgColors[fret][string] : null}"
+                class="color">
+          </span>
+          <span class="string"></span>
+          <span
+            *ngIf="
+              barre && barre.fret === fret && string >= barre.stringStart && barre.stringEnd >= string
+            "
+            [ngClass]="{
+              'barre-start': barre && barre.stringStart === string,
+              'barre-end': barre && barre.stringEnd === string
+            }"
+            class="barre"
+          ></span>
+          <span
+            #noteName
+            [ngClass]="{
+              'note-show-all': showAll,
+              'note-false': !isGoodNote({ name: fretNote, fret: fret, string: string }) && !isGoodNoteName(fretNote),
+              'note-show': showNote({ name: fretNote, fret: fret, string: string }),
+              'root-note': rootNote === fretNote
+            }"
+            class="note-name taba"
+          >
+            {{ fretNote | note:notation:useFlats }}
+          </span>
+        </button>
+
+        <div *ngIf="!isSelectedFret(fret)" class="tile-blocked"></div>
+      </div>
+    </ng-container>
+  </div>
+</div>
