@@ -1,5 +1,5 @@
 
-# Fretboard Learning
+# Fretboard Learning 🎸
 
 ## install & launch
 
