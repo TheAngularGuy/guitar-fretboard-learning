@@ -235,9 +235,11 @@
   pointer-events: none;
 }
 
-.tile-hide {
-  @media screen and (max-width: 760px) {
-    display: none !important;
+.tile:not(show-all) {
+  .tile-hide {
+    @media screen and (max-width: 760px) {
+      display: none !important;
+    }
   }
 }
 

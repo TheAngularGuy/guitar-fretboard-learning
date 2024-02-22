@@ -35,7 +35,7 @@ export interface UserStateModel {
   name: 'user',
   defaults: {
     user: undefined,
-    pro: false,
+    pro: !false,
     hasForeverAccess: false,
     hasSeenTutorial: UtilsService.getParsedItemFromLS(StateEnums.tutorial1seen) || false,
   },
@@ -71,7 +71,7 @@ export class UserState {
 
   @Action(OpenOrderModalAction)
   openOrderModalAction(ctx: StateContext<UserStateModel>, action: OpenOrderModalAction) {
-    this.openModal(GetProModal);
+    this.openModal(GetProModal, true);
   }
 
   @Action(CloseOrderModalAction)
@@ -105,7 +105,6 @@ export class UserState {
       component,
       cssClass: fullscreen ? 'fullscreen-modal' : '',
       animated: true,
-      swipeToClose: true,
       componentProps: {},
     });
     this.modal = modal;

@@ -1,0 +1,21 @@
+:host {
+  img {
+    display: block;
+    border-radius: 1rem;
+    width: 30vw;
+    margin-inline: auto;
+    margin-top: 3rem;
+    margin-bottom: 4rem;
+    // transform: rotateX(22deg) rotateY(12deg) rotateZ(345deg);
+    box-shadow: 0 1px 40px #ffffffaa;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  p {
+    padding: 1.5rem;
+    text-align: justify;
+  }
+}

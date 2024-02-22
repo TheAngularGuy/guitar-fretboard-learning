@@ -54,6 +54,10 @@
     padding: 3px 3px 3px 5px;
     border-radius: 5px;
   }
+
+  @media screen and (max-width: 350px) {
+    font-size: 1.45rem;
+  }
 }
 
 @media screen and (min-width: 761px) {

@@ -26,6 +26,13 @@ export class PreferencesSetFlatsModeAction {
   }
 }
 
+export class PreferencesSetShowOnlySelectedFretsAction {
+  public static readonly type = '[Preferences] set show Only Selected Frets';
+
+  constructor(public payload: { showOnlySelectedFrets: boolean }) {
+  }
+}
+
 export class PreferencesSetTunningAction {
   public static readonly type = '[Preferences] set tunning';
 

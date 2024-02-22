@@ -1,4 +1,16 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
+import { popAnimation } from '@animations/pop.animation';
+import { slideAnimation } from '@animations/slide.animation';
+import { GameMode } from '@classes/game-mode.class';
 import { FretboardManipulationService } from '@core/services/fretboard-manipulation/fretboard-manipulation.service';
 import { SoundService } from '@core/services/sound/sound.service';
 import { UtilsService } from '@core/services/utils/utils.service';
@@ -11,9 +23,6 @@ import { AlertController, IonButton, IonContent } from '@ionic/angular';
 import { Store } from '@ngxs/store';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
-import { popAnimation } from '@animations/pop.animation';
-import { slideAnimation } from '@animations/slide.animation';
-import { GameMode } from '@classes/game-mode.class';
 
 const HEIGHT_OFFSET = 300; // topbar + footer height -- maybe improve this later with the actual height
 
@@ -25,6 +34,7 @@ const HEIGHT_OFFSET = 300; // topbar + footer height -- maybe improve this later
 })
 export class IdentifyPage implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('content') content: IonContent;
+  @ViewChildren('btn') btns: QueryList<IonButton>;
   destroyed$ = new Subject();
   preferences: PreferencesStateModel;
   game: GameMode = new GameMode();
@@ -35,8 +45,8 @@ export class IdentifyPage implements OnInit, AfterViewInit, OnDestroy {
     private readonly alertCtrl: AlertController,
     private readonly store: Store,
     private readonly cd: ChangeDetectorRef,
-    public readonly utils: UtilsService,
     private readonly sound: SoundService,
+    public readonly utils: UtilsService,
   ) {
   }
 
@@ -123,7 +133,10 @@ export class IdentifyPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onNotePicked() {
-    // scroll to the note
+    this.scrollToNote();
+  }
+
+  scrollToNote() {
     setTimeout(
       () => {
         if (
@@ -170,9 +183,16 @@ export class IdentifyPage implements OnInit, AfterViewInit, OnDestroy {
       }));
       this.sound.playError();
       this.game.increaseScoreBad();
+
+      const correctBtn: IonButton | any = this.btns.find((el: IonButton | any) => {
+        return el.el.innerText === this.game.noteToFind.note.name;
+      });
+      correctBtn.el.color = 'success';
       btn.el.color = 'danger';
+
       setTimeout(() => {
         btn.el.color = 'light';
+        correctBtn.el.color = 'light';
       }, this.game.config.ANIMATION_DELAY);
     }
     this.scoreHistoric.push({

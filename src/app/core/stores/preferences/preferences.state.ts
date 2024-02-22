@@ -6,6 +6,7 @@ import {
   PreferencesSetInvertedFretsModeAction,
   PreferencesSetInvertedStringsModeAction,
   PreferencesSetNotationAction,
+  PreferencesSetShowOnlySelectedFretsAction,
   PreferencesSetSoundAction,
   PreferencesSetTunningAction,
 } from './preferences.actions';
@@ -16,6 +17,7 @@ enum StateEnums {
   invertedFrets = 'preferences_invertedFrets',
   activateSound = 'preferences_activateSound',
   useFlats = 'preferences_useFlats',
+  showOnlySelectedFrets = 'preferences_showOnlySelectedFrets',
   tuning = 'preferences_tuning',
   notation = 'preferences_notation',
 }
@@ -24,6 +26,7 @@ export interface PreferencesStateModel {
   invertedStrings: boolean;
   invertedFrets: boolean;
   activateSound: boolean;
+  showOnlySelectedFrets: boolean;
   useFlats: boolean; // ♭ instead of ♯
   tuning: string;
   notation: 'english' | 'german' | 'latin' | 'byzantine' | 'japanese';
@@ -37,6 +40,7 @@ export interface PreferencesStateModel {
     invertedFrets: UtilsService.getParsedItemFromLS(StateEnums.invertedFrets) ?? false,
     activateSound: UtilsService.getParsedItemFromLS(StateEnums.activateSound) ?? true,
     useFlats: UtilsService.getParsedItemFromLS(StateEnums.useFlats) ?? false,
+    showOnlySelectedFrets: UtilsService.getParsedItemFromLS(StateEnums.showOnlySelectedFrets) ?? true,
     tuning: UtilsService.getParsedItemFromLS(StateEnums.tuning) ?? 'Standard',
     notation: UtilsService.getParsedItemFromLS(StateEnums.notation) ?? 'english',
   },
@@ -83,6 +87,15 @@ export class PreferencesState {
   ) {
     patchState({ useFlats: payload.useFlats });
     UtilsService.setParsedItemToLS(StateEnums.useFlats, payload.useFlats);
+  }
+
+  @Action(PreferencesSetShowOnlySelectedFretsAction)
+  public setShowOnlySelectedFrets(
+    { patchState }: StateContext<PreferencesStateModel>,
+    { payload }: PreferencesSetShowOnlySelectedFretsAction,
+  ) {
+    patchState({ showOnlySelectedFrets: payload.showOnlySelectedFrets });
+    UtilsService.setParsedItemToLS(StateEnums.showOnlySelectedFrets, payload.showOnlySelectedFrets);
   }
 
   @Action(PreferencesSetTunningAction)

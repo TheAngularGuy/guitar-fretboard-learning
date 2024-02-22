@@ -6,6 +6,7 @@ import {
   PreferencesSetInvertedFretsModeAction,
   PreferencesSetInvertedStringsModeAction,
   PreferencesSetNotationAction,
+  PreferencesSetShowOnlySelectedFretsAction,
   PreferencesSetSoundAction,
   PreferencesSetTunningAction,
 } from '@core/stores/preferences/preferences.actions';
@@ -92,6 +93,7 @@ export class SettingsPage implements OnInit, OnDestroy {
       invertedFrets: [this.preferences.invertedFrets, [Validators.required]],
       activateSound: [this.preferences.activateSound, [Validators.required]],
       useFlats: [this.preferences.useFlats, [Validators.required]],
+      showOnlySelectedFrets: [this.preferences.showOnlySelectedFrets, [Validators.required]],
       tuning: [this.preferences.tuning, [Validators.required]],
       notation: [this.preferences.notation, [Validators.required]],
     });
@@ -136,6 +138,14 @@ export class SettingsPage implements OnInit, OnDestroy {
         if (formValue.useFlats !== preferences.useFlats) {
           this.store.dispatch(
             new PreferencesSetFlatsModeAction({ useFlats: formValue.useFlats }),
+          );
+          this.refreshTuning();
+        }
+        if (formValue.showOnlySelectedFrets !== preferences.showOnlySelectedFrets) {
+          this.store.dispatch(
+            new PreferencesSetShowOnlySelectedFretsAction(
+              { showOnlySelectedFrets: formValue.showOnlySelectedFrets },
+            ),
           );
           this.refreshTuning();
         }

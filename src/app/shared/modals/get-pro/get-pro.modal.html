@@ -41,26 +41,34 @@
 
           <ul>
             <li>
-              <ion-icon color="success" name="bag-check"></ion-icon> &nbsp; Play an <b>unlimited number of games</b>
-              without
-              worrying about
-              the
-              weekly limit
+              <ion-icon color="success" name="bag-check"></ion-icon> &nbsp;
+              Play an <b>unlimited number of games</b>
+              without worrying about weekly limit
             </li>
             <li>
-              <ion-icon color="success" name="bag-check"></ion-icon> &nbsp; Follow your progression using
+              <ion-icon color="success" name="bag-check"></ion-icon> &nbsp;
+              Follow your progression using
               the <b>fretboard heatmap</b> and find the areas of progression
             </li>
             <li>
-              <ion-icon color="success" name="bag-check"></ion-icon> &nbsp; Unlock all customizations and settings: <b>Custom
-              tunings, left handed mode </b> and <b>alternative Notations </b>
+              <ion-icon color="success" name="bag-check"></ion-icon> &nbsp;
+              Unlock all customizations and settings: <b>Custom
+              tunings, left handed mode</b> and <b>alternative Notations </b>
+            </li>
+            <li>
+              <ion-icon color="success" name="bag-check"></ion-icon> &nbsp;
+              Get <b>twice</b> more
+              <img alt="level coins loge"
+                   src="assets/imgs/guitar-pick.svg"
+                   height="14"
+                   style="display: inline-block; margin-inline: 4px"/>
+              to unlock notes and frets two times faster
             </li>
             <li>
               <ion-icon color="danger" name="heart"></ion-icon> &nbsp;
               Support an independent creator
             </li>
           </ul>
-
 
           <ng-container *ngIf="choix === 'monthly'">
             <div (click)="orderProMode(productMonthly)" *ngIf="productMonthly?.valid" [@fadeinAnimation]="choix"
@@ -120,6 +128,14 @@
 
       </ng-container>
     </ng-container>
+
+    <ion-card class="popup-card" *ngIf="false">
+      <ion-card-content>
+        <ion-icon name="close"></ion-icon>
+        <h2>Fretboard heatmap:</h2>
+        <img src="assets/imgs/heatmap.png" alt="Fretboard heatmap" height="400">
+      </ion-card-content>
+    </ion-card>
 
   </ion-content>
 </ng-container>

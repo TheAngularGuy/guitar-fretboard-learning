@@ -3,10 +3,12 @@ import { InAppReview } from '@awesome-cordova-plugins/in-app-review/ngx';
 import { CHROMATIC_SCALE } from '@constants/chromatic-scale.constant';
 import { LEVELS } from '@constants/levels';
 import { UtilsService } from '@core/services/utils/utils.service';
+import { UserState, UserStateModel } from '@core/stores/user/user.state';
 import { ModalController } from '@ionic/angular';
 import { Note } from '@models/note.model';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { ProgressModal } from '@shared/modals/progress/progress.modal';
+import { first, tap } from 'rxjs/operators';
 import {
   BadNoteFound,
   GameComplete,
@@ -86,6 +88,7 @@ export class GameState {
   constructor(
     private readonly modalCtrl: ModalController,
     private readonly inAppReview: InAppReview,
+    private readonly store: Store,
   ) {
   }
 
@@ -261,8 +264,10 @@ export class GameState {
     const scoreByTuning = scoreByTunings.find(t => t.tuning === tuning).score;
     const scoreNote = scoreByTuning.notes.find(sn => sn.name === note.name);
 
-    scoreByTuning.points += bad ? 0 : 10;
-    globalPoints += bad ? 0 : 10;
+    const increment = this.store.selectSnapshot((s) => (s.user as UserStateModel).pro) ? 20 : 10;
+
+    scoreByTuning.points += bad ? 0 : increment;
+    globalPoints += bad ? 0 : increment;
     if (!action.payload.noPlacement && state.unlockedNotes.includes(action.payload.note.name)) {
       if (!!scoreNote) {
         scoreNote.value += bad ? -1 : 1;

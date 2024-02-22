@@ -1,0 +1,34 @@
+<ng-container *ngIf="preferencesState$ | async as preferencesState">
+  <ng-container *ngIf="gameState$ | async as gameState">
+    <h1 class="taba">How it works?</h1>
+    <div class="content">
+      <p>
+        You'll be starting with few notes and frets to play with at the beginning.
+        <br>
+        To unlock the rest of the notes and
+        frets you'll have to play any of the game modes.
+      </p>
+      <p class="label">
+        Right now you can play with the following notes:
+      </p>
+      <div class="group-container">
+        <span *ngFor="let note of gameState.unlockedNotes" class="note">
+          {{ note | note:preferencesState.notation:preferencesState.useFlats }}
+        </span>
+      </div>
+      <p class="label">
+        And the following frets:
+      </p>
+    </div>
+    <app-fretboard [disableClick]="false"
+                   [invertedFrets]="preferencesState?.invertedFrets"
+                   [invertedStrings]="preferencesState?.invertedStrings"
+                   [notation]="preferencesState?.notation"
+                   [notes]="getFretboardNotes(preferencesState)"
+                   [selectedFrets]="getSelectedFrets(gameState)"
+                   [selectedNoteNames]="chromaticScale"
+                   [showAll]="false"
+                   [useFlats]="preferencesState?.useFlats"
+    ></app-fretboard>
+  </ng-container>
+</ng-container>

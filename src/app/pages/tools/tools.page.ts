@@ -27,25 +27,20 @@ export class ToolsPage {
       title: 'Circle of fifths',
       subtitle: 'An interactive and fun tool to explore music harmony',
     },
+    /*
     {
       path: 'tuner',
       img: 'assets/imgs/tuner.svg',
       title: 'Tuner',
       subtitle: 'Tune your guitar in any tuning, or practice your pitch with this tuner',
     },
-    /*
      {
      path: 'tracks',
      img: 'assets/imgs/amp.svg',
      title: 'Backing tracks',
      subtitle: 'Tune your guitar in any tuning, or practice your pitch with this tuner',
      },*/
-  ].filter(el => {
-    if (this.utils.isIOS) {
-      return el.path !== 'tuner';
-    }
-    return true;
-  });
+  ];
 
   constructor(
     private readonly navCtrl: NavController,

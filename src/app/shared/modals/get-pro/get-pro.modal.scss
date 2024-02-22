@@ -106,3 +106,20 @@ ul {
     }
   }
 }
+
+.popup-card {
+  position: fixed;
+  top: 30%;
+  box-shadow: 0 0 50px 20px #00000069;
+
+  h2, ion-icon {
+    position: absolute;
+    top: 5px
+  }
+  ion-icon {
+    right: 1rem;
+  }
+  ion-card-content {
+    padding-top: 30px;
+  }
+}

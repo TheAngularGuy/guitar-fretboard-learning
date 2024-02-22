@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar *ngIf="!game.isPlaying">
     <ion-buttons slot="start">
-      <ion-back-button text="Games" color="fourth"  defaultHref="games"></ion-back-button>
+      <ion-back-button text="Games" color="fourth" defaultHref="games"></ion-back-button>
     </ion-buttons>
     <ion-title>Identify</ion-title>
   </ion-toolbar>
@@ -65,22 +65,23 @@
   </div>
 
   <app-fretboard
-          *ngIf="game.isPlaying"
-          [invertedStrings]="preferences?.invertedStrings"
-          [invertedFrets]="preferences?.invertedFrets"
-          [useFlats]="preferences?.useFlats"
-          [notation]="preferences?.notation"
-          [notes]="game.fretboardNotes"
-          [highlightNote]="game.noteToFind && game.noteToFind.note"
-          [disableClick]="true"
-          [showAll]="false"
-          [selectedFrets]="game.fretsAvailable"
-          [selectedNoteNames]="game.noteToFind ? [game.noteToFind.note.name] : null"
+    *ngIf="game.isPlaying"
+    [showOnlySelectedFrets]="preferences?.showOnlySelectedFrets"
+    [invertedStrings]="preferences?.invertedStrings"
+    [invertedFrets]="preferences?.invertedFrets"
+    [useFlats]="preferences?.useFlats"
+    [notation]="preferences?.notation"
+    [notes]="game.fretboardNotes"
+    [highlightNote]="game.noteToFind && game.noteToFind.note"
+    [disableClick]="true"
+    [showAll]="false"
+    [selectedFrets]="game.fretsAvailable"
+    [selectedNoteNames]="game.noteToFind ? [game.noteToFind.note.name] : null"
   >
   </app-fretboard>
 </ion-content>
 
-<ion-footer *ngIf="game.isPlaying">
+<ion-footer *ngIf="game.isPlaying" style="bottom: 0">
   <ng-container *ngTemplateOutlet="playingControls"></ng-container>
 </ion-footer>
 
@@ -90,7 +91,7 @@
                 color="light"
                 *ngFor="let note of game.notesAvailable"
                 (click)="onNoteClicked(note, btn)">
-        <span style="min-width: 2.4ch; display: inline-block; font-feature-settings: 'tnum'; text-transform: none;">
+        <span class="clickable-note">
           {{note | note:preferences?.notation:preferences?.useFlats}}
         </span>
     </ion-button>

@@ -50,7 +50,7 @@
 <ion-content #content>
   <ion-card *ngIf="!game.isPlaying">
     <ion-card-header>
-      <ion-card-title *ngIf="(mode$ | async) === false">
+      <ion-card-title *ngIf="(mode$ | async) === 0">
         Locate all positions of a note in an area!
       </ion-card-title>
       <ion-card-title *ngIf="mode$ | async as nbFretsToPlayWith">
@@ -90,6 +90,7 @@
   <app-fretboard
     #fretboardElement
     *ngIf="game.isPlaying"
+    [showOnlySelectedFrets]="preferences?.showOnlySelectedFrets"
     [invertedStrings]="preferences?.invertedStrings"
     [invertedFrets]="preferences?.invertedFrets"
     [useFlats]="preferences?.useFlats"
@@ -106,7 +107,7 @@
   <br/>
 </ion-content>
 
-<ion-footer *ngIf="game.isPlaying">
+<ion-footer *ngIf="game.isPlaying" style="bottom: 0">
   <div class="series">
     <div class="series-dot"
          [ngClass]="{'series-dot-success': dot === true, 'series-dot-fail': dot === false}"

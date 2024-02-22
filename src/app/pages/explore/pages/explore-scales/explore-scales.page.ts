@@ -184,7 +184,7 @@ export class ExploreScalesPage implements OnInit, OnDestroy {
     if (!this.dropDownOpen$.getValue()) {
       this.onSelectedSegment(selectedSeg);
     }
-    this.scrollToFretBoard();
+    this.scrollToStartingFret();
   }
 
   onPrevSegment() {
@@ -197,7 +197,24 @@ export class ExploreScalesPage implements OnInit, OnDestroy {
     if (!this.dropDownOpen$.getValue()) {
       this.onSelectedSegment(selectedSeg);
     }
-    this.scrollToFretBoard();
+    this.scrollToStartingFret();
+  }
+
+  scrollToStartingFret() {
+    const segmentA = this.exploreForm.get('segment').value.split(',')[0];
+    const segmentB = this.exploreForm.get('segment').value.split(',')[1];
+    if (this.preferences?.showOnlySelectedFrets) {
+      return;
+    }
+    setTimeout(() => {
+      const el = window['idFretNb' + Math.round((+segmentA + +segmentB) / 2)];
+      if (el) {
+        el.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+      }
+    }, 10);
   }
 
   scrollToFretBoard() {

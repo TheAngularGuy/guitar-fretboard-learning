@@ -1,8 +1,7 @@
 {
   "name": "Fretboard-learning",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "Mustapha AOUAS",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -23,6 +22,7 @@
     "@awesome-cordova-plugins/device": "^5.45.0",
     "@awesome-cordova-plugins/in-app-purchase-2": "^5.45.0",
     "@awesome-cordova-plugins/in-app-review": "^5.45.0",
+    "@awesome-cordova-plugins/native-audio": "^6.2.0",
     "@awesome-cordova-plugins/status-bar": "^5.45.0",
     "@capacitor/app": "4.0.1",
     "@capacitor/core": "4.2.0",
@@ -36,9 +36,13 @@
     "chart.js": "^2.9.4",
     "com.omarben.inappreview": "^0.0.6",
     "cordova-plugin-device": "^2.1.0",
+    "cordova-plugin-nativeaudio": "^3.0.9",
     "cordova-plugin-purchase": "^11.0.0",
     "cordova-plugin-statusbar": "^3.0.0",
     "ionicons": "^6.0.3",
+    "lottie-web": "^5.10.0",
+    "ng-let": "^14.0.1",
+    "ngx-lottie": "^9.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"
@@ -77,6 +81,5 @@
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "typescript": "~4.7.3"
-  },
-  "description": "An Ionic project"
+  }
 }

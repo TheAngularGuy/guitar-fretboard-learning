@@ -162,6 +162,23 @@ export class LocatePage implements OnInit, AfterViewInit, OnDestroy {
 
     this.game.initRound(notes, frets);
     this.game.togglePlay();
+    this.scrollToStartingFret();
+  }
+
+  scrollToStartingFret() {
+    if (this.preferences?.showOnlySelectedFrets) {
+      return;
+    }
+    setTimeout(() => {
+      const el = window['idFretNb' + (+this.game.fretsAvailable[0] + 1)];
+      if (el) {
+        console.log(el);
+        el.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+      }
+    }, 10);
   }
 
   async presentAlert() {

@@ -31,6 +31,23 @@
   overflow: hidden
 }
 
-ion-tab-bar {
-  height: 65px;
+ion-tabs {
+  ion-tab-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 65px;
+  }
+}
+
+::ng-deep {
+  .app-component {
+    ion-footer {
+      bottom: calc(var(--ion-safe-area-bottom) + 65px);
+    }
+    .ion-page ion-content::part(scroll) {
+      padding-bottom: 65px;
+    }
+  }
 }

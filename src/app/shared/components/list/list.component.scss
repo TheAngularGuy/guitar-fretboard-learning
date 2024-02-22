@@ -1,4 +1,3 @@
-
 .btn-list {
   padding-bottom: 5ch;
   display: flex;
@@ -27,14 +26,6 @@
       }
     }
   }
-}
-
-.btn-list {
-  padding-bottom: 5ch;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  position: relative;
 
   .btn {
     all: unset;

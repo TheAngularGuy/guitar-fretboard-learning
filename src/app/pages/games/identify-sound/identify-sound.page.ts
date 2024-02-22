@@ -1,4 +1,13 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import { popAnimation } from '@animations/pop.animation';
 import { slideAnimation } from '@animations/slide.animation';
 import { GameMode } from '@classes/game-mode.class';
@@ -26,6 +35,7 @@ const HEIGHT_OFFSET = 300;
 })
 export class IdentifySoundPage implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('content') content: IonContent;
+  @ViewChildren('btn') btns: QueryList<IonButton>;
   destroyed$ = new Subject();
   game: GameMode = new GameMode();
   preferences: PreferencesStateModel;
@@ -161,8 +171,16 @@ export class IdentifySoundPage implements OnInit, AfterViewInit, OnDestroy {
       this.store.dispatch(new BadNoteFound({ note: simpleNote, tuning: this.preferences.tuning, noPlacement: true }));
       this.sound.playError();
       this.game.increaseScoreBad();
+
+      const correctBtn: IonButton | any = this.btns.find((el: IonButton | any) => {
+        return el.el.innerText === this.game.noteToFind.note.name;
+      });
+      correctBtn.el.color = 'success';
       btn.el.color = 'danger';
-      setTimeout(() => btn.el.color = 'light', this.game.config.ANIMATION_DELAY);
+      setTimeout(() => {
+        btn.el.color = 'light';
+        correctBtn.el.color = 'light';
+      }, this.game.config.ANIMATION_DELAY);
     }
 
     this.scoreHistoric.push({

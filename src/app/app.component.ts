@@ -41,14 +41,13 @@ export class AppComponent implements AfterViewInit {
     private readonly device: Device,
     private readonly iapService: InAppStoreService,
   ) {
-    this.platform.ready().then(() => {
-      this.initializeApp();
-    });
+
+    this.initializeApp();
+
   }
 
   ngAfterViewInit() {
     this.lastWidthRegistred = window.innerWidth;
-    this.initializeApp();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -73,9 +72,14 @@ export class AppComponent implements AfterViewInit {
   }
 
   initializeApp() {
-    this.iapService.init();
-    StatusBar.setStyle({ style: Style.Dark });
-    SplashScreen.hide();
+    this.platform.ready().then(() => {
+      this.iapService.init();
+      setTimeout(() => {
+        SplashScreen.hide();
+        StatusBar.setStyle({ style: Style.Dark });
+      }, 700);
+      StatusBar.setStyle({ style: Style.Dark });
+    });
   }
 
   tabsChanged(e: { tab: string }) {

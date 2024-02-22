@@ -1,12 +1,16 @@
 <ion-app>
-  <ion-router-outlet id="main-content"></ion-router-outlet>
+  <div class="app-component">
 
-  <ion-tabs (ionTabsDidChange)="tabsChanged($event)">
-    <ion-tab-bar [class.hide]="(isUserPlaying$ | async)" slot="bottom" translucent="false">
-      <ion-tab-button *ngFor="let p of morePages" [tab]="p.url">
-        <img alt="games icon" height="34" src="../assets/imgs/{{p.svg}}.svg">
-        <ion-label>{{p.title}}</ion-label>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
+    <ion-router-outlet></ion-router-outlet>
+
+    <ion-tabs (ionTabsDidChange)="tabsChanged($event)">
+      <ion-tab-bar [class.hide]="(isUserPlaying$ | async)" slot="bottom" translucent="true">
+        <ion-tab-button *ngFor="let p of morePages" [tab]="p.url">
+          <img alt="games icon" height="34" src="../assets/imgs/{{p.svg}}.svg">
+          <ion-label>{{p.title}}</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </div>
 </ion-app>
+

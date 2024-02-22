@@ -9,6 +9,7 @@ import { MAX_FRETS } from '@constants/max-frets';
 import { FretboardManipulationService } from '@core/services/fretboard-manipulation/fretboard-manipulation.service';
 import { SoundService } from '@core/services/sound/sound.service';
 import { UtilsService } from '@core/services/utils/utils.service';
+import { GameStart, GameStop } from '@core/stores/game/game.actions';
 import { GameState } from '@core/stores/game/game.state';
 import { PreferencesState, PreferencesStateModel } from '@core/stores/preferences/preferences.state';
 import { AlertController, IonContent } from '@ionic/angular';
@@ -85,9 +86,11 @@ export class PracticePage implements OnInit, AfterViewInit, OnDestroy {
       fretboardNotes,
       {
         onBeforeStart: () => {
+          this.store.dispatch(new GameStart({ tuning: preferences.tuning }));
           this.scoreHistoric = [];
         },
         onEnd: () => {
+          this.store.dispatch(new GameStop({ tuning: preferences.tuning }));
           this.content.scrollToTop(250);
         },
       });
@@ -136,6 +139,23 @@ export class PracticePage implements OnInit, AfterViewInit, OnDestroy {
     }
     this.game.initRound(notes, frets);
     this.game.togglePlay();
+    this.scrollToStartingFret();
+  }
+
+  scrollToStartingFret() {
+    if (this.preferences?.showOnlySelectedFrets) {
+      return;
+    }
+    setTimeout(() => {
+      const el = window['idFretNb' + (+this.game.fretsAvailable[0] + 1)];
+      if (el) {
+        console.log(el);
+        el.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+      }
+    }, 10);
   }
 
   async presentAlert() {

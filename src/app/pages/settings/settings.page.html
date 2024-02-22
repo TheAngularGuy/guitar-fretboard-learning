@@ -23,10 +23,13 @@
           <ion-toggle color="tertiary" formControlName="activateSound"></ion-toggle>
         </ion-item>
         <ion-item>
+          <ion-label>Show only selected frets while playing</ion-label>
+          <ion-toggle color="tertiary" formControlName="showOnlySelectedFrets"></ion-toggle>
+        </ion-item>
+        <ion-item>
           <ion-label>Use flats instead of sharps</ion-label>
           <ion-toggle color="tertiary" formControlName="useFlats"></ion-toggle>
         </ion-item>
-
 
         <ion-list-header *ngIf="!userState.pro">
           <ion-label>In the pro version</ion-label>

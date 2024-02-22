@@ -102,6 +102,7 @@
 
   <app-fretboard
       *ngIf="game.isPlaying"
+      [showOnlySelectedFrets]="preferences?.showOnlySelectedFrets"
       [invertedStrings]="preferences?.invertedStrings"
       [invertedFrets]="preferences?.invertedFrets"
       [useFlats]="preferences?.useFlats"
@@ -115,7 +116,7 @@
   <br/>
 </ion-content>
 
-<ion-footer *ngIf="game.isPlaying">
+<ion-footer *ngIf="game.isPlaying" style="bottom: 0">
   <div class="playing" @noEnterAnimation>
     <div class="note" [@popAnimation]="game.noteToFind?.note?.name">
       {{game.noteToFind?.note?.name | note:preferences?.notation:preferences?.useFlats}}

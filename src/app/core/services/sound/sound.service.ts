@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { NativeAudio } from '@awesome-cordova-plugins/native-audio/ngx';
 import { PreferencesState, PreferencesStateModel } from '@core/stores/preferences/preferences.state';
 import { Store } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
@@ -18,7 +19,7 @@ export class SoundService {
     coins: new Audio('assets/sounds/coins.mp3'),
   };
 
-  constructor(private store: Store) {
+  constructor(private store: Store, private nativeAudio: NativeAudio) {
     this.store.select<PreferencesStateModel>(PreferencesState.getState)
       .pipe(
         tap((p) => {
